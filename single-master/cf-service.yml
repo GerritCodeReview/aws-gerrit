@@ -1,0 +1,173 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Deploy a service into an ECS cluster behind a public load balancer.
+Parameters:
+  GerritServiceName:
+    Type: String
+    Default: gerrit-master
+  ClusterStackName:
+      Description: Stack name of the ECS cluster to deply the serivces
+      Type: String
+      Default: gerrit-cluster
+  EnvironmentName:
+      Description: An environment name that will be prefixed to resource names
+      Type: String
+      Default: test
+  DockerImage:
+        Description: Gerrit official Docker image
+        Type: String
+        Default: gerritcodereview/gerrit:latest
+  DesiredCount:
+        Description: How many instances of this task should we run across our cluster?
+        Type: Number
+        Default: 1
+  HTTPPort:
+        Description: Gerrit HTTP port
+        Type: Number
+        Default: 8080
+  SSHPort:
+        Description: Gerrit SSH port
+        Type: Number
+        Default: 29418
+
+Resources:
+    Service:
+        Type: AWS::ECS::Service
+        DependsOn:
+          - HTTPListener
+          - SSHListener
+        Properties:
+            Cluster:
+              Fn::ImportValue:
+                  !Join [':', [!Ref 'ClusterStackName', 'ClusterName']]
+            DesiredCount: !Ref DesiredCount
+            TaskDefinition: !Ref TaskDefinition
+            LoadBalancers:
+                - ContainerName: !Ref GerritServiceName
+                  ContainerPort: !Ref HTTPPort
+                  TargetGroupArn: !Ref HTTPTargetGroup
+                - ContainerName: !Ref GerritServiceName
+                  ContainerPort: !Ref SSHPort
+                  TargetGroupArn: !Ref SSHTargetGroup
+
+    TaskDefinition:
+        Type: AWS::ECS::TaskDefinition
+        Properties:
+            Family: !Join ['', [!Ref GerritServiceName, TaskDefinition]]
+            TaskRoleArn: !Ref ECSTaskExecutionRole
+            ExecutionRoleArn: !Ref ECSTaskExecutionRole
+            NetworkMode: bridge
+            ContainerDefinitions:
+                - Name: !Ref GerritServiceName
+                  Essential: true
+                  Image: !Ref DockerImage
+                  Environment:
+                    - Name: "region"
+                      Value: !Ref AWS::Region
+                  Cpu: 1024
+                  Memory: 2048
+                  PortMappings:
+                    - ContainerPort: !Ref HTTPPort
+                      HostPort: !Ref HTTPPort
+                      Protocol: tcp
+                    - ContainerPort: !Ref SSHPort
+                      HostPort: !Ref SSHPort
+                      Protocol: tcp
+                  LogConfiguration:
+                    LogDriver: awslogs
+                    Options:
+                        awslogs-group: !Ref AWS::StackName
+                        awslogs-region: !Ref AWS::Region
+                        awslogs-stream-prefix: !Ref EnvironmentName
+
+    CloudWatchLogsGroup:
+        Type: AWS::Logs::LogGroup
+        Properties:
+            LogGroupName: !Ref AWS::StackName
+            RetentionInDays: 14
+
+    LoadBalancer:
+        Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+        Properties:
+            Type: network
+            Scheme: internet-facing
+            Subnets:
+              - Fn::ImportValue:
+                  !Join [':', [!Ref 'ClusterStackName', 'PublicSubnetOne']]
+            Tags:
+                - Key: Name
+                  Value: !Join ['-', [!Ref 'EnvironmentName', !Ref 'GerritServiceName', 'nlb']]
+
+    HTTPTargetGroup:
+        Type: AWS::ElasticLoadBalancingV2::TargetGroup
+        DependsOn: LoadBalancer
+        Properties:
+            VpcId:
+              Fn::ImportValue:
+                  !Join [':', [!Ref 'ClusterStackName', 'VPCId']]
+            Port: !Ref HTTPPort
+            Protocol: TCP
+
+    HTTPListener:
+        Type: AWS::ElasticLoadBalancingV2::Listener
+        DependsOn: LoadBalancer
+        Properties:
+            DefaultActions:
+            - Type: forward
+              TargetGroupArn: !Ref HTTPTargetGroup
+            LoadBalancerArn: !Ref LoadBalancer
+            Port: !Ref HTTPPort
+            Protocol: TCP
+
+    SSHTargetGroup:
+        Type: AWS::ElasticLoadBalancingV2::TargetGroup
+        DependsOn: LoadBalancer
+        Properties:
+            VpcId:
+              Fn::ImportValue:
+                  !Join [':', [!Ref 'ClusterStackName', 'VPCId']]
+            Port: !Ref SSHPort
+            Protocol: TCP
+
+    SSHListener:
+        Type: AWS::ElasticLoadBalancingV2::Listener
+        DependsOn: LoadBalancer
+        Properties:
+            DefaultActions:
+            - Type: forward
+              TargetGroupArn: !Ref SSHTargetGroup
+            LoadBalancerArn: !Ref LoadBalancer
+            Port: !Ref SSHPort
+            Protocol: TCP
+
+    # This is a role which is used by the ECS tasks themselves.
+    ECSTaskExecutionRole:
+      Type: AWS::IAM::Role
+      Properties:
+        AssumeRolePolicyDocument:
+          Statement:
+          - Effect: Allow
+            Principal:
+              Service: [ecs-tasks.amazonaws.com]
+            Action: ['sts:AssumeRole']
+        Path: /
+        Policies:
+          - PolicyName: AmazonECSTaskExecutionRolePolicy
+            PolicyDocument:
+              Statement:
+              - Effect: Allow
+                Action:
+                  # Allow the ECS Tasks to download images from ECR
+                  - 'ecr:GetAuthorizationToken'
+                  - 'ecr:BatchCheckLayerAvailability'
+                  - 'ecr:GetDownloadUrlForLayer'
+                  - 'ecr:BatchGetImage'
+                  # Allow the ECS tasks to upload logs to CloudWatch
+                  - 'logs:CreateLogStream'
+                  - 'logs:PutLogEvents'
+                Resource: '*'
+Outputs:
+  PublicLoadBalancerUrl:
+    Description: The url of the external load balancer
+    Value: !Join ['', ['http://', !GetAtt 'LoadBalancer.DNSName']]
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'PublicLoadBalancerUrl' ] ]
