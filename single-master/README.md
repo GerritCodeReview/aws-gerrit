@@ -49,34 +49,26 @@ aws ec2 create-key-pair --key-name gerrit-cluster-keys
 for troubleshooting purposes. Store them in a `pem` file to use when ssh-ing into your
 instances as follow: `ssh -i yourKeyPairs.pem <ec2_instance_ip>`*
 
-* Create the cluster stack:
+* Create the cluster and service stack:
 
 ```
-aws cloudformation create-stack \
-  --stack-name gerrit-cluster \
-  --capabilities CAPABILITY_IAM  \
-  --template-body file://<full_path_to_the_template>/aws-gerrit/single-master/cf-cluster.yml
+make create-all
 ```
 
-* Create the service stack:
+By default the cluster and service name are called, respectively, `cluster-stack`
+and `service-stack`. If you want to change the name you can do it by overriding
+the *Makefile* parameters:
 
 ```
-aws cloudformation create-stack \
-  --stack-name gerrit-service \
-  --capabilities CAPABILITY_NAMED_IAM \
-  --template-body file://<full_path_to_the_template>/aws-gerrit/single-master/cf-service.yml \
-  --parameters ParameterKey=ClusterStackName,ParameterValue=gerrit-cluster
+make create-all CLUSTER_STACK_NAME=my-cluster-stack SERVICE_STACK_NAME=my-service-stack
 ```
 
-*NOTE*: the `ClusterStackName` value has to be name of the cluster stack created
-in the previous step (i.e.: `gerrit-cluster` in this case)
+Keep in mind you will have to pass the same parameters when deleting the stacks.
 
 ### Cleaning up
 
 ```
-aws cloudformation delete-stack --stack-name gerrit-cluster
-### Wait for the "gerrit-cluster" stack to be deleted
-aws cloudformation delete-stack --stack-name gerrit-service
+make delete-all
 ```
 
 ### Access your Gerrit
