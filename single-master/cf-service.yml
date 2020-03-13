@@ -28,6 +28,13 @@ Parameters:
         Description: Gerrit SSH port
         Type: Number
         Default: 29418
+  HostedZoneName:
+        Description: The route53 HostedZoneName.
+        Type: String
+  Subdomain:
+        Description: The subdomain of the Gerrit cluster
+        Type: String
+        Default: gerrit-master-demo
 
 Resources:
     Service:
@@ -60,6 +67,9 @@ Resources:
                 - Name: !Ref GerritServiceName
                   Essential: true
                   Image: !Ref DockerImage
+                  Environment:
+                    - Name: "CANONICAL_WEB_URL"
+                      Value: !Join [ '', [ 'http://', !Ref 'Subdomain', '.', !Ref 'HostedZoneName' ] ]
                   Environment:
                     - Name: "region"
                       Value: !Ref AWS::Region
@@ -166,8 +176,28 @@ Resources:
                   - 'logs:PutLogEvents'
                 Resource: '*'
 Outputs:
+  PublicLoadBalancerDNSName:
+    Description: The DNS name of the external load balancer
+    Value: !GetAtt 'LoadBalancer.DNSName'
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'PublicLoadBalancerDNSName' ] ]
+  CanonicalHostedZoneID:
+    Description: Canonical Hosted Zone ID
+    Value: !GetAtt 'LoadBalancer.CanonicalHostedZoneID'
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'CanonicalHostedZoneID' ] ]
   PublicLoadBalancerUrl:
     Description: The url of the external load balancer
     Value: !Join ['', ['http://', !GetAtt 'LoadBalancer.DNSName']]
     Export:
       Name: !Join [ ':', [ !Ref 'AWS::StackName', 'PublicLoadBalancerUrl' ] ]
+  HostedZoneName:
+    Description: Route53 Hosted Zone name
+    Value: !Ref HostedZoneName
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'HostedZoneName' ] ]
+  Subdomain:
+    Description: Service DNS subdomain
+    Value: !Ref Subdomain
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'Subdomain' ] ]

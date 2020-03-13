@@ -2,12 +2,21 @@ CLUSTER_STACK_NAME:=gerrit-cluster
 CLUSTER_TEMPLATE:=cf-cluster.yml
 SERVICE_TEMPLATE:=cf-service.yml
 SERVICE_STACK_NAME:=gerrit-service
+DNS_ROUTING_STACK_NAME:=gerrit-dns-routing
+DNS_ROUTING_TEMPLATE:=cf-dns-route.yml
+HOSTED_ZONE_NAME:=mycompany.com
+SUBDOMAIN:=gerrit-master-demo
 AWS_REGION:=us-east-2
 AWS_FC_COMMAND=export AWS_PAGER=;aws cloudformation
 
-.PHONY: create-all delete-all cluster service wait-for-cluster-creation wait-for-service-creation wait-for-cluster-deletion wait-for-service-deletion
+.PHONY: create-all delete-all \
+				cluster service dns-routing \
+				wait-for-cluster-creation wait-for-service-creation wait-for-dns-routing-creation \
+				wait-for-cluster-deletion wait-for-service-deletion wait-for-dns-routing-deletion
 
-create-all: cluster wait-for-cluster-creation service wait-for-service-creation
+create-all: cluster wait-for-cluster-creation \
+						service wait-for-service-creation \
+						dns-routing wait-for-dns-routing-creation
 
 cluster:
 	$(AWS_FC_COMMAND) create-stack \
@@ -22,8 +31,19 @@ service:
 		--capabilities CAPABILITY_IAM  \
 		--template-body file://`pwd`/$(SERVICE_TEMPLATE) \
 		--region $(AWS_REGION) \
-		--parameters ParameterKey=ClusterStackName,ParameterValue=$(CLUSTER_STACK_NAME)
+		--parameters \
+		ParameterKey=ClusterStackName,ParameterValue=$(CLUSTER_STACK_NAME) \
+		ParameterKey=HostedZoneName,ParameterValue=$(HOSTED_ZONE_NAME) \
+		ParameterKey=Subdomain,ParameterValue=$(SUBDOMAIN)
 
+dns-routing:
+	$(AWS_FC_COMMAND) create-stack \
+		--stack-name $(DNS_ROUTING_STACK_NAME) \
+		--capabilities CAPABILITY_IAM  \
+		--template-body file://`pwd`/$(DNS_ROUTING_TEMPLATE) \
+		--region $(AWS_REGION) \
+		--parameters \
+		ParameterKey=ServiceStackName,ParameterValue=$(SERVICE_STACK_NAME) \
 
 wait-for-cluster-creation:
 	@echo "*** Wait for cluster stack '$(CLUSTER_STACK_NAME)' creation"
@@ -39,6 +59,13 @@ wait-for-service-creation:
 	--region $(AWS_REGION)
 	@echo "*** Service stack '$(SERVICE_STACK_NAME)' created"
 
+wait-for-dns-routing-creation:
+	@echo "*** Wait for DNS routing stack '$(DNS_ROUTING_STACK_NAME)' creation"
+	$(AWS_FC_COMMAND) wait stack-create-complete \
+	--stack-name $(DNS_ROUTING_STACK_NAME) \
+	--region $(AWS_REGION)
+	@echo "*** DNS Routing stack '$(DNS_ROUTING_STACK_NAME)' created"
+
 wait-for-cluster-deletion:
 	@echo "*** Wait for cluster stack '$(CLUSTER_STACK_NAME)' deletion"
 	$(AWS_FC_COMMAND) wait stack-delete-complete \
@@ -53,6 +80,13 @@ wait-for-service-deletion:
 	--region $(AWS_REGION)
 	@echo "*** Service stack '$(SERVICE_STACK_NAME)' deleted"
 
+wait-for-dns-routing-deletion:
+	@echo "*** Wait for DNS routing stack '$(DNS_ROUTING_STACK_NAME)' deletion"
+	$(AWS_FC_COMMAND) wait stack-delete-complete \
+	--stack-name $(DNS_ROUTING_STACK_NAME) \
+	--region $(AWS_REGION)
+	@echo "*** DNS routing stack '$(DNS_ROUTING_STACK_NAME)' deleted"
+
 delete-cluster:
 	$(AWS_FC_COMMAND) delete-stack \
 	--stack-name $(CLUSTER_STACK_NAME) \
@@ -63,4 +97,11 @@ delete-service:
 	--stack-name $(SERVICE_STACK_NAME) \
 	--region $(AWS_REGION)
 
-delete-all: delete-service wait-for-service-deletion delete-cluster wait-for-cluster-deletion
+delete-dns-routing:
+	$(AWS_FC_COMMAND) delete-stack \
+	--stack-name $(DNS_ROUTING_STACK_NAME) \
+	--region $(AWS_REGION)
+
+delete-all: delete-dns-routing wait-for-dns-routing-deletion \
+						delete-service wait-for-service-deletion \
+						delete-cluster wait-for-cluster-deletion \

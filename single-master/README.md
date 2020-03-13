@@ -8,6 +8,7 @@ in ECS
 Two templates are provided in this example:
 * `cf-cluster`: define the ECS cluster and the networking stack
 * `cf-service`: defined the service stack running Gerrit
+* `cf-dns-route`: defined the DNS routing for the service
 
 ### Networking
 
@@ -20,6 +21,7 @@ Two templates are provided in this example:
  * HTTP on port 8080
  * SSH on port 29418
 * 1 Internet Gateway
+* 1 type A alias DNS entry
 
 ### Deployment type
 
@@ -39,6 +41,11 @@ Two templates are provided in this example:
 
 ### Getting Started
 
+As a prerequisite to run this stack, you will need a registered and correctly
+configured domain in [Route53](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/getting-started.html).
+
+Once you will have it you can continue with the next steps:
+
 * Create a key pair to access the EC2 instances in the cluster:
 
 ```
@@ -49,21 +56,11 @@ aws ec2 create-key-pair --key-name gerrit-cluster-keys
 for troubleshooting purposes. Store them in a `pem` file to use when ssh-ing into your
 instances as follow: `ssh -i yourKeyPairs.pem <ec2_instance_ip>`*
 
-* Create the cluster and service stack:
+* Create the cluster, service and DNS routing stacks:
 
 ```
 make create-all
 ```
-
-By default the cluster and service name are called, respectively, `cluster-stack`
-and `service-stack`. If you want to change the name you can do it by overriding
-the *Makefile* parameters:
-
-```
-make create-all CLUSTER_STACK_NAME=my-cluster-stack SERVICE_STACK_NAME=my-service-stack
-```
-
-Keep in mind you will have to pass the same parameters when deleting the stacks.
 
 ### Cleaning up
 
@@ -71,25 +68,32 @@ Keep in mind you will have to pass the same parameters when deleting the stacks.
 make delete-all
 ```
 
+### Stack parameters
+
+The above commands for the creation and deletion of the stacks use a set of default
+parameters which can be overridden as in the following example:
+
+```
+make create-all CLUSTER_STACK_NAME=my-cluster-stack SERVICE_STACK_NAME=my-service-stack
+```
+
+Keep in mind, that once you override a parameter in the creation of the stack,
+you will have to do the same in the deletion, i.e.:
+
+```
+make delete-all CLUSTER_STACK_NAME=my-cluster-stack SERVICE_STACK_NAME=my-service-stack
+```
+
+This is the list of the parameters:
+
+* `CLUSTER_STACK_NAME`: name of the cluster stack. `gerrit-cluster` by default.
+* `SERVICE_STACK_NAME`: name of the service stack. `gerrit-service` by default.
+* `DNS_ROUTING_STACK_NAME`: name of the DNS routing stack. `gerrit-dns-routing` by default.
+* `HOSTED_ZONE_NAME`: name of the hosted zone. `mycompany.com` by default.
+* `SUBDOMAIN`: name of the sub domain. `gerrit-master-demo` by default.
+
 ### Access your Gerrit
 
-You can find the Gerrit public URL by running the following command:
+You Gerrit instance will be available at this URL: `http://<HOSTED_ZONE_NAME>.<SUBDOMAIN>`.
 
-```
-aws cloudformation describe-stacks --stack-name gerrit-service
-```
-
-In the `Outputs` section the URL is set in the `PublicLoadBalancerUrl` key:
-
-```
-  "Outputs": [
-    {
-      "OutputKey": "PublicLoadBalancerUrl",
-      "OutputValue": "http://gerri-LoadB-1CDG276QVT8K8-e28c5bca2e024135.elb.us-east-2.amazonaws.com",
-      "Description": "The url of the external load balancer",
-      "ExportName": "gerrit-ponch-service:PublicLoadBalancerUrl"
-    }
-  ],
-```
-
-The available ports are `8080` for HTTP and `29418` for SSH
+The available ports are `8080` for HTTP and `29418` for SSH.
