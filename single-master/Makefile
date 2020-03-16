@@ -1,18 +1,15 @@
-CLUSTER_STACK_NAME:=gerrit-cluster
+include setup.env
+
 CLUSTER_TEMPLATE:=cf-cluster.yml
 SERVICE_TEMPLATE:=cf-service.yml
-SERVICE_STACK_NAME:=gerrit-service
-DNS_ROUTING_STACK_NAME:=gerrit-dns-routing
 DNS_ROUTING_TEMPLATE:=cf-dns-route.yml
-HOSTED_ZONE_NAME:=mycompany.com
-SUBDOMAIN:=gerrit-master-demo
-AWS_REGION:=us-east-2
 AWS_FC_COMMAND=export AWS_PAGER=;aws cloudformation
 
 .PHONY: create-all delete-all \
 				cluster service dns-routing \
 				wait-for-cluster-creation wait-for-service-creation wait-for-dns-routing-creation \
-				wait-for-cluster-deletion wait-for-service-deletion wait-for-dns-routing-deletion
+				wait-for-cluster-deletion wait-for-service-deletion wait-for-dns-routing-deletion \
+				gerrit-build gerrit-publish
 
 create-all: cluster wait-for-cluster-creation \
 						service wait-for-service-creation \
@@ -34,7 +31,8 @@ service:
 		--parameters \
 		ParameterKey=ClusterStackName,ParameterValue=$(CLUSTER_STACK_NAME) \
 		ParameterKey=HostedZoneName,ParameterValue=$(HOSTED_ZONE_NAME) \
-		ParameterKey=Subdomain,ParameterValue=$(SUBDOMAIN)
+		ParameterKey=Subdomain,ParameterValue=$(SUBDOMAIN) \
+		ParameterKey=DockerRegistryUrl,ParameterValue=$(DOCKER_REGISTRY_URI)
 
 dns-routing:
 	$(AWS_FC_COMMAND) create-stack \
@@ -105,3 +103,6 @@ delete-dns-routing:
 delete-all: delete-dns-routing wait-for-dns-routing-deletion \
 						delete-service wait-for-service-deletion \
 						delete-cluster wait-for-cluster-deletion \
+
+gerrit-publish:
+	$(MAKE) -C gerrit gerrit-publish

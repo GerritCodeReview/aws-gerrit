@@ -23,6 +23,14 @@ Two templates are provided in this example:
 * 1 Internet Gateway
 * 1 type A alias DNS entry
 
+### Data persistency
+
+* EBS volumes for:
+  * Indexes
+  * Caches
+  * Data
+  * Git repositories
+
 ### Deployment type
 
 * Latest Gerrit version deployed using the official [Docker image](https://hub.docker.com/r/gerritcodereview/gerrit)
@@ -39,12 +47,77 @@ Two templates are provided in this example:
 
 ## How to run it
 
+### Setup
+
+The `setup.env.template` is an example of setup file for the creation of the stacks.
+
+Before creating the stacks, create a `setup.env` in the `Makefile` directory and
+correctly set the value of the environment variables.
+
+This is the list of available parameters:
+
+* `DOCKER_REGISTRY_URI`: Mandatory. URI of the Docker registry. See the
+  [prerequisites](#prerequisites) section for more details.
+* `CLUSTER_STACK_NAME`: Optional. Name of the cluster stack. `gerrit-cluster` by default.
+* `SERVICE_STACK_NAME`: Optional. Name of the service stack. `gerrit-service` by default.
+* `DNS_ROUTING_STACK_NAME`: Optional. Name of the DNS routing stack. `gerrit-dns-routing` by default.
+* `HOSTED_ZONE_NAME`: Optional. Name of the hosted zone. `mycompany.com` by default.
+* `SUBDOMAIN`: Optional. Name of the sub domain. `gerrit-master-demo` by default.
+
+### Prerequisites
+
+As a prerequisite to run this stack, you will need:
+* a registered and correctly configured domain in
+[Route53](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/getting-started.html)
+* to [publish the Docker image](#publish-custom-gerrit-docker-image) with your
+Gerrit configuration
+* to [add Gerrit secrets](#add-gerrit-secrets-in-aws-secret-manager) in AWS Secret
+Manager
+
+### Add Gerrit Secrets in AWS Secret Manager
+
+[AWS Secret Manager](https://aws.amazon.com/secrets-manager/) is a secure way of
+storing and managing secrets of any type.
+
+The secrets you will have to add are the Gerrit SSH keys and the Register Email
+Private Key set in `secure.config`.
+
+#### SSH Keys
+
+The SSH keys you will need to add are the one usually created and used by Gerrit:
+* ssh_host_ecdsa_384_key
+* ssh_host_ecdsa_384_key.pub
+* ssh_host_ecdsa_521_key
+* ssh_host_ecdsa_521_key.pub
+* ssh_host_ecdsa_key
+* ssh_host_ecdsa_key.pub
+* ssh_host_ed25519_key
+* ssh_host_ed25519_key.pub
+* ssh_host_rsa_key
+* ssh_host_rsa_key.pub
+
+You will have to create the keys and place them in a directory.
+
+#### Register Email Private Key
+
+You will need to create a secret and put it in a file called `registerEmailPrivateKey`
+in the same directory of the SSH keys.
+
+#### Import into AWS Secret Manager
+
+You can now run the script to upload them to AWS Secret Manager:
+`add_secrets_aws_secrets_manager.sh /path/to/your/keys/directory`
+
+### Publish custom Gerrit Docker image
+
+* Create the repository in the Docker registry:
+  `aws ecr create-repository --repository-name aws-gerrit/gerrit`
+* Set the Docker registry URI in `DOCKER_REGISTRY_URI`
+* Adjust the `gerrit.config` in `./gerrit/etc`
+* Add the plugins you want to install in `./gerrit/plugins`
+* Publish the image: `make gerrit-publish`
+
 ### Getting Started
-
-As a prerequisite to run this stack, you will need a registered and correctly
-configured domain in [Route53](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/getting-started.html).
-
-Once you will have it you can continue with the next steps:
 
 * Create a key pair to access the EC2 instances in the cluster:
 
@@ -68,30 +141,6 @@ make create-all
 ```
 make delete-all
 ```
-
-### Stack parameters
-
-The above commands for the creation and deletion of the stacks use a set of default
-parameters which can be overridden as in the following example:
-
-```
-make create-all CLUSTER_STACK_NAME=my-cluster-stack SERVICE_STACK_NAME=my-service-stack
-```
-
-Keep in mind, that once you override a parameter in the creation of the stack,
-you will have to do the same in the deletion, i.e.:
-
-```
-make delete-all CLUSTER_STACK_NAME=my-cluster-stack SERVICE_STACK_NAME=my-service-stack
-```
-
-This is the list of the parameters:
-
-* `CLUSTER_STACK_NAME`: name of the cluster stack. `gerrit-cluster` by default.
-* `SERVICE_STACK_NAME`: name of the service stack. `gerrit-service` by default.
-* `DNS_ROUTING_STACK_NAME`: name of the DNS routing stack. `gerrit-dns-routing` by default.
-* `HOSTED_ZONE_NAME`: name of the hosted zone. `mycompany.com` by default.
-* `SUBDOMAIN`: name of the sub domain. `gerrit-master-demo` by default.
 
 ### Access your Gerrit
 

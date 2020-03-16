@@ -15,7 +15,10 @@ Parameters:
   DockerImage:
         Description: Gerrit official Docker image
         Type: String
-        Default: gerritcodereview/gerrit:latest
+        Default: aws-gerrit/gerrit:latest
+  DockerRegistryUrl:
+        Description: Docker registry URL
+        Type: String
   DesiredCount:
         Description: How many instances of this task should we run across our cluster?
         Type: Number
@@ -35,6 +38,26 @@ Parameters:
         Description: The subdomain of the Gerrit cluster
         Type: String
         Default: gerrit-master-demo
+  GerritGitVolume:
+      Description: Gerrit git volume name
+      Type: String
+      Default: gerrit-git
+  GerritDataVolume:
+      Description: Gerrit data volume name
+      Type: String
+      Default: gerrit-data
+  GerritIndexVolume:
+      Description: Gerrit index volume name
+      Type: String
+      Default: gerrit-index
+  GerritCacheVolume:
+      Description: Gerrit cache volume name
+      Type: String
+      Default: gerrit-cache
+  GerritDbVolume:
+      Description: Gerrit db volume name
+      Type: String
+      Default: gerrit-db
 
 Resources:
     Service:
@@ -66,13 +89,23 @@ Resources:
             ContainerDefinitions:
                 - Name: !Ref GerritServiceName
                   Essential: true
-                  Image: !Ref DockerImage
+                  Image: !Sub '${DockerRegistryUrl}/${DockerImage}'
                   Environment:
-                    - Name: "CANONICAL_WEB_URL"
+                    - Name: CANONICAL_WEB_URL
                       Value: !Join [ '', [ 'http://', !Ref 'Subdomain', '.', !Ref 'HostedZoneName' ] ]
-                  Environment:
-                    - Name: "region"
+                    - Name: AWS_REGION
                       Value: !Ref AWS::Region
+                  MountPoints:
+                    - SourceVolume: !Ref GerritGitVolume
+                      ContainerPath: /var/gerrit/git
+                    - SourceVolume: !Ref GerritDataVolume
+                      ContainerPath: /var/gerrit/data
+                    - SourceVolume: !Ref GerritIndexVolume
+                      ContainerPath: /var/gerrit/index
+                    - SourceVolume: !Ref GerritCacheVolume
+                      ContainerPath: /var/gerrit/cache
+                    - SourceVolume: !Ref GerritDbVolume
+                      ContainerPath: /var/gerrit/db
                   Cpu: 1024
                   Memory: 2048
                   PortMappings:
@@ -88,7 +121,42 @@ Resources:
                         awslogs-group: !Ref AWS::StackName
                         awslogs-region: !Ref AWS::Region
                         awslogs-stream-prefix: !Ref EnvironmentName
-
+            Volumes:
+              - Name: !Ref 'GerritDbVolume'
+                DockerVolumeConfiguration:
+                  Scope: shared
+                  Autoprovision: true
+                  Driver: local
+                  Labels:
+                    gerrit-db: !Join ['-', [!Ref EnvironmentName, !Ref GerritDbVolume]]
+              - Name: !Ref 'GerritGitVolume'
+                DockerVolumeConfiguration:
+                  Scope: shared
+                  Autoprovision: true
+                  Driver: local
+                  Labels:
+                    gerrit-git: !Join ['-', [!Ref EnvironmentName, !Ref GerritGitVolume]]
+              - Name: !Ref 'GerritDataVolume'
+                DockerVolumeConfiguration:
+                  Scope: shared
+                  Autoprovision: true
+                  Driver: local
+                  Labels:
+                    gerrit-data: !Join ['-', [!Ref EnvironmentName, !Ref GerritDataVolume]]
+              - Name: !Ref 'GerritCacheVolume'
+                DockerVolumeConfiguration:
+                  Scope: shared
+                  Autoprovision: true
+                  Driver: local
+                  Labels:
+                    gerrit-cache: !Join ['-', [!Ref EnvironmentName, !Ref GerritCacheVolume]]
+              - Name: !Ref 'GerritIndexVolume'
+                DockerVolumeConfiguration:
+                  Scope: shared
+                  Autoprovision: true
+                  Driver: local
+                  Labels:
+                    gerrit-index: !Join ['-', [!Ref EnvironmentName, !Ref GerritIndexVolume]]
     CloudWatchLogsGroup:
         Type: AWS::Logs::LogGroup
         Properties:
@@ -174,6 +242,15 @@ Resources:
                   # Allow the ECS tasks to upload logs to CloudWatch
                   - 'logs:CreateLogStream'
                   - 'logs:PutLogEvents'
+                Resource: '*'
+          - PolicyName: AmazonECSTaskSecretManagerRolePolicy
+            PolicyDocument:
+              Statement:
+              - Effect: Allow
+                Action:
+                  # Allow the ECS Tasks to get SSH Keys
+                  - 'secretsmanager:GetSecretValue'
+                  - 'kms:Decrypt'
                 Resource: '*'
 Outputs:
   PublicLoadBalancerDNSName:
