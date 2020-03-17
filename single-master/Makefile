@@ -32,7 +32,8 @@ service:
 		ParameterKey=ClusterStackName,ParameterValue=$(CLUSTER_STACK_NAME) \
 		ParameterKey=HostedZoneName,ParameterValue=$(HOSTED_ZONE_NAME) \
 		ParameterKey=Subdomain,ParameterValue=$(SUBDOMAIN) \
-		ParameterKey=DockerRegistryUrl,ParameterValue=$(DOCKER_REGISTRY_URI)
+		ParameterKey=DockerRegistryUrl,ParameterValue=$(DOCKER_REGISTRY_URI) \
+		ParameterKey=CertificateArn,ParameterValue=$(SSL_CERTIFICATE_ARN)
 
 dns-routing:
 	$(AWS_FC_COMMAND) create-stack \
@@ -41,7 +42,7 @@ dns-routing:
 		--template-body file://`pwd`/$(DNS_ROUTING_TEMPLATE) \
 		--region $(AWS_REGION) \
 		--parameters \
-		ParameterKey=ServiceStackName,ParameterValue=$(SERVICE_STACK_NAME) \
+		ParameterKey=ServiceStackName,ParameterValue=$(SERVICE_STACK_NAME)
 
 wait-for-cluster-creation:
 	@echo "*** Wait for cluster stack '$(CLUSTER_STACK_NAME)' creation"

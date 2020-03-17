@@ -27,10 +27,17 @@ Parameters:
         Description: Gerrit HTTP port
         Type: Number
         Default: 8080
+  HTTPSPort:
+        Description: Gerrit HTTPS port
+        Type: Number
+        Default: 443
   SSHPort:
         Description: Gerrit SSH port
         Type: Number
         Default: 29418
+  CertificateArn:
+        Description: SSL Certificates ARN
+        Type: String
   HostedZoneName:
         Description: The route53 HostedZoneName.
         Type: String
@@ -92,7 +99,9 @@ Resources:
                   Image: !Sub '${DockerRegistryUrl}/${DockerImage}'
                   Environment:
                     - Name: CANONICAL_WEB_URL
-                      Value: !Join [ '', [ 'http://', !Ref 'Subdomain', '.', !Ref 'HostedZoneName' ] ]
+                      Value: !Sub 'https://${Subdomain}.${HostedZoneName}'
+                    - Name: HTTPD_LISTEN_URL
+                      Value: !Sub 'proxy-https://*:${HTTPPort}/'
                     - Name: AWS_REGION
                       Value: !Ref AWS::Region
                   MountPoints:
@@ -189,12 +198,14 @@ Resources:
         Type: AWS::ElasticLoadBalancingV2::Listener
         DependsOn: LoadBalancer
         Properties:
+            Certificates:
+              - CertificateArn: !Ref CertificateArn
             DefaultActions:
             - Type: forward
               TargetGroupArn: !Ref HTTPTargetGroup
             LoadBalancerArn: !Ref LoadBalancer
-            Port: !Ref HTTPPort
-            Protocol: TCP
+            Port: !Ref HTTPSPort
+            Protocol: TLS
 
     SSHTargetGroup:
         Type: AWS::ElasticLoadBalancingV2::TargetGroup
@@ -278,3 +289,8 @@ Outputs:
     Value: !Ref Subdomain
     Export:
       Name: !Join [ ':', [ !Ref 'AWS::StackName', 'Subdomain' ] ]
+  CanonicalWebUrl:
+    Description: Canonical Web URL
+    Value: !Sub 'https://${Subdomain}.${HostedZoneName}'
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'CanonicalWebUrl' ] ]

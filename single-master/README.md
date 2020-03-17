@@ -22,6 +22,7 @@ Two templates are provided in this example:
  * SSH on port 29418
 * 1 Internet Gateway
 * 1 type A alias DNS entry
+* A SSL certificate available in [AWS Certificate Manager](https://aws.amazon.com/certificate-manager/)
 
 ### Data persistency
 
@@ -58,6 +59,7 @@ This is the list of available parameters:
 
 * `DOCKER_REGISTRY_URI`: Mandatory. URI of the Docker registry. See the
   [prerequisites](#prerequisites) section for more details.
+* `SSL_CERTIFICATE_ARN`: Mandatory. ARN of the SSL Certificate.
 * `CLUSTER_STACK_NAME`: Optional. Name of the cluster stack. `gerrit-cluster` by default.
 * `SERVICE_STACK_NAME`: Optional. Name of the service stack. `gerrit-service` by default.
 * `DNS_ROUTING_STACK_NAME`: Optional. Name of the DNS routing stack. `gerrit-dns-routing` by default.
@@ -73,6 +75,8 @@ As a prerequisite to run this stack, you will need:
 Gerrit configuration
 * to [add Gerrit secrets](#add-gerrit-secrets-in-aws-secret-manager) in AWS Secret
 Manager
+* an SSL Certificate in AWS Certificate Manager (you can find more information on
+  how to create and handle certificates in AWS [here](https://aws.amazon.com/certificate-manager/getting-started/)
 
 ### Add Gerrit Secrets in AWS Secret Manager
 
