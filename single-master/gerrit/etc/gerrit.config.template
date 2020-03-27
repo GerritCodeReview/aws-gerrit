@@ -8,7 +8,16 @@
 [index]
 	type = LUCENE
 [auth]
-	type = DEVELOPMENT_BECOME_ANY_ACCOUNT
+  type = ldap
+  gitBasicAuth = true
+[ldap]
+  server = {{ LDAP_SERVER }}
+  username = {{ LDAP_USERNAME }}
+  accountBase = {{ LDAP_ACCOUNT_BASE }}
+  accountPattern = (&(objectClass=person)(uid=${username}))
+  accountFullName = displayName
+  accountEmailAddress = mail
+  groupBase = {{ LDAP_GROUP_BASE }}
 [sendemail]
 	smtpServer = localhost
 [sshd]
@@ -26,7 +35,6 @@
 	javaOptions = "-Dflogger.logging_context=com.google.gerrit.server.logging.LoggingContext#getInstance"
 	user = gerrit
 	javaHome = /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.242.b08-0.el7_7.x86_64/jre
-	javaOptions = -Djava.security.egd=file:/dev/./urandom
 	javaOptions = -Djava.security.egd=file:/dev/./urandom
 [receive]
 	enableSignedPush = false

@@ -3,11 +3,11 @@
 import boto3
 import base64
 import os
+import configparser
 from botocore.exceptions import ClientError
 from jinja2 import Environment, FileSystemLoader
 
 def get_secret(secret_name):
-
     # Create a Secrets Manager client
     session = boto3.session.Session()
     client = session.client(
@@ -62,17 +62,33 @@ secretIds = [
 ]
 
 GERRIT_KEY_PREFIX = "gerrit_secret_"
-GERRIT_SSH_SECRETS_DIRECTORY = "/var/gerrit/etc/"
+GERRIT_CONFIG_DIRECTORY = "/var/gerrit/etc/"
 
-print("Installing SSH Keys from Secret Manager in directory: " + GERRIT_SSH_SECRETS_DIRECTORY)
+print("Installing SSH Keys from Secret Manager in directory: " + GERRIT_CONFIG_DIRECTORY)
 for secretId in secretIds:
     print("* Installing SSH Key: " + secretId)
-    with open(GERRIT_SSH_SECRETS_DIRECTORY + secretId, 'w', encoding = 'utf-8') as f:
+    with open(GERRIT_CONFIG_DIRECTORY + secretId, 'w', encoding = 'utf-8') as f:
         f.write(get_secret(GERRIT_KEY_PREFIX + secretId))
 
-print("Setting Register Email Private Key in '" + GERRIT_SSH_SECRETS_DIRECTORY + "secure.config'")
-file_loader = FileSystemLoader(GERRIT_SSH_SECRETS_DIRECTORY)
+file_loader = FileSystemLoader(GERRIT_CONFIG_DIRECTORY)
 env = Environment(loader=file_loader)
+
+print("Setting Register Email Private Key in '" + GERRIT_CONFIG_DIRECTORY + "secure.config'")
 template = env.get_template("secure.config.template")
-with open(GERRIT_SSH_SECRETS_DIRECTORY + "secure.config", 'w', encoding = 'utf-8') as f:
-    f.write(template.render(REGISTER_EMAIL_PRIVATE_KEY=get_secret(GERRIT_KEY_PREFIX + "registerEmailPrivateKey")))
+with open(GERRIT_CONFIG_DIRECTORY + "secure.config", 'w', encoding = 'utf-8') as f:
+    f.write(template.render(
+                REGISTER_EMAIL_PRIVATE_KEY=get_secret(GERRIT_KEY_PREFIX + "registerEmailPrivateKey"),
+                LDAP_PASSWORD=get_secret(GERRIT_KEY_PREFIX + "ldapPassword"))
+            )
+
+config = configparser.ConfigParser()
+config.read('/tmp/gerrit.setup')
+print("Setting Gerrit config in '" + GERRIT_CONFIG_DIRECTORY + "gerrit.config'")
+template = env.get_template("gerrit.config.template")
+with open(GERRIT_CONFIG_DIRECTORY + "gerrit.config", 'w', encoding = 'utf-8') as f:
+    f.write(template.render(
+                LDAP_SERVER=config['ldap']['server'],
+                LDAP_USERNAME=config['ldap']['username'],
+                LDAP_ACCOUNT_BASE=config['ldap']['accountBase'],
+                LDAP_GROUP_BASE=config['ldap']['groupBase'])
+            )

@@ -49,3 +49,9 @@ echo "Adding Register Email Private Key..."
 aws secretsmanager create-secret --name ${KEY_PREFIX}_registerEmailPrivateKey \
     --description "Gerrit Register Email Private Key" \
     --secret-string file://$SECRETS_DIRECTORY/registerEmailPrivateKey
+
+echo "Adding LDAP password..."
+
+aws secretsmanager create-secret --name ${KEY_PREFIX}_ldapPassword \
+    --description "LDAP password" \
+    --secret-string file://$SECRETS_DIRECTORY/ldapPassword

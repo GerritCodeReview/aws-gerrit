@@ -107,6 +107,11 @@ You will have to create the keys and place them in a directory.
 You will need to create a secret and put it in a file called `registerEmailPrivateKey`
 in the same directory of the SSH keys.
 
+#### LDAP Password
+
+You will need to put the admin LDAP password in a file called `ldapPassword`
+in the same directory of the SSH keys.
+
 #### Import into AWS Secret Manager
 
 You can now run the script to upload them to AWS Secret Manager:
@@ -117,9 +122,16 @@ You can now run the script to upload them to AWS Secret Manager:
 * Create the repository in the Docker registry:
   `aws ecr create-repository --repository-name aws-gerrit/gerrit`
 * Set the Docker registry URI in `DOCKER_REGISTRY_URI`
-* Adjust the `gerrit.config` in `./gerrit/etc`
+* Create a `gerrit.setup` and set the correct parameters
+ * An example of the possible setting are in `gerrit.setup.template`
+ * The structure and parameters of `gerrit.setup` are the same as a normal `gerrit.config`
+ * Refer to the [Gerrit Configuration Documentation](https://gerrit-review.googlesource.com/Documentation/config-gerrit.html)
+   for the meaning of the parameters
 * Add the plugins you want to install in `./gerrit/plugins`
 * Publish the image: `make gerrit-publish`
+
+NOTE: If you need a testing LDAP server you can find details on how to easily
+create one in the [LDAP folder](../ldap/README.md).
 
 ### Getting Started
 
