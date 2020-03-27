@@ -1,5 +1,3 @@
 setup.env
 */gerrit/plugins/*.jar
-*/gerrit/etc/
-!*/gerrit/etc/*.template
-!*/gerrit/etc/gerrit.config
+*/gerrit/etc/*key*

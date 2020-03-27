@@ -1,0 +1,2 @@
+[auth]
+	registerEmailPrivateKey = {{ REGISTER_EMAIL_PRIVATE_KEY }}
