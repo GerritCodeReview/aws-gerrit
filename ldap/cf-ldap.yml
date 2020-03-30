@@ -1,0 +1,76 @@
+---
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'AWS CloudFormation Template to Deploy a single EC2 instance
+  with OpenLDAP Installed and configured with a Gerrit Admin User'
+Parameters:
+  KeyName:
+    Description: Name of an existing EC2 KeyPair to enable SSH access to the instance
+    Type: AWS::EC2::KeyPair::KeyName
+    Default: gerrit-cluster-keys
+    ConstraintDescription: must be the name of an existing EC2 KeyPair.
+  InstanceType:
+    Description: EC2 instance type
+    Type: String
+    Default: t2.micro
+  HostedZoneName:
+    Description: The route53 HostedZoneName.
+    Type: String
+Resources:
+  EC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: !Ref InstanceType
+      SecurityGroups:
+        - !Ref InstanceSecurityGroup
+      KeyName: !Ref KeyName
+      ImageId: ami-0472cbe99b81a694a
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash -xe
+          su - ec2-user bash -c "docker-compose up"
+  InstanceSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Enable SSH access via port 22
+      SecurityGroupIngress:
+      - CidrIp: 0.0.0.0/0
+        IpProtocol: -1
+  LDAPDnsRecord:
+      Type: AWS::Route53::RecordSet
+      Properties:
+        Name: !Sub 'gerrit-ldap.${HostedZoneName}'
+        HostedZoneName: !Sub '${HostedZoneName}.'
+        Comment: DNS name for LDAP Test instance.
+        Type: A
+        TTL: '60'
+        ResourceRecords:
+          - !GetAtt EC2Instance.PublicIp
+Outputs:
+  InstanceId:
+    Description: InstanceId of the newly created EC2 instance
+    Value:
+      Ref: EC2Instance
+  AZ:
+    Description: Availability Zone of the newly created EC2 instance
+    Value:
+      Fn::GetAtt:
+      - EC2Instance
+      - AvailabilityZone
+  PublicDNS:
+    Description: Public DNSName of the newly created EC2 instance
+    Value:
+      Fn::GetAtt:
+      - EC2Instance
+      - PublicDnsName
+  PublicIP:
+    Description: Public IP address of the newly created EC2 instance
+    Value:
+      Fn::GetAtt:
+      - EC2Instance
+      - PublicIp
+  LDAPAdminWebUrl:
+    Description: LDAP Admin URL
+    Value: !Sub 'https://gerrit-ldap.${HostedZoneName}:6443'
+  LDAPServiceUrl:
+    Description: LDAP Service URL
+    Value: !Sub 'ldap://gerrit-ldap.${HostedZoneName}:636'
