@@ -1,0 +1,305 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Deploy a service into an ECS cluster behind a public load balancer.
+Parameters:
+  GerritServiceName:
+    Type: String
+    Default: gerrit-master
+  SlaveServiceStackName:
+    Type: String
+    Default: gerrit-slave
+  ClusterStackName:
+      Description: Stack name of the ECS cluster to deply the serivces
+      Type: String
+      Default: gerrit-cluster
+  EnvironmentName:
+      Description: An environment name that will be prefixed to resource names
+      Type: String
+      Default: test
+  DockerImage:
+        Description: Gerrit official Docker image
+        Type: String
+        Default: aws-gerrit/gerrit:latest
+  GerritLBDockerImage:
+        Description: Load Balancer official Docker image
+        Type: String
+        Default: haproxy:1.7
+  DockerRegistryUrl:
+        Description: Docker registry URL
+        Type: String
+  DesiredCount:
+        Description: How many instances of this task should we run across our cluster?
+        Type: Number
+        Default: 1
+  HTTPPort:
+        Description: Gerrit HTTP port
+        Type: Number
+        Default: 8080
+  HTTPSPort:
+        Description: Gerrit HTTPS port
+        Type: Number
+        Default: 443
+  SSHPort:
+        Description: Gerrit SSH port
+        Type: Number
+        Default: 29418
+  CertificateArn:
+        Description: SSL Certificates ARN
+        Type: String
+  HostedZoneName:
+        Description: The route53 HostedZoneName.
+        Type: String
+  Subdomain:
+        Description: The subdomain of the Gerrit cluster
+        Type: String
+        Default: gerrit-master-demo
+  GerritGitVolume:
+      Description: Gerrit git volume name
+      Type: String
+      Default: gerrit-git-master
+  GerritDataVolume:
+      Description: Gerrit data volume name
+      Type: String
+      Default: gerrit-data-master
+  GerritIndexVolume:
+      Description: Gerrit index volume name
+      Type: String
+      Default: gerrit-index-master
+  GerritCacheVolume:
+      Description: Gerrit cache volume name
+      Type: String
+      Default: gerrit-cache-master
+  GerritDbVolume:
+      Description: Gerrit db volume name
+      Type: String
+      Default: gerrit-db-master
+
+Resources:
+    Service:
+        Type: AWS::ECS::Service
+        DependsOn:
+          - HTTPListener
+          - SSHListener
+        Properties:
+            Cluster:
+              Fn::ImportValue:
+                  !Join [':', [!Ref 'ClusterStackName', 'ClusterName']]
+            DesiredCount: !Ref DesiredCount
+            TaskDefinition: !Ref TaskDefinition
+            LoadBalancers:
+                - ContainerName: !Ref GerritServiceName
+                  ContainerPort: !Ref HTTPPort
+                  TargetGroupArn: !Ref HTTPTargetGroup
+                - ContainerName: !Ref GerritServiceName
+                  ContainerPort: !Ref SSHPort
+                  TargetGroupArn: !Ref SSHTargetGroup
+
+    TaskDefinition:
+        Type: AWS::ECS::TaskDefinition
+        Properties:
+            Family: !Join ['', [!Ref GerritServiceName, TaskDefinition]]
+            TaskRoleArn: !Ref ECSTaskExecutionRole
+            ExecutionRoleArn: !Ref ECSTaskExecutionRole
+            NetworkMode: bridge
+            ContainerDefinitions:
+                - Name: !Ref GerritServiceName
+                  Essential: true
+                  Image: !Sub '${DockerRegistryUrl}/${DockerImage}'
+                  Environment:
+                    - Name: CANONICAL_WEB_URL
+                      Value: !Sub 'https://${Subdomain}.${HostedZoneName}'
+                    - Name: HTTPD_LISTEN_URL
+                      Value: !Sub 'proxy-https://*:${HTTPPort}/'
+                    - Name: AWS_REGION
+                      Value: !Ref AWS::Region
+                  MountPoints:
+                    - SourceVolume: !Ref GerritGitVolume
+                      ContainerPath: /var/gerrit/git
+                    - SourceVolume: !Ref GerritDataVolume
+                      ContainerPath: /var/gerrit/data
+                    - SourceVolume: !Ref GerritIndexVolume
+                      ContainerPath: /var/gerrit/index
+                    - SourceVolume: !Ref GerritCacheVolume
+                      ContainerPath: /var/gerrit/cache
+                    - SourceVolume: !Ref GerritDbVolume
+                      ContainerPath: /var/gerrit/db
+                  Cpu: 1024
+                  Memory: 2048
+                  PortMappings:
+                    - ContainerPort: !Ref HTTPPort
+                      HostPort: !Ref HTTPPort
+                      Protocol: tcp
+                    - ContainerPort: !Ref SSHPort
+                      HostPort: !Ref SSHPort
+                      Protocol: tcp
+                  LogConfiguration:
+                    LogDriver: awslogs
+                    Options:
+                        awslogs-group: !Ref AWS::StackName
+                        awslogs-region: !Ref AWS::Region
+                        awslogs-stream-prefix: !Ref EnvironmentName
+            Volumes:
+              - Name: !Ref 'GerritDbVolume'
+                DockerVolumeConfiguration:
+                  Scope: shared
+                  Autoprovision: true
+                  Driver: local
+                  Labels:
+                    gerrit-db: !Join ['-', [!Ref EnvironmentName, !Ref GerritDbVolume]]
+              - Name: !Ref 'GerritGitVolume'
+                DockerVolumeConfiguration:
+                  Scope: shared
+                  Autoprovision: true
+                  Driver: local
+                  Labels:
+                    gerrit-git: !Join ['-', [!Ref EnvironmentName, !Ref GerritGitVolume]]
+              - Name: !Ref 'GerritDataVolume'
+                DockerVolumeConfiguration:
+                  Scope: shared
+                  Autoprovision: true
+                  Driver: local
+                  Labels:
+                    gerrit-data: !Join ['-', [!Ref EnvironmentName, !Ref GerritDataVolume]]
+              - Name: !Ref 'GerritCacheVolume'
+                DockerVolumeConfiguration:
+                  Scope: shared
+                  Autoprovision: true
+                  Driver: local
+                  Labels:
+                    gerrit-cache: !Join ['-', [!Ref EnvironmentName, !Ref GerritCacheVolume]]
+              - Name: !Ref 'GerritIndexVolume'
+                DockerVolumeConfiguration:
+                  Scope: shared
+                  Autoprovision: true
+                  Driver: local
+                  Labels:
+                    gerrit-index: !Join ['-', [!Ref EnvironmentName, !Ref GerritIndexVolume]]
+    CloudWatchLogsGroup:
+        Type: AWS::Logs::LogGroup
+        Properties:
+            LogGroupName: !Ref AWS::StackName
+            RetentionInDays: 14
+
+    LoadBalancer:
+        Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+        Properties:
+            Type: network
+            Scheme: internet-facing
+            Subnets:
+              - Fn::ImportValue:
+                  !Join [':', [!Ref 'ClusterStackName', 'PublicSubnetOne']]
+              - Fn::ImportValue:
+                  !Join [':', [!Ref 'ClusterStackName', 'PublicSubnetTwo']]
+            Tags:
+                - Key: Name
+                  Value: !Join ['-', [!Ref 'EnvironmentName', !Ref 'GerritServiceName', 'nlb']]
+
+    HTTPTargetGroup:
+        Type: AWS::ElasticLoadBalancingV2::TargetGroup
+        DependsOn: LoadBalancer
+        Properties:
+            VpcId:
+              Fn::ImportValue:
+                  !Join [':', [!Ref 'ClusterStackName', 'VPCId']]
+            Port: !Ref HTTPPort
+            Protocol: TCP
+
+    HTTPListener:
+        Type: AWS::ElasticLoadBalancingV2::Listener
+        DependsOn: LoadBalancer
+        Properties:
+            Certificates:
+              - CertificateArn: !Ref CertificateArn
+            DefaultActions:
+            - Type: forward
+              TargetGroupArn: !Ref HTTPTargetGroup
+            LoadBalancerArn: !Ref LoadBalancer
+            Port: !Ref HTTPSPort
+            Protocol: TLS
+
+    SSHTargetGroup:
+        Type: AWS::ElasticLoadBalancingV2::TargetGroup
+        DependsOn: LoadBalancer
+        Properties:
+            VpcId:
+              Fn::ImportValue:
+                  !Join [':', [!Ref 'ClusterStackName', 'VPCId']]
+            Port: !Ref SSHPort
+            Protocol: TCP
+
+    SSHListener:
+        Type: AWS::ElasticLoadBalancingV2::Listener
+        DependsOn: LoadBalancer
+        Properties:
+            DefaultActions:
+            - Type: forward
+              TargetGroupArn: !Ref SSHTargetGroup
+            LoadBalancerArn: !Ref LoadBalancer
+            Port: !Ref SSHPort
+            Protocol: TCP
+
+    # This is a role which is used by the ECS tasks themselves.
+    ECSTaskExecutionRole:
+      Type: AWS::IAM::Role
+      Properties:
+        AssumeRolePolicyDocument:
+          Statement:
+          - Effect: Allow
+            Principal:
+              Service: [ecs-tasks.amazonaws.com]
+            Action: ['sts:AssumeRole']
+        Path: /
+        Policies:
+          - PolicyName: AmazonECSTaskExecutionRolePolicy
+            PolicyDocument:
+              Statement:
+              - Effect: Allow
+                Action:
+                  # Allow the ECS Tasks to download images from ECR
+                  - 'ecr:GetAuthorizationToken'
+                  - 'ecr:BatchCheckLayerAvailability'
+                  - 'ecr:GetDownloadUrlForLayer'
+                  - 'ecr:BatchGetImage'
+                  # Allow the ECS tasks to upload logs to CloudWatch
+                  - 'logs:CreateLogStream'
+                  - 'logs:PutLogEvents'
+                Resource: '*'
+          - PolicyName: AmazonECSTaskSecretManagerRolePolicy
+            PolicyDocument:
+              Statement:
+              - Effect: Allow
+                Action:
+                  # Allow the ECS Tasks to get SSH Keys
+                  - 'secretsmanager:GetSecretValue'
+                  - 'kms:Decrypt'
+                Resource: '*'
+Outputs:
+  PublicLoadBalancerDNSName:
+    Description: The DNS name of the external load balancer
+    Value: !GetAtt 'LoadBalancer.DNSName'
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'PublicLoadBalancerDNSName' ] ]
+  CanonicalHostedZoneID:
+    Description: Canonical Hosted Zone ID
+    Value: !GetAtt 'LoadBalancer.CanonicalHostedZoneID'
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'CanonicalHostedZoneID' ] ]
+  PublicLoadBalancerUrl:
+    Description: The url of the external load balancer
+    Value: !Join ['', ['http://', !GetAtt 'LoadBalancer.DNSName']]
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'PublicLoadBalancerUrl' ] ]
+  HostedZoneName:
+    Description: Route53 Hosted Zone name
+    Value: !Ref HostedZoneName
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'HostedZoneName' ] ]
+  Subdomain:
+    Description: Service DNS subdomain
+    Value: !Ref Subdomain
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'Subdomain' ] ]
+  CanonicalWebUrl:
+    Description: Canonical Web URL
+    Value: !Sub 'https://${Subdomain}.${HostedZoneName}'
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'CanonicalWebUrl' ] ]

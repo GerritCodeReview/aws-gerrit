@@ -48,6 +48,16 @@ def get_secret(secret_name):
         else:
             return base64.b64decode(get_secret_value_response['SecretBinary'])
 
+"""
+This script setup Gerrit configuration and its plugins when the container spins up.
+
+It reads from:
+ - AWS Secret Manager: Statically defined.
+ - gerrit.setup: Statically defined.
+ - environment variables: Dinamycally defined.
+
+"""
+
 secretIds = [
     "ssh_host_ecdsa_384_key",
     "ssh_host_ecdsa_384_key.pub",
@@ -82,8 +92,9 @@ with open(GERRIT_CONFIG_DIRECTORY + "secure.config", 'w', encoding = 'utf-8') as
                 SMTP_PASSWORD=get_secret(GERRIT_KEY_PREFIX + "smtpPassword"))
             )
 
+BASE_CONFIG_DIR = "/tmp"
 config = configparser.ConfigParser()
-config.read('/tmp/gerrit.setup')
+config.read(BASE_CONFIG_DIR + '/gerrit.setup')
 print("Setting Gerrit config in '" + GERRIT_CONFIG_DIRECTORY + "gerrit.config'")
 template = env.get_template("gerrit.config.template")
 with open(GERRIT_CONFIG_DIRECTORY + "gerrit.config", 'w', encoding = 'utf-8') as f:
@@ -96,3 +107,15 @@ with open(GERRIT_CONFIG_DIRECTORY + "gerrit.config", 'w', encoding = 'utf-8') as
                 SMTP_USER=config['smtp']["user"],
                 SMTP_DOMAIN=config['smtp']["domain"])
             )
+
+#XXX: This will need to be revisited when facing multi-master/multi-slaves scearios
+containerSlave = os.getenv('CONTAINER_SLAVE')
+if (not containerSlave):
+    print("Setting Replication config in '" + GERRIT_CONFIG_DIRECTORY + "replication.config'")
+    config.read(BASE_CONFIG_DIR + '/replication.setup')
+    template = env.get_template("replication.config.template")
+    with open(GERRIT_CONFIG_DIRECTORY + "replication.config", 'w', encoding = 'utf-8') as f:
+        f.write(template.render(
+                SLAVE_1_URL=config['remote-slave-1']['url'],
+                SLAVE_1_AMDIN_URL=config['remote-slave-1']['adminUrl']
+        ))
