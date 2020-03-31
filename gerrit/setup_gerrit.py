@@ -53,6 +53,16 @@ def get_secret(secret_name):
             return base64.b64decode(get_secret_value_response['SecretBinary'])
 
 
+"""
+This script setup Gerrit configuration and its plugins when the container spins up.
+
+It reads from:
+ - AWS Secret Manager: Statically defined.
+ - gerrit.setup: Statically defined.
+ - environment variables: Dinamycally defined.
+
+"""
+
 secretIds = [
     "ssh_host_ecdsa_384_key",
     "ssh_host_ecdsa_384_key.pub",
@@ -76,6 +86,20 @@ for secretId in secretIds:
     with open(GERRIT_CONFIG_DIRECTORY + secretId, 'w', encoding='utf-8') as f:
         f.write(get_secret(GERRIT_KEY_PREFIX + secretId))
 
+GERRIT_SSH_DIRECTORY = "/var/gerrit/.ssh"
+GERRIT_REPLICATION_SSH_KEYS = GERRIT_SSH_DIRECTORY + "/id_rsa"
+
+print("Installing Replication SSH Keys from Secret Manager in: " +
+      GERRIT_REPLICATION_SSH_KEYS)
+
+if not os.path.exists(GERRIT_SSH_DIRECTORY):
+    os.mkdir(GERRIT_SSH_DIRECTORY)
+    os.chmod(GERRIT_SSH_DIRECTORY, 0o700)
+
+with open(GERRIT_REPLICATION_SSH_KEYS, 'w', encoding='utf-8') as f:
+    f.write(get_secret(GERRIT_KEY_PREFIX + 'replication_user_id_rsa'))
+os.chmod(GERRIT_REPLICATION_SSH_KEYS, 0o400)
+
 file_loader = FileSystemLoader(GERRIT_CONFIG_DIRECTORY)
 env = Environment(loader=file_loader)
 
@@ -91,10 +115,10 @@ with open(GERRIT_CONFIG_DIRECTORY + "secure.config", 'w',
         SMTP_PASSWORD=get_secret(GERRIT_KEY_PREFIX + "smtpPassword"))
     )
 
+BASE_CONFIG_DIR = "/tmp"
 config = configparser.ConfigParser()
-config.read('/tmp/gerrit.setup')
-print("Setting Gerrit config in '" + GERRIT_CONFIG_DIRECTORY +
-      "gerrit.config'")
+config.read(BASE_CONFIG_DIR + '/gerrit.setup')
+print("Setting Gerrit config in '" + GERRIT_CONFIG_DIRECTORY + "gerrit.config'")
 template = env.get_template("gerrit.config.template")
 with open(GERRIT_CONFIG_DIRECTORY + "gerrit.config", 'w',
           encoding='utf-8') as f:
@@ -107,3 +131,15 @@ with open(GERRIT_CONFIG_DIRECTORY + "gerrit.config", 'w',
         SMTP_USER=config['smtp']["user"],
         SMTP_DOMAIN=config['smtp']["domain"])
     )
+
+containerSlave = os.getenv('CONTAINER_SLAVE')
+if (not containerSlave):
+    print("Setting Replication config in '" +
+          GERRIT_CONFIG_DIRECTORY + "replication.config'")
+    config.read(BASE_CONFIG_DIR + '/replication.setup')
+    template = env.get_template("replication.config.template")
+    with open(GERRIT_CONFIG_DIRECTORY + "replication.config", 'w', encoding='utf-8') as f:
+        f.write(template.render(
+                SLAVE_1_URL=config['remote-slave']['url'],
+                SLAVE_1_AMDIN_URL=config['remote-slave']['adminUrl']
+                ))
