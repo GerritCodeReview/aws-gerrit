@@ -1,6 +1,8 @@
 setup.env
 gerrit.setup
+replication.setup
 gerrit/plugins/*.jar
 gerrit/etc/*key*
 gerrit.config
 secure.config
+replication.config
