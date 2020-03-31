@@ -1,0 +1,59 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: A stack for the Gerrit service Route53 routing.
+Parameters:
+  MasterServiceStackName:
+      Description: Stack name of the ECS Master Gerrit service
+      Type: String
+      Default: gerrit-service-master
+  SlaveServiceStackName:
+      Description: Stack name of the ECS Slave Gerrit service
+      Type: String
+      Default: gerrit-service-slave
+
+Resources:
+  MasterDnsRecord:
+      Type: AWS::Route53::RecordSet
+      Properties:
+        Name:
+          !Join
+            - '.'
+            - - Fn::ImportValue: !Join [':', [!Ref 'MasterServiceStackName', 'Subdomain']]
+              - Fn::ImportValue: !Join [':', [!Ref 'MasterServiceStackName', 'HostedZoneName']]
+        HostedZoneName:
+          !Join
+            - ''
+            - - Fn::ImportValue: !Join [':', [!Ref 'MasterServiceStackName', 'HostedZoneName']]
+              - '.'
+        Comment: DNS name for Gerrit Master.
+        Type: A
+        AliasTarget:
+          DNSName:
+            Fn::ImportValue:
+              !Join [':', [!Ref 'MasterServiceStackName', 'PublicLoadBalancerDNSName']]
+          HostedZoneId:
+            Fn::ImportValue:
+              !Join [':', [!Ref 'MasterServiceStackName', 'CanonicalHostedZoneID']]
+          EvaluateTargetHealth: False
+  SlaveDnsRecord:
+      Type: AWS::Route53::RecordSet
+      Properties:
+        Name:
+          !Join
+            - '.'
+            - - Fn::ImportValue: !Join [':', [!Ref 'SlaveServiceStackName', 'Subdomain']]
+              - Fn::ImportValue: !Join [':', [!Ref 'SlaveServiceStackName', 'HostedZoneName']]
+        HostedZoneName:
+          !Join
+            - ''
+            - - Fn::ImportValue: !Join [':', [!Ref 'SlaveServiceStackName', 'HostedZoneName']]
+              - '.'
+        Comment: DNS name for Gerrit Slave.
+        Type: A
+        AliasTarget:
+          DNSName:
+            Fn::ImportValue:
+              !Join [':', [!Ref 'SlaveServiceStackName', 'PublicLoadBalancerDNSName']]
+          HostedZoneId:
+            Fn::ImportValue:
+              !Join [':', [!Ref 'SlaveServiceStackName', 'CanonicalHostedZoneID']]
+          EvaluateTargetHealth: False

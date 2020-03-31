@@ -1,0 +1,3 @@
+[remote-slave-1]
+  url = git://replication.internal:29500/${name}.git
+  adminUrl = ssh://gerrit@replication.internal:1022/var/gerrit/git/${name}.git
