@@ -1,4 +1,4 @@
-FROM gerritcodereview/gerrit:latest
+FROM gerritcodereview/gerrit:3.1.4-centos7
 
 USER root
 
@@ -6,9 +6,12 @@ RUN yum install -y https://centos7.iuscommunity.org/ius-release.rpm \
     && yum update -y \
     && yum install -y python36u python36u-libs python36u-devel python36u-pip
 
+COPY --chown=gerrit:gerrit ssh-config /var/gerrit/.ssh/config
+
 # Installing scripts to get SSH Keys from Secret Manager
 COPY --chown=gerrit:gerrit requirements.txt /tmp
 COPY --chown=gerrit:gerrit gerrit.setup /tmp
+COPY --chown=gerrit:gerrit replication.setup /tmp
 COPY --chown=gerrit:gerrit setup_gerrit.py /tmp
 RUN chmod +x /tmp/setup_gerrit.py \
     && pip3 install -r /tmp/requirements.txt
