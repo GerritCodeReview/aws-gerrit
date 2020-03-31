@@ -1,14 +1,15 @@
-# Gerrit Single Master
+# Gerrit Master-Slave
 
 This set of Templates provide all the components to deploy a single Gerrit master
-in ECS
+and a single Gerrit slave in ECS
 
 ## Architecture
 
-Two templates are provided in this example:
+Four templates are provided in this example:
 * `cf-cluster`: define the ECS cluster and the networking stack
-* `cf-service`: defined the service stack running Gerrit
-* `cf-dns-route`: defined the DNS routing for the service
+* `cf-service-master`: define the service stack running Gerrit master
+* `cf-service-slave`: define the service stack running Gerrit slave
+* `cf-dns-route`: define the DNS routing for the service
 
 ### Networking
 
@@ -18,10 +19,15 @@ Two templates are provided in this example:
 * 1 public Subnets:
  * CIDR: 10.0.0.0/24
 * 1 public NLB exposing:
- * HTTP on port 8080
- * SSH on port 29418
+ * Gerrit master HTTP on port 8080
+ * Gerrit master SSH on port 29418
+* 1 public NLB exposing:
+ * Gerrit slave HTTP on port 8081
+ * Gerrit slave SSH on port 39418
+ * SSH agent on port 1022
+ * Git daemon on port 9418
 * 1 Internet Gateway
-* 1 type A alias DNS entry
+* 2 type A alias DNS entry, for Gerrit master and slave
 * A SSL certificate available in [AWS Certificate Manager](https://aws.amazon.com/certificate-manager/)
 
 ### Data persistency
@@ -48,11 +54,6 @@ Two templates are provided in this example:
 
 ## How to run it
 
-You can find [on GerritForge's YouTube Channel](https://www.youtube.com/watch?v=zr2zCSuclIU) a
-step-by-step guide on how to setup you Gerrit Code Review in AWS.
-
-However, keep reading this guide for a more exhaustive explanation.
-
 ### Setup
 
 The `setup.env.template` is an example of setup file for the creation of the stacks.
@@ -66,10 +67,12 @@ This is the list of available parameters:
   [prerequisites](#prerequisites) section for more details.
 * `SSL_CERTIFICATE_ARN`: Mandatory. ARN of the SSL Certificate.
 * `CLUSTER_STACK_NAME`: Optional. Name of the cluster stack. `gerrit-cluster` by default.
-* `SERVICE_STACK_NAME`: Optional. Name of the service stack. `gerrit-service` by default.
+* `SERVICE_MASTER_STACK_NAME`: Optional. Name of the master service stack. `gerrit-service-master` by default.
+* `SERVICE_SLAVE_STACK_NAME`: Optional. Name of the slave service stack. `gerrit-service-slave` by default.
 * `DNS_ROUTING_STACK_NAME`: Optional. Name of the DNS routing stack. `gerrit-dns-routing` by default.
 * `HOSTED_ZONE_NAME`: Optional. Name of the hosted zone. `mycompany.com` by default.
-* `SUBDOMAIN`: Optional. Name of the sub domain. `gerrit-master-demo` by default.
+* `MASTER_SUBDOMAIN`: Optional. Name of the master sub domain. `gerrit-master-demo` by default.
+* `SLAVE_SUBDOMAIN`: Optional. Name of the slave sub domain. `gerrit-slave-demo` by default.
 
 ### Prerequisites
 
@@ -77,7 +80,9 @@ As a prerequisite to run this stack, you will need:
 * a registered and correctly configured domain in
 [Route53](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/getting-started.html)
 * to [publish the Docker image](#publish-custom-gerrit-docker-image) with your
-Gerrit configuration
+Gerrit configuration in AWS ECR
+* to [publish the SSH Agent Docker image](#publish-ssh-agent) in AWS ECR
+* to [publish the Git Daemon Docker image](#publish-git-daemon) in AWS ECR
 * to [add Gerrit secrets](#add-gerrit-secrets-in-aws-secret-manager) in AWS Secret
 Manager
 * an SSL Certificate in AWS Certificate Manager (you can find more information on
@@ -104,6 +109,10 @@ The SSH keys you will need to add are the one usually created and used by Gerrit
 * ssh_host_ed25519_key.pub
 * ssh_host_rsa_key
 * ssh_host_rsa_key.pub
+
+Plus a key used by the replication plugin:
+* replication_user_id_rsa
+* replication_user_id_rsa.pub
 
 You will have to create the keys and place them in a directory.
 
@@ -141,6 +150,18 @@ upload them to AWS Secret Manager:
 * Add the plugins you want to install in `./gerrit/plugins`
 * Publish the image: `make gerrit-publish`
 
+### Publish SSH Agent
+
+* Create the repository in the Docker registry:
+  `aws ecr create-repository --repository-name aws-gerrit/git-ssh`
+* Publish the image: `make git-ssh-publish`
+
+### Publish Git Daemon
+
+* Create the repository in the Docker registry:
+  `aws ecr create-repository --repository-name aws-gerrit/git-daemon`
+* Publish the image: `make git-daemon-publish`
+
 ### Getting Started
 
 * Create a key pair to access the EC2 instances in the cluster:
@@ -154,11 +175,15 @@ aws ec2 create-key-pair --key-name gerrit-cluster-keys \
 for troubleshooting purposes. Store them in a `pem` file to use when ssh-ing into your
 instances as follow: `ssh -i yourKeyPairs.pem <ec2_instance_ip>`*
 
-* Create the cluster, service and DNS routing stacks:
+* Create the cluster, services and DNS routing stacks:
 
 ```
 make create-all
 ```
+
+The slave will start with 5 min delay to allow the replication from master of `All-Users`
+and `All-Projects` to happen.
+You can now check in the slave logs to see when the slave is up and running.
 
 ### Cleaning up
 
@@ -166,11 +191,34 @@ make create-all
 make delete-all
 ```
 
-### Access your Gerrit
+### Access your Gerrit instances
 
-You Gerrit instance will be available at this URL: `http://<HOSTED_ZONE_NAME>.<SUBDOMAIN>`.
+Get the URL of your Gerrit master instance this way:
 
-The available ports are `8080` for HTTP and `29418` for SSH.
+```
+aws cloudformation describe-stacks \
+  --stack-name <SERVICE_MASTER_STACK_NAME> \
+  | grep -A1 '"OutputKey": "CanonicalWebUrl"' \
+  | grep OutputValue \
+  | cut -d'"' -f 4
+```
+
+Similarly for the slave:
+```
+aws cloudformation describe-stacks \
+  --stack-name <SERVICE_SLAVE_STACK_NAME> \
+  | grep -A1 '"OutputKey": "CanonicalWebUrl"' \
+  | grep OutputValue \
+  | cut -d'"' -f 4
+```
+
+Gerrit master instance ports:
+* HTTP `8080`
+* SSH `29418`
+
+Gerrit slave instance ports:
+* HTTP `9080`
+* SSH `39418`
 
 # External services
 
