@@ -1,4 +1,4 @@
-include ../setup.env
+include ../$(RECIPE)/setup.env
 
 docker-registry-login:
 	aws ecr get-login-password --region $(AWS_REGION) \

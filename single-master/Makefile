@@ -106,4 +106,4 @@ delete-all: delete-dns-routing wait-for-dns-routing-deletion \
 						delete-cluster wait-for-cluster-deletion \
 
 gerrit-publish:
-	$(MAKE) -C gerrit gerrit-publish
+	$(MAKE) -C ../gerrit gerrit-publish RECIPE=single-master
