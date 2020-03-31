@@ -18,8 +18,15 @@
   accountFullName = displayName
   accountEmailAddress = mail
   groupBase = {{ LDAP_GROUP_BASE }}
+
 [sendemail]
-	smtpServer = localhost
+  smtpServer = {{ SMTP_SERVER  }}
+  smtpEncryption = ssl
+  sslVerify = false
+  smtpUser = {{ SMTP_USER }}
+  enable = true
+  from = ${user} (Gerrit) <gerrit@{{ SMTP_DOMAIN }}>
+
 [sshd]
 	listenAddress = *:29418
 [httpd]

@@ -78,7 +78,8 @@ template = env.get_template("secure.config.template")
 with open(GERRIT_CONFIG_DIRECTORY + "secure.config", 'w', encoding = 'utf-8') as f:
     f.write(template.render(
                 REGISTER_EMAIL_PRIVATE_KEY=get_secret(GERRIT_KEY_PREFIX + "registerEmailPrivateKey"),
-                LDAP_PASSWORD=get_secret(GERRIT_KEY_PREFIX + "ldapPassword"))
+                LDAP_PASSWORD=get_secret(GERRIT_KEY_PREFIX + "ldapPassword"),
+                SMTP_PASSWORD=get_secret(GERRIT_KEY_PREFIX + "smtpPassword"))
             )
 
 config = configparser.ConfigParser()
@@ -90,5 +91,8 @@ with open(GERRIT_CONFIG_DIRECTORY + "gerrit.config", 'w', encoding = 'utf-8') as
                 LDAP_SERVER=config['ldap']['server'],
                 LDAP_USERNAME=config['ldap']['username'],
                 LDAP_ACCOUNT_BASE=config['ldap']['accountBase'],
-                LDAP_GROUP_BASE=config['ldap']['groupBase'])
+                LDAP_GROUP_BASE=config['ldap']['groupBase'],
+                SMTP_SERVER=config['smtp']["server"],
+                SMTP_USER=config['smtp']["user"],
+                SMTP_DOMAIN=config['smtp']["domain"])
             )

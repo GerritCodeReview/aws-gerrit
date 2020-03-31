@@ -3,3 +3,10 @@ server = ldap://yourldap.yourcompany.com
 username = cn=admin,dc=example,dc=org
 accountBase = dc=example,dc=org
 groupBase = dc=example,dc=org
+
+[smtp]
+server = yoursmtp.yourcompany.com
+user = smtpuser
+password =  smtppassword
+domain = yourcompany.com
+

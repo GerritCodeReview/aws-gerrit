@@ -55,3 +55,9 @@ echo "Adding LDAP password..."
 aws secretsmanager create-secret --name ${KEY_PREFIX}_ldapPassword \
     --description "LDAP password" \
     --secret-string file://$SECRETS_DIRECTORY/ldapPassword
+
+echo "Adding SMTP password..."
+
+aws secretsmanager create-secret --name ${KEY_PREFIX}_smtpPassword \
+    --description "SMTP password" \
+    --secret-string file://$SECRETS_DIRECTORY/smtpPassword
