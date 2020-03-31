@@ -30,4 +30,5 @@ To manage your AWS services via command line you will need to install
 
 ## Templates
 
-* [Standalone Gerrit master sandbox without authentication](/single-master/README.md)
+* [Standalone Gerrit master sandbox with LDAP authentication](/single-master/README.md)
+* [Gerrit master and slave sandbox with LDAP authentication](/master-slave/README.md)
