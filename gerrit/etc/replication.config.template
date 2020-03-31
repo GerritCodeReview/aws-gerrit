@@ -1,0 +1,21 @@
+[replication]
+  lockErrorMaxRetries = 5
+  maxRetries = 5
+
+[gerrit]
+  autoReload = true
+  replicateOnStartup = false
+
+[remote "slave-1"]
+  url = {{ SLAVE_1_URL }}
+  adminUrl = {{ SLAVE_1_AMDIN_URL }}
+  mirror = true
+  push = +refs/*:refs/*
+  threads = 10
+  createMissingRepositories = true
+  replicateProjectDeletions = true
+  replicateHiddenProjects = true
+  timeout = 60
+  rescheduleDelay = 5
+  replicationDelay = 5
+  drainQueueAttempts = 10
