@@ -1,0 +1,424 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Deploy a service into an ECS cluster behind a public load balancer.
+Parameters:
+  GerritServiceName:
+      Type: String
+      Default: gerrit-slave
+  GitDaemonServiceName:
+      Type: String
+      Default: gerrit-git-daemon
+  GitSSHServiceName:
+      Type: String
+      Default: gerrit-git-ssh
+  ClusterStackName:
+      Description: Stack name of the ECS cluster to deply the serivces
+      Type: String
+      Default: gerrit-cluster
+  EnvironmentName:
+      Description: An environment name used to build the log stream names
+      Type: String
+      Default: test
+  GerritDockerImage:
+      Description: Gerrit official Docker image
+      Type: String
+      Default: aws-gerrit/gerrit:latest
+  GitDaemonDockerImage:
+      Description: Git daemon Docker image
+      Type: String
+      Default: aws-gerrit/git-daemon:latest
+  GitSSHDockerImage:
+      Description: Git SSH Docker image
+      Type: String
+      Default: aws-gerrit/git-ssh:latest
+  DockerRegistryUrl:
+      Description: Docker registry URL
+      Type: String
+  DesiredCount:
+      Description: How many instances of this task should we run across our cluster?
+      Type: Number
+      Default: 1
+  HTTPHostPort:
+      Description: Gerrit Host HTTP port
+      Type: Number
+      Default: 9080
+  HTTPContainePort:
+      Description: Gerrit Container HTTP port
+      Type: Number
+      Default: 8080
+  HTTPSPort:
+      Description: Gerrit HTTPS port
+      Type: Number
+      Default: 443
+  SSHHostPort:
+      Description: Gerrit SSH port
+      Type: Number
+      Default: 39418
+  SSHContainerPort:
+      Description: Gerrit SSH port
+      Type: Number
+      Default: 29418
+  GitPort:
+      Description: Git daemon port
+      Type: Number
+      Default: 9418
+  GitSSHPort:
+      Description: Git ssh port
+      Type: Number
+      Default: 1022
+  GitSSHContainerPort:
+      Description: Git ssh port
+      Type: Number
+      Default: 22
+  CertificateArn:
+      Description: SSL Certificates ARN
+      Type: String
+  HostedZoneName:
+      Description: The route53 HostedZoneName.
+      Type: String
+  Subdomain:
+      Description: The subdomain of the Gerrit cluster
+      Type: String
+      Default: gerrit-slave-demo
+  GerritGitVolume:
+      Description: Gerrit git volume name
+      Type: String
+      Default: gerrit-git-slave
+  GerritDataVolume:
+      Description: Gerrit data volume name
+      Type: String
+      Default: gerrit-data-slave
+  GerritCacheVolume:
+      Description: Gerrit cache volume name
+      Type: String
+      Default: gerrit-cache-slave
+  GerritDbVolume:
+      Description: Gerrit db volume name
+      Type: String
+      Default: gerrit-db-slave
+  GerritLogsVolume:
+      Description: Gerrit logs volume name
+      Type: String
+      Default: gerrit-logs-slave
+
+Resources:
+    Service:
+        Type: AWS::ECS::Service
+        DependsOn:
+          - HTTPListener
+          - SSHListener
+          - GitListener
+          - GitSSHListener
+        Properties:
+            Cluster:
+              Fn::ImportValue:
+                  !Join [':', [!Ref 'ClusterStackName', 'ClusterName']]
+            DesiredCount: !Ref DesiredCount
+            TaskDefinition: !Ref TaskDefinition
+            # Grace period = sleep time before starting slave (5min) + startup time (10s)
+            HealthCheckGracePeriodSeconds: 310
+            LoadBalancers:
+                - ContainerName: !Ref GerritServiceName
+                  ContainerPort: !Ref HTTPContainePort
+                  TargetGroupArn: !Ref HTTPTargetGroup
+                - ContainerName: !Ref GerritServiceName
+                  ContainerPort: !Ref SSHContainerPort
+                  TargetGroupArn: !Ref SSHTargetGroup
+                - ContainerName: !Ref GitDaemonServiceName
+                  ContainerPort: !Ref GitPort
+                  TargetGroupArn: !Ref GitTargetGroup
+                - ContainerName: !Ref GitSSHServiceName
+                  ContainerPort: !Ref GitSSHContainerPort
+                  TargetGroupArn: !Ref GitSSHTargetGroup
+
+    TaskDefinition:
+        Type: AWS::ECS::TaskDefinition
+        Properties:
+            Family: !Join ['', [!Ref GerritServiceName, TaskDefinition]]
+            TaskRoleArn: !Ref ECSTaskExecutionRole
+            ExecutionRoleArn: !Ref ECSTaskExecutionRole
+            NetworkMode: bridge
+            ContainerDefinitions:
+                - Name: !Ref GerritServiceName
+                  Essential: true
+                  Image: !Sub '${DockerRegistryUrl}/${GerritDockerImage}'
+                  Environment:
+                    - Name: CANONICAL_WEB_URL
+                      Value: !Sub 'https://${Subdomain}.${HostedZoneName}'
+                    - Name: HTTPD_LISTEN_URL
+                      Value: !Sub 'proxy-https://*:${HTTPHostPort}/'
+                    - Name: CONTAINER_SLAVE
+                      Value: true
+                    - Name: AWS_REGION
+                      Value: !Ref AWS::Region
+                  MountPoints:
+                    - SourceVolume: !Ref GerritGitVolume
+                      ContainerPath: /var/gerrit/git
+                    - SourceVolume: !Ref GerritDataVolume
+                      ContainerPath: /var/gerrit/data
+                    - SourceVolume: !Ref GerritCacheVolume
+                      ContainerPath: /var/gerrit/cache
+                    - SourceVolume: !Ref GerritDbVolume
+                      ContainerPath: /var/gerrit/db
+                    - SourceVolume: !Ref GerritLogsVolume
+                      ContainerPath: /var/gerrit/logs
+                  Cpu: 1024
+                  Memory: 2048
+                  PortMappings:
+                    - ContainerPort: !Ref HTTPContainePort
+                      HostPort: !Ref HTTPHostPort
+                      Protocol: tcp
+                    - ContainerPort: !Ref SSHContainerPort
+                      HostPort: !Ref SSHHostPort
+                      Protocol: tcp
+                  LogConfiguration:
+                    LogDriver: awslogs
+                    Options:
+                        awslogs-group: !Ref ClusterStackName
+                        awslogs-region: !Ref AWS::Region
+                        awslogs-stream-prefix: !Ref EnvironmentName
+                - Name: !Ref GitDaemonServiceName
+                  Essential: true
+                  Image: !Sub '${DockerRegistryUrl}/${GitDaemonDockerImage}'
+                  MountPoints:
+                    - SourceVolume: !Ref GerritGitVolume
+                      ContainerPath: /var/gerrit/git
+                  Cpu: 256
+                  Memory: 512
+                  PortMappings:
+                    - ContainerPort: !Ref GitPort
+                      HostPort: !Ref GitPort
+                      Protocol: tcp
+                  LogConfiguration:
+                    LogDriver: awslogs
+                    Options:
+                        awslogs-group: !Ref ClusterStackName
+                        awslogs-region: !Ref AWS::Region
+                        awslogs-stream-prefix: !Ref EnvironmentName
+                - Name: !Ref GitSSHServiceName
+                  Essential: true
+                  Image: !Sub '${DockerRegistryUrl}/${GitSSHDockerImage}'
+                  Environment:
+                    - Name: TZ
+                      Value: US/Pacific
+                    - Name: SSH_USERS
+                      Value: gerrit:1000:1000
+                    - Name: AWS_REGION
+                      Value: !Ref AWS::Region
+                  MountPoints:
+                    - SourceVolume: !Ref GerritGitVolume
+                      ContainerPath: /var/gerrit/git
+                  Cpu: 1024
+                  Memory: 2048
+                  PortMappings:
+                    - ContainerPort: !Ref GitSSHContainerPort
+                      HostPort: !Ref GitSSHPort
+                      Protocol: tcp
+                  LogConfiguration:
+                    LogDriver: awslogs
+                    Options:
+                        awslogs-group: !Ref ClusterStackName
+                        awslogs-region: !Ref AWS::Region
+                        awslogs-stream-prefix: !Ref EnvironmentName
+            Volumes:
+              - Name: !Ref 'GerritDbVolume'
+                DockerVolumeConfiguration:
+                  Scope: shared
+                  Autoprovision: true
+                  Driver: local
+                  Labels:
+                    gerrit-db: !Join ['-', [!Ref EnvironmentName, !Ref GerritDbVolume]]
+              - Name: !Ref 'GerritGitVolume'
+                DockerVolumeConfiguration:
+                  Scope: shared
+                  Autoprovision: true
+                  Driver: local
+                  Labels:
+                    gerrit-git: !Join ['-', [!Ref EnvironmentName, !Ref GerritGitVolume]]
+              - Name: !Ref 'GerritDataVolume'
+                DockerVolumeConfiguration:
+                  Scope: shared
+                  Autoprovision: true
+                  Driver: local
+                  Labels:
+                    gerrit-data: !Join ['-', [!Ref EnvironmentName, !Ref GerritDataVolume]]
+              - Name: !Ref 'GerritCacheVolume'
+                DockerVolumeConfiguration:
+                  Scope: shared
+                  Autoprovision: true
+                  Driver: local
+                  Labels:
+                    gerrit-cache: !Join ['-', [!Ref EnvironmentName, !Ref GerritCacheVolume]]
+              - Name: !Ref 'GerritLogsVolume'
+                DockerVolumeConfiguration:
+                  Scope: shared
+                  Autoprovision: true
+                  Driver: local
+                  Labels:
+                    gerrit-logs: !Join ['-', [!Ref EnvironmentName, !Ref GerritLogsVolume]]
+
+    LoadBalancer:
+        Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+        Properties:
+            Type: network
+            Scheme: internet-facing
+            Subnets:
+              - Fn::ImportValue:
+                  !Join [':', [!Ref 'ClusterStackName', 'PublicSubnetOne']]
+            Tags:
+                - Key: Name
+                  Value: !Join ['-', [!Ref 'EnvironmentName', !Ref 'GerritServiceName', 'nlb']]
+
+    HTTPTargetGroup:
+        Type: AWS::ElasticLoadBalancingV2::TargetGroup
+        DependsOn: LoadBalancer
+        Properties:
+            VpcId:
+              Fn::ImportValue:
+                  !Join [':', [!Ref 'ClusterStackName', 'VPCId']]
+            Port: !Ref HTTPHostPort
+            Protocol: TCP
+            HealthCheckPort: !Ref HTTPContainePort
+
+    HTTPListener:
+        Type: AWS::ElasticLoadBalancingV2::Listener
+        DependsOn: LoadBalancer
+        Properties:
+            Certificates:
+              - CertificateArn: !Ref CertificateArn
+            DefaultActions:
+            - Type: forward
+              TargetGroupArn: !Ref HTTPTargetGroup
+            LoadBalancerArn: !Ref LoadBalancer
+            Port: !Ref HTTPSPort
+            Protocol: TLS
+
+    SSHTargetGroup:
+        Type: AWS::ElasticLoadBalancingV2::TargetGroup
+        DependsOn: LoadBalancer
+        Properties:
+            VpcId:
+              Fn::ImportValue:
+                  !Join [':', [!Ref 'ClusterStackName', 'VPCId']]
+            Port: !Ref SSHHostPort
+            Protocol: TCP
+            HealthCheckPort: !Ref SSHContainerPort
+
+    SSHListener:
+        Type: AWS::ElasticLoadBalancingV2::Listener
+        DependsOn: LoadBalancer
+        Properties:
+            DefaultActions:
+            - Type: forward
+              TargetGroupArn: !Ref SSHTargetGroup
+            LoadBalancerArn: !Ref LoadBalancer
+            Port: !Ref SSHHostPort
+            Protocol: TCP
+
+    GitTargetGroup:
+        Type: AWS::ElasticLoadBalancingV2::TargetGroup
+        DependsOn: LoadBalancer
+        Properties:
+            VpcId:
+              Fn::ImportValue:
+                  !Join [':', [!Ref 'ClusterStackName', 'VPCId']]
+            Port: !Ref GitPort
+            Protocol: TCP
+
+    GitListener:
+        Type: AWS::ElasticLoadBalancingV2::Listener
+        DependsOn: LoadBalancer
+        Properties:
+            DefaultActions:
+            - Type: forward
+              TargetGroupArn: !Ref GitTargetGroup
+            LoadBalancerArn: !Ref LoadBalancer
+            Port: !Ref GitPort
+            Protocol: TCP
+
+    GitSSHTargetGroup:
+        Type: AWS::ElasticLoadBalancingV2::TargetGroup
+        DependsOn: LoadBalancer
+        Properties:
+            VpcId:
+              Fn::ImportValue:
+                  !Join [':', [!Ref 'ClusterStackName', 'VPCId']]
+            Port: !Ref GitSSHPort
+            Protocol: TCP
+
+    GitSSHListener:
+        Type: AWS::ElasticLoadBalancingV2::Listener
+        DependsOn: LoadBalancer
+        Properties:
+            DefaultActions:
+            - Type: forward
+              TargetGroupArn: !Ref GitSSHTargetGroup
+            LoadBalancerArn: !Ref LoadBalancer
+            Port: !Ref GitSSHPort
+            Protocol: TCP
+
+    # This is a role which is used by the ECS tasks themselves.
+    ECSTaskExecutionRole:
+      Type: AWS::IAM::Role
+      Properties:
+        AssumeRolePolicyDocument:
+          Statement:
+          - Effect: Allow
+            Principal:
+              Service: [ecs-tasks.amazonaws.com]
+            Action: ['sts:AssumeRole']
+        Path: /
+        Policies:
+          - PolicyName: AmazonECSTaskExecutionRolePolicy
+            PolicyDocument:
+              Statement:
+              - Effect: Allow
+                Action:
+                  # Allow the ECS Tasks to download images from ECR
+                  - 'ecr:GetAuthorizationToken'
+                  - 'ecr:BatchCheckLayerAvailability'
+                  - 'ecr:GetDownloadUrlForLayer'
+                  - 'ecr:BatchGetImage'
+                  # Allow the ECS tasks to upload logs to CloudWatch
+                  - 'logs:CreateLogStream'
+                  - 'logs:PutLogEvents'
+                Resource: '*'
+          - PolicyName: AmazonECSTaskSecretManagerRolePolicy
+            PolicyDocument:
+              Statement:
+              - Effect: Allow
+                Action:
+                  # Allow the ECS Tasks to get SSH Keys
+                  - 'secretsmanager:GetSecretValue'
+                  - 'kms:Decrypt'
+                Resource: '*'
+Outputs:
+  PublicLoadBalancerDNSName:
+    Description: The DNS name of the external load balancer
+    Value: !GetAtt 'LoadBalancer.DNSName'
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'PublicLoadBalancerDNSName' ] ]
+  CanonicalHostedZoneID:
+    Description: Canonical Hosted Zone ID
+    Value: !GetAtt 'LoadBalancer.CanonicalHostedZoneID'
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'CanonicalHostedZoneID' ] ]
+  PublicLoadBalancerUrl:
+    Description: The url of the external load balancer
+    Value: !Join ['', ['http://', !GetAtt 'LoadBalancer.DNSName']]
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'PublicLoadBalancerUrl' ] ]
+  HostedZoneName:
+    Description: Route53 Hosted Zone name
+    Value: !Ref HostedZoneName
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'HostedZoneName' ] ]
+  Subdomain:
+    Description: Service DNS subdomain
+    Value: !Ref Subdomain
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'Subdomain' ] ]
+  CanonicalWebUrl:
+    Description: Canonical Web URL
+    Value: !Sub 'https://${Subdomain}.${HostedZoneName}'
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'CanonicalWebUrl' ] ]
