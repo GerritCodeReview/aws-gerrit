@@ -48,6 +48,11 @@ Two templates are provided in this example:
 
 ## How to run it
 
+You can find [on GerritForge's YouTube Channel](https://www.youtube.com/watch?v=zr2zCSuclIU) a
+step-by-step guide on how to setup you Gerrit Code Review in AWS.
+
+However, keep reading this guide for a more exhaustive explanation.
+
 ### Setup
 
 The `setup.env.template` is an example of setup file for the creation of the stacks.
