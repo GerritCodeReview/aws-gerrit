@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca24705e_e14924a7",
+        "filename": "master-slave/git-ssh/requirements.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1011123
+      },
+      "writtenOn": "2020-04-05T00:48:22Z",
+      "side": 1,
+      "message": "Can we use pipenv to manage requirements?  Not necessarily in this change, maybe as a followup",
+      "revId": "48de0ef8f5b35dfb8b717e9b58ca2b928fe1fff5",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
