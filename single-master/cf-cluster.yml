@@ -29,6 +29,10 @@ Parameters:
     Type: String
     Default: gerrit-cluster-keys
     Description: EC2 key pair name the cluter's instances
+  EnvironmentName:
+      Description: An environment name that will be prefixed to resource names
+      Type: String
+      Default: test
 Mappings:
   # Hard values for the subnet masks. These masks define
   # the range of internal IP addresses that can be assigned.
@@ -102,6 +106,12 @@ Resources:
           - CidrIp: 0.0.0.0/0
             IpProtocol: -1
 
+  CloudWatchLogsGroup:
+      Type: AWS::Logs::LogGroup
+      Properties:
+          LogGroupName: !Ref AWS::StackName
+          RetentionInDays: 14
+
   # Autoscaling group. This launches the actual EC2 instances that will register
   # themselves as members of the cluster, and run the docker containers.
   ECSAutoScalingGroup:
@@ -134,6 +144,43 @@ Resources:
           # Make sure latest version of the helper scripts are installed as per recommendation:
           # https://github.com/awsdocs/aws-cloudformation-user-guide/blob/master/doc_source/cfn-helper-scripts-reference.md#using-the-latest-version
           yum install -y aws-cfn-bootstrap
+          # Get the CloudWatch Logs agent
+          echo -e "
+            {\"logs\":
+              {\"logs_collected\":
+                {\"files\":
+                  {\"collect_list\":
+                    [
+                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs/_data/httpd_log\",
+                      \"log_group_name\": \"${AWS::StackName}\",
+                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/httpd_log\",
+                      \"timezone\": \"UTC\"
+                      },
+                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs/_data/sshd_log\",
+                      \"log_group_name\": \"${AWS::StackName}\",
+                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/sshd_log\",
+                      \"timezone\": \"UTC\"
+                      },
+                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs/_data/gc_log\",
+                      \"log_group_name\": \"${AWS::StackName}\",
+                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/gc_log\",
+                      \"timezone\": \"UTC\"
+                      },
+                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs/_data/audit_log\",
+                      \"log_group_name\": \"${AWS::StackName}\",
+                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/audit_log\",
+                      \"timezone\": \"UTC\"
+                      }
+                    ]
+                  }
+                }
+              }
+            }" >> /home/ec2-user/gerritlogsaccess.json
+          # Install the CloudWatch Logs agent
+          yum install -y wget
+          wget https://s3.amazonaws.com/amazoncloudwatch-agent/centos/amd64/latest/amazon-cloudwatch-agent.rpm
+          rpm -U ./amazon-cloudwatch-agent.rpm
+          /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -c file:/home/ec2-user/gerritlogsaccess.json -s
           # Signal to CloudFormation aws-cfn-bootstrap has been correctly updated
           /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource ECSAutoScalingGroup --region ${AWS::Region}
   AutoscalingRole:

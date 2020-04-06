@@ -57,6 +57,10 @@ Parameters:
       Description: Gerrit index volume name
       Type: String
       Default: gerrit-index
+  GerritLogsVolume:
+      Description: Gerrit logs volume name
+      Type: String
+      Default: gerrit-logs
   GerritCacheVolume:
       Description: Gerrit cache volume name
       Type: String
@@ -115,6 +119,8 @@ Resources:
                       ContainerPath: /var/gerrit/cache
                     - SourceVolume: !Ref GerritDbVolume
                       ContainerPath: /var/gerrit/db
+                    - SourceVolume: !Ref GerritLogsVolume
+                      ContainerPath: /var/gerrit/logs
                   Cpu: 1024
                   Memory: 2048
                   PortMappings:
@@ -127,7 +133,7 @@ Resources:
                   LogConfiguration:
                     LogDriver: awslogs
                     Options:
-                        awslogs-group: !Ref AWS::StackName
+                        awslogs-group: !Ref ClusterStackName
                         awslogs-region: !Ref AWS::Region
                         awslogs-stream-prefix: !Ref EnvironmentName
             Volumes:
@@ -166,11 +172,13 @@ Resources:
                   Driver: local
                   Labels:
                     gerrit-index: !Join ['-', [!Ref EnvironmentName, !Ref GerritIndexVolume]]
-    CloudWatchLogsGroup:
-        Type: AWS::Logs::LogGroup
-        Properties:
-            LogGroupName: !Ref AWS::StackName
-            RetentionInDays: 14
+              - Name: !Ref 'GerritLogsVolume'
+                DockerVolumeConfiguration:
+                  Scope: shared
+                  Autoprovision: true
+                  Driver: local
+                  Labels:
+                    gerrit-logs: !Join ['-', [!Ref EnvironmentName, !Ref GerritLogsVolume]]
 
     LoadBalancer:
         Type: AWS::ElasticLoadBalancingV2::LoadBalancer
