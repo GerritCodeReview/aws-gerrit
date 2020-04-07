@@ -140,6 +140,30 @@
       "revId": "a7ee08bf7252e7e5c1c8a5dea7155b2e4131cb4f",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aed0376b_f0996c21",
+        "filename": "single-master/cf-service.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-04-07T10:30:00Z",
+      "side": 1,
+      "message": "I want to keep all the logs together, here we are specifying logs group, in cf-services AWS::StackName is gerrit-service but in cf-cluster(where rest of the logs is setup) AWS:StackName is gerrit-cluster. To keep all logs in the same group I\u0027m using ClusterStackName which is gerrit-cluster",
+      "parentUuid": "3415d3bc_f8e77b22",
+      "range": {
+        "startLine": 136,
+        "startChar": 44,
+        "endLine": 136,
+        "endChar": 60
+      },
+      "revId": "a7ee08bf7252e7e5c1c8a5dea7155b2e4131cb4f",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
     }
   ]
 }
