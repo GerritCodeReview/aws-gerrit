@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "be54f842_25abfb69",
+        "filename": "gerrit/entrypoint.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-04-07T10:29:00Z",
+      "side": 0,
+      "message": "Also if the site already exists?",
+      "parentUuid": "ff577a96_9343bc42",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 61
+      },
+      "revId": "a8d593d860f1a72bde7f7163663677467cbc57b1",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ad0f8d95_11b70b5c",
         "filename": "gerrit/entrypoint.sh",
         "patchSetId": 1
@@ -84,6 +108,30 @@
       "side": 0,
       "message": "this is already set in the template \"gerrit.config.template\".",
       "parentUuid": "ad0f8d95_11b70b5c",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 115
+      },
+      "revId": "a8d593d860f1a72bde7f7163663677467cbc57b1",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e731d847_139fef6d",
+        "filename": "gerrit/entrypoint.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-04-07T10:29:00Z",
+      "side": 0,
+      "message": "This wasn\u0027t mentioned in the commit message though. Is this change focussed in removing redundant configs in the entrypoint.sh?",
+      "parentUuid": "b69ef488_0ef07f33",
       "range": {
         "startLine": 9,
         "startChar": 0,
