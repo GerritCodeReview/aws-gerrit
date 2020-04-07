@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12ade9e1_150a5fb7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-04-07T10:17:32Z",
+      "side": 1,
+      "message": "Can you explain a bit more the rationale behind these changes?\nWhat was difficult before? How can it be easier now?",
+      "range": {
+        "startLine": 9,
+        "startChar": 10,
+        "endLine": 9,
+        "endChar": 49
+      },
+      "revId": "625f108e17593cacde43835362daf3b19f884380",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
