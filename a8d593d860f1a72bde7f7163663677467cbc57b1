@@ -46,6 +46,30 @@
       "revId": "a8d593d860f1a72bde7f7163663677467cbc57b1",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "043ce8a8_aee2a67f",
+        "filename": "single-master/cf-service.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-04-07T13:50:40Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "c49c8d36_0e7c3e18",
+      "range": {
+        "startLine": 173,
+        "startChar": 12,
+        "endLine": 173,
+        "endChar": 31
+      },
+      "revId": "a8d593d860f1a72bde7f7163663677467cbc57b1",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     }
   ]
 }

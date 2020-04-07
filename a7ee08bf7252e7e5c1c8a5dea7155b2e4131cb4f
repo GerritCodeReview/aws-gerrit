@@ -168,6 +168,30 @@
     },
     {
       "key": {
+        "uuid": "2ea25579_b107b567",
+        "filename": "single-master/cf-cluster.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-04-07T13:50:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f97d669_baee9960",
+      "range": {
+        "startLine": 144,
+        "startChar": 10,
+        "endLine": 174,
+        "endChar": 54
+      },
+      "revId": "a7ee08bf7252e7e5c1c8a5dea7155b2e4131cb4f",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3415d3bc_f8e77b22",
         "filename": "single-master/cf-service.yml",
         "patchSetId": 1
