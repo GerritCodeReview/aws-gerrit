@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "9091639d_596a89e7",
+        "filename": "single-master/cf-cluster.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-04-07T13:04:28Z",
+      "side": 1,
+      "message": "I can add environment but $GerritServiceName is defined in cf-service and we have to create this config in cf-cluster so at that point we don\u0027t know it. $streamId is a task definition instance so we do not know it here",
+      "parentUuid": "b8298a67_fccfa075",
+      "range": {
+        "startLine": 152,
+        "startChar": 21,
+        "endLine": 152,
+        "endChar": 70
+      },
+      "revId": "a7ee08bf7252e7e5c1c8a5dea7155b2e4131cb4f",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8a1fbd04_e9ab58c0",
         "filename": "single-master/cf-cluster.yml",
         "patchSetId": 1
