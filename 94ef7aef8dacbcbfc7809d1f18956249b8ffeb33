@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be3c673b_a6ad96c6",
+        "filename": "gerrit/Dockerfile",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-04-09T14:50:25Z",
+      "side": 1,
+      "message": "Switch to 3.0.8 since replication plugin has issues with replication: https://bugs.chromium.org/p/gerrit/issues/detail?id\u003d12559\n\nWill switch back to 3.1 as soon as the issue is fixed.",
+      "range": {
+        "startLine": 1,
+        "startChar": 29,
+        "endLine": 1,
+        "endChar": 42
+      },
+      "revId": "94ef7aef8dacbcbfc7809d1f18956249b8ffeb33",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
