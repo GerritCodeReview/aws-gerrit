@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "de041805_a349e270",
+        "filename": "gerrit/entrypoint.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-04-09T23:08:39Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "6af3c767_fb3b623a",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 61
+      },
+      "revId": "a8d593d860f1a72bde7f7163663677467cbc57b1",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad0f8d95_11b70b5c",
         "filename": "gerrit/entrypoint.sh",
         "patchSetId": 1
@@ -189,6 +213,30 @@
       "revId": "a8d593d860f1a72bde7f7163663677467cbc57b1",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fb652f1_65b7604e",
+        "filename": "gerrit/entrypoint.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-04-09T23:08:39Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "4ca36bea_1368a825",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 115
+      },
+      "revId": "a8d593d860f1a72bde7f7163663677467cbc57b1",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     }
   ]
 }
