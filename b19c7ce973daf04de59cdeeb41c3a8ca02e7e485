@@ -34,6 +34,29 @@
       "revId": "b19c7ce973daf04de59cdeeb41c3a8ca02e7e485",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1665d574_b6bcd29b",
+        "filename": "Makefile",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1011123
+      },
+      "writtenOn": "2020-04-10T10:32:34Z",
+      "side": 1,
+      "message": "If we\u0027re going to automatically format, I\u0027d rather use something like \u0027black\u0027 which does a much better job than autopep8.  I only used it previously because I had it installed already, and it was good enough for fixing up most of the whitespace/indentations issues.",
+      "range": {
+        "startLine": 5,
+        "startChar": 2,
+        "endLine": 5,
+        "endChar": 10
+      },
+      "revId": "b19c7ce973daf04de59cdeeb41c3a8ca02e7e485",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
     }
   ]
 }
