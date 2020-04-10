@@ -474,6 +474,24 @@
       "revId": "f4f89fa655911162228c056535cd180906ca9d7a",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f94c8df_9c7584ec",
+        "filename": "master-slave/git-ssh/setup_ssh.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-04-10T16:16:48Z",
+      "side": 1,
+      "message": "In this case I think it is better to get them since anyway we will need some code to persist them on the file system.\n\nFurthermore, the `get_secret` function you see, is the official one provided by AWS, hence I believe it is a stable piece of code and it is one of the suggested way of retrieving the secrets.\n\nIf we were to use, for example, a token or a password that doesn\u0027t require to be persisted on file system, it would have been better injecting them as \"secret environment variables\" as you suggested.",
+      "parentUuid": "4d13933f_bb2a1ec5",
+      "revId": "f4f89fa655911162228c056535cd180906ca9d7a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
     }
   ]
 }
