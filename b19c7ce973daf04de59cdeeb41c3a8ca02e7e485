@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46434267_fe3ccfbc",
+        "filename": "Makefile",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-04-10T09:47:30Z",
+      "side": 1,
+      "message": "This should be called by a Jenkinsfile so that we can make format validation automatically when a new patch-set is uploaded.",
+      "revId": "b19c7ce973daf04de59cdeeb41c3a8ca02e7e485",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
