@@ -32,3 +32,23 @@ To manage your AWS services via command line you will need to install
 
 * [Standalone Gerrit master sandbox with LDAP authentication](/single-master/README.md)
 * [Gerrit master and slave sandbox with LDAP authentication](/master-slave/README.md)
+
+## Development
+
+### Python checks and format
+
+Make sure you have installed [flake8](https://pypi.org/project/flake8/) and
+[autopep8](https://pypi.org/project/autopep8/) to check and enforce
+[code style](https://www.python.org/dev/peps/pep-0008/) of the Python code.
+
+Use the following command to check the style:
+
+```
+make py-check-style
+```
+
+And the following command to auto-format Python code:
+
+```
+make py-format
+```
