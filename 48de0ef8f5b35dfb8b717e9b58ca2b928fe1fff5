@@ -34,6 +34,24 @@
       "revId": "48de0ef8f5b35dfb8b717e9b58ca2b928fe1fff5",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b336e383_33aadda7",
+        "filename": "master-slave/git-ssh/requirements.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-04-10T16:00:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c83d637a_4c0fc289",
+      "revId": "48de0ef8f5b35dfb8b717e9b58ca2b928fe1fff5",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     }
   ]
 }
