@@ -57,6 +57,30 @@
       "revId": "b19c7ce973daf04de59cdeeb41c3a8ca02e7e485",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54f24ab6_48193024",
+        "filename": "Makefile",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1011123
+      },
+      "writtenOn": "2020-04-10T10:56:28Z",
+      "side": 1,
+      "message": "Also, this assumes autopep8 (and flake8 below) are installed.\n\nMaybe it would be better to do this later after the python setup has been migrated to pipenv?  then the necessary tools can be included in the pipenv lock file.\n\nSee also how I run flake8 and black for the pygerrit2 project:\n\nhttps://github.com/dpursehouse/pygerrit2/blob/master/Makefile",
+      "parentUuid": "1665d574_b6bcd29b",
+      "range": {
+        "startLine": 5,
+        "startChar": 2,
+        "endLine": 5,
+        "endChar": 10
+      },
+      "revId": "b19c7ce973daf04de59cdeeb41c3a8ca02e7e485",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
     }
   ]
 }
