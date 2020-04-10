@@ -81,6 +81,30 @@
       "revId": "b19c7ce973daf04de59cdeeb41c3a8ca02e7e485",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8614a218_c186f45a",
+        "filename": "Makefile",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-04-10T13:00:32Z",
+      "side": 1,
+      "message": "makes sense . I am going to abandon the change for now.",
+      "parentUuid": "54f24ab6_48193024",
+      "range": {
+        "startLine": 5,
+        "startChar": 2,
+        "endLine": 5,
+        "endChar": 10
+      },
+      "revId": "b19c7ce973daf04de59cdeeb41c3a8ca02e7e485",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
     }
   ]
 }
