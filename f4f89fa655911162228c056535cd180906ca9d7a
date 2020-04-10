@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "608535bf_988cf858",
+        "filename": "gerrit/Dockerfile",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-04-10T16:00:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7f97a32_c3790717",
+      "range": {
+        "startLine": 1,
+        "startChar": 29,
+        "endLine": 1,
+        "endChar": 42
+      },
+      "revId": "f4f89fa655911162228c056535cd180906ca9d7a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53831306_527b5554",
         "filename": "gerrit/add_secrets_aws_secrets_manager.sh",
         "patchSetId": 11
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f91ef769_283cebf8",
+        "filename": "gerrit/add_secrets_aws_secrets_manager.sh",
+        "patchSetId": 11
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-04-10T16:00:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53831306_527b5554",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 66
+      },
+      "revId": "f4f89fa655911162228c056535cd180906ca9d7a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48da4d9e_1fb6969a",
         "filename": "gerrit/entrypoint.sh",
         "patchSetId": 11
@@ -59,6 +107,30 @@
       "writtenOn": "2020-04-10T09:46:07Z",
       "side": 1,
       "message": "How can we be sure that 5 minutes is enough?\nI believe we should rather check if the minimum repos needed by Gerrit have been replicated, All-Projects and All-Users.",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 11
+      },
+      "revId": "f4f89fa655911162228c056535cd180906ca9d7a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5f7d928_3f174822",
+        "filename": "gerrit/entrypoint.sh",
+        "patchSetId": 11
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-04-10T16:00:03Z",
+      "side": 1,
+      "message": "it is hard to coordinate the replication..I thought a basic sleep of 5 min (which is enough in case of not many repos) would be enough as a starting point.\n\nJust checking for the existence of All-* repos wouldn\u0027t be enough, since, when the repo doesn\u0027t exists at all, it gets created first and in the next replication cycle the refs will be replicated.\n\nWe would need a way to make sure all the refs for the All-* repos have been replicated. Any suggestion on how to do it?",
+      "parentUuid": "48da4d9e_1fb6969a",
       "range": {
         "startLine": 22,
         "startChar": 0,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "f4e354b1_fc8222b8",
+        "filename": "gerrit/entrypoint.sh",
+        "patchSetId": 11
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-04-10T16:00:03Z",
+      "side": 1,
+      "message": "yep it was just a debugging print.",
+      "parentUuid": "86335b21_ba45ffe2",
+      "range": {
+        "startLine": 25,
+        "startChar": 23,
+        "endLine": 25,
+        "endChar": 41
+      },
+      "revId": "f4f89fa655911162228c056535cd180906ca9d7a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d9f71e3_cffa26ef",
         "filename": "gerrit/entrypoint.sh",
         "patchSetId": 11
@@ -114,6 +210,30 @@
       "revId": "f4f89fa655911162228c056535cd180906ca9d7a",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8afe2b3e_2db45f1f",
+        "filename": "gerrit/entrypoint.sh",
+        "patchSetId": 11
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-04-10T16:00:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d9f71e3_cffa26ef",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 59
+      },
+      "revId": "f4f89fa655911162228c056535cd180906ca9d7a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "751adc38_ae3b3813",
+        "filename": "gerrit/etc/replication.config.template",
+        "patchSetId": 11
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-04-10T16:00:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ede76287_44f0d496",
+      "range": {
+        "startLine": 9,
+        "startChar": 9,
+        "endLine": 9,
+        "endChar": 16
+      },
+      "revId": "f4f89fa655911162228c056535cd180906ca9d7a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7f6442e_e845c98a",
         "filename": "gerrit/setup_gerrit.py",
         "patchSetId": 11
@@ -160,6 +304,30 @@
       "revId": "f4f89fa655911162228c056535cd180906ca9d7a",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c20bca7d_78c6c5bb",
+        "filename": "gerrit/setup_gerrit.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-04-10T16:00:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7f6442e_e845c98a",
+      "range": {
+        "startLine": 92,
+        "startChar": 18,
+        "endLine": 92,
+        "endChar": 29
+      },
+      "revId": "f4f89fa655911162228c056535cd180906ca9d7a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "7081708a_9e43cc3c",
+        "filename": "gerrit/setup_gerrit.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-04-10T16:00:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a21cef90_39563ba8",
+      "range": {
+        "startLine": 135,
+        "startChar": 0,
+        "endLine": 135,
+        "endChar": 84
+      },
+      "revId": "f4f89fa655911162228c056535cd180906ca9d7a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "869c0358_994277fa",
         "filename": "master-slave/Makefile",
         "patchSetId": 11
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "fdf83443_ebd18003",
+        "filename": "master-slave/Makefile",
+        "patchSetId": 11
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-04-10T16:00:03Z",
+      "side": 1,
+      "message": "it looks better indented this way IMO. Have a look at the file in a code editor.",
+      "parentUuid": "869c0358_994277fa",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 4
+      },
+      "revId": "f4f89fa655911162228c056535cd180906ca9d7a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6a77646_aed22282",
         "filename": "master-slave/README.md",
         "patchSetId": 11
@@ -223,6 +439,24 @@
       "revId": "f4f89fa655911162228c056535cd180906ca9d7a",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e607b007_2cac59e2",
+        "filename": "master-slave/README.md",
+        "patchSetId": 11
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-04-10T16:00:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6a77646_aed22282",
+      "revId": "f4f89fa655911162228c056535cd180906ca9d7a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     },
     {
       "key": {
