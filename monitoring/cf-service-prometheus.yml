@@ -1,0 +1,214 @@
+  AWSTemplateFormatVersion: '2010-09-09'
+  Description: Deploy a Prometheus service into an ECS cluster behind a public load balancer.
+  Parameters:
+    PrometheusServiceName:
+        Type: String
+        Default: gerrit-prometheus
+    ClusterStackName:
+        Description: Stack name of the ECS cluster to deply the serivces
+        Type: String
+        Default: gerrit-cluster
+    EnvironmentName:
+        Description: An environment name that will be prefixed to resource names
+        Type: String
+        Default: test
+    DockerImage:
+          Description: Prometheus official Docker image
+          Type: String
+          Default: aws-gerrit/prometheus:latest
+    DockerRegistryUrl:
+          Description: Docker registry URL
+          Type: String
+    DesiredCount:
+          Description: How many instances of this task should we run across our cluster?
+          Type: Number
+          Default: 1
+    HTTPPort:
+          Description: Prometheus HTTP port
+          Type: Number
+          Default: 9090
+    HTTPSPort:
+          Description: Prometheus HTTPS port
+          Type: Number
+          Default: 443
+    CertificateArn:
+          Description: SSL Certificates ARN
+          Type: String
+    HostedZoneName:
+          Description: The route53 HostedZoneName.
+          Type: String
+    Subdomain:
+          Description: The subdomain of the Monitoring service
+          Type: String
+          Default: gerrit-prometheus
+    PrometheusVolume:
+        Description: Prometheus data volume name
+        Type: String
+        Default: prometheus-data
+    TokenVersion:
+        Description: Prometheus Bearer Token Version
+        Type: String
+        Default: 4ibxLB
+
+  Resources:
+      Service:
+          Type: AWS::ECS::Service
+          DependsOn:
+            - HTTPListener
+          Properties:
+              Cluster:
+                Fn::ImportValue:
+                    !Join [':', [!Ref 'ClusterStackName', 'ClusterName']]
+              DesiredCount: !Ref DesiredCount
+              TaskDefinition: !Ref TaskDefinition
+              LoadBalancers:
+                  - ContainerName: !Ref PrometheusServiceName
+                    ContainerPort: !Ref HTTPPort
+                    TargetGroupArn: !Ref HTTPTargetGroup
+
+      TaskDefinition:
+          Type: AWS::ECS::TaskDefinition
+          Properties:
+              Family: !Join ['', [!Ref PrometheusServiceName, TaskDefinition]]
+              TaskRoleArn: !Ref ECSTaskExecutionRole
+              ExecutionRoleArn: !Ref ECSTaskExecutionRole
+              NetworkMode: bridge
+              ContainerDefinitions:
+                  - Name: !Ref PrometheusServiceName
+                    Essential: true
+                    Image: !Sub '${DockerRegistryUrl}/${DockerImage}'
+                    Environment:
+                      - Name: AWS_REGION
+                        Value: !Ref AWS::Region
+                    Secrets:
+                      - Name: PROMETHEUS_BEARER_TOKEN
+                        ValueFrom: !Sub 'arn:aws:secretsmanager:${AWS::Region}:${AWS::AccountId}:secret:gerrit_secret_prometheus_bearer_token-${TokenVersion}'
+                    MountPoints:
+                      - SourceVolume: !Ref GerritGitVolume
+                        ContainerPath: /var/gerrit/git
+                    Cpu: 1024
+                    Memory: 2048
+                    MountPoints:
+                      - SourceVolume: !Ref PrometheusVolume
+                        ContainerPath: /prometheus
+                    PortMappings:
+                      - ContainerPort: !Ref HTTPPort
+                        HostPort: !Ref HTTPPort
+                        Protocol: tcp
+                    LogConfiguration:
+                      LogDriver: awslogs
+                      Options:
+                          awslogs-group: !Ref ClusterStackName
+                          awslogs-region: !Ref AWS::Region
+                          awslogs-stream-prefix: !Ref EnvironmentName
+              Volumes:
+                - Name: !Ref 'PrometheusVolume'
+                  DockerVolumeConfiguration:
+                    Scope: shared
+                    Autoprovision: true
+                    Driver: local
+                    Labels:
+                      prometheus-data: !Join ['-', [!Ref EnvironmentName, !Ref PrometheusVolume]]
+
+
+      LoadBalancer:
+          Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+          Properties:
+              Type: network
+              Scheme: internet-facing
+              Subnets:
+                - Fn::ImportValue:
+                    !Join [':', [!Ref 'ClusterStackName', 'PublicSubnetOne']]
+              Tags:
+                  - Key: Name
+                    Value: !Join ['-', [!Ref 'EnvironmentName', !Ref 'PrometheusServiceName', 'monitoring']]
+
+      HTTPTargetGroup:
+          Type: AWS::ElasticLoadBalancingV2::TargetGroup
+          DependsOn: LoadBalancer
+          Properties:
+              VpcId:
+                Fn::ImportValue:
+                    !Join [':', [!Ref 'ClusterStackName', 'VPCId']]
+              Port: !Ref HTTPPort
+              Protocol: TCP
+
+      HTTPListener:
+          Type: AWS::ElasticLoadBalancingV2::Listener
+          DependsOn: LoadBalancer
+          Properties:
+              Certificates:
+                - CertificateArn: !Ref CertificateArn
+              DefaultActions:
+              - Type: forward
+                TargetGroupArn: !Ref HTTPTargetGroup
+              LoadBalancerArn: !Ref LoadBalancer
+              Port: !Ref HTTPSPort
+              Protocol: TLS
+
+      # This is a role which is used by the ECS tasks themselves.
+      ECSTaskExecutionRole:
+        Type: AWS::IAM::Role
+        Properties:
+          AssumeRolePolicyDocument:
+            Statement:
+            - Effect: Allow
+              Principal:
+                Service: [ecs-tasks.amazonaws.com]
+              Action: ['sts:AssumeRole']
+          Path: /
+          Policies:
+            - PolicyName: AmazonECSTaskExecutionRolePolicy
+              PolicyDocument:
+                Statement:
+                - Effect: Allow
+                  Action:
+                    # Allow the ECS Tasks to download images from ECR
+                    - 'ecr:GetAuthorizationToken'
+                    - 'ecr:BatchCheckLayerAvailability'
+                    - 'ecr:GetDownloadUrlForLayer'
+                    - 'ecr:BatchGetImage'
+                    # Allow the ECS tasks to upload logs to CloudWatch
+                    - 'logs:CreateLogStream'
+                    - 'logs:PutLogEvents'
+                  Resource: '*'
+            - PolicyName: AmazonECSTaskSecretManagerRolePolicy
+              PolicyDocument:
+                Statement:
+                - Effect: Allow
+                  Action:
+                    # Allow the ECS Tasks to get SSH Keys
+                    - 'secretsmanager:GetSecretValue'
+                    - 'kms:Decrypt'
+                  Resource: '*'
+  Outputs:
+    PublicLoadBalancerDNSName:
+      Description: The DNS name of the external load balancer
+      Value: !GetAtt 'LoadBalancer.DNSName'
+      Export:
+        Name: !Join [ ':', [ !Ref 'AWS::StackName', 'PublicLoadBalancerDNSName' ] ]
+    CanonicalHostedZoneID:
+      Description: Canonical Hosted Zone ID
+      Value: !GetAtt 'LoadBalancer.CanonicalHostedZoneID'
+      Export:
+        Name: !Join [ ':', [ !Ref 'AWS::StackName', 'CanonicalHostedZoneID' ] ]
+    PublicLoadBalancerUrl:
+      Description: The url of the external load balancer
+      Value: !Join ['', ['http://', !GetAtt 'LoadBalancer.DNSName']]
+      Export:
+        Name: !Join [ ':', [ !Ref 'AWS::StackName', 'PublicLoadBalancerUrl' ] ]
+    HostedZoneName:
+      Description: Route53 Hosted Zone name
+      Value: !Ref HostedZoneName
+      Export:
+        Name: !Join [ ':', [ !Ref 'AWS::StackName', 'HostedZoneName' ] ]
+    Subdomain:
+      Description: Service DNS subdomain
+      Value: !Ref Subdomain
+      Export:
+        Name: !Join [ ':', [ !Ref 'AWS::StackName', 'Subdomain' ] ]
+    CanonicalWebUrl:
+      Description: Canonical Web URL
+      Value: !Sub 'https://${Subdomain}.${HostedZoneName}'
+      Export:
+        Name: !Join [ ':', [ !Ref 'AWS::StackName', 'CanonicalWebUrl' ] ]
