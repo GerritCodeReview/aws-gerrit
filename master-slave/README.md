@@ -238,3 +238,8 @@ but by default all EC2 instances are blocking it. To enable port 25 please follo
 
 If you need a testing LDAP server you can find details on how to easily
 create one in the [LDAP folder](../ldap/README.md).
+
+## Monitoring
+
+If you want to monitor your system, you can add a Prometheus and Grafana stack.
+[Here](../monitoring/README.md) you can find the details on how to add it.
