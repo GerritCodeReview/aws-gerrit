@@ -150,3 +150,14 @@ git-daemon-publish:
 
 git-ssh-publish:
 	$(MAKE) -C git-ssh git-ssh-publish
+
+prometheus-publish:
+	$(MAKE) -C ../monitoring/prometheus prometheus-publish RECIPE=master-slave
+
+service-monitoring: service-prometheus service-grafana
+
+service-prometheus:
+	$(MAKE) -C ../monitoring service-prometheus RECIPE=master-slave
+
+service-grafana:
+	$(MAKE) -C ../monitoring service-grafana RECIPE=master-slave
