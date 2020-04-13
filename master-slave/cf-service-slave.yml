@@ -154,7 +154,7 @@ Resources:
                     - Name: CANONICAL_WEB_URL
                       Value: !Sub 'https://${Subdomain}.${HostedZoneName}'
                     - Name: HTTPD_LISTEN_URL
-                      Value: !Sub 'proxy-https://*:${HTTPHostPort}/'
+                      Value: !Sub 'proxy-https://*:${HTTPContainePort}/'
                     - Name: CONTAINER_SLAVE
                       Value: true
                     - Name: AWS_REGION
@@ -261,8 +261,8 @@ Resources:
                   MountPoints:
                     - SourceVolume: !Ref GerritGitVolume
                       ContainerPath: /var/gerrit/git
-                  Cpu: 1024
-                  Memory: 2048
+                  Cpu: 256
+                  Memory: 512
                   PortMappings:
                     - ContainerPort: !Ref GitSSHContainerPort
                       HostPort: !Ref GitSSHPort

@@ -120,17 +120,30 @@ config = configparser.ConfigParser()
 config.read(BASE_CONFIG_DIR + '/gerrit.setup')
 print("Setting Gerrit config in '" + GERRIT_CONFIG_DIRECTORY + "gerrit.config'")
 template = env.get_template("gerrit.config.template")
+
+config_for_template = {}
+try:
+    # If we don't need the monitoring stack we can avoid to set this token
+    prometheus_bearer_token = get_secret(GERRIT_KEY_PREFIX + "prometheus_bearer_token")
+    config_for_template['PROMETHEUS_BEARER_TOKEN'] = prometheus_bearer_token
+except ClientError as e:
+    if e.response['Error']['Code'] == 'ResourceNotFoundException':
+         print("[WARN] PROMETHEUS_BEARER_TOKEN not set")
+    else:
+        raise e
+
 with open(GERRIT_CONFIG_DIRECTORY + "gerrit.config", 'w',
           encoding='utf-8') as f:
-    f.write(template.render(
-        LDAP_SERVER=config['ldap']['server'],
-        LDAP_USERNAME=config['ldap']['username'],
-        LDAP_ACCOUNT_BASE=config['ldap']['accountBase'],
-        LDAP_GROUP_BASE=config['ldap']['groupBase'],
-        SMTP_SERVER=config['smtp']["server"],
-        SMTP_USER=config['smtp']["user"],
-        SMTP_DOMAIN=config['smtp']["domain"])
-    )
+    config_for_template.update({
+        'LDAP_SERVER': config['ldap']['server'],
+        'LDAP_USERNAME': config['ldap']['username'],
+        'LDAP_ACCOUNT_BASE': config['ldap']['accountBase'],
+        'LDAP_GROUP_BASE': config['ldap']['groupBase'],
+        'SMTP_SERVER': config['smtp']["server"],
+        'SMTP_USER': config['smtp']["user"],
+        'SMTP_DOMAIN': config['smtp']["domain"]
+    })
+    f.write(template.render(config_for_template))
 
 containerSlave = os.getenv('CONTAINER_SLAVE')
 if (not containerSlave):
