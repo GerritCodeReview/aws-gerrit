@@ -45,3 +45,12 @@
 	javaOptions = -Djava.security.egd=file:/dev/./urandom
 [receive]
 	enableSignedPush = false
+
+[plugin "javamelody"]
+    allowTopMenu = true
+    prometheusBearerToken = {{ PROMETHEUS_BEARER_TOKEN }}
+    storage-directory = data/javamelody
+
+[plugin "metrics-reporter-prometheus"]
+    prometheusBearerToken = {{ PROMETHEUS_BEARER_TOKEN }}
+    excludeMetrics = caches/.*

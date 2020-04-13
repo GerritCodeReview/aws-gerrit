@@ -120,6 +120,17 @@ config = configparser.ConfigParser()
 config.read(BASE_CONFIG_DIR + '/gerrit.setup')
 print("Setting Gerrit config in '" + GERRIT_CONFIG_DIRECTORY + "gerrit.config'")
 template = env.get_template("gerrit.config.template")
+
+# If we don't need the monitoring stack we can avoid to set this token
+prometheus_bearer_token = "notSet"
+try:
+    prometheus_bearer_token = get_secret(GERRIT_KEY_PREFIX + "prometheus_bearer_token")
+except ClientError as e:
+    if e.response['Error']['Code'] == 'ResourceNotFoundException':
+         print("[WARN] PROMETHEUS_BEARER_TOKEN not set")
+    else:
+        raise e
+
 with open(GERRIT_CONFIG_DIRECTORY + "gerrit.config", 'w',
           encoding='utf-8') as f:
     f.write(template.render(
@@ -129,7 +140,8 @@ with open(GERRIT_CONFIG_DIRECTORY + "gerrit.config", 'w',
         LDAP_GROUP_BASE=config['ldap']['groupBase'],
         SMTP_SERVER=config['smtp']["server"],
         SMTP_USER=config['smtp']["user"],
-        SMTP_DOMAIN=config['smtp']["domain"])
+        SMTP_DOMAIN=config['smtp']["domain"],
+        PROMETHEUS_BEARER_TOKEN=prometheus_bearer_token)
     )
 
 containerSlave = os.getenv('CONTAINER_SLAVE')
