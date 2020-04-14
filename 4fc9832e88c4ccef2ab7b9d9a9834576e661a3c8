@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "29e34ab0_f67280cd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 14
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-04-14T14:23:59Z",
+      "side": 1,
+      "message": "This comment is now stale: v3.1.4 fixes the issue.",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 26
+      },
+      "revId": "4fc9832e88c4ccef2ab7b9d9a9834576e661a3c8",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "190faa54_6c511e47",
         "filename": "gerrit/Dockerfile",
         "patchSetId": 14
@@ -18,6 +41,52 @@
         "startChar": 29,
         "endLine": 1,
         "endChar": 34
+      },
+      "revId": "4fc9832e88c4ccef2ab7b9d9a9834576e661a3c8",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe98ab55_d8c4e297",
+        "filename": "gerrit/add_secrets_aws_secrets_manager.sh",
+        "patchSetId": 14
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-04-14T14:23:59Z",
+      "side": 1,
+      "message": "A lot better @ponch 👍",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 4
+      },
+      "revId": "4fc9832e88c4ccef2ab7b9d9a9834576e661a3c8",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "865cca11_1f5bc691",
+        "filename": "master-slave/cf-cluster.yml",
+        "patchSetId": 14
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-04-14T14:23:59Z",
+      "side": 1,
+      "message": "Leftover?",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 19
       },
       "revId": "4fc9832e88c4ccef2ab7b9d9a9834576e661a3c8",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",

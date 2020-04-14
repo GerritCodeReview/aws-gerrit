@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "d85a92be_9084dd83",
+        "filename": "gerrit/entrypoint.sh",
+        "patchSetId": 11
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-04-14T14:23:59Z",
+      "side": 1,
+      "message": "For Gerrit to start, you need the following two repos and refs:\nAll-Projects/refs/meta/{config,version}\nAll-Users/refs/meta/external-ids\n\nYou can just check if they exist and, if they don\u0027t, just exit and rely on ECS to reschedule your startup.",
+      "parentUuid": "e5f7d928_3f174822",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 11
+      },
+      "revId": "f4f89fa655911162228c056535cd180906ca9d7a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "86335b21_ba45ffe2",
         "filename": "gerrit/entrypoint.sh",
         "patchSetId": 11
@@ -425,6 +449,30 @@
     },
     {
       "key": {
+        "uuid": "efd3783d_9944e2d3",
+        "filename": "master-slave/Makefile",
+        "patchSetId": 11
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-04-14T14:23:59Z",
+      "side": 1,
+      "message": "OK, but then you need to wrap them because they overflow at the moment :-(",
+      "parentUuid": "fdf83443_ebd18003",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 4
+      },
+      "revId": "f4f89fa655911162228c056535cd180906ca9d7a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6a77646_aed22282",
         "filename": "master-slave/README.md",
         "patchSetId": 11
@@ -492,6 +540,24 @@
       "revId": "f4f89fa655911162228c056535cd180906ca9d7a",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6172e216_827a8e63",
+        "filename": "master-slave/git-ssh/setup_ssh.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-04-14T14:23:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1f94c8df_9c7584ec",
+      "revId": "f4f89fa655911162228c056535cd180906ca9d7a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     }
   ]
 }
