@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c9946238_0a439c70",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 14
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-04-14T17:10:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29e34ab0_f67280cd",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 26
+      },
+      "revId": "4fc9832e88c4ccef2ab7b9d9a9834576e661a3c8",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "190faa54_6c511e47",
         "filename": "gerrit/Dockerfile",
         "patchSetId": 14
@@ -45,6 +69,30 @@
       "revId": "4fc9832e88c4ccef2ab7b9d9a9834576e661a3c8",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "680db344_082366be",
+        "filename": "gerrit/Dockerfile",
+        "patchSetId": 14
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-04-14T17:10:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "190faa54_6c511e47",
+      "range": {
+        "startLine": 1,
+        "startChar": 29,
+        "endLine": 1,
+        "endChar": 34
+      },
+      "revId": "4fc9832e88c4ccef2ab7b9d9a9834576e661a3c8",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     },
     {
       "key": {
@@ -91,6 +139,30 @@
       "revId": "4fc9832e88c4ccef2ab7b9d9a9834576e661a3c8",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3404d43b_f3023d0e",
+        "filename": "master-slave/cf-cluster.yml",
+        "patchSetId": 14
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-04-14T17:10:15Z",
+      "side": 1,
+      "message": "It is used for the log stream names. I have updated the comment",
+      "parentUuid": "865cca11_1f5bc691",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 19
+      },
+      "revId": "4fc9832e88c4ccef2ab7b9d9a9834576e661a3c8",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     }
   ]
 }
