@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "190faa54_6c511e47",
+        "filename": "gerrit/Dockerfile",
+        "patchSetId": 14
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-04-14T08:40:13Z",
+      "side": 1,
+      "message": "The replication plugin issue has been fixed. We can re-start using the latest Gerrit version.",
+      "range": {
+        "startLine": 1,
+        "startChar": 29,
+        "endLine": 1,
+        "endChar": 34
+      },
+      "revId": "4fc9832e88c4ccef2ab7b9d9a9834576e661a3c8",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
