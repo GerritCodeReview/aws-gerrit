@@ -191,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "5ec2634b_8c91f5ea",
+        "filename": "gerrit/entrypoint.sh",
+        "patchSetId": 11
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-04-15T09:50:18Z",
+      "side": 1,
+      "message": "\u003e LEAVE ECS TO RESCHEDULE STARTUP:\n\u003e * if All-Projects.git doesn\u0027t exists, init Slave and remove All-*.git\n\u003e * check for All-Projects/refs/meta/{config,version} and All-Users/refs/meta/external-ids, if it doesn\u0027t exist startup again\n\u003e \n\u003e The problem with this approach is that it might happen that replication happens while restarting the slave.\n\u003e In this case, the next restart of the slave would skip the init phase, which is fundamental.\n\nWhy is the init phase fundamental for a slave? Gerrit slaves do not need any init, but only a reindex of Groups, of course if the All-Users.git repository is there.\n\n\u003e WAIT FOR REPLICATION TO HAPPEN:\n\u003e What I am suggesting is an in-between solution, where, instead of sleeping for a fixed amount of time, we keep checking on the slave for All-Projects/refs/meta/{config,version} and All-Users/refs/meta/external-ids to be populated.\n\nThat is actually an anti-pattern, we should leave to the container manager the task to reschedule the instances and not make artificial sleeps in the code.",
+      "parentUuid": "828422ac_1efff3b7",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 11
+      },
+      "revId": "f4f89fa655911162228c056535cd180906ca9d7a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "86335b21_ba45ffe2",
         "filename": "gerrit/entrypoint.sh",
         "patchSetId": 11
