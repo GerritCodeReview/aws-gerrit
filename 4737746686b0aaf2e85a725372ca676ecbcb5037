@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d8fe94ea_97f792e1",
+        "filename": "gerrit/Makefile",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-04-20T14:19:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e37e9dd1_90e9524b",
+      "range": {
+        "startLine": 12,
+        "startChar": 24,
+        "endLine": 12,
+        "endChar": 31
+      },
+      "revId": "4737746686b0aaf2e85a725372ca676ecbcb5037",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9ec33e7_acc36240",
         "filename": "gerrit/setup_gerrit.py",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2020-04-20T10:42:22Z",
       "side": 1,
       "message": "it\u0027s that cause a lot of noise in gerrit logs",
+      "range": {
+        "startLine": 125,
+        "startChar": 0,
+        "endLine": 125,
+        "endChar": 34
+      },
+      "revId": "4737746686b0aaf2e85a725372ca676ecbcb5037",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45e9d8dd_dd43b244",
+        "filename": "gerrit/setup_gerrit.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-04-20T14:19:17Z",
+      "side": 1,
+      "message": "What do you mean? If the token set is not valid?\nEven if we don\u0027t scrape the metrics url?",
+      "parentUuid": "b9ec33e7_acc36240",
       "range": {
         "startLine": 125,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ffdf705d_74cdebca",
+        "filename": "master-slave/setup.env.template",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-04-20T14:19:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a22b2e20_c480b5c0",
+      "range": {
+        "startLine": 12,
+        "startChar": 22,
+        "endLine": 12,
+        "endChar": 36
+      },
+      "revId": "4737746686b0aaf2e85a725372ca676ecbcb5037",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ad16430_7cfd2cd7",
         "filename": "monitoring/cf-service-prometheus.yml",
         "patchSetId": 6
@@ -91,6 +163,30 @@
       "revId": "4737746686b0aaf2e85a725372ca676ecbcb5037",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5c01830_d4532b0d",
+        "filename": "monitoring/cf-service-prometheus.yml",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-04-20T14:19:17Z",
+      "side": 1,
+      "message": "Well spotted. It is not needed",
+      "parentUuid": "2ad16430_7cfd2cd7",
+      "range": {
+        "startLine": 86,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 54
+      },
+      "revId": "4737746686b0aaf2e85a725372ca676ecbcb5037",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "b859372f_5f30d689",
+        "filename": "monitoring/prometheus/entrypoint.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-04-20T14:19:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2d8a777_70ce6c22",
+      "range": {
+        "startLine": 3,
+        "startChar": 13,
+        "endLine": 3,
+        "endChar": 36
+      },
+      "revId": "4737746686b0aaf2e85a725372ca676ecbcb5037",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ee105b8_4bb7fdec",
         "filename": "monitoring/prometheus/prometheus.yml",
         "patchSetId": 6
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "f4642c8a_40652458",
+        "filename": "monitoring/prometheus/prometheus.yml",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-04-20T14:19:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ee105b8_4bb7fdec",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 0
+      },
+      "revId": "4737746686b0aaf2e85a725372ca676ecbcb5037",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ca2a61d_aacbca40",
         "filename": "monitoring/prometheus/prometheus.yml",
         "patchSetId": 6
@@ -160,6 +304,30 @@
       "revId": "4737746686b0aaf2e85a725372ca676ecbcb5037",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38d3865b_b7f7cc34",
+        "filename": "monitoring/prometheus/prometheus.yml",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-04-20T14:19:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ca2a61d_aacbca40",
+      "range": {
+        "startLine": 32,
+        "startChar": 18,
+        "endLine": 32,
+        "endChar": 41
+      },
+      "revId": "4737746686b0aaf2e85a725372ca676ecbcb5037",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     }
   ]
 }
