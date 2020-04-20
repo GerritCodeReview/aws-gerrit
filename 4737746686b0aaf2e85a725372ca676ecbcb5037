@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "682ed3f3_c90e83c2",
+        "filename": "gerrit/setup_gerrit.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-04-20T15:04:53Z",
+      "side": 1,
+      "message": "I mean when we scrape metrics url. Could we write  PROMETHEUS_BEARER_TOKEN only when exists in secrets?",
+      "parentUuid": "45e9d8dd_dd43b244",
+      "range": {
+        "startLine": 125,
+        "startChar": 0,
+        "endLine": 125,
+        "endChar": 34
+      },
+      "revId": "4737746686b0aaf2e85a725372ca676ecbcb5037",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a22b2e20_c480b5c0",
         "filename": "master-slave/setup.env.template",
         "patchSetId": 6
