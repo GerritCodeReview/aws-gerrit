@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e37e9dd1_90e9524b",
+        "filename": "gerrit/Makefile",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-04-20T10:42:22Z",
+      "side": 1,
+      "message": "nit: Metrics",
+      "range": {
+        "startLine": 12,
+        "startChar": 24,
+        "endLine": 12,
+        "endChar": 31
+      },
+      "revId": "4737746686b0aaf2e85a725372ca676ecbcb5037",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9ec33e7_acc36240",
+        "filename": "gerrit/setup_gerrit.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-04-20T10:42:22Z",
+      "side": 1,
+      "message": "it\u0027s that cause a lot of noise in gerrit logs",
+      "range": {
+        "startLine": 125,
+        "startChar": 0,
+        "endLine": 125,
+        "endChar": 34
+      },
+      "revId": "4737746686b0aaf2e85a725372ca676ecbcb5037",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a22b2e20_c480b5c0",
+        "filename": "master-slave/setup.env.template",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-04-20T10:42:22Z",
+      "side": 1,
+      "message": "is this part of this change?",
+      "range": {
+        "startLine": 12,
+        "startChar": 22,
+        "endLine": 12,
+        "endChar": 36
+      },
+      "revId": "4737746686b0aaf2e85a725372ca676ecbcb5037",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ad16430_7cfd2cd7",
+        "filename": "monitoring/cf-service-prometheus.yml",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-04-20T10:42:22Z",
+      "side": 1,
+      "message": "why we need that for prometheus?",
+      "range": {
+        "startLine": 86,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 54
+      },
+      "revId": "4737746686b0aaf2e85a725372ca676ecbcb5037",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2d8a777_70ce6c22",
+        "filename": "monitoring/prometheus/entrypoint.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-04-20T10:42:22Z",
+      "side": 1,
+      "message": "maybe we should have $PROMETHEUS_BEARER_TOKEN so in the prometheus.yml is clear that it will be replaced",
+      "range": {
+        "startLine": 3,
+        "startChar": 13,
+        "endLine": 3,
+        "endChar": 36
+      },
+      "revId": "4737746686b0aaf2e85a725372ca676ecbcb5037",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ee105b8_4bb7fdec",
+        "filename": "monitoring/prometheus/prometheus.yml",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-04-20T10:42:22Z",
+      "side": 1,
+      "message": "we are not using alert manager, remove it",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 0
+      },
+      "revId": "4737746686b0aaf2e85a725372ca676ecbcb5037",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ca2a61d_aacbca40",
+        "filename": "monitoring/prometheus/prometheus.yml",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-04-20T10:42:22Z",
+      "side": 1,
+      "message": "maybe $PROMETHEUS_BEARER_TOKEN will be better, just to clarify that this will be resolved to some token",
+      "range": {
+        "startLine": 32,
+        "startChar": 18,
+        "endLine": 32,
+        "endChar": 41
+      },
+      "revId": "4737746686b0aaf2e85a725372ca676ecbcb5037",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
