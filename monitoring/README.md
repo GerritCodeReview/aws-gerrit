@@ -15,6 +15,13 @@ exposed by master and slave, and Grafana to display them.
 
 * From the main cookbook, publish the image: `make prometheus-publish`
 
+### Publish custom Grafana Docker image
+
+* Create the repository in the Docker registry:
+  `aws ecr create-repository --repository-name aws-gerrit/grafana`
+
+* From the main cookbook, publish the image: `make grafana-publish`
+
 ### Import a Prometheus Bearer Token
 
 * [Generate](https://www.uuidgenerator.net/) a Token
