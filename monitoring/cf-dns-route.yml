@@ -5,6 +5,10 @@ Parameters:
       Description: Stack name of the ECS Prometheus service
       Type: String
       Default: gerrit-prometheus
+  GrafanaServiceStackName:
+      Description: Stack name of the ECS Grafana service
+      Type: String
+      Default: gerrit-grafana
 
 Resources:
   PrometheusDnsRecord:
@@ -29,4 +33,27 @@ Resources:
           HostedZoneId:
             Fn::ImportValue:
               !Join [':', [!Ref 'PrometheusServiceStackName', 'CanonicalHostedZoneID']]
+          EvaluateTargetHealth: False
+  GrafanaDnsRecord:
+      Type: AWS::Route53::RecordSet
+      Properties:
+        Name:
+          !Join
+            - '.'
+            - - Fn::ImportValue: !Join [':', [!Ref 'GrafanaServiceStackName', 'Subdomain']]
+              - Fn::ImportValue: !Join [':', [!Ref 'GrafanaServiceStackName', 'HostedZoneName']]
+        HostedZoneName:
+          !Join
+            - ''
+            - - Fn::ImportValue: !Join [':', [!Ref 'GrafanaServiceStackName', 'HostedZoneName']]
+              - '.'
+        Comment: DNS name for Gerrit Master.
+        Type: A
+        AliasTarget:
+          DNSName:
+            Fn::ImportValue:
+              !Join [':', [!Ref 'GrafanaServiceStackName', 'PublicLoadBalancerDNSName']]
+          HostedZoneId:
+            Fn::ImportValue:
+              !Join [':', [!Ref 'GrafanaServiceStackName', 'CanonicalHostedZoneID']]
           EvaluateTargetHealth: False
