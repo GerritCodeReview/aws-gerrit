@@ -154,5 +154,8 @@ git-ssh-publish:
 prometheus-publish:
 	$(MAKE) -C ../monitoring/prometheus prometheus-publish RECIPE=master-slave
 
+grafana-publish:
+	$(MAKE) -C ../monitoring/grafana grafana-publish RECIPE=master-slave
+
 service-monitoring:
 	$(MAKE) -C ../monitoring service-monitoring RECIPE=master-slave
