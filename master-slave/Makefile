@@ -22,7 +22,9 @@ cluster:
 		--stack-name $(CLUSTER_STACK_NAME) \
 		--capabilities CAPABILITY_IAM  \
 		--template-body file://`pwd`/$(CLUSTER_TEMPLATE) \
-		--region $(AWS_REGION)
+		--region $(AWS_REGION) \
+		--parameters \
+		ParameterKey=DesiredCapacity,ParameterValue=$(CLUSTER_DESIRED_CAPACITY)
 
 service-master:
 	$(AWS_FC_COMMAND) create-stack \
@@ -153,6 +155,9 @@ git-ssh-publish:
 
 prometheus-publish:
 	$(MAKE) -C ../monitoring/prometheus prometheus-publish RECIPE=master-slave
+
+grafana-publish:
+	$(MAKE) -C ../monitoring/grafana grafana-publish RECIPE=master-slave
 
 service-monitoring:
 	$(MAKE) -C ../monitoring service-monitoring RECIPE=master-slave
