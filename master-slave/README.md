@@ -73,6 +73,11 @@ This is the list of available parameters:
 * `HOSTED_ZONE_NAME`: Optional. Name of the hosted zone. `mycompany.com` by default.
 * `MASTER_SUBDOMAIN`: Optional. Name of the master sub domain. `gerrit-master-demo` by default.
 * `SLAVE_SUBDOMAIN`: Optional. Name of the slave sub domain. `gerrit-slave-demo` by default.
+* `CLUSTER_DESIRED_CAPACITY`: Optional.  Number of EC2 instances composing the cluster. `1` by default.
+
+*NOTE: if you are planning to run the monitoring stack, set the
+`CLUSTER_DESIRED_CAPACITY` value to at least 2. The resources provided by
+a single EC2 instance won't be enough for all the services that will be ran*
 
 ### Prerequisites
 

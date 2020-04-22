@@ -15,6 +15,13 @@ exposed by master and slave, and Grafana to display them.
 
 * From the main cookbook, publish the image: `make prometheus-publish`
 
+### Publish custom Grafana Docker image
+
+* Create the repository in the Docker registry:
+  `aws ecr create-repository --repository-name aws-gerrit/grafana`
+
+* From the main cookbook, publish the image: `make grafana-publish`
+
 ### Import a Prometheus Bearer Token
 
 * [Generate](https://www.uuidgenerator.net/) a Token
@@ -46,3 +53,19 @@ aws cloudformation describe-stacks \
   | grep OutputValue \
   | cut -d'"' -f 4
 ```
+
+### Access your Grafana instance
+
+Get the URL of your Prometheus instance this way:
+
+```
+aws cloudformation describe-stacks \
+  --stack-name <SERVICE_PROMETHEUS_STACK_NAME> \
+  | grep -A1 '"OutputKey": "CanonicalWebUrl"' \
+  | grep OutputValue \
+  | cut -d'"' -f 4
+```
+
+The default credentials are:
+* user `admin`
+* password `admin`
