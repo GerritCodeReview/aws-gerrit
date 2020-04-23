@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b6e0e22_b73e80f0",
+        "filename": "master-slave/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-04-23T14:30:03Z",
+      "side": 1,
+      "message": "Doesn\u0027t this depend on which EC2 instance type the user choses?",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 76
+      },
+      "revId": "3a590ffc191c7eeb2c12dd082d0cefbcfcfa4495",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
