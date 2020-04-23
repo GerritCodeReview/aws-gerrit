@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8e0eea8_58ebf081",
+        "filename": "master-slave/README.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-04-23T00:00:27Z",
+      "side": 1,
+      "message": "Can you explain why this is the case?",
+      "range": {
+        "startLine": 77,
+        "startChar": 25,
+        "endLine": 77,
+        "endChar": 102
+      },
+      "revId": "a9e331eacad4037fc0cb10a6e7a496367392e480",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92ac6df1_7048e4c4",
+        "filename": "master-slave/setup.env.template",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-04-23T00:00:27Z",
+      "side": 1,
+      "message": "I thought the default was 1?",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 27
+      },
+      "revId": "a9e331eacad4037fc0cb10a6e7a496367392e480",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "443125a3_be646468",
+        "filename": "monitoring/cf-service-grafana.yml",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-04-23T00:00:27Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 11,
+        "startChar": 54,
+        "endLine": 11,
+        "endChar": 59
+      },
+      "revId": "a9e331eacad4037fc0cb10a6e7a496367392e480",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b3ae65c_a80f1f1e",
+        "filename": "monitoring/cf-service-grafana.yml",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-04-23T00:00:27Z",
+      "side": 1,
+      "message": "to *the* resource names",
+      "range": {
+        "startLine": 15,
+        "startChar": 63,
+        "endLine": 15,
+        "endChar": 80
+      },
+      "revId": "a9e331eacad4037fc0cb10a6e7a496367392e480",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19442732_81cb8ad0",
+        "filename": "monitoring/cf-service-grafana.yml",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-04-23T00:00:27Z",
+      "side": 1,
+      "message": "This is not necessarily route53 right? it could be an hostedZone in any other DNS provider",
+      "range": {
+        "startLine": 41,
+        "startChar": 23,
+        "endLine": 41,
+        "endChar": 50
+      },
+      "revId": "a9e331eacad4037fc0cb10a6e7a496367392e480",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21fa0eed_6d6f1dba",
+        "filename": "monitoring/cf-service-grafana.yml",
+        "patchSetId": 5
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-04-23T00:00:27Z",
+      "side": 1,
+      "message": "Should these be parameters too or are we bound to some constraint?",
+      "range": {
+        "startLine": 84,
+        "startChar": 0,
+        "endLine": 85,
+        "endChar": 32
+      },
+      "revId": "a9e331eacad4037fc0cb10a6e7a496367392e480",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8004b3e_65283a72",
+        "filename": "monitoring/grafana/dashboards/Gerrit.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-04-23T00:00:27Z",
+      "side": 1,
+      "message": "Shouldn\u0027t these come from variables?\nProbably this json file needs to be a template and compiled accordingly?",
+      "range": {
+        "startLine": 85,
+        "startChar": 82,
+        "endLine": 85,
+        "endChar": 112
+      },
+      "revId": "a9e331eacad4037fc0cb10a6e7a496367392e480",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0879931_1158e635",
+        "filename": "monitoring/grafana/dashboards/Gerrit.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-04-23T00:00:27Z",
+      "side": 1,
+      "message": "remove reference to gerrithub here",
+      "range": {
+        "startLine": 169,
+        "startChar": 68,
+        "endLine": 169,
+        "endChar": 93
+      },
+      "revId": "a9e331eacad4037fc0cb10a6e7a496367392e480",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
