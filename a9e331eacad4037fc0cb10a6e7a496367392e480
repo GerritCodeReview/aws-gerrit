@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "75ce7f15_412e3bb9",
+        "filename": "master-slave/README.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-04-23T15:13:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78c606ed_f4c1981e",
+      "range": {
+        "startLine": 77,
+        "startChar": 25,
+        "endLine": 77,
+        "endChar": 102
+      },
+      "revId": "a9e331eacad4037fc0cb10a6e7a496367392e480",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92ac6df1_7048e4c4",
         "filename": "master-slave/setup.env.template",
         "patchSetId": 5
@@ -281,6 +305,30 @@
       "revId": "a9e331eacad4037fc0cb10a6e7a496367392e480",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61051674_1537f42d",
+        "filename": "monitoring/cf-service-grafana.yml",
+        "patchSetId": 5
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-04-23T15:13:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d16e4e2d_7d9bc8d4",
+      "range": {
+        "startLine": 84,
+        "startChar": 0,
+        "endLine": 85,
+        "endChar": 32
+      },
+      "revId": "a9e331eacad4037fc0cb10a6e7a496367392e480",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     },
     {
       "key": {
