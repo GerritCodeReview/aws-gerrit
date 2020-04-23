@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "78c606ed_f4c1981e",
+        "filename": "master-slave/README.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-04-23T10:26:55Z",
+      "side": 1,
+      "message": "see if it makes sense now",
+      "parentUuid": "b8e0eea8_58ebf081",
+      "range": {
+        "startLine": 77,
+        "startChar": 25,
+        "endLine": 77,
+        "endChar": 102
+      },
+      "revId": "a9e331eacad4037fc0cb10a6e7a496367392e480",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "92ac6df1_7048e4c4",
         "filename": "master-slave/setup.env.template",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "a9e331eacad4037fc0cb10a6e7a496367392e480",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df32f2ef_ce1cc0a5",
+        "filename": "master-slave/setup.env.template",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-04-23T10:26:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92ac6df1_7048e4c4",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 27
+      },
+      "revId": "a9e331eacad4037fc0cb10a6e7a496367392e480",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "fd4cc90c_65b042b6",
+        "filename": "monitoring/cf-service-grafana.yml",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-04-23T10:26:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "443125a3_be646468",
+      "range": {
+        "startLine": 11,
+        "startChar": 54,
+        "endLine": 11,
+        "endChar": 59
+      },
+      "revId": "a9e331eacad4037fc0cb10a6e7a496367392e480",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b3ae65c_a80f1f1e",
         "filename": "monitoring/cf-service-grafana.yml",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "a9e331eacad4037fc0cb10a6e7a496367392e480",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f641dbfd_e18e098d",
+        "filename": "monitoring/cf-service-grafana.yml",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-04-23T10:26:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b3ae65c_a80f1f1e",
+      "range": {
+        "startLine": 15,
+        "startChar": 63,
+        "endLine": 15,
+        "endChar": 80
+      },
+      "revId": "a9e331eacad4037fc0cb10a6e7a496367392e480",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "cccd2f8f_14a53e25",
+        "filename": "monitoring/cf-service-grafana.yml",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-04-23T10:26:55Z",
+      "side": 1,
+      "message": "Nope...this has to be a hosted zone in Route53. One of the prerequisites for any kind of stack is handling the DNS in Route53: https://github.com/GerritCodeReview/aws-gerrit/blob/master/single-master/README.md#prerequisites",
+      "parentUuid": "19442732_81cb8ad0",
+      "range": {
+        "startLine": 41,
+        "startChar": 23,
+        "endLine": 41,
+        "endChar": 50
+      },
+      "revId": "a9e331eacad4037fc0cb10a6e7a496367392e480",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21fa0eed_6d6f1dba",
         "filename": "monitoring/cf-service-grafana.yml",
         "patchSetId": 5
@@ -128,6 +248,30 @@
       "writtenOn": "2020-04-23T00:00:27Z",
       "side": 1,
       "message": "Should these be parameters too or are we bound to some constraint?",
+      "range": {
+        "startLine": 84,
+        "startChar": 0,
+        "endLine": 85,
+        "endChar": 32
+      },
+      "revId": "a9e331eacad4037fc0cb10a6e7a496367392e480",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d16e4e2d_7d9bc8d4",
+        "filename": "monitoring/cf-service-grafana.yml",
+        "patchSetId": 5
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-04-23T10:26:55Z",
+      "side": 1,
+      "message": "They are parameters based on \"guesstimation\". I just didn\u0027t want to leave the user playing around with those parameters, there are already tons of parameters you can setup I didn\u0027t want to add more.\n\nOf course if you were to use this templates in a real production environment probably you would have to go and trim them to best fit your case.",
+      "parentUuid": "21fa0eed_6d6f1dba",
       "range": {
         "startLine": 84,
         "startChar": 0,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "3d8a9fe9_9f60b7a7",
+        "filename": "monitoring/grafana/dashboards/Gerrit.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-04-23T10:26:55Z",
+      "side": 1,
+      "message": "Ops....yep...good catch.",
+      "parentUuid": "d8004b3e_65283a72",
+      "range": {
+        "startLine": 85,
+        "startChar": 82,
+        "endLine": 85,
+        "endChar": 112
+      },
+      "revId": "a9e331eacad4037fc0cb10a6e7a496367392e480",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0879931_1158e635",
         "filename": "monitoring/grafana/dashboards/Gerrit.json",
         "patchSetId": 5
@@ -183,6 +351,30 @@
       "revId": "a9e331eacad4037fc0cb10a6e7a496367392e480",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e09e813_c20f0e8f",
+        "filename": "monitoring/grafana/dashboards/Gerrit.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-04-23T10:26:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0879931_1158e635",
+      "range": {
+        "startLine": 169,
+        "startChar": 68,
+        "endLine": 169,
+        "endChar": 93
+      },
+      "revId": "a9e331eacad4037fc0cb10a6e7a496367392e480",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     }
   ]
 }
