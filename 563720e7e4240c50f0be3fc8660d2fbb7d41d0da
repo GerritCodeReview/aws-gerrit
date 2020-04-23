@@ -22,6 +22,30 @@
       "revId": "563720e7e4240c50f0be3fc8660d2fbb7d41d0da",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46056a2c_78d357ee",
+        "filename": "monitoring/grafana/provisioning/datasources/prometheus.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-04-23T10:27:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e3648b5_2183f98d",
+      "range": {
+        "startLine": 21,
+        "startChar": 7,
+        "endLine": 21,
+        "endChar": 63
+      },
+      "revId": "563720e7e4240c50f0be3fc8660d2fbb7d41d0da",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     }
   ]
 }
