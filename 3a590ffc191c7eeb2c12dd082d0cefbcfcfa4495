@@ -22,6 +22,30 @@
       "revId": "3a590ffc191c7eeb2c12dd082d0cefbcfcfa4495",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b89adbfb_ef562c75",
+        "filename": "master-slave/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-04-23T14:47:50Z",
+      "side": 1,
+      "message": "yes...the instance type is fix parameter, same reason as for the CPU and memory. I didn\u0027t want to leave too  many parameters to play with to the user.\n\nI set the CPU/Memory usage of the services in a way that they can fit in the instance type I pick by default.\n\nWhen you add the monitoring stack however you need 2 instances since the resources are not enough anymore. I could have used a bigger instance to solve the problem, but I preferred to use 2 \"smaller\".\n\nThe total amount of the resources and the final price is the same so I thought of using 2 instances rather than 1 to make sure everything is ok even when distributed.\n\nI didn\u0027t want to use a bigger instance by default just to avoid paying too much",
+      "parentUuid": "2b6e0e22_b73e80f0",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 76
+      },
+      "revId": "3a590ffc191c7eeb2c12dd082d0cefbcfcfa4495",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
     }
   ]
 }
