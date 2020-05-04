@@ -1,6 +1,6 @@
 include ../$(RECIPE)/setup.env
 
-GERRIT_BRANCH=stable-3.0
+GERRIT_BRANCH=stable-3.2
 GERRIT_CI=https://gerrit-ci.gerritforge.com/view/Plugins-$(GERRIT_BRANCH)/job
 LAST_BUILD=lastSuccessfulBuild/artifact/bazel-bin/plugins
 
@@ -17,7 +17,7 @@ gerrit-get-plugins:
 	|| { echo >&2 "Cannot download metrics-reporter-prometheus plugin: Check internet connection. Aborting"; exit 1; }
 
 	@echo "Downloading javamelody plugin $(GERRIT_BRANCH)"
-	wget $(GERRIT_CI)/plugin-javamelody-bazel-$(GERRIT_BRANCH)/$(LAST_BUILD)/javamelody/javamelody.jar \
+	wget $(GERRIT_CI)/plugin-javamelody-bazel-master-$(GERRIT_BRANCH)/$(LAST_BUILD)/javamelody/javamelody.jar \
 	-O ./plugins/javamelody.jar \
 	|| { echo >&2 "Cannot download javamelody plugin: Check internet connection. Aborting"; exit 1; }
 
