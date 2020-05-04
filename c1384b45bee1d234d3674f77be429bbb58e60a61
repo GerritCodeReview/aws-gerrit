@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "ed892c7c_ecc5f9d0",
+        "filename": "gerrit/Dockerfile",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-05-04T23:04:41Z",
+      "side": 1,
+      "message": "Gerrit v3.2 default docker image runs on Java 11: we should stick to that release.",
+      "parentUuid": "7d330533_2ed2aa03",
+      "range": {
+        "startLine": 6,
+        "startChar": 71,
+        "endLine": 6,
+        "endChar": 89
+      },
+      "revId": "c1384b45bee1d234d3674f77be429bbb58e60a61",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "427c03d6_d16d20e3",
         "filename": "gerrit/etc/gerrit.config.template",
         "patchSetId": 4
