@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3a701a4_e5a6a164",
+        "filename": "gerrit/Dockerfile",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-05-04T16:46:39Z",
+      "side": 1,
+      "message": "Why do you need OpenJDK 8?",
+      "range": {
+        "startLine": 6,
+        "startChar": 71,
+        "endLine": 6,
+        "endChar": 89
+      },
+      "revId": "c1384b45bee1d234d3674f77be429bbb58e60a61",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "427c03d6_d16d20e3",
+        "filename": "gerrit/etc/gerrit.config.template",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-05-04T16:46:39Z",
+      "side": 1,
+      "message": "This isn\u0027t needed at all, the setting can be removed altogether.",
+      "range": {
+        "startLine": 44,
+        "startChar": 1,
+        "endLine": 44,
+        "endChar": 76
+      },
+      "revId": "c1384b45bee1d234d3674f77be429bbb58e60a61",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
