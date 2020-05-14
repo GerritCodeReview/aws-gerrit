@@ -145,8 +145,9 @@ with open(GERRIT_CONFIG_DIRECTORY + "gerrit.config", 'w',
     })
     f.write(template.render(config_for_template))
 
-containerSlave = os.getenv('CONTAINER_SLAVE')
-if (not containerSlave):
+containerSlave = (os.getenv('CONTAINER_SLAVE') == 'true')
+setupReplication = (os.getenv('SETUP_REPLICATION') == 'true')
+if ((not containerSlave) and setupReplication):
     print("Setting Replication config in '" +
           GERRIT_CONFIG_DIRECTORY + "replication.config'")
     config.read(BASE_CONFIG_DIR + '/replication.setup')
