@@ -32,3 +32,4 @@ To manage your AWS services via command line you will need to install
 
 * [Standalone Gerrit master sandbox with LDAP authentication](/single-master/README.md)
 * [Gerrit master and slave sandbox with LDAP authentication](/master-slave/README.md)
+* [Gerrit dual-master in HA sandbox with LDAP authentication](/multi-master/README.md)
