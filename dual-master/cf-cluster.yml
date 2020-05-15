@@ -166,6 +166,7 @@ Resources:
               && s=0 && break || s=$? && sleep 5;
           done; (exit $s)
           mkdir $DIR_TGT/git
+          mkdir $DIR_TGT/high-availability
           chown -R 1000:1000 $DIR_TGT
           cp -p /etc/fstab /etc/fstab.back-$(date +%F)
           echo -e \"$DIR_SRC:/ \t\t $DIR_TGT \t\t nfs \t\t defaults \t\t 0 \t\t 0\" | tee -a /etc/fstab
