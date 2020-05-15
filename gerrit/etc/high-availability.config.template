@@ -1,0 +1,8 @@
+[main]
+  sharedDirectory = /var/gerrit/websessions
+
+[peerInfo]
+  strategy = static
+
+[peerInfo "static"]
+  url = {{ HA_PEER_URL }}
