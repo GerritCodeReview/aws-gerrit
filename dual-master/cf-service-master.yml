@@ -62,11 +62,17 @@ Parameters:
         Default: gerrit-master-demo
   GerritKeyPrefix:
         Description: Gerrit credentials keys prefix
+  PeerSubdomain:
+        Description: The subdomain of the Gerrit cluster
         Type: String
   GerritGitVolume:
       Description: Gerrit git volume name
       Type: String
       Default: gerrit-git-master
+  GerritWebsessionsVolume:
+      Description: Gerrit git volume name
+      Type: String
+      Default: gerrit-ha-websessions-master
   GerritDataVolume:
       Description: Gerrit data volume name
       Type: String
@@ -128,11 +134,20 @@ Resources:
                       Value: !Ref AWS::Region
                     - Name: SETUP_REPLICATION
                       Value: false
+<<<<<<< HEAD:dual-master/cf-service-master.yml
                     - Name: GERRIT_KEY_PREFIX
                       Value: !Ref GerritKeyPrefix
+=======
+                    - Name: SETUP_HA
+                      Value: true
+                    - Name: HA_PEER_URL
+                      Value: !Sub 'https://${PeerSubdomain}.${HostedZoneName}'
+>>>>>>> ef9ce27... Add HA plugin:multi-master/cf-service-master.yml
                   MountPoints:
                     - SourceVolume: !Ref GerritGitVolume
                       ContainerPath: /var/gerrit/git
+                    - SourceVolume: !Ref GerritWebsessionsVolume
+                      ContainerPath: /var/gerrit/high-availability
                     - SourceVolume: !Ref GerritDataVolume
                       ContainerPath: /var/gerrit/data
                     - SourceVolume: !Ref GerritIndexVolume
@@ -162,6 +177,9 @@ Resources:
               - Name: !Ref 'GerritGitVolume'
                 Host:
                   SourcePath: "/mnt/efs/gerrit-shared/git"
+              - Name: !Ref 'GerritWebsessionsVolume'
+                Host:
+                  SourcePath: "/mnt/efs/gerrit-shared/high-availability"
               - Name: !Ref 'GerritDbVolume'
                 DockerVolumeConfiguration:
                   Scope: shared
