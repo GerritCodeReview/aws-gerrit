@@ -63,10 +63,17 @@ Parameters:
   GerritKeyPrefix:
         Description: Gerrit credentials keys prefix
         Type: String
+  PeerSubdomain:
+        Description: The subdomain of the Gerrit cluster
+        Type: String
   GerritGitVolume:
       Description: Gerrit git volume name
       Type: String
       Default: gerrit-git-master
+  GerritWebsessionsVolume:
+      Description: Gerrit git volume name
+      Type: String
+      Default: gerrit-ha-websessions-master
   GerritDataVolume:
       Description: Gerrit data volume name
       Type: String
@@ -130,9 +137,15 @@ Resources:
                       Value: false
                     - Name: GERRIT_KEY_PREFIX
                       Value: !Ref GerritKeyPrefix
+                    - Name: SETUP_HA
+                      Value: true
+                    - Name: HA_PEER_URL
+                      Value: !Sub 'https://${PeerSubdomain}.${HostedZoneName}'
                   MountPoints:
                     - SourceVolume: !Ref GerritGitVolume
                       ContainerPath: /var/gerrit/git
+                    - SourceVolume: !Ref GerritWebsessionsVolume
+                      ContainerPath: /var/gerrit/high-availability
                     - SourceVolume: !Ref GerritDataVolume
                       ContainerPath: /var/gerrit/data
                     - SourceVolume: !Ref GerritIndexVolume
@@ -162,6 +175,9 @@ Resources:
               - Name: !Ref 'GerritGitVolume'
                 Host:
                   SourcePath: "/mnt/efs/gerrit-shared/git"
+              - Name: !Ref 'GerritWebsessionsVolume'
+                Host:
+                  SourcePath: "/mnt/efs/gerrit-shared/high-availability"
               - Name: !Ref 'GerritDbVolume'
                 DockerVolumeConfiguration:
                   Scope: shared

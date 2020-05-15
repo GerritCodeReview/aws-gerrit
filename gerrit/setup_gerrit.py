@@ -8,6 +8,7 @@ from botocore.exceptions import ClientError
 from jinja2 import Environment, FileSystemLoader
 
 setupReplication = (os.getenv('SETUP_REPLICATION') == 'true')
+setupHA = (os.getenv('SETUP_HA') == 'true')
 
 def get_secret(secret_name):
     # Create a Secrets Manager client
@@ -159,3 +160,11 @@ if ((not containerSlave) and setupReplication):
                 SLAVE_1_URL=config['remote-slave']['url'],
                 SLAVE_1_AMDIN_URL=config['remote-slave']['adminUrl']
                 ))
+
+if (setupHA):
+    print("Setting HA config in '" +
+          GERRIT_CONFIG_DIRECTORY + "high-availability.config'")
+    config.read(BASE_CONFIG_DIR + '/high-availability.setup')
+    template = env.get_template("high-availability.config.template")
+    with open(GERRIT_CONFIG_DIRECTORY + "high-availability.config", 'w', encoding='utf-8') as f:
+        f.write(template.render( HA_PEER_URL=os.getenv('HA_PEER_URL'), ))
