@@ -1,4 +1,4 @@
-FROM gerritcodereview/gerrit:3.2.0-rc1-centos8
+FROM gerritcodereview/gerrit:3.2.0-rc2-centos8
 
 USER root
 
