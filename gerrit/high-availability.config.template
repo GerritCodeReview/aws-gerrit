@@ -1,0 +1,8 @@
+[main]
+  sharedDirectory = /shared
+
+[peerInfo]
+  strategy = static
+
+[peerInfo "static"]
+  url = http://gerrit-02.mycompany.com:8080
