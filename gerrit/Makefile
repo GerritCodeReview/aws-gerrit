@@ -21,6 +21,11 @@ gerrit-get-plugins:
 	-O ./plugins/javamelody.jar \
 	|| { echo >&2 "Cannot download javamelody plugin: Check internet connection. Aborting"; exit 1; }
 
+	@echo "Downloading HA plugin $(GERRIT_BRANCH)"
+	wget $(GERRIT_CI)/plugin-high-availability-bazel-master-$(GERRIT_BRANCH)/$(LAST_BUILD)/high-availability/high-availability.jar \
+	-O ./plugins/high-availability.jar \
+	|| { echo >&2 "Cannot download high-availability plugin: Check internet connection. Aborting"; exit 1; }
+
 gerrit-build:
 	docker build -t aws-gerrit/gerrit .
 	docker tag aws-gerrit/gerrit:latest $(DOCKER_REGISTRY_URI)/aws-gerrit/gerrit:latest
