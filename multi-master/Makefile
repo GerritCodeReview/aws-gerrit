@@ -35,7 +35,9 @@ service-master-1:
 		ParameterKey=HostedZoneName,ParameterValue=$(HOSTED_ZONE_NAME) \
 		ParameterKey=Subdomain,ParameterValue=$(MASTER1_SUBDOMAIN) \
 		ParameterKey=DockerRegistryUrl,ParameterValue=$(DOCKER_REGISTRY_URI) \
-		ParameterKey=CertificateArn,ParameterValue=$(SSL_CERTIFICATE_ARN)
+		ParameterKey=CertificateArn,ParameterValue=$(SSL_CERTIFICATE_ARN) \
+		ParameterKey=PeerSubdomain,ParameterValue=$(MASTER2_SUBDOMAIN)
+
 
 service-master-2:
 	$(AWS_FC_COMMAND) create-stack \
@@ -55,7 +57,8 @@ service-master-2:
 		ParameterKey=GerritIndexVolume,ParameterValue=gerrit-index-master-2 \
 		ParameterKey=GerritCacheVolume,ParameterValue=gerrit-cache-master-2 \
 		ParameterKey=GerritDbVolume,ParameterValue=gerrit-db-master-2 \
-		ParameterKey=GerritLogsVolume,ParameterValue=gerrit-logs-master-2
+		ParameterKey=GerritLogsVolume,ParameterValue=gerrit-logs-master-2 \
+		ParameterKey=PeerSubdomain,ParameterValue=$(MASTER1_SUBDOMAIN)
 
 dns-routing:
 	$(AWS_FC_COMMAND) create-stack \
