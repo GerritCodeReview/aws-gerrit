@@ -161,6 +161,7 @@ Resources:
           echo $DIR_TGT >> /home/ec2-user/echo.res
           mount -t nfs4 -o nfsvers=4.1,hard,timeo=600,retrans=2 $DIR_SRC:/ $DIR_TGT >> /home/ec2-user/echo.res
           mkdir $DIR_TGT/git
+          mkdir $DIR_TGT/websessions
           chown -R 1000:1000 $DIR_TGT
           cp -p /etc/fstab /etc/fstab.back-$(date +%F)
           echo -e \"$DIR_SRC:/ \t\t $DIR_TGT \t\t nfs \t\t defaults \t\t 0 \t\t 0\" | tee -a /etc/fstab
