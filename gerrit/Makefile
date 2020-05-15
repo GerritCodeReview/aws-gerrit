@@ -1,6 +1,6 @@
 include ../$(RECIPE)/setup.env
 
-GERRIT_BRANCH=stable-3.0
+GERRIT_BRANCH=stable-3.1
 GERRIT_CI=https://gerrit-ci.gerritforge.com/view/Plugins-$(GERRIT_BRANCH)/job
 LAST_BUILD=lastSuccessfulBuild/artifact/bazel-bin/plugins
 
@@ -20,6 +20,11 @@ gerrit-get-plugins:
 	wget $(GERRIT_CI)/plugin-javamelody-bazel-$(GERRIT_BRANCH)/$(LAST_BUILD)/javamelody/javamelody.jar \
 	-O ./plugins/javamelody.jar \
 	|| { echo >&2 "Cannot download javamelody plugin: Check internet connection. Aborting"; exit 1; }
+
+	@echo "Downloading HA plugin $(GERRIT_BRANCH)"
+	wget $(GERRIT_CI)/plugin-high-availability-bazel-$(GERRIT_BRANCH)/$(LAST_BUILD)/high-availability/high-availability.jar \
+	-O ./plugins/high-availability.jar \
+	|| { echo >&2 "Cannot download high-availability plugin: Check internet connection. Aborting"; exit 1; }
 
 gerrit-build:
 	docker build -t aws-gerrit/gerrit .
