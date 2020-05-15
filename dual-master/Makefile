@@ -40,6 +40,7 @@ service-master-1:
 		ParameterKey=DockerRegistryUrl,ParameterValue=$(DOCKER_REGISTRY_URI) \
 		ParameterKey=CertificateArn,ParameterValue=$(SSL_CERTIFICATE_ARN) \
 		ParameterKey=GerritKeyPrefix,ParameterValue=$(GERRIT_KEY_PREFIX)\
+		ParameterKey=PeerSubdomain,ParameterValue=$(MASTER2_SUBDOMAIN) \
 		ParameterKey=DockerImage,ParameterValue=aws-gerrit/gerrit:$(IMAGE_TAG)
 
 service-master-2:
@@ -62,7 +63,8 @@ service-master-2:
 		ParameterKey=GerritIndexVolume,ParameterValue=gerrit-index-master-2 \
 		ParameterKey=GerritCacheVolume,ParameterValue=gerrit-cache-master-2 \
 		ParameterKey=GerritDbVolume,ParameterValue=gerrit-db-master-2 \
-		ParameterKey=GerritLogsVolume,ParameterValue=gerrit-logs-master-2
+		ParameterKey=GerritLogsVolume,ParameterValue=gerrit-logs-master-2 \
+		ParameterKey=PeerSubdomain,ParameterValue=$(MASTER1_SUBDOMAIN)
 
 dns-routing:
 	$(AWS_FC_COMMAND) create-stack \
