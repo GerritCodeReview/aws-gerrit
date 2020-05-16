@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "fd0e0e13_35e23013",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-05-16T21:19:36Z",
+      "side": 1,
+      "message": "Gerrit dual-master in HA recipe",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 26
+      },
+      "revId": "eef665a5e7154a430cb62a7cdaa1ddf970fc2e5e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0791b481_81555f14",
         "filename": "README.md",
         "patchSetId": 6
