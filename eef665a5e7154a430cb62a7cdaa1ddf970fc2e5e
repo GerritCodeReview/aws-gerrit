@@ -1,0 +1,349 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0791b481_81555f14",
+        "filename": "README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-05-16T21:18:55Z",
+      "side": 1,
+      "message": "dual-master in HA",
+      "range": {
+        "startLine": 35,
+        "startChar": 10,
+        "endLine": 35,
+        "endChar": 22
+      },
+      "revId": "eef665a5e7154a430cb62a7cdaa1ddf970fc2e5e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "304d4381_1d77c525",
+        "filename": "gerrit/entrypoint.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-05-16T21:18:55Z",
+      "side": 1,
+      "message": "Why reindexing if the site has been already initialised?\nI would rather do something different: reindexing *IF* there is no index_config.",
+      "range": {
+        "startLine": 11,
+        "startChar": 7,
+        "endLine": 11,
+        "endChar": 42
+      },
+      "revId": "eef665a5e7154a430cb62a7cdaa1ddf970fc2e5e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ffefa23_3c1ddf97",
+        "filename": "gerrit/setup_gerrit.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-05-16T21:18:55Z",
+      "side": 1,
+      "message": "Is this setupReplication related to the HA setup?",
+      "range": {
+        "startLine": 149,
+        "startChar": 0,
+        "endLine": 149,
+        "endChar": 61
+      },
+      "revId": "eef665a5e7154a430cb62a7cdaa1ddf970fc2e5e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a215710_a0f466e0",
+        "filename": "multi-master/Makefile",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-05-16T21:18:55Z",
+      "side": 1,
+      "message": "nit: I would reduce the indenting a bit, as I find harder to read",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 4
+      },
+      "revId": "eef665a5e7154a430cb62a7cdaa1ddf970fc2e5e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6f4df41_fca41c29",
+        "filename": "multi-master/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-05-16T21:18:55Z",
+      "side": 1,
+      "message": "dual-master in High-Availability",
+      "range": {
+        "startLine": 1,
+        "startChar": 9,
+        "endLine": 1,
+        "endChar": 21
+      },
+      "revId": "eef665a5e7154a430cb62a7cdaa1ddf970fc2e5e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b28095f4_f97bd8a6",
+        "filename": "multi-master/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-05-16T21:18:55Z",
+      "side": 1,
+      "message": "templates",
+      "range": {
+        "startLine": 3,
+        "startChar": 12,
+        "endLine": 3,
+        "endChar": 21
+      },
+      "revId": "eef665a5e7154a430cb62a7cdaa1ddf970fc2e5e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b415ac9_e8954dcb",
+        "filename": "multi-master/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-05-16T21:18:55Z",
+      "side": 1,
+      "message": "provides",
+      "range": {
+        "startLine": 3,
+        "startChar": 22,
+        "endLine": 3,
+        "endChar": 29
+      },
+      "revId": "eef665a5e7154a430cb62a7cdaa1ddf970fc2e5e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf9b0a6d_4545dd0c",
+        "filename": "multi-master/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-05-16T21:18:55Z",
+      "side": 1,
+      "message": "dual-master in HA",
+      "range": {
+        "startLine": 3,
+        "startChar": 68,
+        "endLine": 3,
+        "endChar": 80
+      },
+      "revId": "eef665a5e7154a430cb62a7cdaa1ddf970fc2e5e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4f795c5_45b2eef1",
+        "filename": "multi-master/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-05-16T21:18:55Z",
+      "side": 1,
+      "message": "NFS, using EFS.",
+      "range": {
+        "startLine": 4,
+        "startChar": 58,
+        "endLine": 4,
+        "endChar": 61
+      },
+      "revId": "eef665a5e7154a430cb62a7cdaa1ddf970fc2e5e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f07ba2b5_700ada6d",
+        "filename": "multi-master/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-05-16T21:18:55Z",
+      "side": 1,
+      "message": "Why do we need another port?",
+      "range": {
+        "startLine": 25,
+        "startChar": 32,
+        "endLine": 25,
+        "endChar": 36
+      },
+      "revId": "eef665a5e7154a430cb62a7cdaa1ddf970fc2e5e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a199991_f5f8f082",
+        "filename": "multi-master/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-05-16T21:18:55Z",
+      "side": 1,
+      "message": "Same as before: can we keep 29418?",
+      "range": {
+        "startLine": 26,
+        "startChar": 31,
+        "endLine": 26,
+        "endChar": 36
+      },
+      "revId": "eef665a5e7154a430cb62a7cdaa1ddf970fc2e5e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e5cdfa4_2c225750",
+        "filename": "multi-master/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-05-16T21:18:55Z",
+      "side": 1,
+      "message": "values",
+      "range": {
+        "startLine": 55,
+        "startChar": 18,
+        "endLine": 55,
+        "endChar": 23
+      },
+      "revId": "eef665a5e7154a430cb62a7cdaa1ddf970fc2e5e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "898887f8_b773977e",
+        "filename": "multi-master/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-05-16T21:18:55Z",
+      "side": 1,
+      "message": "set the correct",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 17
+      },
+      "revId": "eef665a5e7154a430cb62a7cdaa1ddf970fc2e5e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c733b3e_43aa23d9",
+        "filename": "multi-master/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-05-16T21:18:55Z",
+      "side": 1,
+      "message": "The prerequisites to run this stack are:",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 51
+      },
+      "revId": "eef665a5e7154a430cb62a7cdaa1ddf970fc2e5e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "408b634b_34871066",
+        "filename": "multi-master/cf-cluster.yml",
+        "patchSetId": 6
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-05-16T21:18:55Z",
+      "side": 1,
+      "message": "What is this hardcoded IP?",
+      "range": {
+        "startLine": 150,
+        "startChar": 41,
+        "endLine": 150,
+        "endChar": 56
+      },
+      "revId": "eef665a5e7154a430cb62a7cdaa1ddf970fc2e5e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
