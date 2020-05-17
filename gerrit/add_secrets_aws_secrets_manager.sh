@@ -28,7 +28,8 @@ keys=(
 
 for key_name in "${keys[@]}"
 do
-  echo aws secretsmanager create-secret --name ${KEY_PREFIX}_${key_name} \
+  echo "Adding ${key_name}..."
+  aws secretsmanager create-secret --name ${KEY_PREFIX}_${key_name} \
       --description "Gerrit ${key_name}" \
       --secret-string file://$SECRETS_DIRECTORY/${key_name}
 done
