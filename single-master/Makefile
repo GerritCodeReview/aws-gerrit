@@ -33,7 +33,8 @@ service:
 		ParameterKey=HostedZoneName,ParameterValue=$(HOSTED_ZONE_NAME) \
 		ParameterKey=Subdomain,ParameterValue=$(SUBDOMAIN) \
 		ParameterKey=DockerRegistryUrl,ParameterValue=$(DOCKER_REGISTRY_URI) \
-		ParameterKey=CertificateArn,ParameterValue=$(SSL_CERTIFICATE_ARN)
+		ParameterKey=CertificateArn,ParameterValue=$(SSL_CERTIFICATE_ARN) \
+		ParameterKey=GerritKeyPrefix,ParameterValue=$(GERRIT_KEY_PREFIX)
 
 dns-routing:
 	$(AWS_FC_COMMAND) create-stack \
