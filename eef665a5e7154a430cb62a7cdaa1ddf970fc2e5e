@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f6c71665_29d1869c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-05-18T18:00:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd0e0e13_35e23013",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 26
+      },
+      "revId": "eef665a5e7154a430cb62a7cdaa1ddf970fc2e5e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0791b481_81555f14",
         "filename": "README.md",
         "patchSetId": 6
@@ -143,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "e16837cb_766ed10e",
+        "filename": "gerrit/entrypoint.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-05-18T18:00:08Z",
+      "side": 1,
+      "message": "ok I will create a ticket for gerrit-docker",
+      "parentUuid": "d4d6a658_4a558ab1",
+      "range": {
+        "startLine": 11,
+        "startChar": 7,
+        "endLine": 11,
+        "endChar": 42
+      },
+      "revId": "eef665a5e7154a430cb62a7cdaa1ddf970fc2e5e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9ffefa23_3c1ddf97",
         "filename": "gerrit/setup_gerrit.py",
         "patchSetId": 6
@@ -211,6 +259,30 @@
       "revId": "eef665a5e7154a430cb62a7cdaa1ddf970fc2e5e",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57c8face_740bb7dd",
+        "filename": "gerrit/setup_gerrit.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-05-18T18:00:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c5db315_c6f98a6a",
+      "range": {
+        "startLine": 149,
+        "startChar": 0,
+        "endLine": 149,
+        "endChar": 61
+      },
+      "revId": "eef665a5e7154a430cb62a7cdaa1ddf970fc2e5e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     },
     {
       "key": {
@@ -591,6 +663,30 @@
     },
     {
       "key": {
+        "uuid": "a8dbba34_77aa5325",
+        "filename": "multi-master/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-05-18T18:00:08Z",
+      "side": 1,
+      "message": "Each master has its own NLB, hence the 2 instances have different hostnames.\n\nThe services will run on the same cluster thought, hence the host ports cannot be the same.\n\nIf we want to make it more resilient we could have a cluster per master instance, but it might be too much for now. WDYT?",
+      "parentUuid": "612ccbe5_eb17f384",
+      "range": {
+        "startLine": 25,
+        "startChar": 32,
+        "endLine": 25,
+        "endChar": 36
+      },
+      "revId": "eef665a5e7154a430cb62a7cdaa1ddf970fc2e5e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4a199991_f5f8f082",
         "filename": "multi-master/README.md",
         "patchSetId": 6
@@ -847,6 +943,30 @@
       "revId": "eef665a5e7154a430cb62a7cdaa1ddf970fc2e5e",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "297992fc_4a358740",
+        "filename": "multi-master/cf-cluster.yml",
+        "patchSetId": 6
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-05-18T18:00:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c131fcc_88a898a5",
+      "range": {
+        "startLine": 150,
+        "startChar": 41,
+        "endLine": 150,
+        "endChar": 56
+      },
+      "revId": "eef665a5e7154a430cb62a7cdaa1ddf970fc2e5e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     }
   ]
 }
