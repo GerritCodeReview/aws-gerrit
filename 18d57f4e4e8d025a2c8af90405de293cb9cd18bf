@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4dba5bc_cff34b94",
+        "filename": "gerrit/setup_gerrit.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-05-18T16:28:00Z",
+      "side": 1,
+      "message": "I am working on the HA configuration and we will need an additional switch for it. I think we should keep the same logic for the switches, i.e.: being explicits, for example SETUP_REPLICATION, SETUP_HA, etc \n\nWDYT?",
+      "range": {
+        "startLine": 152,
+        "startChar": 27,
+        "endLine": 152,
+        "endChar": 47
+      },
+      "revId": "18d57f4e4e8d025a2c8af90405de293cb9cd18bf",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
