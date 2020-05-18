@@ -38,7 +38,8 @@ service-master:
 		ParameterKey=Subdomain,ParameterValue=$(MASTER_SUBDOMAIN) \
 		ParameterKey=DockerRegistryUrl,ParameterValue=$(DOCKER_REGISTRY_URI) \
 		ParameterKey=CertificateArn,ParameterValue=$(SSL_CERTIFICATE_ARN) \
-		ParameterKey=SlaveServiceStackName,ParameterValue=$(SERVICE_SLAVE_STACK_NAME)
+		ParameterKey=SlaveServiceStackName,ParameterValue=$(SERVICE_SLAVE_STACK_NAME) \
+		ParameterKey=GerritKeyPrefix,ParameterValue=$(GERRIT_KEY_PREFIX)
 
 service-slave:
 	$(AWS_FC_COMMAND) create-stack \
@@ -51,7 +52,8 @@ service-slave:
 		ParameterKey=HostedZoneName,ParameterValue=$(HOSTED_ZONE_NAME) \
 		ParameterKey=Subdomain,ParameterValue=$(SLAVE_SUBDOMAIN) \
 		ParameterKey=DockerRegistryUrl,ParameterValue=$(DOCKER_REGISTRY_URI) \
-		ParameterKey=CertificateArn,ParameterValue=$(SSL_CERTIFICATE_ARN)
+		ParameterKey=CertificateArn,ParameterValue=$(SSL_CERTIFICATE_ARN) \
+		ParameterKey=GerritKeyPrefix,ParameterValue=$(GERRIT_KEY_PREFIX)
 
 dns-routing:
 	$(AWS_FC_COMMAND) create-stack \
