@@ -115,6 +115,8 @@ Resources:
                       Value: !Sub 'proxy-https://*:${HTTPPort}/'
                     - Name: AWS_REGION
                       Value: !Ref AWS::Region
+                    - Name: SETUP_REPLICATION
+                      Value: true
                   MountPoints:
                     - SourceVolume: !Ref GerritGitVolume
                       ContainerPath: /var/gerrit/git
