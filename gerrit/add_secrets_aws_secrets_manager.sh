@@ -9,7 +9,7 @@ fi
 
 # Avoid to open output in less for each AWS command
 export AWS_PAGER=;
-KEY_PREFIX=gerrit_secret
+KEY_PREFIX=${2:-gerrit_secret}
 
 echo "Adding SSH Keys..."
 
