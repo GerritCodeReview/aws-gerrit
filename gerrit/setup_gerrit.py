@@ -76,7 +76,7 @@ secretIds = [
     "ssh_host_rsa_key.pub"
 ]
 
-GERRIT_KEY_PREFIX = "gerrit_secret_"
+GERRIT_KEY_PREFIX = os.getenv("GERRIT_KEY_PREFIX", "gerrit_secret")
 GERRIT_CONFIG_DIRECTORY = "/var/gerrit/etc/"
 
 print("Installing SSH Keys from Secret Manager in directory: " +
@@ -84,7 +84,7 @@ print("Installing SSH Keys from Secret Manager in directory: " +
 for secretId in secretIds:
     print("* Installing SSH Key: " + secretId)
     with open(GERRIT_CONFIG_DIRECTORY + secretId, 'w', encoding='utf-8') as f:
-        f.write(get_secret(GERRIT_KEY_PREFIX + secretId))
+        f.write(get_secret(GERRIT_KEY_PREFIX + "_" + secretId))
 
 GERRIT_SSH_DIRECTORY = "/var/gerrit/.ssh"
 GERRIT_REPLICATION_SSH_KEYS = GERRIT_SSH_DIRECTORY + "/id_rsa"
@@ -110,9 +110,9 @@ with open(GERRIT_CONFIG_DIRECTORY + "secure.config", 'w',
           encoding='utf-8') as f:
     f.write(template.render(
         REGISTER_EMAIL_PRIVATE_KEY=get_secret(
-            GERRIT_KEY_PREFIX + "registerEmailPrivateKey"),
-        LDAP_PASSWORD=get_secret(GERRIT_KEY_PREFIX + "ldapPassword"),
-        SMTP_PASSWORD=get_secret(GERRIT_KEY_PREFIX + "smtpPassword"))
+            GERRIT_KEY_PREFIX + "_registerEmailPrivateKey"),
+        LDAP_PASSWORD=get_secret(GERRIT_KEY_PREFIX + "_ldapPassword"),
+        SMTP_PASSWORD=get_secret(GERRIT_KEY_PREFIX + "_smtpPassword"))
     )
 
 BASE_CONFIG_DIR = "/tmp"
@@ -124,7 +124,7 @@ template = env.get_template("gerrit.config.template")
 config_for_template = {}
 try:
     # If we don't need the monitoring stack we can avoid to set this token
-    prometheus_bearer_token = get_secret(GERRIT_KEY_PREFIX + "prometheus_bearer_token")
+    prometheus_bearer_token = get_secret(GERRIT_KEY_PREFIX + "_prometheus_bearer_token")
     config_for_template['PROMETHEUS_BEARER_TOKEN'] = prometheus_bearer_token
 except ClientError as e:
     if e.response['Error']['Code'] == 'ResourceNotFoundException':
