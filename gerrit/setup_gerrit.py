@@ -8,7 +8,7 @@ from botocore.exceptions import ClientError
 from jinja2 import Environment, FileSystemLoader
 
 
-def get_secret(secret_name):
+def get_secret(secret_name, mandatory=true):
     # Create a Secrets Manager client
     session = boto3.session.Session()
     client = session.client(
@@ -41,8 +41,9 @@ def get_secret(secret_name):
             raise e
         elif e.response['Error']['Code'] == 'ResourceNotFoundException':
             # We can't find the resource that you asked for.
-            # Deal with the exception here, and/or rethrow at your discretion.
-            raise e
+            if mandatory:
+                raise e
+            return None
     else:
         # Decrypts secret using the associated KMS CMK.
         # Depending on whether the secret is a string or binary, one of these
@@ -96,9 +97,11 @@ if not os.path.exists(GERRIT_SSH_DIRECTORY):
     os.mkdir(GERRIT_SSH_DIRECTORY)
     os.chmod(GERRIT_SSH_DIRECTORY, 0o700)
 
-with open(GERRIT_REPLICATION_SSH_KEYS, 'w', encoding='utf-8') as f:
-    f.write(get_secret(GERRIT_KEY_PREFIX + 'replication_user_id_rsa'))
-os.chmod(GERRIT_REPLICATION_SSH_KEYS, 0o400)
+replicationUserIdRsa = get_secret(GERRIT_KEY_PREFIX + '_replication_user_id_rsa', mandatory=False)
+if replicationUserIdRsa:
+    with open(GERRIT_REPLICATION_SSH_KEYS, 'w', encoding='utf-8') as f:
+        f.write(replicationUserIdRsa)
+    os.chmod(GERRIT_REPLICATION_SSH_KEYS, 0o400)
 
 file_loader = FileSystemLoader(GERRIT_CONFIG_DIRECTORY)
 env = Environment(loader=file_loader)
