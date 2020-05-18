@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "97261d22_9fa1d268",
+        "filename": "README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-05-18T12:43:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0791b481_81555f14",
+      "range": {
+        "startLine": 35,
+        "startChar": 10,
+        "endLine": 35,
+        "endChar": 22
+      },
+      "revId": "eef665a5e7154a430cb62a7cdaa1ddf970fc2e5e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "304d4381_1d77c525",
         "filename": "gerrit/entrypoint.sh",
         "patchSetId": 6
@@ -59,6 +83,30 @@
       "writtenOn": "2020-05-16T21:18:55Z",
       "side": 1,
       "message": "Why reindexing if the site has been already initialised?\nI would rather do something different: reindexing *IF* there is no index_config.",
+      "range": {
+        "startLine": 11,
+        "startChar": 7,
+        "endLine": 11,
+        "endChar": 42
+      },
+      "revId": "eef665a5e7154a430cb62a7cdaa1ddf970fc2e5e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e30a528_536ded35",
+        "filename": "gerrit/entrypoint.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-05-18T12:43:35Z",
+      "side": 1,
+      "message": "good point...I took inspiration from the entrypoint script in the official docker-gerrit repo (https://github.com/GerritCodeReview/docker-gerrit/blob/master/centos/8/entrypoint.sh).\n\nShall I create a change for it as well?",
+      "parentUuid": "304d4381_1d77c525",
       "range": {
         "startLine": 11,
         "startChar": 7,
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "ea2edb0e_a88712fe",
+        "filename": "gerrit/setup_gerrit.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-05-18T12:43:35Z",
+      "side": 1,
+      "message": "Somehow...I could probably extract it in its own change.",
+      "parentUuid": "9ffefa23_3c1ddf97",
+      "range": {
+        "startLine": 149,
+        "startChar": 0,
+        "endLine": 149,
+        "endChar": 61
+      },
+      "revId": "eef665a5e7154a430cb62a7cdaa1ddf970fc2e5e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2a215710_a0f466e0",
         "filename": "multi-master/Makefile",
         "patchSetId": 6
@@ -105,6 +177,30 @@
       "writtenOn": "2020-05-16T21:18:55Z",
       "side": 1,
       "message": "nit: I would reduce the indenting a bit, as I find harder to read",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 4
+      },
+      "revId": "eef665a5e7154a430cb62a7cdaa1ddf970fc2e5e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79684c1f_b4fea4aa",
+        "filename": "multi-master/Makefile",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-05-18T12:43:35Z",
+      "side": 1,
+      "message": "In the IDE it reads better indented in this way. Not sure why Gerrit shows it so indented.",
+      "parentUuid": "2a215710_a0f466e0",
       "range": {
         "startLine": 9,
         "startChar": 0,
@@ -137,6 +233,30 @@
       "revId": "eef665a5e7154a430cb62a7cdaa1ddf970fc2e5e",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05205064_26d99dfe",
+        "filename": "multi-master/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-05-18T12:43:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6f4df41_fca41c29",
+      "range": {
+        "startLine": 1,
+        "startChar": 9,
+        "endLine": 1,
+        "endChar": 21
+      },
+      "revId": "eef665a5e7154a430cb62a7cdaa1ddf970fc2e5e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +329,78 @@
     },
     {
       "key": {
+        "uuid": "693c2c5e_419aff73",
+        "filename": "multi-master/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-05-18T12:43:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b28095f4_f97bd8a6",
+      "range": {
+        "startLine": 3,
+        "startChar": 12,
+        "endLine": 3,
+        "endChar": 21
+      },
+      "revId": "eef665a5e7154a430cb62a7cdaa1ddf970fc2e5e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "79e51aca_3d26459d",
+        "filename": "multi-master/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-05-18T12:43:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b415ac9_e8954dcb",
+      "range": {
+        "startLine": 3,
+        "startChar": 22,
+        "endLine": 3,
+        "endChar": 29
+      },
+      "revId": "eef665a5e7154a430cb62a7cdaa1ddf970fc2e5e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "051ebc69_be87c97e",
+        "filename": "multi-master/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-05-18T12:43:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf9b0a6d_4545dd0c",
+      "range": {
+        "startLine": 3,
+        "startChar": 68,
+        "endLine": 3,
+        "endChar": 80
+      },
+      "revId": "eef665a5e7154a430cb62a7cdaa1ddf970fc2e5e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4f795c5_45b2eef1",
         "filename": "multi-master/README.md",
         "patchSetId": 6
@@ -229,6 +421,30 @@
       "revId": "eef665a5e7154a430cb62a7cdaa1ddf970fc2e5e",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f91181b4_0d5e782a",
+        "filename": "multi-master/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-05-18T12:43:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4f795c5_45b2eef1",
+      "range": {
+        "startLine": 4,
+        "startChar": 58,
+        "endLine": 4,
+        "endChar": 61
+      },
+      "revId": "eef665a5e7154a430cb62a7cdaa1ddf970fc2e5e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +471,30 @@
     },
     {
       "key": {
+        "uuid": "ef6977c3_a531f9cb",
+        "filename": "multi-master/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-05-18T12:43:35Z",
+      "side": 1,
+      "message": "nope, since the cluster is a single one and it has to expose different ports.\n\nThe NLB and the ports used in the docker container will be the same on the 2 instances.",
+      "parentUuid": "f07ba2b5_700ada6d",
+      "range": {
+        "startLine": 25,
+        "startChar": 32,
+        "endLine": 25,
+        "endChar": 36
+      },
+      "revId": "eef665a5e7154a430cb62a7cdaa1ddf970fc2e5e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4a199991_f5f8f082",
         "filename": "multi-master/README.md",
         "patchSetId": 6
@@ -266,6 +506,30 @@
       "writtenOn": "2020-05-16T21:18:55Z",
       "side": 1,
       "message": "Same as before: can we keep 29418?",
+      "range": {
+        "startLine": 26,
+        "startChar": 31,
+        "endLine": 26,
+        "endChar": 36
+      },
+      "revId": "eef665a5e7154a430cb62a7cdaa1ddf970fc2e5e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb2d6dff_d1a61fb3",
+        "filename": "multi-master/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-05-18T12:43:35Z",
+      "side": 1,
+      "message": "same as above",
+      "parentUuid": "4a199991_f5f8f082",
       "range": {
         "startLine": 26,
         "startChar": 31,
@@ -324,6 +588,54 @@
     },
     {
       "key": {
+        "uuid": "d1b690d7_ea62ed05",
+        "filename": "multi-master/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-05-18T12:43:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "898887f8_b773977e",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 17
+      },
+      "revId": "eef665a5e7154a430cb62a7cdaa1ddf970fc2e5e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "358042d3_95c954c9",
+        "filename": "multi-master/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-05-18T12:43:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e5cdfa4_2c225750",
+      "range": {
+        "startLine": 55,
+        "startChar": 18,
+        "endLine": 55,
+        "endChar": 23
+      },
+      "revId": "eef665a5e7154a430cb62a7cdaa1ddf970fc2e5e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c733b3e_43aa23d9",
         "filename": "multi-master/README.md",
         "patchSetId": 6
@@ -347,6 +659,30 @@
     },
     {
       "key": {
+        "uuid": "038500dd_2c77e0a0",
+        "filename": "multi-master/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-05-18T12:43:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c733b3e_43aa23d9",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 51
+      },
+      "revId": "eef665a5e7154a430cb62a7cdaa1ddf970fc2e5e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "408b634b_34871066",
         "filename": "multi-master/cf-cluster.yml",
         "patchSetId": 6
@@ -358,6 +694,30 @@
       "writtenOn": "2020-05-16T21:18:55Z",
       "side": 1,
       "message": "What is this hardcoded IP?",
+      "range": {
+        "startLine": 150,
+        "startChar": 41,
+        "endLine": 150,
+        "endChar": 56
+      },
+      "revId": "eef665a5e7154a430cb62a7cdaa1ddf970fc2e5e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9990672_7e793d23",
+        "filename": "multi-master/cf-cluster.yml",
+        "patchSetId": 6
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-05-18T12:43:35Z",
+      "side": 1,
+      "message": "It is a link-local address, valid only from the instance, to retrieve meta-data information.",
+      "parentUuid": "408b634b_34871066",
       "range": {
         "startLine": 150,
         "startChar": 41,
