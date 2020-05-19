@@ -11,6 +11,22 @@ fi
 export AWS_PAGER=;
 KEY_PREFIX=${2:-gerrit_secret}
 
+function set-secret-string {
+  SECRET_ID=$1
+
+  if aws secretsmanager describe-secret --secret-id ${KEY_PREFIX}_${SECRET_ID} > /dev/null 2>&1
+  then
+    echo "Updating secret ${KEY_PREFIX}_${SECRET_ID} ..."
+    aws secretsmanager put-secret-value --secret-id ${KEY_PREFIX}_${SECRET_ID} \
+      --secret-string file://$SECRETS_DIRECTORY/${SECRET_ID}
+  else
+    echo "Creating secret ${KEY_PREFIX}_${SECRET_ID} ..."
+    aws secretsmanager create-secret --name ${KEY_PREFIX}_${SECRET_ID} \
+      --description "Gerrit ${SECRET_ID}" \
+      --secret-string file://$SECRETS_DIRECTORY/${SECRET_ID}
+  fi
+}
+
 echo "Adding SSH Keys..."
 
 keys=(
@@ -28,36 +44,20 @@ keys=(
 
 for key_name in "${keys[@]}"
 do
-  echo "Adding ${key_name}..."
-  aws secretsmanager create-secret --name ${KEY_PREFIX}_${key_name} \
-      --description "Gerrit ${key_name}" \
-      --secret-string file://$SECRETS_DIRECTORY/${key_name}
+  set-secret-string ${key_name}
 done
 
 if [ -f "$SECRETS_DIRECTORY/replication_user_id_rsa.pub" ]; then
   echo "Adding Replication SSH Keys..."
-  aws secretsmanager create-secret --name ${KEY_PREFIX}_replication_user_id_rsa.pub \
-      --description "Gerrit replication_user_id_rsa.pub" \
-      --secret-string file://$SECRETS_DIRECTORY/replication_user_id_rsa.pub
-  aws secretsmanager create-secret --name ${KEY_PREFIX}_replication_user_id_rsa \
-      --description "Gerrit replication_user_id_rsa" \
-      --secret-string file://$SECRETS_DIRECTORY/replication_user_id_rsa
+  set-secret-string replication_user_id_rsa.pub
+  set-secret-string replication_user_id_rsa
 fi
 
 echo "Adding Register Email Private Key..."
-
-aws secretsmanager create-secret --name ${KEY_PREFIX}_registerEmailPrivateKey \
-    --description "Gerrit Register Email Private Key" \
-    --secret-string file://$SECRETS_DIRECTORY/registerEmailPrivateKey
+set-secret-string registerEmailPrivateKey
 
 echo "Adding LDAP password..."
-
-aws secretsmanager create-secret --name ${KEY_PREFIX}_ldapPassword \
-    --description "LDAP password" \
-    --secret-string file://$SECRETS_DIRECTORY/ldapPassword
+set-secret-string ldapPassword
 
 echo "Adding SMTP password..."
-
-aws secretsmanager create-secret --name ${KEY_PREFIX}_smtpPassword \
-    --description "SMTP password" \
-    --secret-string file://$SECRETS_DIRECTORY/smtpPassword
+set-secret-string smtpPassword
