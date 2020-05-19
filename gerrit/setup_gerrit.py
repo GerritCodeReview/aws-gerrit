@@ -7,6 +7,7 @@ import configparser
 from botocore.exceptions import ClientError
 from jinja2 import Environment, FileSystemLoader
 
+setupReplication = (os.getenv('SETUP_REPLICATION') == 'true')
 
 def get_secret(secret_name):
     # Create a Secrets Manager client
@@ -86,19 +87,20 @@ for secretId in secretIds:
     with open(GERRIT_CONFIG_DIRECTORY + secretId, 'w', encoding='utf-8') as f:
         f.write(get_secret(GERRIT_KEY_PREFIX + "_" + secretId))
 
-GERRIT_SSH_DIRECTORY = "/var/gerrit/.ssh"
-GERRIT_REPLICATION_SSH_KEYS = GERRIT_SSH_DIRECTORY + "/id_rsa"
+if setupReplication:
+    GERRIT_SSH_DIRECTORY = "/var/gerrit/.ssh"
+    GERRIT_REPLICATION_SSH_KEYS = GERRIT_SSH_DIRECTORY + "/id_rsa"
 
-print("Installing Replication SSH Keys from Secret Manager in: " +
-      GERRIT_REPLICATION_SSH_KEYS)
+    print("Installing Replication SSH Keys from Secret Manager in: " +
+          GERRIT_REPLICATION_SSH_KEYS)
 
-if not os.path.exists(GERRIT_SSH_DIRECTORY):
-    os.mkdir(GERRIT_SSH_DIRECTORY)
-    os.chmod(GERRIT_SSH_DIRECTORY, 0o700)
+    if not os.path.exists(GERRIT_SSH_DIRECTORY):
+        os.mkdir(GERRIT_SSH_DIRECTORY)
+        os.chmod(GERRIT_SSH_DIRECTORY, 0o700)
 
-with open(GERRIT_REPLICATION_SSH_KEYS, 'w', encoding='utf-8') as f:
-    f.write(get_secret(GERRIT_KEY_PREFIX + 'replication_user_id_rsa'))
-os.chmod(GERRIT_REPLICATION_SSH_KEYS, 0o400)
+    with open(GERRIT_REPLICATION_SSH_KEYS, 'w', encoding='utf-8') as f:
+        f.write(get_secret(GERRIT_KEY_PREFIX + 'replication_user_id_rsa'))
+    os.chmod(GERRIT_REPLICATION_SSH_KEYS, 0o400)
 
 file_loader = FileSystemLoader(GERRIT_CONFIG_DIRECTORY)
 env = Environment(loader=file_loader)
@@ -146,7 +148,6 @@ with open(GERRIT_CONFIG_DIRECTORY + "gerrit.config", 'w',
     f.write(template.render(config_for_template))
 
 containerSlave = (os.getenv('CONTAINER_SLAVE') == 'true')
-setupReplication = (os.getenv('SETUP_REPLICATION') == 'true')
 if ((not containerSlave) and setupReplication):
     print("Setting Replication config in '" +
           GERRIT_CONFIG_DIRECTORY + "replication.config'")
