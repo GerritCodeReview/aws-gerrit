@@ -2,8 +2,7 @@ FROM gerritcodereview/gerrit:3.2.0-rc2-centos8
 
 USER root
 
-RUN yum update -y \
-    && yum install -y python36 python3-libs python36-devel python3-pip
+RUN  yum install -y python36 python3-libs python36-devel python3-pip
 
 COPY --chown=gerrit:gerrit ssh-config /var/gerrit/.ssh/config
 

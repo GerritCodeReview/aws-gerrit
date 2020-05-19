@@ -52,6 +52,9 @@ Parameters:
         Description: The subdomain of the Gerrit cluster
         Type: String
         Default: gerrit-master-demo
+  GerritKeyPrefix:
+        Description: Gerrit credentials keys prefix
+        Type: String
   GerritGitVolume:
       Description: Gerrit git volume name
       Type: String
@@ -115,6 +118,10 @@ Resources:
                       Value: !Sub 'proxy-https://*:${HTTPPort}/'
                     - Name: AWS_REGION
                       Value: !Ref AWS::Region
+                    - Name: SETUP_REPLICATION
+                      Value: true
+                    - Name: GERRIT_KEY_PREFIX
+                      Value: !Ref GerritKeyPrefix
                   MountPoints:
                     - SourceVolume: !Ref GerritGitVolume
                       ContainerPath: /var/gerrit/git
