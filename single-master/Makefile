@@ -20,7 +20,9 @@ cluster:
 		--stack-name $(CLUSTER_STACK_NAME) \
 		--capabilities CAPABILITY_IAM  \
 		--template-body file://`pwd`/$(CLUSTER_TEMPLATE) \
-		--region $(AWS_REGION)
+		--region $(AWS_REGION) \
+		--parameters \
+		ParameterKey=ECSKeyName,ParameterValue=$(CLUSTER_KEYS)
 
 service:
 	$(AWS_FC_COMMAND) create-stack \

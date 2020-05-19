@@ -24,7 +24,8 @@ cluster:
 		--template-body file://`pwd`/$(CLUSTER_TEMPLATE) \
 		--region $(AWS_REGION) \
 		--parameters \
-		ParameterKey=DesiredCapacity,ParameterValue=$(CLUSTER_DESIRED_CAPACITY)
+		ParameterKey=DesiredCapacity,ParameterValue=$(CLUSTER_DESIRED_CAPACITY) \
+		ParameterKey=ECSKeyName,ParameterValue=$(CLUSTER_KEYS)
 
 service-master:
 	$(AWS_FC_COMMAND) create-stack \
