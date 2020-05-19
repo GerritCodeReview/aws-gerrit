@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6d4f903_4ca1c88e",
+        "filename": "gerrit/setup_gerrit.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-05-19T10:15:15Z",
+      "side": 1,
+      "message": "post-merge -1: that isn\u0027t enough as needs also to disable the SSH key extraction from secrets.\nGonna fix it in a follow-up commit.",
+      "range": {
+        "startLine": 149,
+        "startChar": 0,
+        "endLine": 150,
+        "endChar": 47
+      },
+      "revId": "6fb70ba080fc870d5306d094777c42a4a227ba23",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
