@@ -191,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "1e929070_534a6162",
+        "filename": "gerrit/entrypoint.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-05-19T20:07:46Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e16837cb_766ed10e",
+      "range": {
+        "startLine": 11,
+        "startChar": 7,
+        "endLine": 11,
+        "endChar": 42
+      },
+      "revId": "eef665a5e7154a430cb62a7cdaa1ddf970fc2e5e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ffefa23_3c1ddf97",
         "filename": "gerrit/setup_gerrit.py",
         "patchSetId": 6
