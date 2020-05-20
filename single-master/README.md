@@ -70,6 +70,7 @@ This is the list of available parameters:
 * `DNS_ROUTING_STACK_NAME`: Optional. Name of the DNS routing stack. `gerrit-dns-routing` by default.
 * `HOSTED_ZONE_NAME`: Optional. Name of the hosted zone. `mycompany.com` by default.
 * `SUBDOMAIN`: Optional. Name of the sub domain. `gerrit-master-demo` by default.
+*  GERRIT_KEY_PREFIX : Optional. Secrets prefix used during the [Import into AWS Secret Manager](#import-into-aws-secret-manager). gerrit_secret by default.
 
 ### Prerequisites
 

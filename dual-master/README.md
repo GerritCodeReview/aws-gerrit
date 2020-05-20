@@ -67,6 +67,7 @@ This is the list of available parameters:
 * `MASTER1_SUBDOMAIN`: Optional. Name of the master 1 sub domain. `gerrit-master-1-demo` by default.
 * `MASTER2_SUBDOMAIN`: Optional. Name of the master 2 sub domain. `gerrit-master-2-demo` by default.
 * `CLUSTER_DESIRED_CAPACITY`: Optional.  Number of EC2 instances composing the cluster. `1` by default.
+*  GERRIT_KEY_PREFIX : Optional. Secrets prefix used during the [Import into AWS Secret Manager](#import-into-aws-secret-manager). gerrit_secret by default.
 
 ### Prerequisites
 
@@ -127,7 +128,9 @@ in the same directory of the SSH keys.
 
 You can now run the [script](../gerrit/add_secrets_aws_secrets_manager.sh) to
 upload them to AWS Secret Manager:
-`add_secrets_aws_secrets_manager.sh /path/to/your/keys/directory`
+`add_secrets_aws_secrets_manager.sh /path/to/your/keys/directory secret_prefix`
+
+When `secret_prefix` is omitted, it is set to `gerrit_secret` by default.
 
 ### Publish custom Gerrit Docker image
 
