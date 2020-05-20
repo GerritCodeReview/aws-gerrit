@@ -129,7 +129,7 @@ in the same directory of the SSH keys.
 
 You can now run the [script](../gerrit/add_secrets_aws_secrets_manager.sh) to
 upload them to AWS Secret Manager:
-`add_secrets_aws_secrets_manager.sh /path/to/your/keys/directory secret_prefix`
+`add_secrets_aws_secrets_manager.sh /path/to/your/keys/directory secret_prefix aws-region-id`
 
 When `secret_prefix` is omitted, it is set to `gerrit_secret` by default.
 
