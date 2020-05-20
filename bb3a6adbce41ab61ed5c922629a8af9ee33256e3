@@ -70,6 +70,30 @@
       "revId": "bb3a6adbce41ab61ed5c922629a8af9ee33256e3",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eee2c5a1_965a9d2f",
+        "filename": "gerrit/entrypoint.sh",
+        "patchSetId": 10
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-05-20T10:09:00Z",
+      "side": 1,
+      "message": "\u003e I thinks is actually needed and it was missed in the parent change. \n\n-d means \"directory\", -f means \"file\".\n\nThe gerrit_index.config is a file, not a directory. Hope that makes sense.",
+      "parentUuid": "b9cf7020_b0a21b84",
+      "range": {
+        "startLine": 11,
+        "startChar": 7,
+        "endLine": 11,
+        "endChar": 12
+      },
+      "revId": "bb3a6adbce41ab61ed5c922629a8af9ee33256e3",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
     }
   ]
 }
