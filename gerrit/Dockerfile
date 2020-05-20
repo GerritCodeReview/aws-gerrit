@@ -2,7 +2,7 @@ FROM gerritcodereview/gerrit:$GERRIT_VERSION.$GERRIT_PATCH-centos7
 
 USER root
 
-RUN yum install -y https://centos7.iuscommunity.org/ius-release.rpm \
+RUN yum install -y https://repo.ius.io/ius-release-el7.rpm \
     && yum install -y python36u python36u-libs python36u-devel python36u-pip
 
 COPY --chown=gerrit:gerrit ssh-config /var/gerrit/.ssh/config
