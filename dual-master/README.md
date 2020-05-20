@@ -144,22 +144,16 @@ upload them to AWS Secret Manager:
 
 ### Getting Started
 
-* Create a key pair to access the EC2 instances in the cluster:
-
-```
-aws ec2 create-key-pair --key-name gerrit-cluster-keys \
-  --query 'KeyMaterial' --output text > gerrit-cluster.pem
-```
-
-*NOTE: the EC2 key pair are useful when you need to connect to the EC2 instances
-for troubleshooting purposes. Store them in a `pem` file to use when ssh-ing into your
-instances as follow: `ssh -i yourKeyPairs.pem <ec2_instance_ip>`*
-
 * Create the cluster, services and DNS routing stacks:
 
 ```
 make create-all
 ```
+
+*NOTE: the creation of the cluster needs an EC2 key pair are useful when you need to connect
+to the EC2 instances for troubleshooting purposes. The key pair is automatically generated
+and store them in a `pem` file on the current directory.
+To use when ssh-ing into your instances as follow: `ssh -i cluster-keys.pem ec2-user@<ec2_instance_ip>`*
 
 ### Cleaning up
 

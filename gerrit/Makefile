@@ -1,5 +1,5 @@
 include ../$(RECIPE)/setup.env
-include ../makefile.env
+include ../Makefile.common
 
 docker-registry-login:
 	aws ecr get-login-password --region $(AWS_REGION) \

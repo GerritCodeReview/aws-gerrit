@@ -1,5 +1,5 @@
 include setup.env
-include ../makefile.env
+include ../Makefile.common
 
 CLUSTER_TEMPLATE:=cf-cluster.yml
 SERVICE_MASTER_TEMPLATE:=cf-service-master.yml
@@ -8,7 +8,7 @@ DNS_ROUTING_TEMPLATE:=cf-dns-route.yml
 AWS_FC_COMMAND=export AWS_PAGER=;aws cloudformation
 
 .PHONY: create-all delete-all \
-				cluster service-master dns-routing \
+				cluster cluster-keys service-master dns-routing \
 				wait-for-cluster-creation wait-for-service-master-creation wait-for-dns-routing-creation \
 				wait-for-cluster-deletion wait-for-service-master-deletion wait-for-dns-routing-deletion \
 				gerrit-build gerrit-publish
@@ -18,7 +18,7 @@ create-all: cluster wait-for-cluster-creation \
 						wait-for-service-master-creation wait-for-service-slave-creation \
 						dns-routing wait-for-dns-routing-creation
 
-cluster:
+cluster: cluster-keys
 	$(AWS_FC_COMMAND) create-stack \
 		--stack-name $(CLUSTER_STACK_NAME) \
 		--capabilities CAPABILITY_IAM  \
