@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "181a6772_7e0de9d5",
+        "filename": "dual-master/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-05-20T16:58:59Z",
+      "side": 1,
+      "message": "nit: for consistency with the other default parameters it should be: `gerrit_secret`",
+      "range": {
+        "startLine": 70,
+        "startChar": 131,
+        "endLine": 70,
+        "endChar": 144
+      },
+      "revId": "2c5d273a34a32bdfebfa797adff5b3db0ff4af2a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
