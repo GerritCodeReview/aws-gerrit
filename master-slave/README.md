@@ -73,6 +73,8 @@ This is the list of available parameters:
 * `HOSTED_ZONE_NAME`: Optional. Name of the hosted zone. `mycompany.com` by default.
 * `MASTER_SUBDOMAIN`: Optional. Name of the master sub domain. `gerrit-master-demo` by default.
 * `SLAVE_SUBDOMAIN`: Optional. Name of the slave sub domain. `gerrit-slave-demo` by default.
+*  GERRIT_KEY_PREFIX : Optional. Secrets prefix used during the [Import into AWS Secret Manager](#import-into-aws-secret-manager).
+  `gerrit_secret` by default.
 * `CLUSTER_DESIRED_CAPACITY`: Optional.  Number of EC2 instances composing the cluster. `1` by default.
 
 *NOTE: if you are planning to run the monitoring stack, set the
@@ -140,7 +142,9 @@ in the same directory of the SSH keys.
 
 You can now run the [script](../gerrit/add_secrets_aws_secrets_manager.sh) to
 upload them to AWS Secret Manager:
-`add_secrets_aws_secrets_manager.sh /path/to/your/keys/directory`
+`add_secrets_aws_secrets_manager.sh /path/to/your/keys/directory secret_prefix`
+
+When `secret_prefix` is omitted, it is set to `gerrit_secret` by default.
 
 ### Publish custom Gerrit Docker image
 
