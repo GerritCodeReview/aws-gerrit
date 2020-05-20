@@ -1,4 +1,5 @@
 include setup.env
+include ../version.env
 
 CLUSTER_TEMPLATE:=cf-cluster.yml
 SERVICE_TEMPLATE:=cf-service.yml
@@ -20,7 +21,9 @@ cluster:
 		--stack-name $(CLUSTER_STACK_NAME) \
 		--capabilities CAPABILITY_IAM  \
 		--template-body file://`pwd`/$(CLUSTER_TEMPLATE) \
-		--region $(AWS_REGION)
+		--region $(AWS_REGION) \
+		--parameters \
+		ParameterKey=ECSKeyName,ParameterValue=$(CLUSTER_KEYS)
 
 service:
 	$(AWS_FC_COMMAND) create-stack \
@@ -34,7 +37,8 @@ service:
 		ParameterKey=Subdomain,ParameterValue=$(SUBDOMAIN) \
 		ParameterKey=DockerRegistryUrl,ParameterValue=$(DOCKER_REGISTRY_URI) \
 		ParameterKey=CertificateArn,ParameterValue=$(SSL_CERTIFICATE_ARN) \
-		ParameterKey=GerritKeyPrefix,ParameterValue=$(GERRIT_KEY_PREFIX)
+		ParameterKey=GerritKeyPrefix,ParameterValue=$(GERRIT_KEY_PREFIX) \
+		ParameterKey=DockerImage,ParameterValue=aws-gerrit/gerrit:$(IMAGE_TAG) \
 
 dns-routing:
 	$(AWS_FC_COMMAND) create-stack \

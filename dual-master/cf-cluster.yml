@@ -1,0 +1,330 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: A stack for deploying containerized applications onto a cluster of EC2
+             hosts using Elastic Container Service. This stack runs containers on
+             hosts that are in a public VPC subnet.
+Parameters:
+  DesiredCapacity:
+    Type: Number
+    Default: '1'
+    Description: Number of EC2 instances to launch in your ECS cluster.
+  MaxSize:
+    Type: Number
+    Default: '6'
+    Description: Maximum number of EC2 instances that can be launched in your ECS cluster.
+  ECSAMI:
+    Description: AMI ID
+    Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
+    Default: /aws/service/ecs/optimized-ami/amazon-linux-2/recommended/image_id
+  InstanceType:
+    Description: EC2 instance type
+    Type: String
+    Default: c4.xlarge
+    AllowedValues: [t2.micro, t2.small, t2.medium, t2.large, m3.medium, m3.large,
+      m3.xlarge, m3.2xlarge, m4.large, m4.xlarge, m4.2xlarge, m4.4xlarge, m4.10xlarge,
+      c4.large, c4.xlarge, c4.2xlarge, c4.4xlarge, c4.8xlarge, c3.large, c3.xlarge,
+      c3.2xlarge, c3.4xlarge, c3.8xlarge, r3.large, r3.xlarge, r3.2xlarge, r3.4xlarge,
+      r3.8xlarge, i2.xlarge, i2.2xlarge, i2.4xlarge, i2.8xlarge]
+    ConstraintDescription: Please choose a valid instance type.
+  ECSKeyName:
+    Type: String
+    Default: gerrit-cluster-keys
+    Description: EC2 key pair name the cluter's instances
+  EnvironmentName:
+      Description: An environment name used to build the log stream names
+      Type: String
+      Default: test
+Mappings:
+  # Hard values for the subnet masks. These masks define
+  # the range of internal IP addresses that can be assigned.
+  # The VPC can have all IP's from 10.0.0.0 to 10.0.255.255
+  # There is the subnet which cover the ranges:
+  #
+  # 10.0.0.0 - 10.0.0.255
+  SubnetConfig:
+    VPC:
+      CIDR: '10.0.0.0/16'
+    PublicOne:
+      CIDR: '10.0.0.0/24'
+Resources:
+  VPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      CidrBlock: !FindInMap ['SubnetConfig', 'VPC', 'CIDR']
+
+  # Public subnets, where containers can have public IP addresses
+  PublicSubnetOne:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone:
+         Fn::Select:
+         - 0
+         - Fn::GetAZs: {Ref: 'AWS::Region'}
+      VpcId: !Ref 'VPC'
+      CidrBlock: !FindInMap ['SubnetConfig', 'PublicOne', 'CIDR']
+      MapPublicIpOnLaunch: true
+
+  # Setup networking resources for the public subnets. Containers
+  # in the public subnets have public IP addresses and the routing table
+  # sends network traffic via the internet gateway.
+  InternetGateway:
+    Type: AWS::EC2::InternetGateway
+  GatewayAttachement:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId: !Ref 'VPC'
+      InternetGatewayId: !Ref 'InternetGateway'
+  PublicRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref 'VPC'
+  PublicRoute:
+    Type: AWS::EC2::Route
+    DependsOn: GatewayAttachement
+    Properties:
+      RouteTableId: !Ref 'PublicRouteTable'
+      DestinationCidrBlock: '0.0.0.0/0'
+      GatewayId: !Ref 'InternetGateway'
+  PublicSubnetOneRouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PublicSubnetOne
+      RouteTableId: !Ref PublicRouteTable
+
+  # ECS Resources
+  ECSCluster:
+    Type: AWS::ECS::Cluster
+
+  EcsHostSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Access to the ECS hosts that run containers
+      VpcId: !Ref 'VPC'
+      SecurityGroupIngress:
+          # Allow access to NLB from anywhere on the internet
+          - CidrIp: 0.0.0.0/0
+            IpProtocol: -1
+
+  CloudWatchLogsGroup:
+      Type: AWS::Logs::LogGroup
+      Properties:
+          LogGroupName: !Ref AWS::StackName
+          RetentionInDays: 14
+
+  # Autoscaling group. This launches the actual EC2 instances that will register
+  # themselves as members of the cluster, and run the docker containers.
+  ECSAutoScalingGroup:
+    Type: AWS::AutoScaling::AutoScalingGroup
+    Properties:
+      VPCZoneIdentifier:
+        - !Ref PublicSubnetOne
+      LaunchConfigurationName: !Ref 'ContainerInstances'
+      MinSize: '1'
+      MaxSize: !Ref 'MaxSize'
+      DesiredCapacity: !Ref 'DesiredCapacity'
+    CreationPolicy:
+      ResourceSignal:
+        Timeout: PT15M
+    UpdatePolicy:
+      AutoScalingReplacingUpdate:
+        WillReplace: 'true'
+  ContainerInstances:
+    Type: AWS::AutoScaling::LaunchConfiguration
+    Properties:
+      ImageId: !Ref 'ECSAMI'
+      SecurityGroups: [!Ref 'EcsHostSecurityGroup']
+      InstanceType: !Ref 'InstanceType'
+      IamInstanceProfile: !Ref 'EC2InstanceProfile'
+      KeyName: !Ref ECSKeyName
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash -xe
+          echo ECS_CLUSTER=${ECSCluster} >> /etc/ecs/ecs.config
+          # Make sure latest version of the helper scripts are installed as per recommendation:
+          # https://github.com/awsdocs/aws-cloudformation-user-guide/blob/master/doc_source/cfn-helper-scripts-reference.md#using-the-latest-version
+          yum install -y aws-cfn-bootstrap nfs-utils
+          # EFS setting
+          DIR_TGT=/mnt/efs/gerrit-shared
+          mkdir -p $DIR_TGT
+          EC2_REGION=${AWS::Region}
+          # 169.254.169.254 link-local address, valid only from the instance, to retrieve meta-data information.
+          EC2_AVAIL_ZONE=`curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone`
+          EFS_FILE_SYSTEM_ID=${FileSystem}
+          DIR_SRC=$EC2_AVAIL_ZONE.$EFS_FILE_SYSTEM_ID.efs.$EC2_REGION.amazonaws.com
+
+          touch /home/ec2-user/echo.res
+          echo $EFS_FILE_SYSTEM_ID >> /home/ec2-user/echo.res
+          echo $EC2_AVAIL_ZONE >> /home/ec2-user/echo.res
+          echo $EC2_REGION >> /home/ec2-user/echo.res
+          echo $DIR_SRC >> /home/ec2-user/echo.res
+          echo $DIR_TGT >> /home/ec2-user/echo.res
+          mount -t nfs4 -o nfsvers=4.1,hard,timeo=600,retrans=2 $DIR_SRC:/ $DIR_TGT >> /home/ec2-user/echo.res
+          mkdir $DIR_TGT/git
+          chown -R 1000:1000 $DIR_TGT
+          cp -p /etc/fstab /etc/fstab.back-$(date +%F)
+          echo -e \"$DIR_SRC:/ \t\t $DIR_TGT \t\t nfs \t\t defaults \t\t 0 \t\t 0\" | tee -a /etc/fstab
+          # Get the CloudWatch Logs agent
+          echo -e "
+            {\"logs\":
+              {\"logs_collected\":
+                {\"files\":
+                  {\"collect_list\":
+                    [
+                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-master-2/_data/httpd_log\",
+                      \"log_group_name\": \"${AWS::StackName}\",
+                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/master-2/httpd_log\",
+                      \"timezone\": \"UTC\"
+                      },
+                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-master-2/_data/sshd_log\",
+                      \"log_group_name\": \"${AWS::StackName}\",
+                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/master-2/sshd_log\",
+                      \"timezone\": \"UTC\"
+                      },
+                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-master-2/_data/gc_log\",
+                      \"log_group_name\": \"${AWS::StackName}\",
+                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/master-2/gc_log\",
+                      \"timezone\": \"UTC\"
+                      },
+                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-master-2/_data/audit_log\",
+                      \"log_group_name\": \"${AWS::StackName}\",
+                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/master-2/audit_log\",
+                      \"timezone\": \"UTC\"
+                      },
+                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-master/_data/replication_log\",
+                      \"log_group_name\": \"${AWS::StackName}\",
+                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/master/replication_log\",
+                      \"timezone\": \"UTC\"
+                      },
+                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-master/_data/httpd_log\",
+                      \"log_group_name\": \"${AWS::StackName}\",
+                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/master/httpd_log\",
+                      \"timezone\": \"UTC\"
+                      },
+                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-master/_data/sshd_log\",
+                      \"log_group_name\": \"${AWS::StackName}\",
+                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/master/sshd_log\",
+                      \"timezone\": \"UTC\"
+                      },
+                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-master/_data/gc_log\",
+                      \"log_group_name\": \"${AWS::StackName}\",
+                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/master/gc_log\",
+                      \"timezone\": \"UTC\"
+                      },
+                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-master/_data/audit_log\",
+                      \"log_group_name\": \"${AWS::StackName}\",
+                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/master/audit_log\",
+                      \"timezone\": \"UTC\"
+                      }
+                    ]
+                  }
+                }
+              }
+            }" >> /home/ec2-user/gerritlogsaccess.json
+          # Install the CloudWatch Logs agent
+          yum install -y wget
+          wget https://s3.amazonaws.com/amazoncloudwatch-agent/centos/amd64/latest/amazon-cloudwatch-agent.rpm
+          rpm -U ./amazon-cloudwatch-agent.rpm
+          /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -c file:/home/ec2-user/gerritlogsaccess.json -s
+          # Signal to CloudFormation aws-cfn-bootstrap has been correctly updated
+          /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource ECSAutoScalingGroup --region ${AWS::Region}
+  AutoscalingRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service: [application-autoscaling.amazonaws.com]
+          Action: ['sts:AssumeRole']
+      Path: /
+      Policies:
+      - PolicyName: service-autoscaling
+        PolicyDocument:
+          Statement:
+          - Effect: Allow
+            Action:
+              - 'application-autoscaling:*'
+              - 'cloudwatch:DescribeAlarms'
+              - 'cloudwatch:PutMetricAlarm'
+              - 'ecs:DescribeServices'
+              - 'ecs:UpdateService'
+            Resource: '*'
+  EC2InstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      Path: /
+      Roles: [!Ref 'EC2Role']
+
+  # Role for the EC2 hosts. This allows the ECS agent on the EC2 hosts
+  # to communciate with the ECS control plane, as well as download the docker
+  # images from ECR to run on your host.
+  EC2Role:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service: [ec2.amazonaws.com]
+          Action: ['sts:AssumeRole']
+      Path: /
+      Policies:
+      - PolicyName: ecs-service
+        PolicyDocument:
+          Statement:
+          - Effect: Allow
+            Action:
+              - 'ecs:CreateCluster'
+              - 'ecs:DeregisterContainerInstance'
+              - 'ecs:DiscoverPollEndpoint'
+              - 'ecs:Poll'
+              - 'ecs:RegisterContainerInstance'
+              - 'ecs:StartTelemetrySession'
+              - 'ecs:Submit*'
+              - 'logs:CreateLogStream'
+              - 'logs:PutLogEvents'
+              - 'ecr:GetAuthorizationToken'
+              - 'ecr:BatchGetImage'
+              - 'ecr:GetDownloadUrlForLayer'
+            Resource: '*'
+  FileSystem:
+    Type: AWS::EFS::FileSystem
+    Properties:
+      FileSystemTags:
+        - Key: Name
+          Value: "multi-master-git-repo"
+  GitMountTarget:
+    Type: AWS::EFS::MountTarget
+    Properties:
+      FileSystemId: !Ref FileSystem
+      SubnetId: !Ref PublicSubnetOne
+      SecurityGroups:
+        - !Ref MountTargetSecurityGroup
+  MountTargetSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      VpcId: !Ref 'VPC'
+      GroupDescription: "Security group for mount target"
+      SecurityGroupIngress:
+        - IpProtocol: TCP
+          FromPort: 2049
+          ToPort: 2049
+          CidrIp: !FindInMap ['SubnetConfig', 'PublicOne', 'CIDR']
+
+Outputs:
+  ClusterName:
+    Description: The name of the ECS cluster
+    Value: !Ref 'ECSCluster'
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'ClusterName' ] ]
+  VPCId:
+    Description: The ID of the VPC that this stack is deployed in
+    Value: !Ref 'VPC'
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'VPCId' ] ]
+  PublicSubnetOne:
+    Description: Public subnet one
+    Value: !Ref 'PublicSubnetOne'
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'PublicSubnetOne' ] ]
