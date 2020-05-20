@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8d33204_c6fd3d21",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-05-20T11:06:23Z",
+      "side": 1,
+      "message": "AWS_REGION",
+      "range": {
+        "startLine": 13,
+        "startChar": 10,
+        "endLine": 13,
+        "endChar": 21
+      },
+      "revId": "8a27e34befff820088df41b4979dd7f5015acfda",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
