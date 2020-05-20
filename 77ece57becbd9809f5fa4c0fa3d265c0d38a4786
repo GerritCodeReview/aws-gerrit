@@ -1,0 +1,164 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9548fc8c_005d12fc",
+        "filename": "gerrit/entrypoint.sh",
+        "patchSetId": 12
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-05-20T00:02:34Z",
+      "side": 1,
+      "message": "should be \u0027-f\u0027 as gerrit_index.config is a file.",
+      "range": {
+        "startLine": 11,
+        "startChar": 7,
+        "endLine": 11,
+        "endChar": 9
+      },
+      "revId": "77ece57becbd9809f5fa4c0fa3d265c0d38a4786",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f26ddc8_50782586",
+        "filename": "multi-master/Makefile",
+        "patchSetId": 12
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-05-20T00:02:34Z",
+      "side": 1,
+      "message": "Missing creation of service-master-2 and wait-for-service-master-2-creation",
+      "revId": "77ece57becbd9809f5fa4c0fa3d265c0d38a4786",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e730af6_2e47f12a",
+        "filename": "multi-master/Makefile",
+        "patchSetId": 12
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-05-20T00:02:34Z",
+      "side": 1,
+      "message": "No need to wait for creation of service-master-1 for starting creating service-master-2: they can be done in parallel to speedup the process.",
+      "range": {
+        "startLine": 15,
+        "startChar": 23,
+        "endLine": 15,
+        "endChar": 57
+      },
+      "revId": "77ece57becbd9809f5fa4c0fa3d265c0d38a4786",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "857c5de5_58d2715e",
+        "filename": "multi-master/README.md",
+        "patchSetId": 12
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-05-20T00:02:34Z",
+      "side": 1,
+      "message": "A wildcard SSL",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 29,
+        "endChar": 7
+      },
+      "revId": "77ece57becbd9809f5fa4c0fa3d265c0d38a4786",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c48ff6c8_dc0ff4f6",
+        "filename": "multi-master/README.md",
+        "patchSetId": 12
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-05-20T00:02:34Z",
+      "side": 1,
+      "message": "wildcard SSL Certificate, covering both masters",
+      "range": {
+        "startLine": 61,
+        "startChar": 47,
+        "endLine": 61,
+        "endChar": 63
+      },
+      "revId": "77ece57becbd9809f5fa4c0fa3d265c0d38a4786",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0063ae8_495d46fd",
+        "filename": "multi-master/cf-cluster.yml",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-05-20T00:02:34Z",
+      "side": 1,
+      "message": "The receipt should be in a dual-master folder, as this isn\u0027t really a generic multi-master setup.",
+      "revId": "77ece57becbd9809f5fa4c0fa3d265c0d38a4786",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfbdddbb_afe7770e",
+        "filename": "multi-master/cf-service-master.yml",
+        "patchSetId": 12
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-05-20T00:02:34Z",
+      "side": 1,
+      "message": "Missing GERRIT_KEY_PREFIX, the service won\u0027t event start.",
+      "revId": "77ece57becbd9809f5fa4c0fa3d265c0d38a4786",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07ab5aca_7e9c8a70",
+        "filename": "multi-master/setup.env.template",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-05-20T00:02:34Z",
+      "side": 1,
+      "message": "CLUSTER_KEYS missing",
+      "revId": "77ece57becbd9809f5fa4c0fa3d265c0d38a4786",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
