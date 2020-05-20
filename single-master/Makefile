@@ -1,5 +1,5 @@
 include setup.env
-include ../version.env
+include ../makefile.env
 
 CLUSTER_TEMPLATE:=cf-cluster.yml
 SERVICE_TEMPLATE:=cf-service.yml
