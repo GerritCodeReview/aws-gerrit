@@ -1,4 +1,4 @@
-FROM gerritcodereview/gerrit:3.1.4-centos7
+FROM gerritcodereview/gerrit:$GERRIT_VERSION.$GERRIT_PATCH-centos7
 
 USER root
 

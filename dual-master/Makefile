@@ -1,4 +1,5 @@
 include setup.env
+include ../version.env
 
 CLUSTER_TEMPLATE:=cf-cluster.yml
 SERVICE_MASTER_TEMPLATE:=cf-service-master.yml
@@ -38,7 +39,8 @@ service-master-1:
 		ParameterKey=Subdomain,ParameterValue=$(MASTER1_SUBDOMAIN) \
 		ParameterKey=DockerRegistryUrl,ParameterValue=$(DOCKER_REGISTRY_URI) \
 		ParameterKey=CertificateArn,ParameterValue=$(SSL_CERTIFICATE_ARN) \
-		ParameterKey=GerritKeyPrefix,ParameterValue=$(GERRIT_KEY_PREFIX)
+		ParameterKey=GerritKeyPrefix,ParameterValue=$(GERRIT_KEY_PREFIX)\
+		ParameterKey=DockerImage,ParameterValue=aws-gerrit/gerrit:$(IMAGE_TAG)
 
 service-master-2:
 	$(AWS_FC_COMMAND) create-stack \
@@ -54,7 +56,8 @@ service-master-2:
 		ParameterKey=CertificateArn,ParameterValue=$(SSL_CERTIFICATE_ARN) \
 		ParameterKey=HTTPHostPort,ParameterValue=$(HTTP_HOST_PORT_MASTER2) \
 		ParameterKey=SSHHostPort,ParameterValue=$(SSH_HOST_PORT_MASTER2) \
-		ParameterKey=GerritKeyPrefix,ParameterValue=$(GERRIT_KEY_PREFIX) \
+		ParameterKey=GerritKeyPrefix,ParameterValue=$(GERRIT_KEY_PREFIX)\
+		ParameterKey=DockerImage,ParameterValue=aws-gerrit/gerrit:$(IMAGE_TAG) \
 		ParameterKey=GerritDataVolume,ParameterValue=gerrit-data-master-2 \
 		ParameterKey=GerritIndexVolume,ParameterValue=gerrit-index-master-2 \
 		ParameterKey=GerritCacheVolume,ParameterValue=gerrit-cache-master-2 \
