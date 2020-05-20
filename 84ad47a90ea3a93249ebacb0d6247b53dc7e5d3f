@@ -16,6 +16,24 @@
       "revId": "84ad47a90ea3a93249ebacb0d6247b53dc7e5d3f",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "478c2f30_d82caaa6",
+        "filename": "makefile.env",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-05-20T13:11:29Z",
+      "side": 1,
+      "message": "true, let me introduce a makefile.common for that.\nI would keep then a makefile.env with the environment variables that people may want to override via CLI",
+      "parentUuid": "f8aebcc8_b6c130d9",
+      "revId": "84ad47a90ea3a93249ebacb0d6247b53dc7e5d3f",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
     }
   ]
 }
