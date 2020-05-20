@@ -14,6 +14,9 @@ Parameters:
       Description: Stack name of the ECS cluster to deply the serivces
       Type: String
       Default: gerrit-cluster
+  GerritKeyPrefix:
+        Description: Gerrit credentials keys prefix
+        Type: String
   EnvironmentName:
       Description: An environment name used to build the log stream names
       Type: String
@@ -159,6 +162,8 @@ Resources:
                       Value: true
                     - Name: AWS_REGION
                       Value: !Ref AWS::Region
+                    - Name: GERRIT_KEY_PREFIX
+                      Value: !Ref GerritKeyPrefix
                   MountPoints:
                     - SourceVolume: !Ref GerritGitVolume
                       ContainerPath: /var/gerrit/git

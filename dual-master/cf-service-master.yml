@@ -62,6 +62,7 @@ Parameters:
         Default: gerrit-master-demo
   GerritKeyPrefix:
         Description: Gerrit credentials keys prefix
+        Type: String
   PeerSubdomain:
         Description: The subdomain of the Gerrit cluster
         Type: String
