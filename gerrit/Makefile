@@ -1,8 +1,5 @@
 include ../$(RECIPE)/setup.env
-
-GERRIT_BRANCH=stable-3.2
-GERRIT_CI=https://gerrit-ci.gerritforge.com/view/Plugins-$(GERRIT_BRANCH)/job
-LAST_BUILD=lastSuccessfulBuild/artifact/bazel-bin/plugins
+include ../version.env
 
 docker-registry-login:
 	aws ecr get-login-password --region $(AWS_REGION) \
@@ -22,8 +19,10 @@ gerrit-get-plugins:
 	|| { echo >&2 "Cannot download javamelody plugin: Check internet connection. Aborting"; exit 1; }
 
 gerrit-build:
-	docker build -t aws-gerrit/gerrit .
-	docker tag aws-gerrit/gerrit:latest $(DOCKER_REGISTRY_URI)/aws-gerrit/gerrit:latest
+	cat Dockerfile | \
+		GERRIT_VERSION=$(GERRIT_VERSION) GERRIT_PATCH=$(GERRIT_PATCH) envsubst | \
+		docker build -f - -t aws-gerrit/gerrit:$(IMAGE_TAG) .
+	docker tag aws-gerrit/gerrit:$(IMAGE_TAG) $(DOCKER_REGISTRY_URI)/aws-gerrit/gerrit:$(IMAGE_TAG)
 
 gerrit-publish: gerrit-get-plugins docker-registry-login gerrit-build
-	docker push $(DOCKER_REGISTRY_URI)/aws-gerrit/gerrit:latest
+	docker push $(DOCKER_REGISTRY_URI)/aws-gerrit/gerrit:$(IMAGE_TAG)
