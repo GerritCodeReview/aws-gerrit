@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8aebcc8_b6c130d9",
+        "filename": "makefile.env",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-05-20T12:58:54Z",
+      "side": 1,
+      "message": "This file is no more just about environment variable, it also has target in it. WDYT about renaming it, to something like \"Makefile.common\"?",
+      "revId": "84ad47a90ea3a93249ebacb0d6247b53dc7e5d3f",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
