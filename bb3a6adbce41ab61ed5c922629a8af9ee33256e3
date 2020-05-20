@@ -46,6 +46,30 @@
       "revId": "bb3a6adbce41ab61ed5c922629a8af9ee33256e3",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b9cf7020_b0a21b84",
+        "filename": "gerrit/entrypoint.sh",
+        "patchSetId": 10
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-05-20T09:46:52Z",
+      "side": 1,
+      "message": "I thinks is actually needed and it was missed in the parent change. If the gerrit_index.config doesn\u0027t exists it means that we don\u0027t have indexes, isn\u0027t it?",
+      "parentUuid": "80a73e1a_75114382",
+      "range": {
+        "startLine": 11,
+        "startChar": 7,
+        "endLine": 11,
+        "endChar": 12
+      },
+      "revId": "bb3a6adbce41ab61ed5c922629a8af9ee33256e3",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
     }
   ]
 }
