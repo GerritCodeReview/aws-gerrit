@@ -43,6 +43,7 @@ def get_secret(secret_name):
         elif e.response['Error']['Code'] == 'ResourceNotFoundException':
             # We can't find the resource that you asked for.
             # Deal with the exception here, and/or rethrow at your discretion.
+            print("Secret name '%s' was not found" % secret_name)
             raise e
     else:
         # Decrypts secret using the associated KMS CMK.
@@ -99,7 +100,7 @@ if setupReplication:
         os.chmod(GERRIT_SSH_DIRECTORY, 0o700)
 
     with open(GERRIT_REPLICATION_SSH_KEYS, 'w', encoding='utf-8') as f:
-        f.write(get_secret(GERRIT_KEY_PREFIX + 'replication_user_id_rsa'))
+        f.write(get_secret(GERRIT_KEY_PREFIX + '_replication_user_id_rsa'))
     os.chmod(GERRIT_REPLICATION_SSH_KEYS, 0o400)
 
 file_loader = FileSystemLoader(GERRIT_CONFIG_DIRECTORY)

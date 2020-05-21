@@ -123,6 +123,22 @@ Resources:
                   ContainerPort: !Ref SSHContainerPort
                   TargetGroupArn: !Ref SSHTargetGroup
 
+    DiscoveryService:
+        Type: AWS::ServiceDiscovery::Service
+        Properties:
+          Description: Discovery Service for the git-daemon exposing the slave's repos over git and ssh
+          DnsConfig:
+            RoutingPolicy: MULTIVALUE
+            DnsRecords:
+              - TTL: 60
+                Type: SRV
+          HealthCheckCustomConfig:
+            FailureThreshold: 1
+          Name: git-daemon-slave
+          NamespaceId:
+            Fn::ImportValue:
+              !Join [':', [!Ref 'ClusterStackName', 'PrivateNamespace']]
+
     GerritReplicationService:
         Type: AWS::ECS::Service
         DependsOn:
@@ -133,7 +149,12 @@ Resources:
               Fn::ImportValue:
                   !Join [':', [!Ref 'ClusterStackName', 'ClusterName']]
             DesiredCount: !Ref DesiredCount
+            ServiceName: git-daemon-slave
             TaskDefinition: !Ref GerritReplicationTaskDefinition
+            ServiceRegistries:
+                - RegistryArn: !GetAtt DiscoveryService.Arn
+                  ContainerName: !Ref GitDaemonServiceName
+                  ContainerPort: !Ref GitPort
             LoadBalancers:
                 - ContainerName: !Ref GitDaemonServiceName
                   ContainerPort: !Ref GitPort
