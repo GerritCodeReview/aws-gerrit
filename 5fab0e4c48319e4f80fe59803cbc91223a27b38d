@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6eb3553_6f3d6e17",
+        "filename": "master-slave/Makefile",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-05-21T11:56:15Z",
+      "side": 1,
+      "message": "maybe we could even avoid to wait for the slave to be created and create the master stack in parallel. WDYT?",
+      "range": {
+        "startLine": 18,
+        "startChar": 20,
+        "endLine": 18,
+        "endChar": 52
+      },
+      "revId": "5fab0e4c48319e4f80fe59803cbc91223a27b38d",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
