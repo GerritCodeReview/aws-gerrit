@@ -52,6 +52,11 @@ Resources:
       EnableDnsSupport: true
       EnableDnsHostnames: true
       CidrBlock: !FindInMap ['SubnetConfig', 'VPC', 'CIDR']
+  PrivateNamespace:
+    Type: AWS::ServiceDiscovery::PrivateDnsNamespace
+    Properties:
+        Name: gerrit-internal
+        Vpc: !Ref VPC
 
   # Public subnets, where containers can have public IP addresses
   PublicSubnetOne:
@@ -280,6 +285,11 @@ Outputs:
     Value: !Ref 'VPC'
     Export:
       Name: !Join [ ':', [ !Ref 'AWS::StackName', 'VPCId' ] ]
+  PrivateNamespace:
+    Description: The private namespace for service resolutions inside the cluster
+    Value: !Ref 'PrivateNamespace'
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'PrivateNamespace' ] ]
   PublicSubnetOne:
     Description: Public subnet one
     Value: !Ref 'PublicSubnetOne'
