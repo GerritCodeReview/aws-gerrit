@@ -121,6 +121,9 @@ Plus a key used by the replication plugin:
 * replication_user_id_rsa
 * replication_user_id_rsa.pub
 
+Generate a random bearer token to be used for monitoring with Promtetheus:
+* `openssl rand -hex 20 > prometheus_bearer_token`
+
 You will have to create the keys and place them in a directory.
 
 #### Register Email Private Key
