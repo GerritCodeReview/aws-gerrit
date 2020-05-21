@@ -22,6 +22,30 @@
       "revId": "5fab0e4c48319e4f80fe59803cbc91223a27b38d",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "676ba26f_c4346822",
+        "filename": "master-slave/Makefile",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-05-21T12:14:40Z",
+      "side": 1,
+      "message": "\u003e maybe we could even avoid to wait for the slave to be created and create the master stack in parallel. WDYT?\n\nIf they get created in parallel, then the master could come up *before* the slaves, causing the replication to fail. That\u0027s why I have put a wait for slaves to be ready, so that I can make sure that the master will come up and the replication would succeed.",
+      "parentUuid": "a6eb3553_6f3d6e17",
+      "range": {
+        "startLine": 18,
+        "startChar": 20,
+        "endLine": 18,
+        "endChar": 52
+      },
+      "revId": "5fab0e4c48319e4f80fe59803cbc91223a27b38d",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
     }
   ]
 }
