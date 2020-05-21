@@ -46,6 +46,30 @@
       "revId": "5fab0e4c48319e4f80fe59803cbc91223a27b38d",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15815a4a_2271db26",
+        "filename": "master-slave/Makefile",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-05-21T12:28:21Z",
+      "side": 1,
+      "message": "I was counting on the replication retry mechanism, which was ensuring replication to happen in the previous ordering (i.e.: create master \u003d\u003e create slave).\n\nI was just thinking of firing in parallel since building the stacks is time consuming. Probably it is not necessary for the time being saving time.",
+      "parentUuid": "676ba26f_c4346822",
+      "range": {
+        "startLine": 18,
+        "startChar": 20,
+        "endLine": 18,
+        "endChar": 52
+      },
+      "revId": "5fab0e4c48319e4f80fe59803cbc91223a27b38d",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
     }
   ]
 }
