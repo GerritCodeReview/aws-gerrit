@@ -70,6 +70,30 @@
       "revId": "5fab0e4c48319e4f80fe59803cbc91223a27b38d",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f83774ad_c6a34bab",
+        "filename": "master-slave/Makefile",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-05-21T14:16:00Z",
+      "side": 1,
+      "message": "\u003e I was counting on the replication retry mechanism, which was ensuring replication to happen in the previous ordering (i.e.: create master \u003d\u003e create slave).\n\nThe retry mechanism is used ONLY when Gerrit receives an actual ref-update, but for the replications happening at startup.\n\n\u003e I was just thinking of firing in parallel since building the stacks is time consuming. Probably it is not necessary for the time being saving time.\n\nI know, but in this case it is important to make sure that the startup is successful, otherwise the slave may keep on going up and down until the repos are replicated.",
+      "parentUuid": "15815a4a_2271db26",
+      "range": {
+        "startLine": 18,
+        "startChar": 20,
+        "endLine": 18,
+        "endChar": 52
+      },
+      "revId": "5fab0e4c48319e4f80fe59803cbc91223a27b38d",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     }
   ]
 }
