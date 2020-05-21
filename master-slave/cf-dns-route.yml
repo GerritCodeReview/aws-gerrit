@@ -34,3 +34,26 @@ Resources:
             Fn::ImportValue:
               !Join [':', [!Ref 'MasterServiceStackName', 'CanonicalHostedZoneID']]
           EvaluateTargetHealth: False
+  MasterDnsRecord:
+      Type: AWS::Route53::RecordSet
+      Properties:
+        Name:
+          !Join
+            - '.'
+            - - Fn::ImportValue: !Join [':', [!Ref 'SlaveServiceStackName', 'Subdomain']]
+              - Fn::ImportValue: !Join [':', [!Ref 'SlaveServiceStackName', 'HostedZoneName']]
+        HostedZoneName:
+          !Join
+            - ''
+            - - Fn::ImportValue: !Join [':', [!Ref 'SlaveServiceStackName', 'HostedZoneName']]
+              - '.'
+        Comment: DNS name for Gerrit Slave.
+        Type: A
+        AliasTarget:
+          DNSName:
+            Fn::ImportValue:
+              !Join [':', [!Ref 'SlaveServiceStackName', 'PublicLoadBalancerDNSName']]
+          HostedZoneId:
+            Fn::ImportValue:
+              !Join [':', [!Ref 'SlaveServiceStackName', 'CanonicalHostedZoneID']]
+          EvaluateTargetHealth: False
