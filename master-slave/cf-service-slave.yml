@@ -263,6 +263,8 @@ Resources:
                       Value: gerrit:1000:1000
                     - Name: AWS_REGION
                       Value: !Ref AWS::Region
+                    - Name: GERRIT_KEY_PREFIX
+                      Value: !Ref GerritKeyPrefix
                   MountPoints:
                     - SourceVolume: !Ref GerritGitVolume
                       ContainerPath: /var/gerrit/git
