@@ -65,3 +65,8 @@ set-secret-string ldapPassword
 
 echo "Adding SMTP password..."
 set-secret-string smtpPassword
+
+if [ -f "$SECRETS_DIRECTORY/prometheus_bearer_token" ]; then
+  echo "Adding Prometheus bearer token..."
+  set-secret-string prometheus_bearer_token
+fi
