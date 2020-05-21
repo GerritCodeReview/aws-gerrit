@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5cd3a91_25a90d8c",
+        "filename": "dual-master/cf-cluster.yml",
+        "patchSetId": 20
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-05-21T15:46:06Z",
+      "side": 1,
+      "message": "How is this retry cycle related to the HA plugin?",
+      "range": {
+        "startLine": 162,
+        "startChar": 0,
+        "endLine": 167,
+        "endChar": 25
+      },
+      "revId": "e19016853dd14b1dbdaf59a61a8c229bd631e5e1",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
