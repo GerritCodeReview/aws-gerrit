@@ -1,0 +1,304 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Deploy a service into an ECS cluster behind a public load balancer.
+Parameters:
+  LBServiceName:
+    Type: String
+    Default: gerrit-load-balancer
+  ClusterStackName:
+      Description: Stack name of the ECS cluster to deploy the services
+      Type: String
+      Default: gerrit-cluster
+  EnvironmentName:
+      Description: An environment name used to build the log stream names
+      Type: String
+      Default: test
+  HAProxyDockerImage:
+        Description: HAProxy Docker image
+        Type: String
+        Default: aws-gerrit/haproxy:latest
+  SidecarDockerImage:
+        Description: Syslog sidecar Docker image
+        Type: String
+        Default: aws-gerrit/syslog-sidecar:latest
+  DockerRegistryUrl:
+        Description: Docker registry URL
+        Type: String
+  DesiredCount:
+        Description: How many instances of this task should we run across our cluster?
+        Type: Number
+        Default: 1
+  HTTPGerritMaster1Port:
+        Description: Gerrit HTTP port
+        Type: Number
+        Default: 8080
+  SSHGerritMaster1Port:
+        Description: Gerrit SSH port
+        Type: Number
+        Default: 29418
+  HTTPGerritMaster2Port:
+        Description: Gerrit HTTP port
+        Type: Number
+        Default: 8081
+  SSHGerritMaster2Port:
+        Description: Gerrit SSH port
+        Type: Number
+        Default: 29419
+  HTTPGerritPort:
+        Description: Gerrit HTTP port
+        Type: Number
+        Default: 8080
+  SSHGerritPort:
+        Description: Gerrit SSH port
+        Type: Number
+        Default: 29418
+  HTTPContainerPort:
+        Description: Gerrit HTTP port
+        Type: Number
+        Default: 80
+  HTTPSHostPort:
+        Description: Gerrit HTTPS port
+        Type: Number
+        Default: 443
+  HTTPHostPort:
+        Description: Gerrit HTTPS port
+        Type: Number
+        Default: 80
+  SSHHostPort:
+        Description: Gerrit SSH port
+        Type: Number
+        Default: 29420
+  SSHLBPort:
+        Description: Gerrit SSH port
+        Type: Number
+        Default: 29418
+  SSHContainerPort:
+        Description: Gerrit SSH port
+        Type: Number
+        Default: 29418
+  CertificateArn:
+        Description: SSL Certificates ARN
+        Type: String
+  HostedZoneName:
+        Description: The route53 HostedZoneName.
+        Type: String
+  Subdomain:
+        Description: The subdomain of the Gerrit cluster
+        Type: String
+        Default: gerrit-dual-master
+  GerritKeyPrefix:
+        Description: Gerrit credentials keys prefix
+        Type: String
+  Master1ServiceStackName:
+      Description: Stack name of the ECS Master Gerrit service
+      Type: String
+      Default: gerrit-service-master-1
+  Master2ServiceStackName:
+      Description: Stack name of the ECS Master Gerrit service
+      Type: String
+      Default: gerrit-service-master-2
+  SyslogSidecarServiceName:
+      Description: HAPRoxy Syslog Sidecar service name
+      Type: String
+      Default: gerrit-haproxy-sidecar
+
+Resources:
+    LBService:
+        Type: AWS::ECS::Service
+        DependsOn:
+          - HTTPListener
+          - SSHListener
+        Properties:
+            Cluster:
+              Fn::ImportValue:
+                  !Join [':', [!Ref 'ClusterStackName', 'ClusterName']]
+            DesiredCount: !Ref DesiredCount
+            TaskDefinition: !Ref TaskDefinition
+            LoadBalancers:
+                - ContainerName: !Ref LBServiceName
+                  ContainerPort: !Ref HTTPContainerPort
+                  TargetGroupArn: !Ref HTTPTargetGroup
+                - ContainerName: !Ref LBServiceName
+                  ContainerPort: !Ref SSHContainerPort
+                  TargetGroupArn: !Ref SSHTargetGroup
+
+    TaskDefinition:
+        Type: AWS::ECS::TaskDefinition
+        Properties:
+            Family: !Sub '${LBServiceName}TaskDefinition'
+            TaskRoleArn: !Ref ECSTaskExecutionRole
+            ExecutionRoleArn: !Ref ECSTaskExecutionRole
+            NetworkMode: bridge
+            ContainerDefinitions:
+                - Name: !Ref LBServiceName
+                  Essential: true
+                  Image: !Sub '${DockerRegistryUrl}/${HAProxyDockerImage}'
+                  Environment:
+                    - Name: GERRIT_MASTER_1_URL
+                      Value:
+                        Fn::ImportValue: !Join [':', [!Ref 'Master1ServiceStackName', 'PublicLoadBalancerDNSName']]
+                    - Name: GERRIT_MASTER_2_URL
+                      Value:
+                        Fn::ImportValue: !Join [':', [!Ref 'Master2ServiceStackName', 'PublicLoadBalancerDNSName']]
+                    - Name: GERRIT_MASTER_1_HTTP_PORT
+                      Value: !Ref HTTPGerritMaster1Port
+                    - Name: GERRIT_MASTER_2_HTTP_PORT
+                      Value: !Ref HTTPGerritMaster2Port
+                    - Name: GERRIT_MASTER_1_SSH_PORT
+                      Value: !Ref SSHGerritMaster1Port
+                    - Name: GERRIT_MASTER_2_SSH_PORT
+                      Value: !Ref SSHGerritMaster2Port
+                    - Name: SYSLOG_SIDECAR
+                      Value: !Ref SyslogSidecarServiceName
+                  Cpu: 1024
+                  Memory: 2048
+                  PortMappings:
+                    - ContainerPort: !Ref HTTPContainerPort
+                      HostPort: !Ref HTTPHostPort
+                      Protocol: tcp
+                    - ContainerPort: !Ref SSHContainerPort
+                      HostPort: !Ref SSHHostPort
+                      Protocol: tcp
+                  Links:
+                    - !Ref SyslogSidecarServiceName
+                  LogConfiguration:
+                    LogDriver: awslogs
+                    Options:
+                        awslogs-group: !Ref ClusterStackName
+                        awslogs-region: !Ref AWS::Region
+                        awslogs-stream-prefix: !Ref EnvironmentName
+                - Name: !Ref SyslogSidecarServiceName
+                  Essential: true
+                  Image: !Sub '${DockerRegistryUrl}/${SidecarDockerImage}'
+                  Cpu: 256
+                  Memory: 512
+                  LogConfiguration:
+                    LogDriver: awslogs
+                    Options:
+                        awslogs-group: !Ref ClusterStackName
+                        awslogs-region: !Ref AWS::Region
+                        awslogs-stream-prefix: !Ref EnvironmentName
+
+    # This is a role which is used by the ECS tasks themselves.
+    ECSTaskExecutionRole:
+      Type: AWS::IAM::Role
+      Properties:
+        AssumeRolePolicyDocument:
+          Statement:
+          - Effect: Allow
+            Principal:
+              Service: [ecs-tasks.amazonaws.com]
+            Action: ['sts:AssumeRole']
+        Path: /
+        Policies:
+          - PolicyName: AmazonECSTaskExecutionRolePolicy
+            PolicyDocument:
+              Statement:
+              - Effect: Allow
+                Action:
+                  # Allow the ECS Tasks to download images from ECR
+                  - 'ecr:GetAuthorizationToken'
+                  - 'ecr:BatchCheckLayerAvailability'
+                  - 'ecr:GetDownloadUrlForLayer'
+                  - 'ecr:BatchGetImage'
+                  # Allow the ECS tasks to upload logs to CloudWatch
+                  - 'logs:CreateLogStream'
+                  - 'logs:PutLogEvents'
+                Resource: '*'
+          - PolicyName: AmazonECSTaskSecretManagerRolePolicy
+            PolicyDocument:
+              Statement:
+              - Effect: Allow
+                Action:
+                  # Allow the ECS Tasks to get SSH Keys
+                  - 'secretsmanager:GetSecretValue'
+                  - 'kms:Decrypt'
+                Resource: '*'
+
+    LoadBalancer:
+        Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+        Properties:
+            Type: network
+            Scheme: internet-facing
+            Subnets:
+              - Fn::ImportValue:
+                  !Join [':', [!Ref 'ClusterStackName', 'PublicSubnetOne']]
+            Tags:
+                - Key: Name
+                  Value: !Join ['-', [!Ref 'EnvironmentName', !Ref 'LBServiceName', 'alb']]
+
+    HTTPTargetGroup:
+        Type: AWS::ElasticLoadBalancingV2::TargetGroup
+        DependsOn: LoadBalancer
+        Properties:
+            VpcId:
+              Fn::ImportValue:
+                  !Join [':', [!Ref 'ClusterStackName', 'VPCId']]
+            Port: !Ref HTTPHostPort
+            Protocol: TCP
+
+    HTTPListener:
+        Type: AWS::ElasticLoadBalancingV2::Listener
+        DependsOn: LoadBalancer
+        Properties:
+            Certificates:
+              - CertificateArn: !Ref CertificateArn
+            DefaultActions:
+            - Type: forward
+              TargetGroupArn: !Ref HTTPTargetGroup
+            LoadBalancerArn: !Ref LoadBalancer
+            Port: !Ref HTTPSHostPort
+            Protocol: TLS
+
+    SSHTargetGroup:
+        Type: AWS::ElasticLoadBalancingV2::TargetGroup
+        DependsOn: LoadBalancer
+        Properties:
+            VpcId:
+              Fn::ImportValue:
+                  !Join [':', [!Ref 'ClusterStackName', 'VPCId']]
+            Port: !Ref SSHLBPort
+            Protocol: TCP
+            HealthCheckPort: !Ref SSHHostPort
+
+    SSHListener:
+        Type: AWS::ElasticLoadBalancingV2::Listener
+        DependsOn: LoadBalancer
+        Properties:
+            DefaultActions:
+            - Type: forward
+              TargetGroupArn: !Ref SSHTargetGroup
+            LoadBalancerArn: !Ref LoadBalancer
+            Port: !Ref SSHLBPort
+            Protocol: TCP
+
+Outputs:
+  PublicLoadBalancerDNSName:
+    Description: The DNS name of the external load balancer
+    Value: !GetAtt 'LoadBalancer.DNSName'
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'PublicLoadBalancerDNSName' ] ]
+  CanonicalHostedZoneID:
+    Description: Canonical Hosted Zone ID
+    Value: !GetAtt 'LoadBalancer.CanonicalHostedZoneID'
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'CanonicalHostedZoneID' ] ]
+  PublicLoadBalancerUrl:
+    Description: The url of the external load balancer
+    Value: !Join ['', ['https://', !GetAtt 'LoadBalancer.DNSName']]
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'PublicLoadBalancerUrl' ] ]
+  HostedZoneName:
+    Description: Route53 Hosted Zone name
+    Value: !Ref HostedZoneName
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'HostedZoneName' ] ]
+  Subdomain:
+    Description: Service DNS subdomain
+    Value: !Ref Subdomain
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'Subdomain' ] ]
+  CanonicalWebUrl:
+    Description: Canonical Web URL
+    Value: !Sub 'https://${Subdomain}.${HostedZoneName}'
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'CanonicalWebUrl' ] ]
