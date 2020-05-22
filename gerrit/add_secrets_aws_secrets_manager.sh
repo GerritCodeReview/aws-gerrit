@@ -11,17 +11,21 @@ fi
 export AWS_PAGER=;
 KEY_PREFIX=${2:-gerrit_secret}
 
+AWS_REGION=${3:-"us-east-1"}
+
 function set-secret-string {
   SECRET_ID=$1
 
-  if aws secretsmanager describe-secret --secret-id ${KEY_PREFIX}_${SECRET_ID} > /dev/null 2>&1
+  if aws secretsmanager describe-secret --region ${AWS_REGION} --secret-id ${KEY_PREFIX}_${SECRET_ID} > /dev/null 2>&1
   then
     echo "Updating secret ${KEY_PREFIX}_${SECRET_ID} ..."
-    aws secretsmanager put-secret-value --secret-id ${KEY_PREFIX}_${SECRET_ID} \
+    aws secretsmanager put-secret-value --region ${AWS_REGION} \
+      --secret-id ${KEY_PREFIX}_${SECRET_ID} \
       --secret-string file://$SECRETS_DIRECTORY/${SECRET_ID}
   else
     echo "Creating secret ${KEY_PREFIX}_${SECRET_ID} ..."
-    aws secretsmanager create-secret --name ${KEY_PREFIX}_${SECRET_ID} \
+    aws secretsmanager create-secret --region ${AWS_REGION} \
+      --name ${KEY_PREFIX}_${SECRET_ID} \
       --description "Gerrit ${SECRET_ID}" \
       --secret-string file://$SECRETS_DIRECTORY/${SECRET_ID}
   fi
@@ -61,3 +65,8 @@ set-secret-string ldapPassword
 
 echo "Adding SMTP password..."
 set-secret-string smtpPassword
+
+if [ -f "$SECRETS_DIRECTORY/prometheus_bearer_token" ]; then
+  echo "Adding Prometheus bearer token..."
+  set-secret-string prometheus_bearer_token
+fi

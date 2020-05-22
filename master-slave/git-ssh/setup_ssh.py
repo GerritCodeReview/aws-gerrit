@@ -58,13 +58,13 @@ It reads from:
 
 """
 
-GERRIT_KEY_PREFIX = "gerrit_secret_"
+GERRIT_KEY_PREFIX = os.getenv("GERRIT_KEY_PREFIX", "gerrit_secret")
 SSH_KEYS_DIRECTORY = "/home/gerrit/.ssh"
 
 print("Installing SSH Keys from Secret Manager in directory: " + SSH_KEYS_DIRECTORY)
 
 with open(SSH_KEYS_DIRECTORY + '/authorized_keys', 'w', encoding='utf-8') as f:
-    f.write(get_secret(GERRIT_KEY_PREFIX + 'replication_user_id_rsa.pub'))
+    f.write(get_secret(GERRIT_KEY_PREFIX + '_replication_user_id_rsa.pub'))
 os.chmod(SSH_KEYS_DIRECTORY, 0o700)
 os.chmod(SSH_KEYS_DIRECTORY + '/authorized_keys', 0o600)
 

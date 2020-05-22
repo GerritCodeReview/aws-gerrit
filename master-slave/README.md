@@ -73,6 +73,8 @@ This is the list of available parameters:
 * `HOSTED_ZONE_NAME`: Optional. Name of the hosted zone. `mycompany.com` by default.
 * `MASTER_SUBDOMAIN`: Optional. Name of the master sub domain. `gerrit-master-demo` by default.
 * `SLAVE_SUBDOMAIN`: Optional. Name of the slave sub domain. `gerrit-slave-demo` by default.
+*  GERRIT_KEY_PREFIX : Optional. Secrets prefix used during the [Import into AWS Secret Manager](#import-into-aws-secret-manager).
+  `gerrit_secret` by default.
 * `CLUSTER_DESIRED_CAPACITY`: Optional.  Number of EC2 instances composing the cluster. `1` by default.
 
 *NOTE: if you are planning to run the monitoring stack, set the
@@ -119,6 +121,9 @@ Plus a key used by the replication plugin:
 * replication_user_id_rsa
 * replication_user_id_rsa.pub
 
+Generate a random bearer token to be used for monitoring with Promtetheus:
+* `openssl rand -hex 20 > prometheus_bearer_token`
+
 You will have to create the keys and place them in a directory.
 
 #### Register Email Private Key
@@ -140,7 +145,9 @@ in the same directory of the SSH keys.
 
 You can now run the [script](../gerrit/add_secrets_aws_secrets_manager.sh) to
 upload them to AWS Secret Manager:
-`add_secrets_aws_secrets_manager.sh /path/to/your/keys/directory`
+`add_secrets_aws_secrets_manager.sh /path/to/your/keys/directory secret_prefix aws-region-id`
+
+When `secret_prefix` is omitted, it is set to `gerrit_secret` by default.
 
 ### Publish custom Gerrit Docker image
 
@@ -169,17 +176,6 @@ upload them to AWS Secret Manager:
 
 ### Getting Started
 
-* Create a key pair to access the EC2 instances in the cluster:
-
-```
-aws ec2 create-key-pair --key-name gerrit-cluster-keys \
-  --query 'KeyMaterial' --output text > gerrit-cluster.pem
-```
-
-*NOTE: the EC2 key pair are useful when you need to connect to the EC2 instances
-for troubleshooting purposes. Store them in a `pem` file to use when ssh-ing into your
-instances as follow: `ssh -i yourKeyPairs.pem <ec2_instance_ip>`*
-
 * Create the cluster, services and DNS routing stacks:
 
 ```
@@ -189,6 +185,11 @@ make create-all
 The slave will start with 5 min delay to allow the replication from master of `All-Users`
 and `All-Projects` to happen.
 You can now check in the slave logs to see when the slave is up and running.
+
+*NOTE: the creation of the cluster needs an EC2 key pair are useful when you need to connect
+to the EC2 instances for troubleshooting purposes. The key pair is automatically generated
+and store them in a `pem` file on the current directory.
+To use when ssh-ing into your instances as follow: `ssh -i cluster-keys.pem ec2-user@<ec2_instance_ip>`*
 
 ### Cleaning up
 
