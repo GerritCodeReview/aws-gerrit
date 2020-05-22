@@ -4,6 +4,7 @@ include ../Makefile.common
 CLUSTER_TEMPLATE:=cf-cluster.yml
 SERVICE_MASTER_TEMPLATE:=cf-service-master.yml
 DNS_ROUTING_TEMPLATE:=cf-dns-route.yml
+LOAD_BALANCER_TEMPLATE:=cf-service-lb.yml
 AWS_FC_COMMAND=export AWS_PAGER=;aws cloudformation
 
 .PHONY: create-all delete-all \
@@ -65,6 +66,21 @@ service-master-2:
 		ParameterKey=GerritDbVolume,ParameterValue=gerrit-db-master-2 \
 		ParameterKey=GerritLogsVolume,ParameterValue=gerrit-logs-master-2 \
 		ParameterKey=PeerSubdomain,ParameterValue=$(MASTER1_SUBDOMAIN)
+
+service-lb:
+	$(AWS_FC_COMMAND) create-stack \
+		--stack-name $(LOAD_BALANCER_STACK_NAME) \
+		--capabilities CAPABILITY_IAM  \
+		--template-body file://`pwd`/$(LOAD_BALANCER_TEMPLATE) \
+		--region $(AWS_REGION) \
+		--parameters \
+		ParameterKey=ClusterStackName,ParameterValue=$(CLUSTER_STACK_NAME) \
+		ParameterKey=Master1ServiceStackName,ParameterValue=$(SERVICE_MASTER1_STACK_NAME) \
+		ParameterKey=Master2ServiceStackName,ParameterValue=$(SERVICE_MASTER2_STACK_NAME) \
+		ParameterKey=HostedZoneName,ParameterValue=$(HOSTED_ZONE_NAME) \
+		ParameterKey=DockerRegistryUrl,ParameterValue=$(DOCKER_REGISTRY_URI) \
+		ParameterKey=GerritKeyPrefix,ParameterValue=$(GERRIT_KEY_PREFIX)\
+		ParameterKey=CertificateArn,ParameterValue=$(SSL_CERTIFICATE_ARN)
 
 dns-routing:
 	$(AWS_FC_COMMAND) create-stack \
@@ -159,3 +175,6 @@ delete-all: delete-dns-routing wait-for-dns-routing-deletion \
 
 gerrit-publish:
 	$(MAKE) -C ../gerrit gerrit-publish RECIPE=dual-master
+
+haproxy-publish:
+	$(MAKE) -C haproxy haproxy-publish
