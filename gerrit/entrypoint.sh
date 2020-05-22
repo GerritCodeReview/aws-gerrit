@@ -8,7 +8,7 @@ git config -f /var/gerrit/etc/gerrit.config container.slave "${CONTAINER_SLAVE:-
 if [ $CONTAINER_SLAVE ]; then
   rm -fr /var/gerrit/plugins/replication.jar
   java -jar /var/gerrit/bin/gerrit.war reindex --index groups
-elif [ -f /var/gerrit/index/gerrit_index.config ]; then
+elif [ ! -f /var/gerrit/index/gerrit_index.config ]; then
   java -jar /var/gerrit/bin/gerrit.war reindex -d /var/gerrit
 else
   java -jar /var/gerrit/bin/gerrit.war init --no-auto-start --batch --install-all-plugins -d /var/gerrit

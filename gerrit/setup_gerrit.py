@@ -8,6 +8,7 @@ from botocore.exceptions import ClientError
 from jinja2 import Environment, FileSystemLoader
 
 setupReplication = (os.getenv('SETUP_REPLICATION') == 'true')
+setupHA = (os.getenv('SETUP_HA') == 'true')
 
 def get_secret(secret_name):
     # Create a Secrets Manager client
@@ -43,6 +44,7 @@ def get_secret(secret_name):
         elif e.response['Error']['Code'] == 'ResourceNotFoundException':
             # We can't find the resource that you asked for.
             # Deal with the exception here, and/or rethrow at your discretion.
+            print("Secret name '%s' was not found" % secret_name)
             raise e
     else:
         # Decrypts secret using the associated KMS CMK.
@@ -99,7 +101,7 @@ if setupReplication:
         os.chmod(GERRIT_SSH_DIRECTORY, 0o700)
 
     with open(GERRIT_REPLICATION_SSH_KEYS, 'w', encoding='utf-8') as f:
-        f.write(get_secret(GERRIT_KEY_PREFIX + 'replication_user_id_rsa'))
+        f.write(get_secret(GERRIT_KEY_PREFIX + '_replication_user_id_rsa'))
     os.chmod(GERRIT_REPLICATION_SSH_KEYS, 0o400)
 
 file_loader = FileSystemLoader(GERRIT_CONFIG_DIRECTORY)
@@ -143,7 +145,8 @@ with open(GERRIT_CONFIG_DIRECTORY + "gerrit.config", 'w',
         'LDAP_GROUP_BASE': config['ldap']['groupBase'],
         'SMTP_SERVER': config['smtp']["server"],
         'SMTP_USER': config['smtp']["user"],
-        'SMTP_DOMAIN': config['smtp']["domain"]
+        'SMTP_DOMAIN': config['smtp']["domain"],
+        'COOKIE_DOMAIN': os.getenv('HOSTED_ZONE_NAME'),
     })
     f.write(template.render(config_for_template))
 
@@ -158,3 +161,11 @@ if ((not containerSlave) and setupReplication):
                 SLAVE_1_URL=config['remote-slave']['url'],
                 SLAVE_1_AMDIN_URL=config['remote-slave']['adminUrl']
                 ))
+
+if (setupHA):
+    print("Setting HA config in '" +
+          GERRIT_CONFIG_DIRECTORY + "high-availability.config'")
+    config.read(BASE_CONFIG_DIR + '/high-availability.setup')
+    template = env.get_template("high-availability.config.template")
+    with open(GERRIT_CONFIG_DIRECTORY + "high-availability.config", 'w', encoding='utf-8') as f:
+        f.write(template.render(HA_PEER_URL=os.getenv('HA_PEER_URL')))
