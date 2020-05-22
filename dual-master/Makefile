@@ -4,17 +4,20 @@ include ../Makefile.common
 CLUSTER_TEMPLATE:=cf-cluster.yml
 SERVICE_MASTER_TEMPLATE:=cf-service-master.yml
 DNS_ROUTING_TEMPLATE:=cf-dns-route.yml
+LOAD_BALANCER_TEMPLATE:=cf-service-lb.yml
 AWS_FC_COMMAND=export AWS_PAGER=;aws cloudformation
 
 .PHONY: create-all delete-all \
 				cluster cluster-keys service-master-1 dns-routing \
 				wait-for-cluster-creation wait-for-service-master-1-creation wait-for-service-master-2-creation wait-for-dns-routing-creation \
 				wait-for-cluster-deletion wait-for-service-master-1-deletion wait-for-service-master-2-deletion wait-for-dns-routing-deletion \
-				gerrit-build gerrit-publish
+				service-lb wait-for-service-lb-deletion wait-for-service-lb-creation \
+				gerrit-build gerrit-publish haproxy-publish syslog-sidecar-publish
 
 create-all: cluster wait-for-cluster-creation \
 						service-master-1 wait-for-service-master-1-creation \
 						service-master-2 wait-for-service-master-2-creation \
+						service-lb wait-for-service-lb-creation \
 						dns-routing wait-for-dns-routing-creation
 
 cluster: cluster-keys
@@ -41,7 +44,8 @@ service-master-1:
 		ParameterKey=CertificateArn,ParameterValue=$(SSL_CERTIFICATE_ARN) \
 		ParameterKey=GerritKeyPrefix,ParameterValue=$(GERRIT_KEY_PREFIX)\
 		ParameterKey=PeerSubdomain,ParameterValue=$(MASTER2_SUBDOMAIN) \
-		ParameterKey=DockerImage,ParameterValue=aws-gerrit/gerrit:$(IMAGE_TAG)
+		ParameterKey=DockerImage,ParameterValue=aws-gerrit/gerrit:$(IMAGE_TAG) \
+		ParameterKey=LBSubdomain,ParameterValue=$(LB_SUBDOMAIN)
 
 service-master-2:
 	$(AWS_FC_COMMAND) create-stack \
@@ -64,7 +68,29 @@ service-master-2:
 		ParameterKey=GerritCacheVolume,ParameterValue=gerrit-cache-master-2 \
 		ParameterKey=GerritDbVolume,ParameterValue=gerrit-db-master-2 \
 		ParameterKey=GerritLogsVolume,ParameterValue=gerrit-logs-master-2 \
-		ParameterKey=PeerSubdomain,ParameterValue=$(MASTER1_SUBDOMAIN)
+		ParameterKey=PeerSubdomain,ParameterValue=$(MASTER1_SUBDOMAIN) \
+		ParameterKey=LBSubdomain,ParameterValue=$(LB_SUBDOMAIN)
+
+service-lb:
+	$(AWS_FC_COMMAND) create-stack \
+		--stack-name $(LOAD_BALANCER_STACK_NAME) \
+		--capabilities CAPABILITY_IAM  \
+		--template-body file://`pwd`/$(LOAD_BALANCER_TEMPLATE) \
+		--region $(AWS_REGION) \
+		--parameters \
+		ParameterKey=ClusterStackName,ParameterValue=$(CLUSTER_STACK_NAME) \
+		ParameterKey=Master1ServiceStackName,ParameterValue=$(SERVICE_MASTER1_STACK_NAME) \
+		ParameterKey=Master2ServiceStackName,ParameterValue=$(SERVICE_MASTER2_STACK_NAME) \
+		ParameterKey=HostedZoneName,ParameterValue=$(HOSTED_ZONE_NAME) \
+		ParameterKey=DockerRegistryUrl,ParameterValue=$(DOCKER_REGISTRY_URI) \
+		ParameterKey=GerritKeyPrefix,ParameterValue=$(GERRIT_KEY_PREFIX)\
+		ParameterKey=CertificateArn,ParameterValue=$(SSL_CERTIFICATE_ARN) \
+		ParameterKey=Subdomain,ParameterValue=$(LB_SUBDOMAIN) \
+		ParameterKey=HTTPGerritMaster1Port,ParameterValue=$(HTTP_HOST_PORT_MASTER1) \
+		ParameterKey=SSHGerritMaster1Port,ParameterValue=$(SSH_HOST_PORT_MASTER1) \
+		ParameterKey=SSHGerritMaster2Port,ParameterValue=$(SSH_HOST_PORT_MASTER2) \
+		ParameterKey=HAProxyDockerImage,ParameterValue=aws-gerrit/haproxy:$(COMMITED_HEAD_SHA1) \
+		ParameterKey=SidecarDockerImage,ParameterValue=aws-gerrit/syslog-sidecar:$(COMMITED_HEAD_SHA1)
 
 dns-routing:
 	$(AWS_FC_COMMAND) create-stack \
@@ -74,7 +100,8 @@ dns-routing:
 		--region $(AWS_REGION) \
 		--parameters \
 		ParameterKey=Master1ServiceStackName,ParameterValue=$(SERVICE_MASTER1_STACK_NAME) \
-		ParameterKey=Master2ServiceStackName,ParameterValue=$(SERVICE_MASTER2_STACK_NAME)
+		ParameterKey=Master2ServiceStackName,ParameterValue=$(SERVICE_MASTER2_STACK_NAME) \
+		ParameterKey=LBServiceStackName,ParameterValue=$(LOAD_BALANCER_STACK_NAME)
 
 wait-for-cluster-creation:
 	@echo "*** Wait for cluster stack '$(CLUSTER_STACK_NAME)' creation"
@@ -96,6 +123,13 @@ wait-for-service-master-2-creation:
 	--stack-name $(SERVICE_MASTER2_STACK_NAME) \
 	--region $(AWS_REGION)
 	@echo "*** Service stack '$(SERVICE_MASTER2_STACK_NAME)' created"
+
+wait-for-service-lb-creation:
+	@echo "*** Wait for service lb stack '$(LOAD_BALANCER_STACK_NAME)' creation"
+	$(AWS_FC_COMMAND) wait stack-create-complete \
+	--stack-name $(LOAD_BALANCER_STACK_NAME) \
+	--region $(AWS_REGION)
+	@echo "*** Service stack '$(LOAD_BALANCER_STACK_NAME)' created"
 
 wait-for-dns-routing-creation:
 	@echo "*** Wait for DNS routing stack '$(DNS_ROUTING_STACK_NAME)' creation"
@@ -125,6 +159,13 @@ wait-for-service-master-2-deletion:
 	--region $(AWS_REGION)
 	@echo "*** Service stack master '$(SERVICE_MASTER2_STACK_NAME)' deleted"
 
+wait-for-service-lb-deletion:
+	@echo "*** Wait for service lb stack '$(LOAD_BALANCER_STACK_NAME)' deletion"
+	$(AWS_FC_COMMAND) wait stack-delete-complete \
+	--stack-name $(LOAD_BALANCER_STACK_NAME) \
+	--region $(AWS_REGION)
+	@echo "*** Service stack '$(LOAD_BALANCER_STACK_NAME)' deleted"
+
 wait-for-dns-routing-deletion:
 	@echo "*** Wait for DNS routing stack '$(DNS_ROUTING_STACK_NAME)' deletion"
 	$(AWS_FC_COMMAND) wait stack-delete-complete \
@@ -147,15 +188,27 @@ delete-service-master-2:
 	--stack-name $(SERVICE_MASTER2_STACK_NAME) \
 	--region $(AWS_REGION)
 
+delete-service-lb:
+	$(AWS_FC_COMMAND) delete-stack \
+	--stack-name $(LOAD_BALANCER_STACK_NAME) \
+	--region $(AWS_REGION)
+
 delete-dns-routing:
 	$(AWS_FC_COMMAND) delete-stack \
 	--stack-name $(DNS_ROUTING_STACK_NAME) \
 	--region $(AWS_REGION)
 
 delete-all: delete-dns-routing wait-for-dns-routing-deletion \
+						delete-service-lb wait-for-service-lb-deletion \
 						delete-service-master-1 wait-for-service-master-1-deletion \
 						delete-service-master-2 wait-for-service-master-2-deletion \
 						delete-cluster wait-for-cluster-deletion
 
 gerrit-publish:
 	$(MAKE) -C ../gerrit gerrit-publish RECIPE=dual-master
+
+haproxy-publish:
+	$(MAKE) -C haproxy haproxy-publish
+
+syslog-sidecar-publish:
+	$(MAKE) -C syslog-sidecar syslog-sidecar-publish
