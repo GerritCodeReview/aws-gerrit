@@ -60,6 +60,9 @@ Parameters:
         Description: The subdomain of the Gerrit cluster
         Type: String
         Default: gerrit-master-demo
+  LBSubdomain:
+        Description: The subdomain of the Gerrit load balancer
+        Type: String
   GerritKeyPrefix:
         Description: Gerrit credentials keys prefix
         Type: String
@@ -128,7 +131,7 @@ Resources:
                   Image: !Sub '${DockerRegistryUrl}/${DockerImage}'
                   Environment:
                     - Name: CANONICAL_WEB_URL
-                      Value: !Sub 'https://${Subdomain}.${HostedZoneName}'
+                      Value: !Sub 'https://${LBSubdomain}.${HostedZoneName}'
                     - Name: HTTPD_LISTEN_URL
                       Value: !Sub 'proxy-https://*:${HTTPContainerPort}/'
                     - Name: AWS_REGION
@@ -243,14 +246,12 @@ Resources:
         Type: AWS::ElasticLoadBalancingV2::Listener
         DependsOn: LoadBalancer
         Properties:
-            Certificates:
-              - CertificateArn: !Ref CertificateArn
             DefaultActions:
             - Type: forward
               TargetGroupArn: !Ref HTTPTargetGroup
             LoadBalancerArn: !Ref LoadBalancer
-            Port: !Ref HTTPSHostPort
-            Protocol: TLS
+            Port: !Ref HTTPHostPort
+            Protocol: TCP
 
     SSHTargetGroup:
         Type: AWS::ElasticLoadBalancingV2::TargetGroup

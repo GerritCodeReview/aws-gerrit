@@ -1,0 +1,76 @@
+global
+    log gerrit-haproxy-sidecar local0 debug
+
+    chroot /var/lib/haproxy
+    stats socket /var/run/haproxy/admin.sock mode 660 level admin
+    stats timeout 30s
+    user haproxy
+    group haproxy
+    daemon
+
+defaults
+    log     global
+    mode    http
+    option  httplog
+    option  dontlognull
+    timeout connect 5000
+    timeout client  900000
+    timeout server  900000
+    timeout check 30000
+
+frontend localnodes
+    bind *:80
+    mode http
+    option httplog
+    capture request header X-Forwarded-For len 15
+    log-format %[capture.req.hdr(0)]:%cp\ [%t]\ %f\ %b/%s\ %Tq/%Tw/%Tc/%Tr/%Tt\ %ST\ %B\ %CC\ %CS\ %tsc\ %ac/%fc/%bc/%sc/%rc\ %sq/%bq\ {%hrl}\ {%hsl}\ %{+Q}r
+
+    default_backend master
+
+frontend gitssh
+    bind *:29418
+    mode tcp
+    timeout client  5m
+
+    default_backend ssh
+
+backend master
+    mode http
+    balance roundrobin
+    option forwardfor
+    default-server inter 10s fall 3 rise 2
+    option httpchk GET /config/server/version HTTP/1.0
+    http-check expect status 200
+    server gerrit-1 $GERRIT_MASTER_1_URL:$GERRIT_MASTER_1_HTTP_PORT check inter 10s
+    server gerrit-2 $GERRIT_MASTER_2_URL:$GERRIT_MASTER_2_HTTP_PORT check inter 10s backup
+
+backend gerrit-1
+    mode http
+    option forwardfor
+    server gerrit-1 $GERRIT_MASTER_1_URL:$GERRIT_MASTER_1_HTTP_PORT
+
+backend gerrit-2
+    mode http
+    option forwardfor
+    server gerrit-2 $GERRIT_MASTER_2_URL:$GERRIT_MASTER_2_HTTP_PORT
+
+backend ssh
+    mode tcp
+    option redispatch
+    option httpchk GET /config/server/version HTTP/1.0
+    http-check expect status 200
+    balance source
+    timeout connect 10s
+    timeout server 5m
+    server gerrit-ssh-1 $GERRIT_MASTER_1_URL:$GERRIT_MASTER_1_SSH_PORT check port $GERRIT_MASTER_1_HTTP_PORT inter 10s
+    server gerrit-ssh-2 $GERRIT_MASTER_2_URL:$GERRIT_MASTER_2_SSH_PORT check port $GERRIT_MASTER_2_HTTP_PORT inter 10s backup
+
+backend gerrit-ssh-1
+    mode http
+    option forwardfor
+    server gerrit-ssh-1 $GERRIT_MASTER_1_URL:$GERRIT_MASTER_1_SSH_PORT
+
+backend gerrit-ssh-2
+    mode http
+    option forwardfor
+    server gerrit-ssh-2 $GERRIT_MASTER_2_URL:$GERRIT_MASTER_2_SSH_PORT
