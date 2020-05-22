@@ -1,5 +1,5 @@
 include ../$(RECIPE)/setup.env
-include ../version.env
+include ../Makefile.common
 
 docker-registry-login:
 	aws ecr get-login-password --region $(AWS_REGION) \
@@ -17,6 +17,11 @@ gerrit-get-plugins:
 	wget $(GERRIT_CI)/plugin-javamelody-bazel-master-$(GERRIT_BRANCH)/$(LAST_BUILD)/javamelody/javamelody.jar \
 	-O ./plugins/javamelody.jar \
 	|| { echo >&2 "Cannot download javamelody plugin: Check internet connection. Aborting"; exit 1; }
+
+	@echo "Downloading HA plugin $(GERRIT_BRANCH)"
+	wget $(GERRIT_CI)/plugin-high-availability-bazel-$(GERRIT_BRANCH)/$(LAST_BUILD)/high-availability/high-availability.jar \
+	-O ./plugins/high-availability.jar \
+	|| { echo >&2 "Cannot download high-availability plugin: Check internet connection. Aborting"; exit 1; }
 
 gerrit-build:
 	cat Dockerfile | \

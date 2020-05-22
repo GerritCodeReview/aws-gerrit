@@ -1,5 +1,5 @@
 include setup.env
-include ../version.env
+include ../Makefile.common
 
 CLUSTER_TEMPLATE:=cf-cluster.yml
 SERVICE_MASTER_TEMPLATE:=cf-service-master.yml
@@ -7,17 +7,17 @@ DNS_ROUTING_TEMPLATE:=cf-dns-route.yml
 AWS_FC_COMMAND=export AWS_PAGER=;aws cloudformation
 
 .PHONY: create-all delete-all \
-				cluster service-master-1 dns-routing \
+				cluster cluster-keys service-master-1 dns-routing \
 				wait-for-cluster-creation wait-for-service-master-1-creation wait-for-service-master-2-creation wait-for-dns-routing-creation \
 				wait-for-cluster-deletion wait-for-service-master-1-deletion wait-for-service-master-2-deletion wait-for-dns-routing-deletion \
 				gerrit-build gerrit-publish
 
 create-all: cluster wait-for-cluster-creation \
-						service-master-1 service-master-2 \
-						wait-for-service-master-1-creation wait-for-service-master-2-creation \
+						service-master-1 wait-for-service-master-1-creation \
+						service-master-2 wait-for-service-master-2-creation \
 						dns-routing wait-for-dns-routing-creation
 
-cluster:
+cluster: cluster-keys
 	$(AWS_FC_COMMAND) create-stack \
 		--stack-name $(CLUSTER_STACK_NAME) \
 		--capabilities CAPABILITY_IAM  \
@@ -40,6 +40,7 @@ service-master-1:
 		ParameterKey=DockerRegistryUrl,ParameterValue=$(DOCKER_REGISTRY_URI) \
 		ParameterKey=CertificateArn,ParameterValue=$(SSL_CERTIFICATE_ARN) \
 		ParameterKey=GerritKeyPrefix,ParameterValue=$(GERRIT_KEY_PREFIX)\
+		ParameterKey=PeerSubdomain,ParameterValue=$(MASTER2_SUBDOMAIN) \
 		ParameterKey=DockerImage,ParameterValue=aws-gerrit/gerrit:$(IMAGE_TAG)
 
 service-master-2:
@@ -62,7 +63,8 @@ service-master-2:
 		ParameterKey=GerritIndexVolume,ParameterValue=gerrit-index-master-2 \
 		ParameterKey=GerritCacheVolume,ParameterValue=gerrit-cache-master-2 \
 		ParameterKey=GerritDbVolume,ParameterValue=gerrit-db-master-2 \
-		ParameterKey=GerritLogsVolume,ParameterValue=gerrit-logs-master-2
+		ParameterKey=GerritLogsVolume,ParameterValue=gerrit-logs-master-2 \
+		ParameterKey=PeerSubdomain,ParameterValue=$(MASTER1_SUBDOMAIN)
 
 dns-routing:
 	$(AWS_FC_COMMAND) create-stack \
@@ -109,12 +111,19 @@ wait-for-cluster-deletion:
 	--region $(AWS_REGION)
 	@echo "*** Cluster stack '$(CLUSTER_STACK_NAME)' deleted"
 
-wait-for-service-master-deletion:
-	@echo "*** Wait for service master stack '$(SERVICE_MASTER_STACK_NAME)' deletion"
+wait-for-service-master-1-deletion:
+	@echo "*** Wait for service master stack '$(SERVICE_MASTER1_STACK_NAME)' deletion"
 	$(AWS_FC_COMMAND) wait stack-delete-complete \
 	--stack-name $(SERVICE_MASTER1_STACK_NAME) \
 	--region $(AWS_REGION)
-	@echo "*** Service stack master '$(SERVICE_MASTER_STACK_NAME)' deleted"
+	@echo "*** Service stack master '$(SERVICE_MASTER1_STACK_NAME)' deleted"
+
+wait-for-service-master-2-deletion:
+	@echo "*** Wait for service master stack '$(SERVICE_MASTER2_STACK_NAME)' deletion"
+	$(AWS_FC_COMMAND) wait stack-delete-complete \
+	--stack-name $(SERVICE_MASTER2_STACK_NAME) \
+	--region $(AWS_REGION)
+	@echo "*** Service stack master '$(SERVICE_MASTER2_STACK_NAME)' deleted"
 
 wait-for-dns-routing-deletion:
 	@echo "*** Wait for DNS routing stack '$(DNS_ROUTING_STACK_NAME)' deletion"

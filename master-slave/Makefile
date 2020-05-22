@@ -1,5 +1,5 @@
+include ../Makefile.common
 include setup.env
-include ../version.env
 
 CLUSTER_TEMPLATE:=cf-cluster.yml
 SERVICE_MASTER_TEMPLATE:=cf-service-master.yml
@@ -8,17 +8,18 @@ DNS_ROUTING_TEMPLATE:=cf-dns-route.yml
 AWS_FC_COMMAND=export AWS_PAGER=;aws cloudformation
 
 .PHONY: create-all delete-all \
-				cluster service-master dns-routing \
+				cluster cluster-keys service-master service-slave dns-routing \
+				delete-cluster delete-service-master delete-service-slave delete-dns-routing \
 				wait-for-cluster-creation wait-for-service-master-creation wait-for-dns-routing-creation \
 				wait-for-cluster-deletion wait-for-service-master-deletion wait-for-dns-routing-deletion \
 				gerrit-build gerrit-publish
 
 create-all: cluster wait-for-cluster-creation \
-						service-master service-slave \
-						wait-for-service-master-creation wait-for-service-slave-creation \
+						service-slave wait-for-service-slave-creation \
+						service-master wait-for-service-master-creation \
 						dns-routing wait-for-dns-routing-creation
 
-cluster:
+cluster: cluster-keys
 	$(AWS_FC_COMMAND) create-stack \
 		--stack-name $(CLUSTER_STACK_NAME) \
 		--capabilities CAPABILITY_IAM  \
@@ -57,7 +58,7 @@ service-slave:
 		ParameterKey=DockerRegistryUrl,ParameterValue=$(DOCKER_REGISTRY_URI) \
 		ParameterKey=CertificateArn,ParameterValue=$(SSL_CERTIFICATE_ARN) \
 		ParameterKey=GerritKeyPrefix,ParameterValue=$(GERRIT_KEY_PREFIX)\
-		ParameterKey=DockerImage,ParameterValue=aws-gerrit/gerrit:$(IMAGE_TAG)
+		ParameterKey=GerritDockerImage,ParameterValue=aws-gerrit/gerrit:$(IMAGE_TAG)
 
 dns-routing:
 	$(AWS_FC_COMMAND) create-stack \

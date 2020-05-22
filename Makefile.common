@@ -1,0 +1,6 @@
+include $(dir $(realpath $(lastword $(MAKEFILE_LIST))))common.env
+
+
+cluster-keys:
+	aws ec2 describe-key-pairs --region $(AWS_REGION) --key-names $(CLUSTER_KEYS) > /dev/null 2>&1 || \
+		aws ec2 create-key-pair --region $(AWS_REGION) --key-name $(CLUSTER_KEYS) --query 'KeyMaterial' --output text > $(CLUSTER_KEYS).pem
