@@ -1,0 +1,5 @@
+# sidecar log source for mounting between docker containers
+  network(
+    transport("udp")
+    port("514")
+  );
