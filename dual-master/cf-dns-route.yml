@@ -9,6 +9,10 @@ Parameters:
       Description: Stack name of the ECS Master Gerrit service
       Type: String
       Default: gerrit-service-master-2
+  LBServiceStackName:
+      Description: Stack name of the ECS LB service
+      Type: String
+      Default: gerrit-service
 
 Resources:
   Master1DnsRecord:
@@ -56,4 +60,27 @@ Resources:
           HostedZoneId:
             Fn::ImportValue:
               !Join [':', [!Ref 'Master2ServiceStackName', 'CanonicalHostedZoneID']]
+          EvaluateTargetHealth: False
+  LBDnsRecord:
+      Type: AWS::Route53::RecordSet
+      Properties:
+        Name:
+          !Join
+            - '.'
+            - - Fn::ImportValue: !Join [':', [!Ref 'LBServiceStackName', 'Subdomain']]
+              - Fn::ImportValue: !Join [':', [!Ref 'LBServiceStackName', 'HostedZoneName']]
+        HostedZoneName:
+          !Join
+            - ''
+            - - Fn::ImportValue: !Join [':', [!Ref 'LBServiceStackName', 'HostedZoneName']]
+              - '.'
+        Comment: DNS name for Gerrit LB.
+        Type: A
+        AliasTarget:
+          DNSName:
+            Fn::ImportValue:
+              !Join [':', [!Ref 'LBServiceStackName', 'PublicLoadBalancerDNSName']]
+          HostedZoneId:
+            Fn::ImportValue:
+              !Join [':', [!Ref 'LBServiceStackName', 'CanonicalHostedZoneID']]
           EvaluateTargetHealth: False

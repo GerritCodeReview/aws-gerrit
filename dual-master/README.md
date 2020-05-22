@@ -146,6 +146,15 @@ When `secret_prefix` is omitted, it is set to `gerrit_secret` by default.
 * Add the plugins you want to install in `./gerrit/plugins`
 * Publish the image: `make gerrit-publish`
 
+### Publish custom HAProxy Docker image
+
+* Create the HAProxy and the logging sidecar repository in the Docker registry:
+  `aws ecr create-repository --repository-name aws-gerrit/haproxy`
+  `aws ecr create-repository --repository-name aws-gerrit/syslog-sidecar`
+* Publish the images:
+  `make haproxy-publish`
+  `make syslog-sidecar-publish`
+
 ### Getting Started
 
 * Create the cluster, services and DNS routing stacks:
