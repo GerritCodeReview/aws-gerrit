@@ -118,6 +118,30 @@
       "revId": "bb3a6adbce41ab61ed5c922629a8af9ee33256e3",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d695d2c0_5de7ee6a",
+        "filename": "gerrit/entrypoint.sh",
+        "patchSetId": 10
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-05-22T11:56:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "406b540e_cf6d8867",
+      "range": {
+        "startLine": 11,
+        "startChar": 7,
+        "endLine": 11,
+        "endChar": 12
+      },
+      "revId": "bb3a6adbce41ab61ed5c922629a8af9ee33256e3",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     }
   ]
 }
