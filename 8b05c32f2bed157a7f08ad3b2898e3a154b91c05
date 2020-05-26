@@ -177,6 +177,54 @@
     },
     {
       "key": {
+        "uuid": "59b4a6db_2363222a",
+        "filename": "dual-master/haproxy/Dockerfile",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-05-26T20:16:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5dcf95e9_871b22d2",
+      "range": {
+        "startLine": 10,
+        "startChar": 5,
+        "endLine": 10,
+        "endChar": 16
+      },
+      "revId": "8b05c32f2bed157a7f08ad3b2898e3a154b91c05",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "83c317d1_09489c1f",
+        "filename": "dual-master/haproxy/Dockerfile",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-05-26T20:16:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a510e7d_5b3a1ee8",
+      "range": {
+        "startLine": 10,
+        "startChar": 40,
+        "endLine": 10,
+        "endChar": 60
+      },
+      "revId": "8b05c32f2bed157a7f08ad3b2898e3a154b91c05",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff36a036_4f58a89e",
         "filename": "dual-master/haproxy/Dockerfile",
         "patchSetId": 9
