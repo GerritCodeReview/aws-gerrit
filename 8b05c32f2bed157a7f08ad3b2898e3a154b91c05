@@ -1,0 +1,222 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71c47e59_cf565a3a",
+        "filename": "dual-master/Makefile",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-05-26T11:10:46Z",
+      "side": 1,
+      "message": ".PHONY target needs updating, for the new lb-related targets.",
+      "revId": "8b05c32f2bed157a7f08ad3b2898e3a154b91c05",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccd241eb_4548de3d",
+        "filename": "dual-master/cf-service-lb.yml",
+        "patchSetId": 9
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-05-26T11:10:46Z",
+      "side": 1,
+      "message": "Port 8080 is HTTP, not HTTPS. Do we really need to expose HTTP though?",
+      "range": {
+        "startLine": 62,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 19
+      },
+      "revId": "8b05c32f2bed157a7f08ad3b2898e3a154b91c05",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04e7ea64_39c16117",
+        "filename": "dual-master/cf-service-master.yml",
+        "patchSetId": 9
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-05-26T11:10:46Z",
+      "side": 1,
+      "message": "load balancer?",
+      "range": {
+        "startLine": 64,
+        "startChar": 49,
+        "endLine": 64,
+        "endChar": 56
+      },
+      "revId": "8b05c32f2bed157a7f08ad3b2898e3a154b91c05",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a510e7d_5b3a1ee8",
+        "filename": "dual-master/haproxy/Dockerfile",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-05-26T11:10:46Z",
+      "side": 1,
+      "message": "This can be omitted",
+      "range": {
+        "startLine": 10,
+        "startChar": 40,
+        "endLine": 10,
+        "endChar": 60
+      },
+      "revId": "8b05c32f2bed157a7f08ad3b2898e3a154b91c05",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dcf95e9_871b22d2",
+        "filename": "dual-master/haproxy/Dockerfile",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-05-26T11:10:46Z",
+      "side": 1,
+      "message": "haproxy.cfg.template",
+      "range": {
+        "startLine": 10,
+        "startChar": 5,
+        "endLine": 10,
+        "endChar": 16
+      },
+      "revId": "8b05c32f2bed157a7f08ad3b2898e3a154b91c05",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff36a036_4f58a89e",
+        "filename": "dual-master/haproxy/Dockerfile",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-05-26T11:10:46Z",
+      "side": 1,
+      "message": "If the docker-entrypoint.sh is already +x on the filesystem, you don\u0027t need any extra chmod inside the Dockerfile",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 35
+      },
+      "revId": "8b05c32f2bed157a7f08ad3b2898e3a154b91c05",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1e871b5_ff5af1f4",
+        "filename": "dual-master/haproxy/Makefile",
+        "patchSetId": 9
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-05-26T11:10:46Z",
+      "side": 1,
+      "message": "Where is IMAGE_TAG defined? Relying on the global one isn\u0027t correct, as it is supposed to check for the Gerrit docker configuration and SHA1 of that one.",
+      "range": {
+        "startLine": 11,
+        "startChar": 44,
+        "endLine": 11,
+        "endChar": 53
+      },
+      "revId": "8b05c32f2bed157a7f08ad3b2898e3a154b91c05",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcc4388b_a18e2b5a",
+        "filename": "dual-master/haproxy/haproxy.cfg",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-05-26T11:10:46Z",
+      "side": 1,
+      "message": "change it to haproxy.cfg.template? (for consistency with the other template files)",
+      "revId": "8b05c32f2bed157a7f08ad3b2898e3a154b91c05",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1641436a_ded80558",
+        "filename": "dual-master/haproxy/haproxy.cfg",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-05-26T11:10:46Z",
+      "side": 1,
+      "message": "Best to ask for Gerrit version, or even better, add the healthcheck plugin.",
+      "range": {
+        "startLine": 42,
+        "startChar": 4,
+        "endLine": 42,
+        "endChar": 46
+      },
+      "revId": "8b05c32f2bed157a7f08ad3b2898e3a154b91c05",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e14438ab_d2ddc3f1",
+        "filename": "dual-master/haproxy/haproxy.cfg",
+        "patchSetId": 9
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-05-26T11:10:46Z",
+      "side": 1,
+      "message": "Same as above: ask for Gerrit version or add the healthcheck plugin.",
+      "range": {
+        "startLine": 60,
+        "startChar": 23,
+        "endLine": 60,
+        "endChar": 37
+      },
+      "revId": "8b05c32f2bed157a7f08ad3b2898e3a154b91c05",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
