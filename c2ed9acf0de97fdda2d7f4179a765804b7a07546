@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff2317db_c366ec42",
+        "filename": "gerrit/Makefile",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-05-27T22:47:54Z",
+      "side": 1,
+      "message": "The -p already succeeds in any case, you don\u0027t need the conditional. Just do mkdir -p $(@D)/plugins.",
+      "range": {
+        "startLine": 10,
+        "startChar": 1,
+        "endLine": 10,
+        "endChar": 58
+      },
+      "revId": "c2ed9acf0de97fdda2d7f4179a765804b7a07546",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
