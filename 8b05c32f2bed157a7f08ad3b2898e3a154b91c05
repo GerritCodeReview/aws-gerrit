@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "d8baeb44_7bd64d53",
+        "filename": "dual-master/cf-service-lb.yml",
+        "patchSetId": 9
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-05-27T22:45:02Z",
+      "side": 1,
+      "message": "Ack, shall we change the description to HAProxy HTTP port?",
+      "parentUuid": "7abc528e_0395b6bf",
+      "range": {
+        "startLine": 62,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 19
+      },
+      "revId": "8b05c32f2bed157a7f08ad3b2898e3a154b91c05",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "04e7ea64_39c16117",
         "filename": "dual-master/cf-service-master.yml",
         "patchSetId": 9
@@ -316,6 +340,30 @@
       "revId": "8b05c32f2bed157a7f08ad3b2898e3a154b91c05",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c66db8e_854164e9",
+        "filename": "dual-master/haproxy/Makefile",
+        "patchSetId": 9
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-05-27T22:45:02Z",
+      "side": 1,
+      "message": "What if you do something similar to what we do for Gerrit? Just get the all content of the files under the haproxy directory and do a SHA1 of that one.\n\nIf any change involve any non-HAProxy part, then the SHA1 won\u0027t change as the HAProxy image is the same. WDYT?",
+      "parentUuid": "10eeb69d_04bf7f06",
+      "range": {
+        "startLine": 11,
+        "startChar": 44,
+        "endLine": 11,
+        "endChar": 53
+      },
+      "revId": "8b05c32f2bed157a7f08ad3b2898e3a154b91c05",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     },
     {
       "key": {
