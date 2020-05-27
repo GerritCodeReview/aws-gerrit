@@ -89,8 +89,8 @@ service-lb:
 		ParameterKey=HTTPGerritMaster1Port,ParameterValue=$(HTTP_HOST_PORT_MASTER1) \
 		ParameterKey=SSHGerritMaster1Port,ParameterValue=$(SSH_HOST_PORT_MASTER1) \
 		ParameterKey=SSHGerritMaster2Port,ParameterValue=$(SSH_HOST_PORT_MASTER2) \
-		ParameterKey=HAProxyDockerImage,ParameterValue=aws-gerrit/haproxy:$(COMMITED_HEAD_SHA1) \
-		ParameterKey=SidecarDockerImage,ParameterValue=aws-gerrit/syslog-sidecar:$(COMMITED_HEAD_SHA1)
+		ParameterKey=HAProxyDockerImage,ParameterValue=aws-gerrit/haproxy:$(HAPROXY_HEAD_SHA1) \
+		ParameterKey=SidecarDockerImage,ParameterValue=aws-gerrit/syslog-sidecar:$(SYSLOG_HEAD_SHA1)
 
 dns-routing:
 	$(AWS_FC_COMMAND) create-stack \

@@ -8,8 +8,8 @@ docker-registry-login:
 		| docker login --username AWS --password-stdin $(DOCKER_REGISTRY_URI)/aws-gerrit/$(IMAGE_NAME)
 
 syslog-sidecar-build:
-	docker build -t aws-gerrit/$(IMAGE_NAME):$(COMMITED_HEAD_SHA1) .
-	docker tag aws-gerrit/$(IMAGE_NAME):$(COMMITED_HEAD_SHA1) $(DOCKER_REGISTRY_URI)/aws-gerrit/$(IMAGE_NAME):$(COMMITED_HEAD_SHA1)
+	docker build -t aws-gerrit/$(IMAGE_NAME):$(SYSLOG_HEAD_SHA1) .
+	docker tag aws-gerrit/$(IMAGE_NAME):$(SYSLOG_HEAD_SHA1) $(DOCKER_REGISTRY_URI)/aws-gerrit/$(IMAGE_NAME):$(SYSLOG_HEAD_SHA1)
 
 syslog-sidecar-publish: docker-registry-login syslog-sidecar-build
-	docker push $(DOCKER_REGISTRY_URI)/aws-gerrit/$(IMAGE_NAME):$(COMMITED_HEAD_SHA1)
+	docker push $(DOCKER_REGISTRY_URI)/aws-gerrit/$(IMAGE_NAME):$(SYSLOG_HEAD_SHA1)
