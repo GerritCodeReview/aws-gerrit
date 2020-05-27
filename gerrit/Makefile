@@ -23,6 +23,11 @@ gerrit-get-plugins:
 	-O ./plugins/high-availability.jar \
 	|| { echo >&2 "Cannot download high-availability plugin: Check internet connection. Aborting"; exit 1; }
 
+	@echo "Downloading Health Check plugin $(GERRIT_BRANCH)"
+	wget $(GERRIT_CI)/plugin-healthcheck-bazel-$(GERRIT_BRANCH)/$(LAST_BUILD)/healthcheck/healthcheck.jar \
+	-O ./plugins/healthcheck.jar \
+	|| { echo >&2 "Cannot download healthcheck plugin: Check internet connection. Aborting"; exit 1; }
+
 gerrit-build:
 	cat Dockerfile | \
 		GERRIT_VERSION=$(GERRIT_VERSION) GERRIT_PATCH=$(GERRIT_PATCH) envsubst | \
