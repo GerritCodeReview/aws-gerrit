@@ -295,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "10eeb69d_04bf7f06",
+        "filename": "dual-master/haproxy/Makefile",
+        "patchSetId": 9
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-05-27T11:49:54Z",
+      "side": 1,
+      "message": "I have added this COMMITED_HEAD_SHA1 which is the sha1 of what has been commit since haproxy populates the template via environment variables only.\n\nNot sure if the naming is the best, but I couldn\u0027t come up with anything better.",
+      "parentUuid": "d1e871b5_ff5af1f4",
+      "range": {
+        "startLine": 11,
+        "startChar": 44,
+        "endLine": 11,
+        "endChar": 53
+      },
+      "revId": "8b05c32f2bed157a7f08ad3b2898e3a154b91c05",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fcc4388b_a18e2b5a",
         "filename": "dual-master/haproxy/haproxy.cfg",
         "patchSetId": 9
