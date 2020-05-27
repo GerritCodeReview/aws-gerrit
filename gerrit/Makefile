@@ -7,6 +7,7 @@ docker-registry-login:
 
 gerrit-get-plugins:
 	# Make sure Prometheus Metrics exporter plugin is installed
+	mkdir -p $(@D)/plugins
 
 	@echo "Downloading metrics-reporter-prometheus plugin $(GERRIT_BRANCH)"
 	wget $(GERRIT_CI)/plugin-metrics-reporter-prometheus-bazel-master-$(GERRIT_BRANCH)/$(LAST_BUILD)/metrics-reporter-prometheus/metrics-reporter-prometheus.jar \
