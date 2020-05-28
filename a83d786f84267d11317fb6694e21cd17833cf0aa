@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1208821_bdad3759",
+        "filename": "dual-master/Makefile",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-05-28T19:03:15Z",
+      "side": 1,
+      "message": "all the parameters added should get the default value in CF...did you find any problem with the default values or you have added them for consistency with master-2 ?",
+      "revId": "a83d786f84267d11317fb6694e21cd17833cf0aa",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
