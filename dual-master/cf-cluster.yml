@@ -177,6 +177,11 @@ Resources:
                 {\"files\":
                   {\"collect_list\":
                     [
+                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-master-2/_data/replication_log\",
+                      \"log_group_name\": \"${AWS::StackName}\",
+                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/master-2/replication_log\",
+                      \"timezone\": \"UTC\"
+                      },
                       {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-master-2/_data/httpd_log\",
                       \"log_group_name\": \"${AWS::StackName}\",
                       \"log_stream_name\": \"${EnvironmentName}/{instance_id}/master-2/httpd_log\",
