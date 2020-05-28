@@ -27,22 +27,6 @@ Parameters:
         Description: How many instances of this task should we run across our cluster?
         Type: Number
         Default: 1
-  HTTPGerritMaster1Port:
-        Description: Gerrit HTTP port
-        Type: Number
-        Default: 8080
-  SSHGerritMaster1Port:
-        Description: Gerrit SSH port
-        Type: Number
-        Default: 29418
-  HTTPGerritMaster2Port:
-        Description: Gerrit HTTP port
-        Type: Number
-        Default: 8081
-  SSHGerritMaster2Port:
-        Description: Gerrit SSH port
-        Type: Number
-        Default: 29419
   HTTPGerritPort:
         Description: Gerrit HTTP port
         Type: Number
@@ -123,14 +107,6 @@ Resources:
                     - Name: GERRIT_MASTER_2_URL
                       Value:
                         Fn::ImportValue: !Join [':', [!Ref 'Master2ServiceStackName', 'PublicLoadBalancerDNSName']]
-                    - Name: GERRIT_MASTER_1_HTTP_PORT
-                      Value: !Ref HTTPGerritMaster1Port
-                    - Name: GERRIT_MASTER_2_HTTP_PORT
-                      Value: !Ref HTTPGerritMaster2Port
-                    - Name: GERRIT_MASTER_1_SSH_PORT
-                      Value: !Ref SSHGerritMaster1Port
-                    - Name: GERRIT_MASTER_2_SSH_PORT
-                      Value: !Ref SSHGerritMaster2Port
                     - Name: SYSLOG_SIDECAR
                       Value: !Ref SyslogSidecarServiceName
                   Cpu: 1024
