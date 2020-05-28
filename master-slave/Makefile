@@ -155,10 +155,10 @@ gerrit-publish:
 	$(MAKE) -C ../gerrit gerrit-publish RECIPE=master-slave
 
 git-daemon-publish:
-	$(MAKE) -C git-daemon git-daemon-publish
+	$(MAKE) -C ../git-daemon git-daemon-publish RECIPE=master-slave
 
 git-ssh-publish:
-	$(MAKE) -C git-ssh git-ssh-publish
+	$(MAKE) -C ../git-ssh git-ssh-publish RECIPE=master-slave
 
 prometheus-publish:
 	$(MAKE) -C ../monitoring/prometheus prometheus-publish RECIPE=master-slave
