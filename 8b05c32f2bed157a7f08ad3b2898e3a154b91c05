@@ -108,6 +108,30 @@
     },
     {
       "key": {
+        "uuid": "87b7c72f_f3af6ac6",
+        "filename": "dual-master/cf-service-lb.yml",
+        "patchSetId": 9
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-05-28T12:31:02Z",
+      "side": 1,
+      "message": "Can I change the description to HAProxy HTTP port?",
+      "parentUuid": "d8baeb44_7bd64d53",
+      "range": {
+        "startLine": 62,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 19
+      },
+      "revId": "8b05c32f2bed157a7f08ad3b2898e3a154b91c05",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "04e7ea64_39c16117",
         "filename": "dual-master/cf-service-master.yml",
         "patchSetId": 9
