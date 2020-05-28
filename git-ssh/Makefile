@@ -1,5 +1,5 @@
-include ../../Makefile.common
-include ../setup.env
+include ../Makefile.common
+include ../$(RECIPE)/setup.env
 
 IMAGE_NAME:=git-ssh
 
