@@ -42,9 +42,16 @@ service-master-1:
 		ParameterKey=Subdomain,ParameterValue=$(MASTER1_SUBDOMAIN) \
 		ParameterKey=DockerRegistryUrl,ParameterValue=$(DOCKER_REGISTRY_URI) \
 		ParameterKey=CertificateArn,ParameterValue=$(SSL_CERTIFICATE_ARN) \
+		ParameterKey=HTTPHostPort,ParameterValue=$(HTTP_HOST_PORT_MASTER1) \
+		ParameterKey=SSHHostPort,ParameterValue=$(SSH_HOST_PORT_MASTER1) \
 		ParameterKey=GerritKeyPrefix,ParameterValue=$(GERRIT_KEY_PREFIX)\
-		ParameterKey=PeerSubdomain,ParameterValue=$(MASTER2_SUBDOMAIN) \
 		ParameterKey=DockerImage,ParameterValue=aws-gerrit/gerrit:$(IMAGE_TAG) \
+		ParameterKey=GerritDataVolume,ParameterValue=gerrit-data-master-1 \
+		ParameterKey=GerritIndexVolume,ParameterValue=gerrit-index-master-1 \
+		ParameterKey=GerritCacheVolume,ParameterValue=gerrit-cache-master-1 \
+		ParameterKey=GerritDbVolume,ParameterValue=gerrit-db-master-1 \
+		ParameterKey=GerritLogsVolume,ParameterValue=gerrit-logs-master12 \
+		ParameterKey=PeerSubdomain,ParameterValue=$(MASTER2_SUBDOMAIN) \
 		ParameterKey=LBSubdomain,ParameterValue=$(LB_SUBDOMAIN)
 
 service-master-2:
