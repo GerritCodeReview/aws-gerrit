@@ -7,6 +7,7 @@ docker-registry-login:
 
 gerrit-get-plugins:
 	# Make sure Prometheus Metrics exporter plugin is installed
+	mkdir -p $(@D)/plugins
 
 	@echo "Downloading metrics-reporter-prometheus plugin $(GERRIT_BRANCH)"
 	wget $(GERRIT_CI)/plugin-metrics-reporter-prometheus-bazel-master-$(GERRIT_BRANCH)/$(LAST_BUILD)/metrics-reporter-prometheus/metrics-reporter-prometheus.jar \
@@ -22,6 +23,11 @@ gerrit-get-plugins:
 	wget $(GERRIT_CI)/plugin-high-availability-bazel-master-$(GERRIT_BRANCH)/$(LAST_BUILD)/high-availability/high-availability.jar \
 	-O ./plugins/high-availability.jar \
 	|| { echo >&2 "Cannot download high-availability plugin: Check internet connection. Aborting"; exit 1; }
+
+	@echo "Downloading Health Check plugin $(GERRIT_BRANCH)"
+	wget $(GERRIT_CI)/plugin-healthcheck-bazel-$(GERRIT_BRANCH)/$(LAST_BUILD)/healthcheck/healthcheck.jar \
+	-O ./plugins/healthcheck.jar \
+	|| { echo >&2 "Cannot download healthcheck plugin: Check internet connection. Aborting"; exit 1; }
 
 gerrit-build:
 	cat Dockerfile | \

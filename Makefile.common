@@ -1,4 +1,5 @@
-include $(dir $(realpath $(lastword $(MAKEFILE_LIST))))common.env
+ROOT_DIR=$(dir $(realpath $(filter %Makefile.common,$(MAKEFILE_LIST))))
+include $(ROOT_DIR)common.env
 
 
 cluster-keys:
