@@ -87,6 +87,7 @@ service-lb:
 		ParameterKey=CertificateArn,ParameterValue=$(SSL_CERTIFICATE_ARN) \
 		ParameterKey=Subdomain,ParameterValue=$(LB_SUBDOMAIN) \
 		ParameterKey=HTTPGerritMaster1Port,ParameterValue=$(HTTP_HOST_PORT_MASTER1) \
+		ParameterKey=HTTPGerritMaster2Port,ParameterValue=$(HTTP_HOST_PORT_MASTER2) \
 		ParameterKey=SSHGerritMaster1Port,ParameterValue=$(SSH_HOST_PORT_MASTER1) \
 		ParameterKey=SSHGerritMaster2Port,ParameterValue=$(SSH_HOST_PORT_MASTER2) \
 		ParameterKey=HAProxyDockerImage,ParameterValue=aws-gerrit/haproxy:$(HAPROXY_HEAD_SHA1) \
