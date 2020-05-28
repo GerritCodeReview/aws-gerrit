@@ -22,6 +22,30 @@
       "revId": "c2ed9acf0de97fdda2d7f4179a765804b7a07546",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fd561a5_1b9b726d",
+        "filename": "gerrit/Makefile",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-05-28T10:13:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff2317db_c366ec42",
+      "range": {
+        "startLine": 10,
+        "startChar": 1,
+        "endLine": 10,
+        "endChar": 58
+      },
+      "revId": "c2ed9acf0de97fdda2d7f4179a765804b7a07546",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     }
   ]
 }
