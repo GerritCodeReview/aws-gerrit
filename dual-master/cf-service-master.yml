@@ -77,6 +77,10 @@ Parameters:
       Description: Gerrit git volume name
       Type: String
       Default: gerrit-git-master
+  GerritEventsVolume:
+      Description: Gerrit replication events volume name
+      Type: String
+      Default: gerrit-events-master
   GerritWebsessionsVolume:
       Description: Gerrit git volume name
       Type: String
@@ -190,6 +194,9 @@ Resources:
               - Name: !Ref 'GerritGitVolume'
                 Host:
                   SourcePath: "/mnt/efs/gerrit-shared/git"
+              - Name: !Ref 'GerritEventsVolume'
+                Host:
+                  SourcePath: "/mnt/efs/gerrit-shared/events"
               - Name: !Ref 'GerritWebsessionsVolume'
                 Host:
                   SourcePath: "/mnt/efs/gerrit-shared/high-availability"
