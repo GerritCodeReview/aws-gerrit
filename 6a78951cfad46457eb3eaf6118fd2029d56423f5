@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "edf0ce30_e4c896ac",
+        "filename": "dual-master/Makefile",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-05-29T06:39:35Z",
+      "side": 1,
+      "message": "seems like you are missing building and publishing of ssh agent and git daemon",
+      "revId": "6a78951cfad46457eb3eaf6118fd2029d56423f5",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dbe42ab_5a755731",
+        "filename": "dual-master/Makefile",
+        "patchSetId": 4
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-05-29T06:39:35Z",
+      "side": 1,
+      "message": "master \u003d\u003e slave",
+      "revId": "6a78951cfad46457eb3eaf6118fd2029d56423f5",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
