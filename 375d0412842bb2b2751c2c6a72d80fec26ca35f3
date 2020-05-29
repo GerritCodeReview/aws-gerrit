@@ -16,6 +16,24 @@
       "revId": "375d0412842bb2b2751c2c6a72d80fec26ca35f3",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6399bf97_76ee19b5",
+        "filename": "dual-master/cf-service-slave.yml",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-05-29T14:00:29Z",
+      "side": 1,
+      "message": "Let me add this back.",
+      "parentUuid": "58990883_91f99a52",
+      "revId": "375d0412842bb2b2751c2c6a72d80fec26ca35f3",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
     }
   ]
 }
