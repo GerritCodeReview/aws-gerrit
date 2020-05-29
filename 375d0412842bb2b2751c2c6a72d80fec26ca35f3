@@ -88,6 +88,24 @@
       "revId": "375d0412842bb2b2751c2c6a72d80fec26ca35f3",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "11d6667e_bb6fb990",
+        "filename": "dual-master/cf-service-slave.yml",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-05-29T15:22:31Z",
+      "side": 1,
+      "message": "They are missing from the cluster..see the one for master 1: https://github.com/GerritCodeReview/aws-gerrit/blob/stable-3.1/dual-master/cf-cluster.yml#L200",
+      "parentUuid": "459cd4a0_f7895e45",
+      "revId": "375d0412842bb2b2751c2c6a72d80fec26ca35f3",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
     }
   ]
 }
