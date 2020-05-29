@@ -70,6 +70,24 @@
       "revId": "375d0412842bb2b2751c2c6a72d80fec26ca35f3",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "459cd4a0_f7895e45",
+        "filename": "dual-master/cf-service-slave.yml",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-05-29T14:54:49Z",
+      "side": 1,
+      "message": "Can you point on where they are missing then?",
+      "parentUuid": "3d02f9c8_fec8dc89",
+      "revId": "375d0412842bb2b2751c2c6a72d80fec26ca35f3",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     }
   ]
 }
