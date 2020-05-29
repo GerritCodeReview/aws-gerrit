@@ -8,10 +8,12 @@ git config -f /var/gerrit/etc/gerrit.config container.slave "${CONTAINER_SLAVE:-
 if [ $CONTAINER_SLAVE ]; then
   rm -fr /var/gerrit/plugins/replication.jar
   java -jar /var/gerrit/bin/gerrit.war reindex --index groups
+# Not a slave, and nothing is there, hence we need to init
+elif [ ! -d /var/gerrit/git/All-Projects.git ]; then
+  java -jar /var/gerrit/bin/gerrit.war init --no-auto-start --batch --install-all-plugins -d /var/gerrit
+# Not a slave but init already took place (i.e.: in an HA scenario with shared git repositories)
 elif [ ! -f /var/gerrit/index/gerrit_index.config ]; then
   java -jar /var/gerrit/bin/gerrit.war reindex -d /var/gerrit
-else
-  java -jar /var/gerrit/bin/gerrit.war init --no-auto-start --batch --install-all-plugins -d /var/gerrit
 fi
 
 echo "Running Gerrit ..."
