@@ -10,7 +10,10 @@
 [auth]
   type = ldap
   gitBasicAuth = true
-  cookiedomain = .{{ COOKIE_DOMAIN }}
+  {% if COOKIE_DOMAIN is defined %}
+    cookiedomain = .{{ COOKIE_DOMAIN }}
+  {% endif %}
+
 [ldap]
   server = {{ LDAP_SERVER }}
   username = {{ LDAP_USERNAME }}
