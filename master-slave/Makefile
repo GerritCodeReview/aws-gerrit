@@ -14,7 +14,8 @@ AWS_FC_COMMAND=export AWS_PAGER=;aws cloudformation
 				wait-for-cluster-deletion wait-for-service-master-deletion wait-for-dns-routing-deletion \
 				gerrit-build gerrit-publish
 
-create-all: cluster wait-for-cluster-creation \
+create-all: gerrit-publish git-daemon-publish git-ssh-publish \
+						cluster wait-for-cluster-creation \
 						service-slave wait-for-service-slave-creation \
 						service-master wait-for-service-master-creation \
 						dns-routing wait-for-dns-routing-creation
