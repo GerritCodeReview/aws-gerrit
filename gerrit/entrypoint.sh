@@ -10,9 +10,7 @@ if [ $CONTAINER_SLAVE ]; then
   java -jar /var/gerrit/bin/gerrit.war reindex --index groups
 else
   java -jar /var/gerrit/bin/gerrit.war init --no-auto-start --batch --install-all-plugins -d /var/gerrit
-  if [ ! -f /var/gerrit/index/gerrit_index.config ]; then
-    java -jar /var/gerrit/bin/gerrit.war reindex -d /var/gerrit
-  fi
+  java -jar /var/gerrit/bin/gerrit.war reindex -d /var/gerrit
 fi
 
 echo "Running Gerrit ..."
