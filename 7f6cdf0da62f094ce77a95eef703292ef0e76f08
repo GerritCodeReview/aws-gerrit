@@ -22,6 +22,30 @@
       "revId": "7f6cdf0da62f094ce77a95eef703292ef0e76f08",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb77355b_df0710b2",
+        "filename": "dual-master/Makefile",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-06-01T19:33:06Z",
+      "side": 0,
+      "message": "good point",
+      "parentUuid": "b1be363f_6340846e",
+      "range": {
+        "startLine": 20,
+        "startChar": 20,
+        "endLine": 20,
+        "endChar": 51
+      },
+      "revId": "7f6cdf0da62f094ce77a95eef703292ef0e76f08",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     }
   ]
 }
