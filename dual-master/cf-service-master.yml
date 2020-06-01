@@ -101,6 +101,10 @@ Parameters:
       Description: Gerrit logs volume name
       Type: String
       Default: gerrit-logs-master
+  ReindexAtSartup:
+      Description: Force index reindexing at startup
+      Type: String
+      Default: false
 
 Resources:
     Service:
@@ -150,6 +154,8 @@ Resources:
                       Value: !Sub 'http://${PeerSubdomain}.${HostedZoneName}:${HTTPGerritLBPort}'
                     - Name: HOSTED_ZONE_NAME
                       Value: !Ref HostedZoneName
+                    - Name: REINDEX_AT_STARTUP
+                      Value: !Ref ReindexAtSartup
                   MountPoints:
                     - SourceVolume: !Ref GerritGitVolume
                       ContainerPath: /var/gerrit/git

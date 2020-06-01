@@ -83,7 +83,8 @@ service-master-2:
 		ParameterKey=GerritLogsVolume,ParameterValue=gerrit-logs-master-2 \
 		ParameterKey=PeerSubdomain,ParameterValue=$(MASTER1_SUBDOMAIN) \
 		ParameterKey=LBSubdomain,ParameterValue=$(LB_SUBDOMAIN) \
-		ParameterKey=SlaveServiceStackName,ParameterValue=$(SERVICE_SLAVE_STACK_NAME)
+		ParameterKey=SlaveServiceStackName,ParameterValue=$(SERVICE_SLAVE_STACK_NAME) \
+		ParameterKey=ReindexAtSartup,ParameterValue=true
 
 service-slave:
 	$(AWS_FC_COMMAND) create-stack \
