@@ -17,8 +17,8 @@ AWS_FC_COMMAND=export AWS_PAGER=;aws cloudformation
 
 create-all: gerrit-publish haproxy-publish syslog-sidecar-publish \
 						cluster wait-for-cluster-creation \
-						service-slave wait-for-service-slave-creation \
-						service-master-1 wait-for-service-master-1-creation \
+						service-slave service-master-1 \
+						wait-for-service-master-1-creation wait-for-serice-slave-creation \
 						service-master-2 wait-for-service-master-2-creation \
 						service-lb wait-for-service-lb-creation \
 						dns-routing wait-for-dns-routing-creation
