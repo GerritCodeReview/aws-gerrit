@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "873a1e80_dac98806",
+        "filename": "dual-master/cf-service-master.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-06-01T19:09:03Z",
+      "side": 1,
+      "message": "unfortunately boolean types don\u0027t exist in CF",
+      "range": {
+        "startLine": 106,
+        "startChar": 6,
+        "endLine": 106,
+        "endChar": 18
+      },
+      "revId": "7f6cdf0da62f094ce77a95eef703292ef0e76f08",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
