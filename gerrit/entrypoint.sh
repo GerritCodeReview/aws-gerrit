@@ -7,6 +7,19 @@ git config -f /var/gerrit/etc/gerrit.config container.slave "${CONTAINER_SLAVE:-
 
 if [ $CONTAINER_SLAVE ]; then
   echo "Slave mode..."
+  retry_count=0
+  MAX_RETRIES=${STARTUP_MAX_RETRIES:-10}
+  STARTUP_RETRY_SLEEP=60
+
+  while [ `git --git-dir=/var/gerrit/git/All-Projects.git show-ref | wc -l` -eq 0 ] || [ `git --git-dir=/var/gerrit/git/All-Users.git show-ref | wc -l` -eq 0 ]
+  do
+    retry_count=$((retry_count+1))
+    if [ "$retry_count" -ge "$MAX_RETRIES" ]; then
+        exit 1
+    fi
+    echo "Sleep $STARTUP_RETRY_SLEEP seconds before checking replication happened ($retry_count/$MAX_RETRIES)..."
+    sleep $STARTUP_RETRY_SLEEP
+  done
   rm -fr /var/gerrit/plugins/replication.jar
   java -jar /var/gerrit/bin/gerrit.war reindex --index groups
 else
