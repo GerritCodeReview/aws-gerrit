@@ -16,8 +16,8 @@ AWS_FC_COMMAND=export AWS_PAGER=;aws cloudformation
 
 create-all: gerrit-publish git-daemon-publish git-ssh-publish \
 						cluster wait-for-cluster-creation \
-						service-slave wait-for-service-slave-creation \
-						service-master wait-for-service-master-creation \
+						service-slave service-master \
+						wait-for-service-master-creation wait-for-service-slave-creation \
 						dns-routing wait-for-dns-routing-creation
 
 cluster: cluster-keys
@@ -59,7 +59,9 @@ service-slave:
 		ParameterKey=DockerRegistryUrl,ParameterValue=$(DOCKER_REGISTRY_URI) \
 		ParameterKey=CertificateArn,ParameterValue=$(SSL_CERTIFICATE_ARN) \
 		ParameterKey=GerritKeyPrefix,ParameterValue=$(GERRIT_KEY_PREFIX)\
-		ParameterKey=GerritDockerImage,ParameterValue=aws-gerrit/gerrit:$(IMAGE_TAG)
+		ParameterKey=GerritDockerImage,ParameterValue=aws-gerrit/gerrit:$(IMAGE_TAG) \
+		ParameterKey=StartupMaxRetries,ParameterValue=$(STARTUP_MAX_RETRIES)
+
 
 dns-routing:
 	$(AWS_FC_COMMAND) create-stack \
