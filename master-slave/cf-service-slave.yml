@@ -102,6 +102,10 @@ Parameters:
   GerritKeyPrefix:
       Description: Gerrit credentials keys prefix
       Type: String
+  StartupMaxRetries:
+      Description: Max number of retries done by the Slave to become healthy
+      Type: Number
+      Default: 10
 
 Resources:
     GerritService:
@@ -109,7 +113,10 @@ Resources:
         DependsOn:
           - HTTPListener
           - SSHListener
+          - GitListener
+          - GitSSHListener
         Properties:
+            HealthCheckGracePeriodSeconds: 180
             Cluster:
               Fn::ImportValue:
                   !Join [':', [!Ref 'ClusterStackName', 'ClusterName']]
@@ -122,19 +129,6 @@ Resources:
                 - ContainerName: !Ref GerritServiceName
                   ContainerPort: !Ref SSHContainerPort
                   TargetGroupArn: !Ref SSHTargetGroup
-
-    GerritReplicationService:
-        Type: AWS::ECS::Service
-        DependsOn:
-          - GitListener
-          - GitSSHListener
-        Properties:
-            Cluster:
-              Fn::ImportValue:
-                  !Join [':', [!Ref 'ClusterStackName', 'ClusterName']]
-            DesiredCount: !Ref DesiredCount
-            TaskDefinition: !Ref GerritReplicationTaskDefinition
-            LoadBalancers:
                 - ContainerName: !Ref GitDaemonServiceName
                   ContainerPort: !Ref GitPort
                   TargetGroupArn: !Ref GitTargetGroup
@@ -164,6 +158,8 @@ Resources:
                       Value: !Ref GerritKeyPrefix
                     - Name: AWS_REGION
                       Value: !Ref AWS::Region
+                    - Name: STARTUP_MAX_RETRIES
+                      Value: !Ref StartupMaxRetries
                   MountPoints:
                     - SourceVolume: !Ref GerritGitVolume
                       ContainerPath: /var/gerrit/git
@@ -190,51 +186,6 @@ Resources:
                         awslogs-group: !Ref ClusterStackName
                         awslogs-region: !Ref AWS::Region
                         awslogs-stream-prefix: !Ref EnvironmentName
-            Volumes:
-              - Name: !Ref 'GerritDbVolume'
-                DockerVolumeConfiguration:
-                  Scope: shared
-                  Autoprovision: true
-                  Driver: local
-                  Labels:
-                    gerrit-db: !Join ['-', [!Ref EnvironmentName, !Ref GerritDbVolume]]
-              - Name: !Ref 'GerritGitVolume'
-                DockerVolumeConfiguration:
-                  Scope: shared
-                  Autoprovision: true
-                  Driver: local
-                  Labels:
-                    gerrit-git: !Join ['-', [!Ref EnvironmentName, !Ref GerritGitVolume]]
-              - Name: !Ref 'GerritDataVolume'
-                DockerVolumeConfiguration:
-                  Scope: shared
-                  Autoprovision: true
-                  Driver: local
-                  Labels:
-                    gerrit-data: !Join ['-', [!Ref EnvironmentName, !Ref GerritDataVolume]]
-              - Name: !Ref 'GerritCacheVolume'
-                DockerVolumeConfiguration:
-                  Scope: shared
-                  Autoprovision: true
-                  Driver: local
-                  Labels:
-                    gerrit-cache: !Join ['-', [!Ref EnvironmentName, !Ref GerritCacheVolume]]
-              - Name: !Ref 'GerritLogsVolume'
-                DockerVolumeConfiguration:
-                  Scope: shared
-                  Autoprovision: true
-                  Driver: local
-                  Labels:
-                    gerrit-logs: !Join ['-', [!Ref EnvironmentName, !Ref GerritLogsVolume]]
-
-    GerritReplicationTaskDefinition:
-        Type: AWS::ECS::TaskDefinition
-        Properties:
-            Family: !Join ['', [!Ref GerritServiceName, TaskDefinition]]
-            TaskRoleArn: !Ref ECSTaskExecutionRole
-            ExecutionRoleArn: !Ref ECSTaskExecutionRole
-            NetworkMode: bridge
-            ContainerDefinitions:
                 - Name: !Ref GitDaemonServiceName
                   Essential: true
                   Image: !Sub '${DockerRegistryUrl}/${GitDaemonDockerImage}'
@@ -281,6 +232,13 @@ Resources:
                         awslogs-region: !Ref AWS::Region
                         awslogs-stream-prefix: !Ref EnvironmentName
             Volumes:
+              - Name: !Ref 'GerritDbVolume'
+                DockerVolumeConfiguration:
+                  Scope: shared
+                  Autoprovision: true
+                  Driver: local
+                  Labels:
+                    gerrit-db: !Join ['-', [!Ref EnvironmentName, !Ref GerritDbVolume]]
               - Name: !Ref 'GerritGitVolume'
                 DockerVolumeConfiguration:
                   Scope: shared
@@ -288,6 +246,27 @@ Resources:
                   Driver: local
                   Labels:
                     gerrit-git: !Join ['-', [!Ref EnvironmentName, !Ref GerritGitVolume]]
+              - Name: !Ref 'GerritDataVolume'
+                DockerVolumeConfiguration:
+                  Scope: shared
+                  Autoprovision: true
+                  Driver: local
+                  Labels:
+                    gerrit-data: !Join ['-', [!Ref EnvironmentName, !Ref GerritDataVolume]]
+              - Name: !Ref 'GerritCacheVolume'
+                DockerVolumeConfiguration:
+                  Scope: shared
+                  Autoprovision: true
+                  Driver: local
+                  Labels:
+                    gerrit-cache: !Join ['-', [!Ref EnvironmentName, !Ref GerritCacheVolume]]
+              - Name: !Ref 'GerritLogsVolume'
+                DockerVolumeConfiguration:
+                  Scope: shared
+                  Autoprovision: true
+                  Driver: local
+                  Labels:
+                    gerrit-logs: !Join ['-', [!Ref EnvironmentName, !Ref GerritLogsVolume]]
 
     LoadBalancer:
         Type: AWS::ElasticLoadBalancingV2::LoadBalancer
@@ -311,6 +290,11 @@ Resources:
             Port: !Ref HTTPHostPort
             Protocol: TCP
             HealthCheckPort: !Ref HTTPContainePort
+            HealthyThresholdCount: 5
+            UnhealthyThresholdCount: 5
+            TargetGroupAttributes:
+              - Key: deregistration_delay.timeout_seconds
+                Value: 420
 
     HTTPListener:
         Type: AWS::ElasticLoadBalancingV2::Listener
@@ -335,6 +319,11 @@ Resources:
             Port: !Ref SSHHostPort
             Protocol: TCP
             HealthCheckPort: !Ref SSHContainerPort
+            HealthyThresholdCount: 5
+            UnhealthyThresholdCount: 5
+            TargetGroupAttributes:
+                - Key: deregistration_delay.timeout_seconds
+                  Value: 420
 
     SSHListener:
         Type: AWS::ElasticLoadBalancingV2::Listener

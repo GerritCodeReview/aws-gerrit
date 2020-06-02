@@ -7,8 +7,19 @@ git config -f /var/gerrit/etc/gerrit.config container.slave "${CONTAINER_SLAVE:-
 
 if [ $CONTAINER_SLAVE ]; then
   echo "Slave mode..."
+
+  if [ ! -d /var/gerrit/git/All-Projects.git ] ||
+     [ ! -d /var/gerrit/git/All-Users.git ] ||
+     [ `git --git-dir=/var/gerrit/git/All-Projects.git show-ref | wc -l` -eq 0 ] ||
+     [ `git --git-dir=/var/gerrit/git/All-Users.git show-ref | wc -l` -eq 0 ]; then
+     echo "Init phase..."
+     java -jar /var/gerrit/bin/gerrit.war init --no-auto-start --batch --install-all-plugins -d /var/gerrit
+  else
+    echo "Reindexing phase..."
+    java -jar /var/gerrit/bin/gerrit.war reindex --index groups
+  fi
   rm -fr /var/gerrit/plugins/replication.jar
-  java -jar /var/gerrit/bin/gerrit.war reindex --index groups
+
 else
   echo "Master mode (init phase)..."
   java -jar /var/gerrit/bin/gerrit.war init --no-auto-start --batch --install-all-plugins -d /var/gerrit
