@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9d9e22e_14d6641f",
+        "filename": "dual-master/Makefile",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-06-02T08:13:07Z",
+      "side": 1,
+      "message": "Should be wait-for-service-slave-creation",
+      "range": {
+        "startLine": 21,
+        "startChar": 41,
+        "endLine": 21,
+        "endChar": 64
+      },
+      "revId": "ed7db59b31d9b4de32dfd649ff915ccf6c1ba354",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
