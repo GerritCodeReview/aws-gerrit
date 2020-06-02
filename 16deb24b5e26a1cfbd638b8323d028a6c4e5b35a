@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "afe05b54_92ff5980",
+        "filename": "gerrit/entrypoint.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-06-02T14:25:29Z",
+      "side": 1,
+      "message": "Best would be to use this as a parameter, with a default of 10.\n\nExample:\n  MAX_RETRIES\u003d${STARTUP_MAX_RETRIES:-10}",
+      "range": {
+        "startLine": 11,
+        "startChar": 14,
+        "endLine": 11,
+        "endChar": 16
+      },
+      "revId": "16deb24b5e26a1cfbd638b8323d028a6c4e5b35a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee269af7_3f5ddecd",
+        "filename": "gerrit/entrypoint.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-06-02T14:25:29Z",
+      "side": 1,
+      "message": "Not sure this is enough: it should be populated with a non-empty list of refs.",
+      "range": {
+        "startLine": 12,
+        "startChar": 12,
+        "endLine": 12,
+        "endChar": 47
+      },
+      "revId": "16deb24b5e26a1cfbd638b8323d028a6c4e5b35a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef6abccc_d1b9f83e",
+        "filename": "gerrit/entrypoint.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-06-02T14:25:29Z",
+      "side": 1,
+      "message": "For how long?",
+      "range": {
+        "startLine": 18,
+        "startChar": 15,
+        "endLine": 18,
+        "endChar": 16
+      },
+      "revId": "16deb24b5e26a1cfbd638b8323d028a6c4e5b35a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a14ab3a_63b37ca5",
+        "filename": "gerrit/entrypoint.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-06-02T14:25:29Z",
+      "side": 1,
+      "message": "Should this also parametrised?\n\nExamples:\n  STARTUP_RETRY_SLEEP\u003d${STARTUP_RETRY_SLEEP:-60}",
+      "range": {
+        "startLine": 19,
+        "startChar": 10,
+        "endLine": 19,
+        "endChar": 12
+      },
+      "revId": "16deb24b5e26a1cfbd638b8323d028a6c4e5b35a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
