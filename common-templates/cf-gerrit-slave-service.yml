@@ -107,9 +107,7 @@ Resources:
     GerritService:
         Type: AWS::ECS::Service
         DependsOn:
-          -
-            Fn::ImportValue:
-              !Join [':', [!Ref 'LBStack', 'HTTPListener']]
+          - HTTPListener
           - SSHListener
           - GitListener
           - GitSSHListener
@@ -263,28 +261,105 @@ Resources:
                   Labels:
                     gerrit-logs: !Join ['-', [!Ref EnvironmentName, !Ref GerritLogsVolume]]
 
-    LBStack:
-      Type: AWS::CloudFormation::Stack
-      Properties:
-        Parameters:
-          GerritServiceName: !Ref GerritServiceName
-          GitDaemonServiceName: !Ref GitDaemonServiceName
-          GitSSHServiceName: !Ref GitSSHServiceName
-          ClusterStackName: !Ref ClusterStackName
-          EnvironmentName: !Ref EnvironmentName
-          HTTPHostPort: !Ref HTTPHostPort
-          HTTPContainePort: !Ref HTTPContainePort
-          HTTPSPort: !Ref HTTPSPort
-          SSHHostPort: !Ref SSHHostPort
-          SSHContainerPort: !Ref SSHContainerPort
-          GitPort: !Ref GitPort
-          GitSSHPort: !Ref GitSSHPort
-          GitSSHContainerPort: !Ref GitSSHContainerPort
-          CertificateArn: !Ref CertificateArn
-          HostedZoneName: !Ref HostedZoneName
-          Subdomain: !Ref Subdomain
-        TemplateURL: s3://aws-gerrit-cf-templates/cf-gerrit-slave-lb.yml
-        TimeoutInMinutes: '5'
+    LoadBalancer:
+        Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+        Properties:
+            Type: network
+            Scheme: internet-facing
+            Subnets:
+              - Fn::ImportValue:
+                  !Join [':', [!Ref 'ClusterStackName', 'PublicSubnetOne']]
+            Tags:
+                - Key: Name
+                  Value: !Join ['-', [!Ref 'EnvironmentName', !Ref 'GerritServiceName', 'nlb']]
+
+    HTTPTargetGroup:
+        Type: AWS::ElasticLoadBalancingV2::TargetGroup
+        DependsOn: LoadBalancer
+        Properties:
+            VpcId:
+              Fn::ImportValue:
+                  !Join [':', [!Ref 'ClusterStackName', 'VPCId']]
+            Port: !Ref HTTPHostPort
+            Protocol: TCP
+            HealthCheckPort: !Ref HTTPContainePort
+
+    HTTPListener:
+        Type: AWS::ElasticLoadBalancingV2::Listener
+        DependsOn: LoadBalancer
+        Properties:
+            Certificates:
+              - CertificateArn: !Ref CertificateArn
+            DefaultActions:
+            - Type: forward
+              TargetGroupArn: !Ref HTTPTargetGroup
+            LoadBalancerArn: !Ref LoadBalancer
+            Port: !Ref HTTPSPort
+            Protocol: TLS
+
+    SSHTargetGroup:
+        Type: AWS::ElasticLoadBalancingV2::TargetGroup
+        DependsOn: LoadBalancer
+        Properties:
+            VpcId:
+              Fn::ImportValue:
+                  !Join [':', [!Ref 'ClusterStackName', 'VPCId']]
+            Port: !Ref SSHHostPort
+            Protocol: TCP
+            HealthCheckPort: !Ref SSHContainerPort
+
+    SSHListener:
+        Type: AWS::ElasticLoadBalancingV2::Listener
+        DependsOn: LoadBalancer
+        Properties:
+            DefaultActions:
+            - Type: forward
+              TargetGroupArn: !Ref SSHTargetGroup
+            LoadBalancerArn: !Ref LoadBalancer
+            Port: !Ref SSHHostPort
+            Protocol: TCP
+
+    GitTargetGroup:
+        Type: AWS::ElasticLoadBalancingV2::TargetGroup
+        DependsOn: LoadBalancer
+        Properties:
+            VpcId:
+              Fn::ImportValue:
+                  !Join [':', [!Ref 'ClusterStackName', 'VPCId']]
+            Port: !Ref GitPort
+            Protocol: TCP
+
+    GitListener:
+        Type: AWS::ElasticLoadBalancingV2::Listener
+        DependsOn: LoadBalancer
+        Properties:
+            DefaultActions:
+            - Type: forward
+              TargetGroupArn: !Ref GitTargetGroup
+            LoadBalancerArn: !Ref LoadBalancer
+            Port: !Ref GitPort
+            Protocol: TCP
+
+    GitSSHTargetGroup:
+        Type: AWS::ElasticLoadBalancingV2::TargetGroup
+        DependsOn: LoadBalancer
+        Properties:
+            VpcId:
+              Fn::ImportValue:
+                  !Join [':', [!Ref 'ClusterStackName', 'VPCId']]
+            Port: !Ref GitSSHPort
+            Protocol: TCP
+
+    GitSSHListener:
+        Type: AWS::ElasticLoadBalancingV2::Listener
+        DependsOn: LoadBalancer
+        Properties:
+            DefaultActions:
+            - Type: forward
+              TargetGroupArn: !Ref GitSSHTargetGroup
+            LoadBalancerArn: !Ref LoadBalancer
+            Port: !Ref GitSSHPort
+            Protocol: TCP
 
     SlaveDnsRecord:
         Type: AWS::Route53::RecordSet

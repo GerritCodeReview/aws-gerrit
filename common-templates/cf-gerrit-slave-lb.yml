@@ -1,0 +1,201 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Deploy a service into an ECS cluster behind a public load balancer.
+Parameters:
+  GerritServiceName:
+      Type: String
+      Default: gerrit-slave
+  GitDaemonServiceName:
+      Type: String
+      Default: gerrit-git-daemon
+  GitSSHServiceName:
+      Type: String
+      Default: gerrit-git-ssh
+  ClusterStackName:
+      Description: Stack name of the ECS cluster to deply the serivces
+      Type: String
+      Default: gerrit-cluster
+  EnvironmentName:
+      Description: An environment name used to build the log stream names
+      Type: String
+      Default: test
+  HTTPHostPort:
+      Description: Gerrit Host HTTP port
+      Type: Number
+      Default: 9080
+  HTTPContainePort:
+      Description: Gerrit Container HTTP port
+      Type: Number
+      Default: 8080
+  HTTPSPort:
+      Description: Gerrit HTTPS port
+      Type: Number
+      Default: 443
+  SSHHostPort:
+      Description: Gerrit SSH port
+      Type: Number
+      Default: 39418
+  SSHContainerPort:
+      Description: Gerrit SSH port
+      Type: Number
+      Default: 29418
+  GitPort:
+      Description: Git daemon port
+      Type: Number
+      Default: 9418
+  GitSSHPort:
+      Description: Git ssh port
+      Type: Number
+      Default: 1022
+  GitSSHContainerPort:
+      Description: Git ssh port
+      Type: Number
+      Default: 22
+  CertificateArn:
+      Description: SSL Certificates ARN
+      Type: String
+  HostedZoneName:
+      Description: The route53 HostedZoneName.
+      Type: String
+  Subdomain:
+      Description: The subdomain of the Gerrit cluster
+      Type: String
+      Default: gerrit-slave-demo
+
+Resources:
+
+    LoadBalancer:
+        Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+        Properties:
+            Type: network
+            Scheme: internet-facing
+            Subnets:
+              - Fn::ImportValue:
+                  !Join [':', [!Ref 'ClusterStackName', 'PublicSubnetOne']]
+            Tags:
+                - Key: Name
+                  Value: !Join ['-', [!Ref 'EnvironmentName', !Ref 'GerritServiceName', 'nlb']]
+
+    HTTPTargetGroup:
+        Type: AWS::ElasticLoadBalancingV2::TargetGroup
+        DependsOn: LoadBalancer
+        Properties:
+            VpcId:
+              Fn::ImportValue:
+                  !Join [':', [!Ref 'ClusterStackName', 'VPCId']]
+            Port: !Ref HTTPHostPort
+            Protocol: TCP
+            HealthCheckPort: !Ref HTTPContainePort
+
+    HTTPListener:
+        Type: AWS::ElasticLoadBalancingV2::Listener
+        DependsOn: LoadBalancer
+        Properties:
+            Certificates:
+              - CertificateArn: !Ref CertificateArn
+            DefaultActions:
+            - Type: forward
+              TargetGroupArn: !Ref HTTPTargetGroup
+            LoadBalancerArn: !Ref LoadBalancer
+            Port: !Ref HTTPSPort
+            Protocol: TLS
+
+    SSHTargetGroup:
+        Type: AWS::ElasticLoadBalancingV2::TargetGroup
+        DependsOn: LoadBalancer
+        Properties:
+            VpcId:
+              Fn::ImportValue:
+                  !Join [':', [!Ref 'ClusterStackName', 'VPCId']]
+            Port: !Ref SSHHostPort
+            Protocol: TCP
+            HealthCheckPort: !Ref SSHContainerPort
+
+    SSHListener:
+        Type: AWS::ElasticLoadBalancingV2::Listener
+        DependsOn: LoadBalancer
+        Properties:
+            DefaultActions:
+            - Type: forward
+              TargetGroupArn: !Ref SSHTargetGroup
+            LoadBalancerArn: !Ref LoadBalancer
+            Port: !Ref SSHHostPort
+            Protocol: TCP
+
+    GitTargetGroup:
+        Type: AWS::ElasticLoadBalancingV2::TargetGroup
+        DependsOn: LoadBalancer
+        Properties:
+            VpcId:
+              Fn::ImportValue:
+                  !Join [':', [!Ref 'ClusterStackName', 'VPCId']]
+            Port: !Ref GitPort
+            Protocol: TCP
+
+    GitListener:
+        Type: AWS::ElasticLoadBalancingV2::Listener
+        DependsOn: LoadBalancer
+        Properties:
+            DefaultActions:
+            - Type: forward
+              TargetGroupArn: !Ref GitTargetGroup
+            LoadBalancerArn: !Ref LoadBalancer
+            Port: !Ref GitPort
+            Protocol: TCP
+
+    GitSSHTargetGroup:
+        Type: AWS::ElasticLoadBalancingV2::TargetGroup
+        DependsOn: LoadBalancer
+        Properties:
+            VpcId:
+              Fn::ImportValue:
+                  !Join [':', [!Ref 'ClusterStackName', 'VPCId']]
+            Port: !Ref GitSSHPort
+            Protocol: TCP
+
+    GitSSHListener:
+        Type: AWS::ElasticLoadBalancingV2::Listener
+        DependsOn: LoadBalancer
+        Properties:
+            DefaultActions:
+            - Type: forward
+              TargetGroupArn: !Ref GitSSHTargetGroup
+            LoadBalancerArn: !Ref LoadBalancer
+            Port: !Ref GitSSHPort
+            Protocol: TCP
+
+Outputs:
+  PublicLoadBalancerDNSName:
+    Description: The DNS name of the external load balancer
+    Value: !GetAtt 'LoadBalancer.DNSName'
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'PublicLoadBalancerDNSName' ] ]
+  CanonicalHostedZoneID:
+    Description: Canonical Hosted Zone ID
+    Value: !GetAtt 'LoadBalancer.CanonicalHostedZoneID'
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'CanonicalHostedZoneID' ] ]
+  PublicLoadBalancerUrl:
+    Description: The url of the external load balancer
+    Value: !Join ['', ['http://', !GetAtt 'LoadBalancer.DNSName']]
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'PublicLoadBalancerUrl' ] ]
+  HostedZoneName:
+    Description: Route53 Hosted Zone name
+    Value: !Ref HostedZoneName
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'HostedZoneName' ] ]
+  Subdomain:
+    Description: Service DNS subdomain
+    Value: !Ref Subdomain
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'Subdomain' ] ]
+  CanonicalWebUrl:
+    Description: Canonical Web URL
+    Value: !Sub 'https://${Subdomain}.${HostedZoneName}'
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'CanonicalWebUrl' ] ]
+  SSHListener:
+    Description: SSHListener 
+    Value: !Ref SSHListener
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'Subdomain' ] ]
