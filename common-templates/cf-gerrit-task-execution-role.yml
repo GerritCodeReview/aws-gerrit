@@ -1,0 +1,45 @@
+
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Deploy a service into an ECS cluster behind a public load balancer.
+
+Resources:
+    # This is a role which is used by the ECS tasks themselves.
+    ECSTaskExecutionRole:
+      Type: AWS::IAM::Role
+      Properties:
+        AssumeRolePolicyDocument:
+          Statement:
+          - Effect: Allow
+            Principal:
+              Service: [ecs-tasks.amazonaws.com]
+            Action:
+              - sts:AssumeRole
+        Path: /
+        Policies:
+          - PolicyName: AmazonECSTaskExecutionRolePolicy
+            PolicyDocument:
+              Statement:
+              - Effect: Allow
+                Action:
+                  # Allow the ECS Tasks to download images from ECR
+                  - 'ecr:GetAuthorizationToken'
+                  - 'ecr:BatchCheckLayerAvailability'
+                  - 'ecr:GetDownloadUrlForLayer'
+                  - 'ecr:BatchGetImage'
+                  # Allow the ECS tasks to upload logs to CloudWatch
+                  - 'logs:CreateLogStream'
+                  - 'logs:PutLogEvents'
+                Resource: '*'
+          - PolicyName: AmazonECSTaskSecretManagerRolePolicy
+            PolicyDocument:
+              Statement:
+              - Effect: Allow
+                Action:
+                  # Allow the ECS Tasks to get SSH Keys
+                  - 'secretsmanager:GetSecretValue'
+                  - 'kms:Decrypt'
+                Resource: '*'
+
+Outputs:
+  TaskExecutionRoleRef:
+    Value: !Ref ECSTaskExecutionRole
