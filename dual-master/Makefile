@@ -15,7 +15,8 @@ AWS_FC_COMMAND=export AWS_PAGER=;aws cloudformation
 				service-lb wait-for-service-lb-deletion wait-for-service-lb-creation \
 				gerrit-build gerrit-publish haproxy-publish syslog-sidecar-publish
 
-create-all: gerrit-publish haproxy-publish syslog-sidecar-publish \
+create-all: upload-common-templates \
+						gerrit-publish haproxy-publish syslog-sidecar-publish \
 						cluster wait-for-cluster-creation \
 						service-slave service-master-1 \
 						wait-for-service-master-1-creation wait-for-service-slave-creation \
