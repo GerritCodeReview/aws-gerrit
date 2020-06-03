@@ -97,8 +97,8 @@ Resources:
         Type: AWS::ECS::TaskDefinition
         Properties:
             Family: !Join ['', [!Ref GerritServiceName, TaskDefinition]]
-            TaskRoleArn: !Ref ECSTaskExecutionRole
-            ExecutionRoleArn: !Ref ECSTaskExecutionRole
+            TaskRoleArn: !GetAtt ECSTaskExecutionRoleStack.Outputs.TaskExecutionRoleRef
+            ExecutionRoleArn: !GetAtt ECSTaskExecutionRoleStack.Outputs.TaskExecutionRoleRef
             NetworkMode: bridge
             ContainerDefinitions:
                 - Name: !Ref GerritServiceName
@@ -241,41 +241,12 @@ Resources:
             Port: !Ref SSHPort
             Protocol: TCP
 
-    # This is a role which is used by the ECS tasks themselves.
-    ECSTaskExecutionRole:
-      Type: AWS::IAM::Role
+    ECSTaskExecutionRoleStack:
+      Type: AWS::CloudFormation::Stack
       Properties:
-        AssumeRolePolicyDocument:
-          Statement:
-          - Effect: Allow
-            Principal:
-              Service: [ecs-tasks.amazonaws.com]
-            Action: ['sts:AssumeRole']
-        Path: /
-        Policies:
-          - PolicyName: AmazonECSTaskExecutionRolePolicy
-            PolicyDocument:
-              Statement:
-              - Effect: Allow
-                Action:
-                  # Allow the ECS Tasks to download images from ECR
-                  - 'ecr:GetAuthorizationToken'
-                  - 'ecr:BatchCheckLayerAvailability'
-                  - 'ecr:GetDownloadUrlForLayer'
-                  - 'ecr:BatchGetImage'
-                  # Allow the ECS tasks to upload logs to CloudWatch
-                  - 'logs:CreateLogStream'
-                  - 'logs:PutLogEvents'
-                Resource: '*'
-          - PolicyName: AmazonECSTaskSecretManagerRolePolicy
-            PolicyDocument:
-              Statement:
-              - Effect: Allow
-                Action:
-                  # Allow the ECS Tasks to get SSH Keys
-                  - 'secretsmanager:GetSecretValue'
-                  - 'kms:Decrypt'
-                Resource: '*'
+        TemplateURL: https://aws-gerrit-cf-templates.s3.amazonaws.com/cf-gerrit-task-execution-role.yml
+        TimeoutInMinutes: '5'
+
 Outputs:
   PublicLoadBalancerDNSName:
     Description: The DNS name of the external load balancer
