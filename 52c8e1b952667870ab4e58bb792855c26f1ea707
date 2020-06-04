@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67df4ea8_30e2b485",
+        "filename": "dual-master/Makefile",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-06-04T13:44:01Z",
+      "side": 1,
+      "message": "Not needed anymore.",
+      "range": {
+        "startLine": 103,
+        "startChar": 0,
+        "endLine": 103,
+        "endChar": 70
+      },
+      "revId": "52c8e1b952667870ab4e58bb792855c26f1ea707",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9da9767d_a24b2a8a",
+        "filename": "dual-master/README.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-06-04T13:44:01Z",
+      "side": 1,
+      "message": "Not needed anymore.",
+      "range": {
+        "startLine": 72,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 102
+      },
+      "revId": "52c8e1b952667870ab4e58bb792855c26f1ea707",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5a27d43_469e84f1",
+        "filename": "dual-master/cf-service-slave.yml",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-06-04T13:44:01Z",
+      "side": 1,
+      "message": "This isn\u0027t needed anymore.",
+      "range": {
+        "startLine": 105,
+        "startChar": 0,
+        "endLine": 108,
+        "endChar": 17
+      },
+      "revId": "52c8e1b952667870ab4e58bb792855c26f1ea707",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20e50e82_51c65f34",
+        "filename": "dual-master/cf-service-slave.yml",
+        "patchSetId": 5
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-06-04T13:44:01Z",
+      "side": 1,
+      "message": "Not needed anymore.",
+      "range": {
+        "startLine": 160,
+        "startChar": 0,
+        "endLine": 161,
+        "endChar": 51
+      },
+      "revId": "52c8e1b952667870ab4e58bb792855c26f1ea707",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a979f681_9221aa06",
+        "filename": "master-slave/Makefile",
+        "patchSetId": 5
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-06-04T13:44:01Z",
+      "side": 1,
+      "message": "Not needed anymore.",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 70
+      },
+      "revId": "52c8e1b952667870ab4e58bb792855c26f1ea707",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab00a895_ce63d23b",
+        "filename": "master-slave/cf-service-slave.yml",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-06-04T13:44:01Z",
+      "side": 1,
+      "message": "Not needed anymore.",
+      "range": {
+        "startLine": 105,
+        "startChar": 0,
+        "endLine": 108,
+        "endChar": 17
+      },
+      "revId": "52c8e1b952667870ab4e58bb792855c26f1ea707",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d144afb5_2f2ae186",
+        "filename": "master-slave/cf-service-slave.yml",
+        "patchSetId": 5
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-06-04T13:44:01Z",
+      "side": 1,
+      "message": "Not needed anymore.",
+      "range": {
+        "startLine": 160,
+        "startChar": 0,
+        "endLine": 161,
+        "endChar": 51
+      },
+      "revId": "52c8e1b952667870ab4e58bb792855c26f1ea707",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bc386fb_bcb47fb2",
+        "filename": "master-slave/setup.env.template",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-06-04T13:44:01Z",
+      "side": 1,
+      "message": "Not needed anymore.",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 23
+      },
+      "revId": "52c8e1b952667870ab4e58bb792855c26f1ea707",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
