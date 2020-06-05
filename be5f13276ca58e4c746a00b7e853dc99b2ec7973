@@ -22,6 +22,30 @@
       "revId": "be5f13276ca58e4c746a00b7e853dc99b2ec7973",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81630524_4b0062ab",
+        "filename": "dual-master/cf-cluster.yml",
+        "patchSetId": 4
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-06-05T08:40:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37317d38_ee44f1ea",
+      "range": {
+        "startLine": 168,
+        "startChar": 0,
+        "endLine": 170,
+        "endChar": 31
+      },
+      "revId": "be5f13276ca58e4c746a00b7e853dc99b2ec7973",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     }
   ]
 }
