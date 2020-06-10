@@ -202,27 +202,27 @@ Resources:
                       \"log_stream_name\": \"${EnvironmentName}/{instance_id}/master-2/audit_log\",
                       \"timezone\": \"UTC\"
                       },
-                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-master/_data/replication_log\",
+                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-master-1/_data/replication_log\",
                       \"log_group_name\": \"${AWS::StackName}\",
                       \"log_stream_name\": \"${EnvironmentName}/{instance_id}/master/replication_log\",
                       \"timezone\": \"UTC\"
                       },
-                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-master/_data/httpd_log\",
+                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-master-1/_data/httpd_log\",
                       \"log_group_name\": \"${AWS::StackName}\",
                       \"log_stream_name\": \"${EnvironmentName}/{instance_id}/master/httpd_log\",
                       \"timezone\": \"UTC\"
                       },
-                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-master/_data/sshd_log\",
+                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-master-1/_data/sshd_log\",
                       \"log_group_name\": \"${AWS::StackName}\",
                       \"log_stream_name\": \"${EnvironmentName}/{instance_id}/master/sshd_log\",
                       \"timezone\": \"UTC\"
                       },
-                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-master/_data/gc_log\",
+                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-master-1/_data/gc_log\",
                       \"log_group_name\": \"${AWS::StackName}\",
                       \"log_stream_name\": \"${EnvironmentName}/{instance_id}/master/gc_log\",
                       \"timezone\": \"UTC\"
                       },
-                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-master/_data/audit_log\",
+                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-master-1/_data/audit_log\",
                       \"log_group_name\": \"${AWS::StackName}\",
                       \"log_stream_name\": \"${EnvironmentName}/{instance_id}/master/audit_log\",
                       \"timezone\": \"UTC\"

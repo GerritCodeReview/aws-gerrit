@@ -54,7 +54,7 @@ service-master-1:
 		ParameterKey=GerritIndexVolume,ParameterValue=gerrit-index-master-1 \
 		ParameterKey=GerritCacheVolume,ParameterValue=gerrit-cache-master-1 \
 		ParameterKey=GerritDbVolume,ParameterValue=gerrit-db-master-1 \
-		ParameterKey=GerritLogsVolume,ParameterValue=gerrit-logs-master1 \
+		ParameterKey=GerritLogsVolume,ParameterValue=gerrit-logs-master-1 \
 		ParameterKey=PeerSubdomain,ParameterValue=$(MASTER2_SUBDOMAIN) \
 		ParameterKey=LBSubdomain,ParameterValue=$(LB_SUBDOMAIN) \
 		ParameterKey=SlaveServiceStackName,ParameterValue=$(SERVICE_SLAVE_STACK_NAME)
