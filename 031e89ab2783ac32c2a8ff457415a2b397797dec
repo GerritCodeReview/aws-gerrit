@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91f97337_9b13efb3",
+        "filename": "dual-master/cf-cluster.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-06-11T08:51:30Z",
+      "side": 1,
+      "message": "could we have master-1 here as well?",
+      "range": {
+        "startLine": 207,
+        "startChar": 78,
+        "endLine": 207,
+        "endChar": 84
+      },
+      "revId": "031e89ab2783ac32c2a8ff457415a2b397797dec",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce4640cb_bcd5e772",
+        "filename": "dual-master/cf-cluster.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-06-11T08:51:30Z",
+      "side": 1,
+      "message": "same as above",
+      "range": {
+        "startLine": 212,
+        "startChar": 78,
+        "endLine": 212,
+        "endChar": 84
+      },
+      "revId": "031e89ab2783ac32c2a8ff457415a2b397797dec",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1b1822c_90edc109",
+        "filename": "dual-master/cf-cluster.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-06-11T08:51:30Z",
+      "side": 1,
+      "message": "same as above",
+      "range": {
+        "startLine": 217,
+        "startChar": 78,
+        "endLine": 217,
+        "endChar": 84
+      },
+      "revId": "031e89ab2783ac32c2a8ff457415a2b397797dec",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c3fe009_38b50c83",
+        "filename": "dual-master/cf-cluster.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-06-11T08:51:30Z",
+      "side": 1,
+      "message": "same as above",
+      "range": {
+        "startLine": 222,
+        "startChar": 78,
+        "endLine": 222,
+        "endChar": 84
+      },
+      "revId": "031e89ab2783ac32c2a8ff457415a2b397797dec",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a301470_caf25e5a",
+        "filename": "dual-master/cf-cluster.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-06-11T08:51:30Z",
+      "side": 1,
+      "message": "same as above",
+      "range": {
+        "startLine": 227,
+        "startChar": 78,
+        "endLine": 227,
+        "endChar": 84
+      },
+      "revId": "031e89ab2783ac32c2a8ff457415a2b397797dec",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
