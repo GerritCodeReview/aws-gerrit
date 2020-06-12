@@ -143,7 +143,7 @@ Resources:
           echo ECS_CLUSTER=${ECSCluster} >> /etc/ecs/ecs.config
           # Make sure latest version of the helper scripts are installed as per recommendation:
           # https://github.com/awsdocs/aws-cloudformation-user-guide/blob/master/doc_source/cfn-helper-scripts-reference.md#using-the-latest-version
-          yum install -y aws-cfn-bootstrap nfs-utils
+          yum install -y aws-cfn-bootstrap nfs-utils wget
           # EFS setting
           DIR_TGT=/mnt/efs/gerrit-shared
           mkdir -p $DIR_TGT
@@ -233,7 +233,6 @@ Resources:
               }
             }" >> /home/ec2-user/gerritlogsaccess.json
           # Install the CloudWatch Logs agent
-          yum install -y wget
           wget https://s3.amazonaws.com/amazoncloudwatch-agent/centos/amd64/latest/amazon-cloudwatch-agent.rpm
           rpm -U ./amazon-cloudwatch-agent.rpm
           /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -c file:/home/ec2-user/gerritlogsaccess.json -s
