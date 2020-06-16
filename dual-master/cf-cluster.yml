@@ -159,7 +159,7 @@ Resources:
           echo $EC2_REGION >> /home/ec2-user/echo.res
           echo $DIR_SRC >> /home/ec2-user/echo.res
           echo $DIR_TGT >> /home/ec2-user/echo.res
-          MAX_RETRIES=5
+          MAX_RETRIES=20
           for i in $(seq 1 $MAX_RETRIES); do
             echo "Mounting EFS volume ($i/$MAX_RETRIES)..."
             `mount -t nfs4 -o nfsvers=4.1,hard,timeo=600,retrans=2 $DIR_SRC:/ $DIR_TGT >> /home/ec2-user/echo.res` \
