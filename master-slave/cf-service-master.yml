@@ -92,6 +92,7 @@ Resources:
                   !Join [':', [!Ref 'ClusterStackName', 'ClusterName']]
             DesiredCount: !Ref DesiredCount
             TaskDefinition: !Ref TaskDefinition
+            HealthCheckGracePeriodSeconds: 1200
             LoadBalancers:
                 - ContainerName: !Ref GerritServiceName
                   ContainerPort: !Ref HTTPPort

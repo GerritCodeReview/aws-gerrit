@@ -1,7 +1,7 @@
 [gerrit]
 	basePath = git
 	canonicalWebUrl = http://localhost
-	serverId = 0f56469f-dfe4-4f28-aca7-803eba7845e0
+	serverId = 173816e5-2b9a-37c3-8a2e-48639d4f1153
 [database]
 	type = h2
 	database = db/ReviewDB

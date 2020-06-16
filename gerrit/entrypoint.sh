@@ -12,10 +12,14 @@ if [ $CONTAINER_SLAVE ]; then
 else
   echo "Master mode (init phase)..."
   java -jar /var/gerrit/bin/gerrit.war init --no-auto-start --batch --install-all-plugins -d /var/gerrit
-  if [ $REINDEX_AT_STARTUP == "true" ]; then
+  # if [ $REINDEX_AT_STARTUP == "true" ]; then
+    cd /var/gerrit/git
+    if [ ! -d /var/gerrit/git/gerrit.git ]; then
+      git clone --mirror "https://gerrit.googlesource.com/gerrit"
+    fi
     echo "Master mode (reindex phase)..."
     java -jar /var/gerrit/bin/gerrit.war reindex -d /var/gerrit
-  fi
+  # fi
 fi
 
 echo "Running Gerrit ..."
