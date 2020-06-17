@@ -109,6 +109,8 @@ Resources:
         DependsOn:
           - HTTPListener
           - SSHListener
+          - GitListener
+          - GitSSHListener
         Properties:
             Cluster:
               Fn::ImportValue:
@@ -122,19 +124,6 @@ Resources:
                 - ContainerName: !Ref GerritServiceName
                   ContainerPort: !Ref SSHContainerPort
                   TargetGroupArn: !Ref SSHTargetGroup
-
-    GerritReplicationService:
-        Type: AWS::ECS::Service
-        DependsOn:
-          - GitListener
-          - GitSSHListener
-        Properties:
-            Cluster:
-              Fn::ImportValue:
-                  !Join [':', [!Ref 'ClusterStackName', 'ClusterName']]
-            DesiredCount: !Ref DesiredCount
-            TaskDefinition: !Ref GerritReplicationTaskDefinition
-            LoadBalancers:
                 - ContainerName: !Ref GitDaemonServiceName
                   ContainerPort: !Ref GitPort
                   TargetGroupArn: !Ref GitTargetGroup
@@ -146,8 +135,8 @@ Resources:
         Type: AWS::ECS::TaskDefinition
         Properties:
             Family: !Join ['', [!Ref GerritServiceName, TaskDefinition]]
-            TaskRoleArn: !Ref ECSTaskExecutionRole
-            ExecutionRoleArn: !Ref ECSTaskExecutionRole
+            TaskRoleArn: !GetAtt ECSTaskExecutionRoleStack.Outputs.TaskExecutionRoleRef
+            ExecutionRoleArn: !GetAtt ECSTaskExecutionRoleStack.Outputs.TaskExecutionRoleRef
             NetworkMode: bridge
             ContainerDefinitions:
                 - Name: !Ref GerritServiceName
@@ -175,8 +164,8 @@ Resources:
                       ContainerPath: /var/gerrit/db
                     - SourceVolume: !Ref GerritLogsVolume
                       ContainerPath: /var/gerrit/logs
-                  Cpu: 1024
-                  Memory: 2048
+                  Cpu: 3072
+                  Memory: 9216
                   PortMappings:
                     - ContainerPort: !Ref HTTPContainePort
                       HostPort: !Ref HTTPHostPort
@@ -190,51 +179,6 @@ Resources:
                         awslogs-group: !Ref ClusterStackName
                         awslogs-region: !Ref AWS::Region
                         awslogs-stream-prefix: !Ref EnvironmentName
-            Volumes:
-              - Name: !Ref 'GerritDbVolume'
-                DockerVolumeConfiguration:
-                  Scope: shared
-                  Autoprovision: true
-                  Driver: local
-                  Labels:
-                    gerrit-db: !Join ['-', [!Ref EnvironmentName, !Ref GerritDbVolume]]
-              - Name: !Ref 'GerritGitVolume'
-                DockerVolumeConfiguration:
-                  Scope: shared
-                  Autoprovision: true
-                  Driver: local
-                  Labels:
-                    gerrit-git: !Join ['-', [!Ref EnvironmentName, !Ref GerritGitVolume]]
-              - Name: !Ref 'GerritDataVolume'
-                DockerVolumeConfiguration:
-                  Scope: shared
-                  Autoprovision: true
-                  Driver: local
-                  Labels:
-                    gerrit-data: !Join ['-', [!Ref EnvironmentName, !Ref GerritDataVolume]]
-              - Name: !Ref 'GerritCacheVolume'
-                DockerVolumeConfiguration:
-                  Scope: shared
-                  Autoprovision: true
-                  Driver: local
-                  Labels:
-                    gerrit-cache: !Join ['-', [!Ref EnvironmentName, !Ref GerritCacheVolume]]
-              - Name: !Ref 'GerritLogsVolume'
-                DockerVolumeConfiguration:
-                  Scope: shared
-                  Autoprovision: true
-                  Driver: local
-                  Labels:
-                    gerrit-logs: !Join ['-', [!Ref EnvironmentName, !Ref GerritLogsVolume]]
-
-    GerritReplicationTaskDefinition:
-        Type: AWS::ECS::TaskDefinition
-        Properties:
-            Family: !Join ['', [!Ref GerritServiceName, TaskDefinition]]
-            TaskRoleArn: !Ref ECSTaskExecutionRole
-            ExecutionRoleArn: !Ref ECSTaskExecutionRole
-            NetworkMode: bridge
-            ContainerDefinitions:
                 - Name: !Ref GitDaemonServiceName
                   Essential: true
                   Image: !Sub '${DockerRegistryUrl}/${GitDaemonDockerImage}'
@@ -281,6 +225,13 @@ Resources:
                         awslogs-region: !Ref AWS::Region
                         awslogs-stream-prefix: !Ref EnvironmentName
             Volumes:
+              - Name: !Ref 'GerritDbVolume'
+                DockerVolumeConfiguration:
+                  Scope: shared
+                  Autoprovision: true
+                  Driver: local
+                  Labels:
+                    gerrit-db: !Join ['-', [!Ref EnvironmentName, !Ref GerritDbVolume]]
               - Name: !Ref 'GerritGitVolume'
                 DockerVolumeConfiguration:
                   Scope: shared
@@ -288,6 +239,27 @@ Resources:
                   Driver: local
                   Labels:
                     gerrit-git: !Join ['-', [!Ref EnvironmentName, !Ref GerritGitVolume]]
+              - Name: !Ref 'GerritDataVolume'
+                DockerVolumeConfiguration:
+                  Scope: shared
+                  Autoprovision: true
+                  Driver: local
+                  Labels:
+                    gerrit-data: !Join ['-', [!Ref EnvironmentName, !Ref GerritDataVolume]]
+              - Name: !Ref 'GerritCacheVolume'
+                DockerVolumeConfiguration:
+                  Scope: shared
+                  Autoprovision: true
+                  Driver: local
+                  Labels:
+                    gerrit-cache: !Join ['-', [!Ref EnvironmentName, !Ref GerritCacheVolume]]
+              - Name: !Ref 'GerritLogsVolume'
+                DockerVolumeConfiguration:
+                  Scope: shared
+                  Autoprovision: true
+                  Driver: local
+                  Labels:
+                    gerrit-logs: !Join ['-', [!Ref EnvironmentName, !Ref GerritLogsVolume]]
 
     LoadBalancer:
         Type: AWS::ElasticLoadBalancingV2::LoadBalancer
@@ -310,7 +282,7 @@ Resources:
                   !Join [':', [!Ref 'ClusterStackName', 'VPCId']]
             Port: !Ref HTTPHostPort
             Protocol: TCP
-            HealthCheckPort: !Ref HTTPContainePort
+            HealthCheckPort: !Ref HTTPHostPort
 
     HTTPListener:
         Type: AWS::ElasticLoadBalancingV2::Listener
@@ -334,7 +306,7 @@ Resources:
                   !Join [':', [!Ref 'ClusterStackName', 'VPCId']]
             Port: !Ref SSHHostPort
             Protocol: TCP
-            HealthCheckPort: !Ref SSHContainerPort
+            HealthCheckPort: !Ref SSHHostPort
 
     SSHListener:
         Type: AWS::ElasticLoadBalancingV2::Listener
@@ -401,41 +373,12 @@ Resources:
             HostedZoneId: !GetAtt 'LoadBalancer.CanonicalHostedZoneID'
             EvaluateTargetHealth: False
 
-    # This is a role which is used by the ECS tasks themselves.
-    ECSTaskExecutionRole:
-      Type: AWS::IAM::Role
+    ECSTaskExecutionRoleStack:
+      Type: AWS::CloudFormation::Stack
       Properties:
-        AssumeRolePolicyDocument:
-          Statement:
-          - Effect: Allow
-            Principal:
-              Service: [ecs-tasks.amazonaws.com]
-            Action: ['sts:AssumeRole']
-        Path: /
-        Policies:
-          - PolicyName: AmazonECSTaskExecutionRolePolicy
-            PolicyDocument:
-              Statement:
-              - Effect: Allow
-                Action:
-                  # Allow the ECS Tasks to download images from ECR
-                  - 'ecr:GetAuthorizationToken'
-                  - 'ecr:BatchCheckLayerAvailability'
-                  - 'ecr:GetDownloadUrlForLayer'
-                  - 'ecr:BatchGetImage'
-                  # Allow the ECS tasks to upload logs to CloudWatch
-                  - 'logs:CreateLogStream'
-                  - 'logs:PutLogEvents'
-                Resource: '*'
-          - PolicyName: AmazonECSTaskSecretManagerRolePolicy
-            PolicyDocument:
-              Statement:
-              - Effect: Allow
-                Action:
-                  # Allow the ECS Tasks to get SSH Keys
-                  - 'secretsmanager:GetSecretValue'
-                  - 'kms:Decrypt'
-                Resource: '*'
+        TemplateURL: https://aws-gerrit-cf-templates.s3.amazonaws.com/cf-gerrit-task-execution-role.yml
+        TimeoutInMinutes: '5'
+
 Outputs:
   PublicLoadBalancerDNSName:
     Description: The DNS name of the external load balancer

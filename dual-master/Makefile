@@ -15,7 +15,8 @@ AWS_FC_COMMAND=export AWS_PAGER=;aws cloudformation
 				service-lb wait-for-service-lb-deletion wait-for-service-lb-creation \
 				gerrit-build gerrit-publish haproxy-publish syslog-sidecar-publish
 
-create-all: gerrit-publish haproxy-publish syslog-sidecar-publish \
+create-all: upload-common-templates \
+						gerrit-publish haproxy-publish syslog-sidecar-publish \
 						cluster wait-for-cluster-creation \
 						service-slave service-master-1 \
 						wait-for-service-master-1-creation wait-for-service-slave-creation \
@@ -54,7 +55,7 @@ service-master-1:
 		ParameterKey=GerritIndexVolume,ParameterValue=gerrit-index-master-1 \
 		ParameterKey=GerritCacheVolume,ParameterValue=gerrit-cache-master-1 \
 		ParameterKey=GerritDbVolume,ParameterValue=gerrit-db-master-1 \
-		ParameterKey=GerritLogsVolume,ParameterValue=gerrit-logs-master1 \
+		ParameterKey=GerritLogsVolume,ParameterValue=gerrit-logs-master-1 \
 		ParameterKey=PeerSubdomain,ParameterValue=$(MASTER2_SUBDOMAIN) \
 		ParameterKey=LBSubdomain,ParameterValue=$(LB_SUBDOMAIN) \
 		ParameterKey=SlaveServiceStackName,ParameterValue=$(SERVICE_SLAVE_STACK_NAME)
