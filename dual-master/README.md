@@ -33,7 +33,14 @@ Four templates are provided in this example:
 * EBS volumes for:
   * Indexes
   * Caches
-  * Data
+  * Logs
+* EFS volume:
+  * Share Git repositories between masters
+  * Share Web sessions between masters
+
+*NOTE*: Since EFS cannot be used in burst mode with JGit, because the latency is
+too high, this stack uses EFS in provisioned mode. This is a **really expensive**
+feature (~1.5K$ a month). Monitor your AWS bill when testing this stack.
 
 ### Deployment type
 
