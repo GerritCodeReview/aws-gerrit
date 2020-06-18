@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9bd457f3_2d9aa0e7",
+        "filename": "gerrit/etc/gerrit.config.template",
+        "patchSetId": 5
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-06-18T14:10:03Z",
+      "side": 1,
+      "message": "Can those be variables? Depending on the HW specs they may need to change, isn\u0027t it?",
+      "range": {
+        "startLine": 6,
+        "startChar": 18,
+        "endLine": 6,
+        "endChar": 21
+      },
+      "revId": "e48f1116552417b829c7ea3636590e848ecb924f",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
