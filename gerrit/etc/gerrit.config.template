@@ -2,6 +2,8 @@
 	basePath = git
 	canonicalWebUrl = http://localhost
 	serverId = 173816e5-2b9a-37c3-8a2e-48639d4f1153
+[core]
+	packedGitLimit = 12g
 [database]
 	type = h2
 	database = db/ReviewDB
@@ -43,8 +45,10 @@
 [plugins]
 	allowRemoteAdmin = true
 [container]
+	heapLimit = 35g
 	javaOptions = "-Dflogger.backend_factory=com.google.common.flogger.backend.log4j.Log4jBackendFactory#getInstance"
 	javaOptions = "-Dflogger.logging_context=com.google.gerrit.server.logging.LoggingContext#getInstance"
+	javaOptions = "-verbose:gc"
 	user = gerrit
 	javaHome = /usr/lib/jvm/jre
 	javaOptions = -Djava.security.egd=file:/dev/./urandom
