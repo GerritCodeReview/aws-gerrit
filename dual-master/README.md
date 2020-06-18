@@ -33,7 +33,15 @@ Four templates are provided in this example:
 * EBS volumes for:
   * Indexes
   * Caches
-  * Data
+  * Logs
+* EFS volume:
+  * Share Git repositories between masters
+  * Share Web sessions between masters
+
+*NOTE*: This stack uses EFS in provisioned mode, which is a better setting for large repos
+(> 1GB uncompressed) since it provides a lower latency compared to the burst mode.
+However, it has some [costs associated](https://aws.amazon.com/efs/pricing/).
+If you are dealing with small repos, you can switch to burst mode.
 
 ### Deployment type
 
