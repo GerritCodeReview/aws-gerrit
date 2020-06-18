@@ -58,7 +58,9 @@ service-master-1:
 		ParameterKey=GerritLogsVolume,ParameterValue=gerrit-logs-master-1 \
 		ParameterKey=PeerSubdomain,ParameterValue=$(MASTER2_SUBDOMAIN) \
 		ParameterKey=LBSubdomain,ParameterValue=$(LB_SUBDOMAIN) \
-		ParameterKey=SlaveServiceStackName,ParameterValue=$(SERVICE_SLAVE_STACK_NAME)
+		ParameterKey=SlaveServiceStackName,ParameterValue=$(SERVICE_SLAVE_STACK_NAME) \
+		ParameterKey=GerritRAM,ParameterValue=$(GERRIT_RAM) \
+		ParameterKey=GerritCPU,ParameterValue=$(GERRIT_CPU)
 
 
 service-master-2:
@@ -85,7 +87,9 @@ service-master-2:
 		ParameterKey=PeerSubdomain,ParameterValue=$(MASTER1_SUBDOMAIN) \
 		ParameterKey=LBSubdomain,ParameterValue=$(LB_SUBDOMAIN) \
 		ParameterKey=SlaveServiceStackName,ParameterValue=$(SERVICE_SLAVE_STACK_NAME) \
-		ParameterKey=ReindexAtSartup,ParameterValue=true
+		ParameterKey=ReindexAtSartup,ParameterValue=true \
+		ParameterKey=GerritRAM,ParameterValue=$(GERRIT_RAM) \
+		ParameterKey=GerritCPU,ParameterValue=$(GERRIT_CPU)
 
 service-slave:
 	$(AWS_FC_COMMAND) create-stack \
@@ -100,7 +104,9 @@ service-slave:
 		ParameterKey=DockerRegistryUrl,ParameterValue=$(DOCKER_REGISTRY_URI) \
 		ParameterKey=CertificateArn,ParameterValue=$(SSL_CERTIFICATE_ARN) \
 		ParameterKey=GerritKeyPrefix,ParameterValue=$(GERRIT_KEY_PREFIX)\
-		ParameterKey=GerritDockerImage,ParameterValue=aws-gerrit/gerrit:$(IMAGE_TAG)
+		ParameterKey=GerritDockerImage,ParameterValue=aws-gerrit/gerrit:$(IMAGE_TAG) \
+		ParameterKey=GerritRAM,ParameterValue=$(GERRIT_RAM) \
+		ParameterKey=GerritCPU,ParameterValue=$(GERRIT_CPU)
 
 service-lb:
 	$(AWS_FC_COMMAND) create-stack \
