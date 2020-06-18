@@ -280,6 +280,8 @@ Resources:
   FileSystem:
     Type: AWS::EFS::FileSystem
     Properties:
+      ThroughputMode: provisioned
+      ProvisionedThroughputInMibps: 1024
       FileSystemTags:
         - Key: Name
           Value: "multi-master-git-repo"
