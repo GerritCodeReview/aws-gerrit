@@ -72,6 +72,8 @@ This is the list of available parameters:
 * `SUBDOMAIN`: Optional. Name of the sub domain. `gerrit-master-demo` by default.
 *  GERRIT_KEY_PREFIX : Optional. Secrets prefix used during the [Import into AWS Secret Manager](#import-into-aws-secret-manager).
   `gerrit_secret` by default.
+* `GERRIT_RAM`: RAM allocated to the Gerrit container. `70G` by default.
+* `GERRIT_CPU`: vCPU allocated to the Gerrit container. `10240` by default.
 
 ### Prerequisites
 

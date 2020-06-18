@@ -102,6 +102,14 @@ Parameters:
   GerritKeyPrefix:
       Description: Gerrit credentials keys prefix
       Type: String
+  GerritRAM:
+      Description: RAM to allocate to the Gerrit container
+      Type: String
+      Default: 70G
+  GerritCPU:
+      Description: vCPU to allocate to the Gerrit container
+      Type: String
+      Default: 10240
 
 Resources:
     GerritService:
@@ -164,8 +172,8 @@ Resources:
                       ContainerPath: /var/gerrit/db
                     - SourceVolume: !Ref GerritLogsVolume
                       ContainerPath: /var/gerrit/logs
-                  Cpu: 3072
-                  Memory: 9216
+                  Cpu: !Ref GerritCPU
+                  Memory: !Ref GerritRAM
                   PortMappings:
                     - ContainerPort: !Ref HTTPContainePort
                       HostPort: !Ref HTTPHostPort
