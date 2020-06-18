@@ -22,6 +22,30 @@
       "revId": "ffb2d11a7a5520c718efb5e7f6f22352576cc7e5",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c738e72_8b48f0d0",
+        "filename": "dual-master/cf-cluster.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-06-18T14:43:33Z",
+      "side": 1,
+      "message": "\u003e Do you think we should warning the user when spinning up a dual master stack of the cost of having EFS in this mode?\n\nYes, but in the readme. EFS in burst mode cannot be used with JGit in production, because the latency is just too high.\n\nThe cost-effective version of the stack will be with multi-site, where there isn\u0027t any EFS.",
+      "parentUuid": "49c1fe1b_2d5fbe6f",
+      "range": {
+        "startLine": 283,
+        "startChar": 0,
+        "endLine": 284,
+        "endChar": 40
+      },
+      "revId": "ffb2d11a7a5520c718efb5e7f6f22352576cc7e5",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
     }
   ]
 }
