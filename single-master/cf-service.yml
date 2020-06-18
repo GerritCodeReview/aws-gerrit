@@ -72,6 +72,14 @@ Parameters:
       Description: Gerrit db volume name
       Type: String
       Default: gerrit-db
+  GerritRAM:
+      Description: RAM to allocate to the Gerrit container
+      Type: Number
+      Default: 70000
+  GerritCPU:
+      Description: vCPU to allocate to the Gerrit container
+      Type: Number
+      Default: 10240
 
 Resources:
     Service:
@@ -126,8 +134,8 @@ Resources:
                       ContainerPath: /var/gerrit/db
                     - SourceVolume: !Ref GerritLogsVolume
                       ContainerPath: /var/gerrit/logs
-                  Cpu: 1024
-                  Memory: 2048
+                  Cpu: !Ref GerritCPU
+                  Memory: !Ref GerritRAM
                   PortMappings:
                     - ContainerPort: !Ref HTTPPort
                       HostPort: !Ref HTTPPort

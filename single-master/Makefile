@@ -40,7 +40,9 @@ service:
 		ParameterKey=DockerRegistryUrl,ParameterValue=$(DOCKER_REGISTRY_URI) \
 		ParameterKey=CertificateArn,ParameterValue=$(SSL_CERTIFICATE_ARN) \
 		ParameterKey=GerritKeyPrefix,ParameterValue=$(GERRIT_KEY_PREFIX) \
-		ParameterKey=DockerImage,ParameterValue=aws-gerrit/gerrit:$(IMAGE_TAG) \
+		ParameterKey=DockerImage,ParameterValue=aws-gerrit/gerrit:$(IMAGE_TAG)\
+		ParameterKey=GerritRAM,ParameterValue=$(GERRIT_RAM) \
+		ParameterKey=GerritCPU,ParameterValue=$(GERRIT_CPU)
 
 dns-routing:
 	$(AWS_FC_COMMAND) create-stack \
