@@ -42,7 +42,9 @@ service:
 		ParameterKey=GerritKeyPrefix,ParameterValue=$(GERRIT_KEY_PREFIX) \
 		ParameterKey=DockerImage,ParameterValue=aws-gerrit/gerrit:$(IMAGE_TAG)\
 		ParameterKey=GerritRAM,ParameterValue=$(GERRIT_RAM) \
-		ParameterKey=GerritCPU,ParameterValue=$(GERRIT_CPU)
+		ParameterKey=GerritCPU,ParameterValue=$(GERRIT_CPU) \
+		ParameterKey=GerritHeapLimit,ParameterValue=$(GERRIT_HEAP_LIMIT) \
+		ParameterKey=JgitCacheSize,ParameterValue=$(JGIT_CACHE_SIZE)
 
 dns-routing:
 	$(AWS_FC_COMMAND) create-stack \

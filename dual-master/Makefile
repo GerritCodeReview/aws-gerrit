@@ -60,7 +60,9 @@ service-master-1:
 		ParameterKey=LBSubdomain,ParameterValue=$(LB_SUBDOMAIN) \
 		ParameterKey=SlaveServiceStackName,ParameterValue=$(SERVICE_SLAVE_STACK_NAME) \
 		ParameterKey=GerritRAM,ParameterValue=$(GERRIT_RAM) \
-		ParameterKey=GerritCPU,ParameterValue=$(GERRIT_CPU)
+		ParameterKey=GerritCPU,ParameterValue=$(GERRIT_CPU) \
+		ParameterKey=GerritHeapLimit,ParameterValue=$(GERRIT_HEAP_LIMIT) \
+		ParameterKey=JgitCacheSize,ParameterValue=$(JGIT_CACHE_SIZE)
 
 
 service-master-2:
@@ -89,7 +91,9 @@ service-master-2:
 		ParameterKey=SlaveServiceStackName,ParameterValue=$(SERVICE_SLAVE_STACK_NAME) \
 		ParameterKey=ReindexAtSartup,ParameterValue=true \
 		ParameterKey=GerritRAM,ParameterValue=$(GERRIT_RAM) \
-		ParameterKey=GerritCPU,ParameterValue=$(GERRIT_CPU)
+		ParameterKey=GerritCPU,ParameterValue=$(GERRIT_CPU) \
+		ParameterKey=GerritHeapLimit,ParameterValue=$(GERRIT_HEAP_LIMIT) \
+		ParameterKey=JgitCacheSize,ParameterValue=$(JGIT_CACHE_SIZE)
 
 service-slave:
 	$(AWS_FC_COMMAND) create-stack \
@@ -106,7 +110,9 @@ service-slave:
 		ParameterKey=GerritKeyPrefix,ParameterValue=$(GERRIT_KEY_PREFIX)\
 		ParameterKey=GerritDockerImage,ParameterValue=aws-gerrit/gerrit:$(IMAGE_TAG) \
 		ParameterKey=GerritRAM,ParameterValue=$(GERRIT_RAM) \
-		ParameterKey=GerritCPU,ParameterValue=$(GERRIT_CPU)
+		ParameterKey=GerritCPU,ParameterValue=$(GERRIT_CPU) \
+		ParameterKey=GerritHeapLimit,ParameterValue=$(GERRIT_HEAP_LIMIT) \
+		ParameterKey=JgitCacheSize,ParameterValue=$(JGIT_CACHE_SIZE)
 
 service-lb:
 	$(AWS_FC_COMMAND) create-stack \
