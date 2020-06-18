@@ -74,6 +74,12 @@ This is the list of available parameters:
   `gerrit_secret` by default.
 * `GERRIT_RAM`: RAM allocated (MiB) to the Gerrit container. `70000` by default.
 * `GERRIT_CPU`: vCPU units allocated to the Gerrit container. `10240` by default.
+* `GERRIT_HEAP_LIMIT`: Maximum heap size of the Java process running Gerrit, in bytes.
+  See [Gerrit documentation](https://gerrit-review.googlesource.com/Documentation/config-gerrit.html#container.heapLimit)
+  `35g` by default.
+* `JGIT_CACHE_SIZE`: Maximum number of bytes to load and cache in memory from pack files.
+  See [Gerrit documentation](https://gerrit-review.googlesource.com/Documentation/config-gerrit.html#core.packedGitLimit)
+  for more details. `12g` by default.
 
 ### Prerequisites
 

@@ -110,6 +110,14 @@ Parameters:
       Description: vCPU to allocate to the Gerrit container
       Type: Number
       Default: 10240
+  GerritHeapLimit:
+      Description: Gerrit Heap limit
+      Type: String
+      Default: 35g
+  JgitCacheSize:
+      Description: JGit cache size
+      Type: String
+      Default: 12g
 
 Resources:
     GerritService:
@@ -161,6 +169,10 @@ Resources:
                       Value: !Ref GerritKeyPrefix
                     - Name: AWS_REGION
                       Value: !Ref AWS::Region
+                    - Name: GERRIT_HEAP_LIMIT
+                      Value: !Ref GerritHeapLimit
+                    - Name: JGIT_CACHE_SIZE
+                      Value: !Ref JgitCacheSize
                   MountPoints:
                     - SourceVolume: !Ref GerritGitVolume
                       ContainerPath: /var/gerrit/git
