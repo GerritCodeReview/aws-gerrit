@@ -126,8 +126,8 @@ Resources:
                       ContainerPath: /var/gerrit/db
                     - SourceVolume: !Ref GerritLogsVolume
                       ContainerPath: /var/gerrit/logs
-                  Cpu: 1024
-                  Memory: 2048
+                  Cpu: 10240
+                  Memory: 70G
                   PortMappings:
                     - ContainerPort: !Ref HTTPPort
                       HostPort: !Ref HTTPPort
