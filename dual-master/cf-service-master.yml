@@ -105,6 +105,14 @@ Parameters:
       Description: Force index reindexing at startup
       Type: String
       Default: false
+  GerritRAM:
+      Description: RAM to allocate to the Gerrit container
+      Type: Number
+      Default: 70000
+  GerritCPU:
+      Description: vCPU to allocate to the Gerrit container
+      Type: Number
+      Default: 10240
 
 Resources:
     Service:
@@ -171,8 +179,8 @@ Resources:
                       ContainerPath: /var/gerrit/db
                     - SourceVolume: !Ref GerritLogsVolume
                       ContainerPath: /var/gerrit/logs
-                  Cpu: 3072
-                  Memory: 9216
+                  Cpu: !Ref GerritCPU
+                  Memory: !Ref GerritRAM
                   PortMappings:
                     - ContainerPort: !Ref HTTPContainerPort
                       HostPort: !Ref HTTPHostPort

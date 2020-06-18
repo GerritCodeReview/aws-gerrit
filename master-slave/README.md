@@ -76,6 +76,8 @@ This is the list of available parameters:
 *  GERRIT_KEY_PREFIX : Optional. Secrets prefix used during the [Import into AWS Secret Manager](#import-into-aws-secret-manager).
   `gerrit_secret` by default.
 * `CLUSTER_DESIRED_CAPACITY`: Optional.  Number of EC2 instances composing the cluster. `1` by default.
+* `GERRIT_RAM`: RAM allocated to the Gerrit container. `70000` by default.
+* `GERRIT_CPU`: vCPU allocated to the Gerrit container. `10240` by default.
 
 *NOTE: if you are planning to run the monitoring stack, set the
 `CLUSTER_DESIRED_CAPACITY` value to at least 2. The resources provided by
