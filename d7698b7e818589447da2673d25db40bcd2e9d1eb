@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47b289d4_9a7af223",
+        "filename": "gerrit/etc/gerrit.config.template",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-06-19T21:59:37Z",
+      "side": 1,
+      "message": "Do we also need to collect this in CloudWatch?",
+      "range": {
+        "startLine": 51,
+        "startChar": 56,
+        "endLine": 51,
+        "endChar": 79
+      },
+      "revId": "d7698b7e818589447da2673d25db40bcd2e9d1eb",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
