@@ -48,6 +48,7 @@
 	heapLimit = {{ GERRIT_HEAP_LIMIT }}
 	javaOptions = "-Dflogger.backend_factory=com.google.common.flogger.backend.log4j.Log4jBackendFactory#getInstance"
 	javaOptions = "-Dflogger.logging_context=com.google.gerrit.server.logging.LoggingContext#getInstance"
+	javaOptions = "-verbose:gc -XX:+PrintGCDetails -Xloggc:/var/gerrit/logs/gc_log"
 	user = gerrit
 	javaHome = /usr/lib/jvm/jre
 	javaOptions = -Djava.security.egd=file:/dev/./urandom
