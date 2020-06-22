@@ -45,7 +45,11 @@ service-master:
 		ParameterKey=CertificateArn,ParameterValue=$(SSL_CERTIFICATE_ARN) \
 		ParameterKey=SlaveServiceStackName,ParameterValue=$(SERVICE_SLAVE_STACK_NAME) \
 		ParameterKey=GerritKeyPrefix,ParameterValue=$(GERRIT_KEY_PREFIX)\
-		ParameterKey=DockerImage,ParameterValue=aws-gerrit/gerrit:$(IMAGE_TAG)
+		ParameterKey=DockerImage,ParameterValue=aws-gerrit/gerrit:$(IMAGE_TAG) \
+		ParameterKey=GerritRAM,ParameterValue=$(GERRIT_RAM) \
+		ParameterKey=GerritCPU,ParameterValue=$(GERRIT_CPU) \
+		ParameterKey=GerritHeapLimit,ParameterValue=$(GERRIT_HEAP_LIMIT) \
+		ParameterKey=JgitCacheSize,ParameterValue=$(JGIT_CACHE_SIZE)
 
 service-slave:
 	$(AWS_FC_COMMAND) create-stack \
@@ -60,7 +64,11 @@ service-slave:
 		ParameterKey=DockerRegistryUrl,ParameterValue=$(DOCKER_REGISTRY_URI) \
 		ParameterKey=CertificateArn,ParameterValue=$(SSL_CERTIFICATE_ARN) \
 		ParameterKey=GerritKeyPrefix,ParameterValue=$(GERRIT_KEY_PREFIX)\
-		ParameterKey=GerritDockerImage,ParameterValue=aws-gerrit/gerrit:$(IMAGE_TAG)
+		ParameterKey=GerritDockerImage,ParameterValue=aws-gerrit/gerrit:$(IMAGE_TAG) \
+		ParameterKey=GerritRAM,ParameterValue=$(GERRIT_RAM) \
+		ParameterKey=GerritCPU,ParameterValue=$(GERRIT_CPU) \
+		ParameterKey=GerritHeapLimit,ParameterValue=$(GERRIT_HEAP_LIMIT) \
+		ParameterKey=JgitCacheSize,ParameterValue=$(JGIT_CACHE_SIZE)
 
 dns-routing:
 	$(AWS_FC_COMMAND) create-stack \

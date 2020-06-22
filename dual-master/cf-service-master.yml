@@ -109,6 +109,23 @@ Parameters:
       Description: Force index reindexing at startup
       Type: String
       Default: false
+  GerritRAM:
+      Description: RAM to allocate to the Gerrit container
+      Type: Number
+      Default: 70000
+  GerritCPU:
+      Description: vCPU to allocate to the Gerrit container
+      Type: Number
+      Default: 10240
+  GerritHeapLimit:
+      Description: Gerrit Heap limit
+      Type: String
+      Default: 35g
+  JgitCacheSize:
+      Description: JGit cache size
+      Type: String
+      Default: 12g
+
 
 Resources:
     Service:
@@ -161,6 +178,10 @@ Resources:
                       Value: !Ref HostedZoneName
                     - Name: REINDEX_AT_STARTUP
                       Value: !Ref ReindexAtSartup
+                    - Name: GERRIT_HEAP_LIMIT
+                      Value: !Ref GerritHeapLimit
+                    - Name: JGIT_CACHE_SIZE
+                      Value: !Ref JgitCacheSize
                   MountPoints:
                     - SourceVolume: !Ref GerritGitVolume
                       ContainerPath: /var/gerrit/git
@@ -178,8 +199,8 @@ Resources:
                       ContainerPath: /var/gerrit/logs
                     - SourceVolume: !Ref GerritEventsVolume
                       ContainerPath: /var/gerrit/events
-                  Cpu: 3072
-                  Memory: 9216
+                  Cpu: !Ref GerritCPU
+                  Memory: !Ref GerritRAM
                   PortMappings:
                     - ContainerPort: !Ref HTTPContainerPort
                       HostPort: !Ref HTTPHostPort
