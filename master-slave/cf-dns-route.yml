@@ -34,3 +34,21 @@ Resources:
             Fn::ImportValue:
               !Join [':', [!Ref 'MasterServiceStackName', 'CanonicalHostedZoneID']]
           EvaluateTargetHealth: False
+Outputs:
+  Master1CanonicalWebUrl:
+    Description: Master Canonical Web Url
+    Value:
+      Fn::ImportValue: !Join [':', [!Ref 'MasterServiceStackName', 'CanonicalWebUrl']]
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'MasterServiceStackName' ] ]
+  Master2CanonicalWebUrl:
+    Description: Master2 Canonical Web Url
+    Value: ""
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'Master2CanonicalWebUrl' ] ]
+  SlaveCanonicalWebUrl:
+    Description: Slave Canonical Web Url
+    Value:
+      Fn::ImportValue: !Join [':', [!Ref 'SlaveServiceStackName', 'CanonicalWebUrl']]
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'SlaveCanonicalWebUrl' ] ]

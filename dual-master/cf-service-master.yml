@@ -339,6 +339,6 @@ Outputs:
       Name: !Join [ ':', [ !Ref 'AWS::StackName', 'Subdomain' ] ]
   CanonicalWebUrl:
     Description: Canonical Web URL
-    Value: !Sub 'https://${Subdomain}.${HostedZoneName}'
+    Value: !Sub 'http://${Subdomain}.${HostedZoneName}:${HTTPGerritLBPort}'
     Export:
       Name: !Join [ ':', [ !Ref 'AWS::StackName', 'CanonicalWebUrl' ] ]
