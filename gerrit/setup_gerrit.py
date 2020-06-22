@@ -147,7 +147,9 @@ with open(GERRIT_CONFIG_DIRECTORY + "gerrit.config", 'w',
         'LDAP_GROUP_BASE': config['ldap']['groupBase'],
         'SMTP_SERVER': config['smtp']["server"],
         'SMTP_USER': config['smtp']["user"],
-        'SMTP_DOMAIN': config['smtp']["domain"]
+        'SMTP_DOMAIN': config['smtp']["domain"],
+        'GERRIT_HEAP_LIMIT': os.getenv('GERRIT_HEAP_LIMIT'),
+        'JGIT_CACHE_SIZE': os.getenv('JGIT_CACHE_SIZE')
     })
     f.write(template.render(config_for_template))
 
