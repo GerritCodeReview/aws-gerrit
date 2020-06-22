@@ -13,8 +13,9 @@ scrape_configs:
     static_configs:
     - targets: ['localhost:9090']
 
+{% if MASTER_1_URL is defined %}
 
-  - job_name: 'gerrit-master-javamelody'
+  - job_name: 'gerrit-master-1-javamelody'
 
     scheme: https
     metrics_path: '/monitoring'
@@ -22,12 +23,12 @@ scrape_configs:
     params:
       format: ['prometheus']
 
-    bearer_token: {{PROMETHEUS_BEARER_TOKEN}}
+    bearer_token: {{ PROMETHEUS_BEARER_TOKEN }}
 
     scrape_interval: 1s
 
     static_configs:
-      - targets: ['gerrit-master.gerrit-demo.gerritforgeaws.com:443']
+      - targets: ['{{ MASTER_1_URL }}']
         labels:
           env: 'unit'
 
@@ -39,15 +40,56 @@ scrape_configs:
     params:
       format: ['prometheus']
 
-    bearer_token: {{PROMETHEUS_BEARER_TOKEN}}
+    bearer_token: {{ PROMETHEUS_BEARER_TOKEN }}
 
     scrape_interval: 5s
 
     static_configs:
-      - targets: ['gerrit-master.gerrit-demo.gerritforgeaws.com:443']
+      - targets: ['{{ MASTER_1_URL }}']
         labels:
           env: 'unit'
 
+{% endif %}
+
+{% if MASTER_2_URL is defined %}
+
+  - job_name: 'gerrit-master-2-javamelody'
+
+    scheme: https
+    metrics_path: '/monitoring'
+
+    params:
+      format: ['prometheus']
+
+    bearer_token: {{ PROMETHEUS_BEARER_TOKEN }}
+
+    scrape_interval: 1s
+
+    static_configs:
+      - targets: ['{{ MASTER_2_URL }}']
+        labels:
+          env: 'unit'
+
+  - job_name: 'gerrit-master-metrics'
+
+    scheme: https
+    metrics_path: '/plugins/metrics-reporter-prometheus/metrics'
+
+    params:
+      format: ['prometheus']
+
+    bearer_token: {{ PROMETHEUS_BEARER_TOKEN }}
+
+    scrape_interval: 5s
+
+    static_configs:
+      - targets: ['{{ MASTER_2_URL }}']
+        labels:
+          env: 'unit'
+
+{% endif %}
+
+{% if SLAVE_URL is defined %}
   - job_name: 'gerrit-slave-javamelody'
 
     scheme: https
@@ -56,12 +98,12 @@ scrape_configs:
     params:
       format: ['prometheus']
 
-    bearer_token: {{PROMETHEUS_BEARER_TOKEN}}
+    bearer_token: {{ PROMETHEUS_BEARER_TOKEN }}
 
     scrape_interval: 1s
 
     static_configs:
-      - targets: ['gerrit-slave.gerrit-demo.gerritforgeaws.com:443']
+      - targets: ['{{ SLAVE_URL }}']
         labels:
           env: 'unit'
 
@@ -73,11 +115,13 @@ scrape_configs:
     params:
       format: ['prometheus']
 
-    bearer_token: {{PROMETHEUS_BEARER_TOKEN}}
+    bearer_token: {{ PROMETHEUS_BEARER_TOKEN }}
 
     scrape_interval: 5s
 
     static_configs:
-      - targets: ['gerrit-slave.gerrit-demo.gerritforgeaws.com:443']
+      - targets: ['{{ SLAVE_URL }}']
         labels:
           env: 'unit'
+
+{% endif %}
