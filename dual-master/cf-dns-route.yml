@@ -9,6 +9,10 @@ Parameters:
       Description: Stack name of the ECS Master Gerrit service
       Type: String
       Default: gerrit-service-master-2
+  SlaveServiceStackName:
+      Description: Stack name of the ECS Slave Gerrit service
+      Type: String
+      Default: gerrit-service-slave
   LBServiceStackName:
       Description: Stack name of the ECS LB service
       Type: String
@@ -84,3 +88,23 @@ Resources:
             Fn::ImportValue:
               !Join [':', [!Ref 'LBServiceStackName', 'CanonicalHostedZoneID']]
           EvaluateTargetHealth: False
+
+Outputs:
+  Master1CanonicalWebUrl:
+    Description: Master1 Canonical Web Url
+    Value:
+      Fn::ImportValue: !Join [':', [!Ref 'Master1ServiceStackName', 'CanonicalWebUrl']]
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'Master1CanonicalWebUrl' ] ]
+  Master2CanonicalWebUrl:
+    Description: Master2 Canonical Web Url
+    Value:
+      Fn::ImportValue: !Join [':', [!Ref 'Master2ServiceStackName', 'CanonicalWebUrl']]
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'Master2CanonicalWebUrl' ] ]
+  SlaveCanonicalWebUrl:
+    Description: Slave Canonical Web Url
+    Value:
+      Fn::ImportValue: !Join [':', [!Ref 'SlaveServiceStackName', 'CanonicalWebUrl']]
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'SlaveCanonicalWebUrl' ] ]
