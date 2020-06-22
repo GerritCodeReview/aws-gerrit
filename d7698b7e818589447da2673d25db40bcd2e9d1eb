@@ -22,6 +22,30 @@
       "revId": "d7698b7e818589447da2673d25db40bcd2e9d1eb",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "255c9932_3cee94f2",
+        "filename": "gerrit/etc/gerrit.config.template",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-06-22T08:17:59Z",
+      "side": 1,
+      "message": "The cluster CF is already set to do it.",
+      "parentUuid": "47b289d4_9a7af223",
+      "range": {
+        "startLine": 51,
+        "startChar": 56,
+        "endLine": 51,
+        "endChar": 79
+      },
+      "revId": "d7698b7e818589447da2673d25db40bcd2e9d1eb",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     }
   ]
 }
