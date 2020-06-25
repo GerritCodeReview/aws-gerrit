@@ -173,6 +173,12 @@ Resources:
                       Value: !Ref GerritHeapLimit
                     - Name: JGIT_CACHE_SIZE
                       Value: !Ref JgitCacheSize
+                    - Name: PROMETHEUS
+                      Value: true
+                    - Name: PROMETHEUS_ENDPOINT
+                      Value: "/plugins/metrics-reporter-prometheus/metrics,/monitoring"
+                    - Name: PROMETHEUS_PORT
+                      Value: !Ref HTTPHostPort
                   MountPoints:
                     - SourceVolume: !Ref GerritGitVolume
                       ContainerPath: /var/gerrit/git

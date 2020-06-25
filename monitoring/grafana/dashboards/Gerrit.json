@@ -82,12 +82,12 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "max_over_time(sshd_sessions_connected{instance=\"{{MASTER_URL}}:443\"}[$Window])",
+          "expr": "max_over_time(sshd_sessions_connected{job=\"gerrit-masterTaskDefinition\"}[$Window])",
           "format": "time_series",
           "instant": true,
           "interval": "",
           "intervalFactor": 1,
-          "legendFormat": "",
+          "legendFormat": "{{instance}}",
           "refId": "A"
         }
       ],
@@ -166,7 +166,7 @@
       "tableColumn": "env",
       "targets": [
         {
-          "expr": "max_over_time(sshd_sessions_connected{instance=\"{{SLAVE_URL}}:443\"}[$Window])",
+          "expr": "max_over_time(sshd_sessions_connected{job=\"gerrit-slaveTaskDefinition\"}[$Window])",
           "format": "time_series",
           "instant": true,
           "intervalFactor": 1,
