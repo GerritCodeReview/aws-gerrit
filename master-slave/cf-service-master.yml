@@ -199,6 +199,12 @@ Resources:
                       Value: !Ref SlaveSubdomain
                     - Name: HOSTED_ZONE_NAME
                       Value: !Ref HostedZoneName
+                    - Name: PROMETHEUS
+                      Value: true
+                    - Name: PROMETHEUS_ENDPOINT
+                      Value: "/plugins/metrics-reporter-prometheus/metrics,/monitoring"
+                    - Name: PROMETHEUS_PORT
+                      Value: !Ref HTTPPort
                   MountPoints:
                     - SourceVolume: !Ref GerritGitVolume
                       ContainerPath: /var/gerrit/git

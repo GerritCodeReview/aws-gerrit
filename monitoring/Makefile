@@ -1,5 +1,6 @@
 include ../common.env # Must be included before setup.env because the latter depends on it
 include ../$(RECIPE)/setup.env
+include ../Makefile.common
 
 AWS_FC_COMMAND=export AWS_PAGER=;aws cloudformation
 SERVICE_PROMETHEUS_TEMPLATE:=cf-service-prometheus.yml
@@ -35,8 +36,6 @@ service-grafana:
 		--parameters \
 		ParameterKey=ClusterStackName,ParameterValue=$(CLUSTER_STACK_NAME) \
 		ParameterKey=PrometheusStackName,ParameterValue=$(SERVICE_PROMETHEUS_STACK_NAME) \
-		ParameterKey=MasterStackName,ParameterValue=$(SERVICE_MASTER_STACK_NAME) \
-		ParameterKey=SlaveStackName,ParameterValue=$(SERVICE_SLAVE_STACK_NAME) \
 		ParameterKey=HostedZoneName,ParameterValue=$(HOSTED_ZONE_NAME) \
 		ParameterKey=Subdomain,ParameterValue=$(GRAFANA_SUBDOMAIN) \
 		ParameterKey=DockerRegistryUrl,ParameterValue=$(DOCKER_REGISTRY_URI) \
