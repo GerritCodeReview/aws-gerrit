@@ -4,6 +4,9 @@
     PrometheusServiceName:
         Type: String
         Default: gerrit-prometheus
+    ECSDiscovery:
+        Type: String
+        Default: ecs-discovery
     ClusterStackName:
         Description: Stack name of the ECS cluster to deply the serivces
         Type: String
@@ -97,6 +100,24 @@
                           awslogs-group: !Ref ClusterStackName
                           awslogs-region: !Ref AWS::Region
                           awslogs-stream-prefix: !Ref EnvironmentName
+                  - Name: !Ref ECSDiscovery
+                    Essential: true
+                    # Image: !Sub '${DockerRegistryUrl}/${ECSDiscoveryDockerImage}'
+                    Image: barbasa/discoverecs:latest
+                    Environment:
+                      - Name: AWS_DEFAULT_REGION
+                        Value: !Ref AWS::Region
+                    MountPoints:
+                      - SourceVolume: !Ref PrometheusVolume
+                        ContainerPath: /prometheus
+                    Cpu: 256
+                    Memory: 512
+                    LogConfiguration:
+                      LogDriver: awslogs
+                      Options:
+                          awslogs-group: !Ref ClusterStackName
+                          awslogs-region: !Ref AWS::Region
+                          awslogs-stream-prefix: !Ref EnvironmentName
               Volumes:
                 - Name: !Ref 'PrometheusVolume'
                   DockerVolumeConfiguration:
@@ -167,6 +188,9 @@
                     # Allow the ECS tasks to upload logs to CloudWatch
                     - 'logs:CreateLogStream'
                     - 'logs:PutLogEvents'
+                    - 'ecs:List*'
+                    - 'ecs:Describe*'
+                    - 'ec2:DescribeInstances'
                   Resource: '*'
             - PolicyName: AmazonECSTaskSecretManagerRolePolicy
               PolicyDocument:
