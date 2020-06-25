@@ -4,6 +4,9 @@
     PrometheusServiceName:
         Type: String
         Default: gerrit-prometheus
+    ECSDiscovery:
+        Type: String
+        Default: ecs-discovery
     ClusterStackName:
         Description: Stack name of the ECS cluster to deply the serivces
         Type: String
@@ -82,8 +85,8 @@
                     Secrets:
                       - Name: PROMETHEUS_BEARER_TOKEN
                         ValueFrom: !Sub 'arn:aws:secretsmanager:${AWS::Region}:${AWS::AccountId}:secret:gerrit_secret_prometheus_bearer_token-${TokenVersion}'
-                    Cpu: 1024
-                    Memory: 2048
+                    Cpu: 2048
+                    Memory: 4096
                     MountPoints:
                       - SourceVolume: !Ref PrometheusVolume
                         ContainerPath: /prometheus
@@ -91,6 +94,24 @@
                       - ContainerPort: !Ref HTTPPort
                         HostPort: !Ref HTTPPort
                         Protocol: tcp
+                    LogConfiguration:
+                      LogDriver: awslogs
+                      Options:
+                          awslogs-group: !Ref ClusterStackName
+                          awslogs-region: !Ref AWS::Region
+                          awslogs-stream-prefix: !Ref EnvironmentName
+                  - Name: !Ref ECSDiscovery
+                    Essential: true
+                    # Image: !Sub '${DockerRegistryUrl}/${ECSDiscoveryDockerImage}'
+                    Image: barbasa/discoverecs:latest
+                    Environment:
+                      - Name: AWS_DEFAULT_REGION
+                        Value: !Ref AWS::Region
+                    MountPoints:
+                      - SourceVolume: !Ref PrometheusVolume
+                        ContainerPath: /prometheus
+                    Cpu: 256
+                    Memory: 512
                     LogConfiguration:
                       LogDriver: awslogs
                       Options:
@@ -167,6 +188,9 @@
                     # Allow the ECS tasks to upload logs to CloudWatch
                     - 'logs:CreateLogStream'
                     - 'logs:PutLogEvents'
+                    - 'ecs:List*'
+                    - 'ecs:Describe*'
+                    - 'ec2:DescribeInstances'
                   Resource: '*'
             - PolicyName: AmazonECSTaskSecretManagerRolePolicy
               PolicyDocument:

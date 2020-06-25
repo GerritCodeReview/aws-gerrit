@@ -13,71 +13,14 @@ scrape_configs:
     static_configs:
     - targets: ['localhost:9090']
 
-
-  - job_name: 'gerrit-master-javamelody'
-
-    scheme: https
-    metrics_path: '/monitoring'
-
-    params:
-      format: ['prometheus']
-
+  - job_name: 'ecs-1m'
+    scrape_interval: 1m
     bearer_token: {{PROMETHEUS_BEARER_TOKEN}}
-
-    scrape_interval: 1s
-
-    static_configs:
-      - targets: ['gerrit-master.gerrit-demo.gerritforgeaws.com:443']
-        labels:
-          env: 'unit'
-
-  - job_name: 'gerrit-master-metrics'
-
-    scheme: https
-    metrics_path: '/plugins/metrics-reporter-prometheus/metrics'
-
-    params:
-      format: ['prometheus']
-
-    bearer_token: {{PROMETHEUS_BEARER_TOKEN}}
-
-    scrape_interval: 5s
-
-    static_configs:
-      - targets: ['gerrit-master.gerrit-demo.gerritforgeaws.com:443']
-        labels:
-          env: 'unit'
-
-  - job_name: 'gerrit-slave-javamelody'
-
-    scheme: https
-    metrics_path: '/monitoring'
-
-    params:
-      format: ['prometheus']
-
-    bearer_token: {{PROMETHEUS_BEARER_TOKEN}}
-
-    scrape_interval: 1s
-
-    static_configs:
-      - targets: ['gerrit-slave.gerrit-demo.gerritforgeaws.com:443']
-        labels:
-          env: 'unit'
-
-  - job_name: 'gerrit-slave-metrics'
-
-    scheme: https
-    metrics_path: '/plugins/metrics-reporter-prometheus/metrics'
-
-    params:
-      format: ['prometheus']
-
-    bearer_token: {{PROMETHEUS_BEARER_TOKEN}}
-
-    scrape_interval: 5s
-
-    static_configs:
-      - targets: ['gerrit-slave.gerrit-demo.gerritforgeaws.com:443']
-        labels:
-          env: 'unit'
+    file_sd_configs:
+      - files:
+          - /prometheus/ecs/1m-tasks.json
+    relabel_configs:
+      - source_labels: [metrics_path]
+        action: replace
+        target_label: __metrics_path__
+        regex: (.+)
