@@ -57,8 +57,11 @@ If you are dealing with small repos, you can switch to burst mode.
 ### Monitoring
 
 * Standard CloudWatch monitoring metrics for each component
-* Prometheus and Grafana stack is currently not available for dual-master, but a change is in progress to allow this
- (see [Issue 12979](https://bugs.chromium.org/p/gerrit/issues/detail?id=12979))
+* You can deploy prometheus and grafana stack by running
+
+```bash
+    make AWS_PREFIX=<AWS_PREFIX> service-monitoring
+```
 
 ## How to run it
 
