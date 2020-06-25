@@ -1,4 +1,5 @@
 include ../$(RECIPE)/setup.env
+include ../Makefile.common
 
 AWS_FC_COMMAND=export AWS_PAGER=;aws cloudformation
 SERVICE_PROMETHEUS_TEMPLATE:=cf-service-prometheus.yml
