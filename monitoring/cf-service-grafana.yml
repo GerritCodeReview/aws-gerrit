@@ -7,12 +7,6 @@
     PrometheusStackName:
         Type: String
         Default: gerrit-prometheus
-    MasterStackName:
-        Type: String
-        Default: gerrit-master
-    SlaveStackName:
-        Type: String
-        Default: gerrit-slave
     ClusterStackName:
         Description: Stack name of the ECS cluster to deploy the serivces
         Type: String
@@ -83,18 +77,6 @@
                         Value: !Ref AWS::Region
                       - Name: GRAFANA_DOMAIN
                         Value: !Sub '${Subdomain}.${HostedZoneName}'
-                      - Name: MASTER_URL
-                        Value:
-                          !Join
-                            - '.'
-                            - - Fn::ImportValue: !Join [':', [!Ref 'MasterStackName', 'Subdomain']]
-                              - Fn::ImportValue: !Join [':', [!Ref 'MasterStackName', 'HostedZoneName']]
-                      - Name: SLAVE_URL
-                        Value:
-                          !Join
-                            - '.'
-                            - - Fn::ImportValue: !Join [':', [!Ref 'SlaveStackName', 'Subdomain']]
-                              - Fn::ImportValue: !Join [':', [!Ref 'SlaveStackName', 'HostedZoneName']]
                       - Name: PROMETHEUS_URL
                         Value:
                           Fn::ImportValue:

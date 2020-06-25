@@ -278,3 +278,21 @@ git-daemon-publish:
 
 git-ssh-publish:
 	$(MAKE) -C ../master-slave/git-ssh git-ssh-publish
+
+prometheus-publish:
+	$(MAKE) -C ../monitoring/prometheus prometheus-publish RECIPE=dual-master
+
+service-prometheus:
+	$(MAKE) -C ../monitoring service-prometheus RECIPE=dual-master
+
+grafana-publish:
+	$(MAKE) -C ../monitoring/grafana grafana-publish RECIPE=dual-master
+
+service-grafana:
+	$(MAKE) -C ../monitoring service-grafana RECIPE=dual-master
+
+service-monitoring:
+	$(MAKE) -C ../monitoring service-monitoring RECIPE=dual-master
+
+dns-monitoring-routing:
+	$(MAKE) -C ../monitoring dns-monitoring-routing RECIPE=dual-master
