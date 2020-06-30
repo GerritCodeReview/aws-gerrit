@@ -1,15 +1,16 @@
 # Gerrit dual-master in High-Availability
 
 This set of templates provides all the components to deploy a Gerrit dual-master
-in HA in ECS. The 2 masters will share the Git repositories via NFS, using EFS.
+in HA over ECS. The 2 masters will share the Git repositories via NFS, using EFS.
 
 ## Architecture
 
-Four templates are provided in this example:
+The following templates are provided in this example:
 * `cf-cluster`: define the ECS cluster and the networking stack
-* `cf-service-master-1`: define the service stack running Gerrit master 1
-* `cf-service-master-2`: define the service stack running Gerrit master 2
+* `cf-service-master`: define the service stack running the gerrit master
 * `cf-dns-route`: define the DNS routing for the service
+* `cf-service-slave`: define the service stack running the gerrit replica
+* `cf-service-lb`: define the LBs in front of gerrit masters (this includes haproxy as well as NLB)
 
 ### Networking
 
@@ -93,61 +94,10 @@ The prerequisites to run this stack are:
 [Route53](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/getting-started.html)
 * to [publish the Docker image](#publish-custom-gerrit-docker-image) with your
 Gerrit configuration in AWS ECR
-* to [add Gerrit secrets](#add-gerrit-secrets-in-aws-secret-manager) in AWS Secret
-Manager
+* Upload required secrets to AWS Secret Manager.
+  You can follow the steps [here](../Secrets.md))
 * an SSL Certificate in AWS Certificate Manager (you can find more information on
   how to create and handle certificates in AWS [here](https://aws.amazon.com/certificate-manager/getting-started/)
-
-### Add Gerrit Secrets in AWS Secret Manager
-
-[AWS Secret Manager](https://aws.amazon.com/secrets-manager/) is a secure way of
-storing and managing secrets of any type.
-
-The secrets you will have to add are the Gerrit SSH keys and the Register Email
-Private Key set in `secure.config`.
-
-#### SSH Keys
-
-The SSH keys you will need to add are the one usually created and used by Gerrit:
-* ssh_host_ecdsa_384_key
-* ssh_host_ecdsa_384_key.pub
-* ssh_host_ecdsa_521_key
-* ssh_host_ecdsa_521_key.pub
-* ssh_host_ecdsa_key
-* ssh_host_ecdsa_key.pub
-* ssh_host_ed25519_key
-* ssh_host_ed25519_key.pub
-* ssh_host_rsa_key
-* ssh_host_rsa_key.pub
-
-Plus a key used by the replication plugin:
-* replication_user_id_rsa
-* replication_user_id_rsa.pub
-
-You will have to create the keys and place them in a directory.
-
-#### Register Email Private Key
-
-You will need to create a secret and put it in a file called `registerEmailPrivateKey`
-in the same directory of the SSH keys.
-
-#### LDAP Password
-
-You will need to put the admin LDAP password in a file called `ldapPassword`
-in the same directory of the SSH keys.
-
-#### SMTP Password
-
-You will need to put the SMTP password in a file called `smtpPassword`
-in the same directory of the SSH keys.
-
-#### Import into AWS Secret Manager
-
-You can now run the [script](../gerrit/add_secrets_aws_secrets_manager.sh) to
-upload them to AWS Secret Manager:
-`add_secrets_aws_secrets_manager.sh /path/to/your/keys/directory secret_prefix aws-region-id`
-
-When `secret_prefix` is omitted, it is set to `gerrit_secret` by default.
 
 ### Publish custom Gerrit Docker image
 
@@ -181,7 +131,7 @@ make create-all
 
 *NOTE: the creation of the cluster needs an EC2 key pair are useful when you need to connect
 to the EC2 instances for troubleshooting purposes. The key pair is automatically generated
-and store them in a `pem` file on the current directory.
+and stored in a `pem` file on the current directory.
 To use when ssh-ing into your instances as follow: `ssh -i cluster-keys.pem ec2-user@<ec2_instance_ip>`*
 
 ### Cleaning up
