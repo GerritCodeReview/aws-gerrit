@@ -6,7 +6,8 @@ docker-registry-login:
 
 grafana-build:
 	docker build -t aws-gerrit/grafana .
-	docker tag aws-gerrit/grafana:latest $(DOCKER_REGISTRY_URI)/aws-gerrit/grafana:latest
+	docker tag aws-gerrit/grafana:
+	latest $(DOCKER_REGISTRY_URI)/aws-gerrit/grafana:latest
 
 grafana-publish: docker-registry-login grafana-build
 	docker push $(DOCKER_REGISTRY_URI)/aws-gerrit/grafana:latest
