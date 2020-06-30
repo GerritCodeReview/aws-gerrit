@@ -39,26 +39,28 @@ Two templates are provided in this example:
 
 ### Logging
 
-* Gerrit `error_log` is exported in a Log Group in CloudWatch
-* Other Gerrit logs still need to be exported
+* All the logs are forwarded to AWS CloudWatch in the LogGroup with the cluster
+  stack name
 
 ### Monitoring
 
 * Standard CloudWatch monitoring metrics for each component
-
-## How to run it
-
-You can find [on GerritForge's YouTube Channel](https://www.youtube.com/watch?v=zr2zCSuclIU) a
-step-by-step guide on how to setup you Gerrit Code Review in AWS.
-
-However, keep reading this guide for a more exhaustive explanation.
+* Optionally Prometheus and Grafana stack (see [here](../monitoring/README.md))
 
 ### Setup
 
-The `setup.env.template` is an example of setup file for the creation of the stacks.
+#### 0 - Prerequisites
 
-Before creating the stacks, create a `setup.env` in the `Makefile` directory and
-correctly set the value of the environment variables.
+Follow the steps described in the [Prerequisites](../Prerequisites.md) section
+
+#### 1 - Configuration
+
+Each recipe provides a `setup.env.template` file which is a template for configuring the Gerrit stacks.
+Copy that into a `setup.env` and set the correct values for the  provided environment variables.
+
+```bash
+cp setup.env.template setup.env
+```
 
 This is the list of available parameters:
 
@@ -81,96 +83,37 @@ This is the list of available parameters:
   See [Gerrit documentation](https://gerrit-review.googlesource.com/Documentation/config-gerrit.html#core.packedGitLimit)
   for more details. `12g` by default.
 
-### Prerequisites
+#### 2 - Deploy
 
-As a prerequisite to run this stack, you will need:
-* a registered and correctly configured domain in
-[Route53](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/getting-started.html)
-* to [publish the Docker image](#publish-custom-gerrit-docker-image) with your
-Gerrit configuration
-* to [add Gerrit secrets](#add-gerrit-secrets-in-aws-secret-manager) in AWS Secret
-Manager
-* an SSL Certificate in AWS Certificate Manager (you can find more information on
-  how to create and handle certificates in AWS [here](https://aws.amazon.com/certificate-manager/getting-started/)
-
-### Add Gerrit Secrets in AWS Secret Manager
-
-[AWS Secret Manager](https://aws.amazon.com/secrets-manager/) is a secure way of
-storing and managing secrets of any type.
-
-The secrets you will have to add are the Gerrit SSH keys and the Register Email
-Private Key set in `secure.config`.
-
-#### SSH Keys
-
-The SSH keys you will need to add are the one usually created and used by Gerrit:
-* ssh_host_ecdsa_384_key
-* ssh_host_ecdsa_384_key.pub
-* ssh_host_ecdsa_521_key
-* ssh_host_ecdsa_521_key.pub
-* ssh_host_ecdsa_key
-* ssh_host_ecdsa_key.pub
-* ssh_host_ed25519_key
-* ssh_host_ed25519_key.pub
-* ssh_host_rsa_key
-* ssh_host_rsa_key.pub
-
-You will have to create the keys and place them in a directory.
-
-#### Register Email Private Key
-
-You will need to create a secret and put it in a file called `registerEmailPrivateKey`
-in the same directory of the SSH keys.
-
-#### LDAP Password
-
-You will need to put the admin LDAP password in a file called `ldapPassword`
-in the same directory of the SSH keys.
-
-#### SMTP Password
-
-You will need to put the SMTP password in a file called `smtpPassword`
-in the same directory of the SSH keys.
-
-#### Import into AWS Secret Manager
-
-You can now run the [script](../gerrit/add_secrets_aws_secrets_manager.sh) to
-upload them to AWS Secret Manager:
-`add_secrets_aws_secrets_manager.sh /path/to/your/keys/directory secret_prefix aws-region-id`
-
-When `secret_prefix` is omitted, it is set to `gerrit_secret` by default.
-
-### Publish custom Gerrit Docker image
-
-* Create the repository in the Docker registry:
-  `aws ecr create-repository --repository-name aws-gerrit/gerrit`
-* Set the Docker registry URI in `DOCKER_REGISTRY_URI`
-* Create a `gerrit.setup` and set the correct parameters
- * An example of the possible setting are in `gerrit.setup.template`
- * The structure and parameters of `gerrit.setup` are the same as a normal `gerrit.config`
- * Refer to the [Gerrit Configuration Documentation](https://gerrit-review.googlesource.com/Documentation/config-gerrit.html)
-   for the meaning of the parameters
-* Add the plugins you want to install in `./gerrit/plugins`
-* Publish the image: `make gerrit-publish`
-
-### Getting Started
-
+This step will:
+* Build and push Gerrit
 * Create the cluster, service and DNS routing stacks:
-
 ```
 make create-all
 ```
 
-*NOTE: the creation of the cluster needs an EC2 key pair are useful when you need to connect
+It might take several minutes to build the stack.
+You can monitor the creations of the stacks in [CloudFormation](https://console.aws.amazon.com/cloudformation/home)
+
+* *NOTE*: the creation of the cluster needs an EC2 key pair are useful when you need to connect
 to the EC2 instances for troubleshooting purposes. The key pair is automatically generated
-and store them in a `pem` file on the current directory.
+and stored in a `pem` file on the current directory.
 To use when ssh-ing into your instances as follow: `ssh -i cluster-keys.pem ec2-user@<ec2_instance_ip>`*
 
-### Cleaning up
+### Other operations
+
+#### Tear down
+
+to tear down the entire stack just run
 
 ```
 make delete-all
 ```
+
+Note that this will *not* delete:
+* Secrets stored in Secret Manager
+* SSL certificates
+* ECR repositories
 
 ### Access your Gerrit
 
@@ -178,21 +121,7 @@ You Gerrit instance will be available at this URL: `http://<HOSTED_ZONE_NAME>.<S
 
 The available ports are `8080` for HTTP and `29418` for SSH.
 
-# External services
+### External Services
 
-This is a list of external services that you might need to setup your stack and some suggestions
-on how to easily create them.
-
-## SMTP Server
-
-If you need to setup a SMTP service Amazon Simple Email Service can be used.
-Details how setup Amazon SES can be found [here](https://docs.aws.amazon.com/ses/latest/DeveloperGuide/send-email-set-up.html).
-
-To correctly setup email notifications Gerrit requires ssl protocol on default port 465 to
-be enabled on SMTP Server. It is possible to setup Gerrit to talk to standard SMTP port 25
-but by default all EC2 instances are blocking it. To enable port 25 please follow [this](https://aws.amazon.com/premiumsupport/knowledge-center/ec2-port-25-throttle/) link.
-
-## LDAP Server
-
-If you need a testing LDAP server you can find details on how to easily
-create one in the [LDAP folder](../ldap/README.md).
+If you need to setup some external services (maybe for testing purposes, such as SMTP or LDAP),
+you can follow the instructions [here](../README.md#external-services)
