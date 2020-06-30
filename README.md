@@ -1,9 +1,6 @@
 ## Gerrit AWS Templates
-Those are a collection of [AWS CloudFormation](https://aws.amazon.com/cloudformation/)
+This repository holds a collection of [AWS CloudFormation](https://aws.amazon.com/cloudformation/)
 templates and scripts to deploy Gerrit in AWS.
-
-The aim is to provide some guidelines and example on how to deploy different Gerrit
-setups in the Cloud using AWS as provider.
 
 ## Outline
 
@@ -13,8 +10,8 @@ setups in the Cloud using AWS as provider.
 
 ## Overview
 
-The goal of Gerrit AWS Templates is to provide fully-functional Gerrit installations
-to helps users deploying Gerrit on AWS by providing out-of-the-box templates.
+The goal is to provide guidelines, examples as well as out-of-the-box templates and scripts to deploy fully-functional
+Gerrit setups in AWS.
 
 With Gerrit AWS Templates, developers and administrator can create a production-ready
 installation on the cloud in minutes and in a repeatable way, allowing them
@@ -28,8 +25,11 @@ of the infrastructure and the application.
 To manage your AWS services via command line you will need to install
 [AWS CLI](https://aws.amazon.com/cli/) and set it up to point to your account.
 
+To build gerrit and related-components' images
+[Docker](https://www.docker.com/)
+
 ## Templates
 
 * [Standalone Gerrit master sandbox with LDAP authentication](/single-master/README.md)
 * [Gerrit master and slave sandbox with LDAP authentication](/master-slave/README.md)
-* [Gerrit dual-master in HA sandbox with LDAP authentication](/multi-master/README.md)
+* [Gerrit dual-master in HA sandbox with LDAP authentication](/dual-master/README.md)
