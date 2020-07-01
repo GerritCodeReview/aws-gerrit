@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a999def9_c25dbd4d",
+        "filename": "README.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-07-01T18:04:34Z",
+      "side": 1,
+      "message": "an",
+      "range": {
+        "startLine": 70,
+        "startChar": 17,
+        "endLine": 70,
+        "endChar": 20
+      },
+      "revId": "b301d901aaf5f138ed28090d638e80ad1c9dec40",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cea0fb9_5cd76bb7",
+        "filename": "dual-master/README.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-07-01T18:04:34Z",
+      "side": 1,
+      "message": "it also pushes the git daemon and ssh agent images. not sure if it is worth mentioning it",
+      "range": {
+        "startLine": 106,
+        "startChar": 17,
+        "endLine": 106,
+        "endChar": 23
+      },
+      "revId": "b301d901aaf5f138ed28090d638e80ad1c9dec40",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19b80891_b5b80814",
+        "filename": "master-slave/README.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-07-01T18:04:34Z",
+      "side": 1,
+      "message": "master slave recipe doesn\u0027t have Haproxy and sidecar",
+      "range": {
+        "startLine": 102,
+        "startChar": 24,
+        "endLine": 102,
+        "endChar": 51
+      },
+      "revId": "b301d901aaf5f138ed28090d638e80ad1c9dec40",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
