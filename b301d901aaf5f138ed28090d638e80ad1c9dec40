@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "74f67208_a3a0aa9f",
+        "filename": "README.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-07-02T06:52:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a999def9_c25dbd4d",
+      "range": {
+        "startLine": 70,
+        "startChar": 17,
+        "endLine": 70,
+        "endChar": 20
+      },
+      "revId": "b301d901aaf5f138ed28090d638e80ad1c9dec40",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3cea0fb9_5cd76bb7",
         "filename": "dual-master/README.md",
         "patchSetId": 7
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "0a1513b3_b9a8bb4a",
+        "filename": "dual-master/README.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-07-02T06:52:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3cea0fb9_5cd76bb7",
+      "range": {
+        "startLine": 106,
+        "startChar": 17,
+        "endLine": 106,
+        "endChar": 23
+      },
+      "revId": "b301d901aaf5f138ed28090d638e80ad1c9dec40",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19b80891_b5b80814",
         "filename": "master-slave/README.md",
         "patchSetId": 7
@@ -68,6 +116,30 @@
       "revId": "b301d901aaf5f138ed28090d638e80ad1c9dec40",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2f43279_ee727876",
+        "filename": "master-slave/README.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-07-02T06:52:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19b80891_b5b80814",
+      "range": {
+        "startLine": 102,
+        "startChar": 24,
+        "endLine": 102,
+        "endChar": 51
+      },
+      "revId": "b301d901aaf5f138ed28090d638e80ad1c9dec40",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     }
   ]
 }
