@@ -1,3 +1,0 @@
-[remote-slave]
-  url = git://subdomain.hostedzonename:9418/${name}.git
-  adminUrl = ssh://gerrit@$subdomain.hostedzonename:1022/var/gerrit/git/${name}.git
