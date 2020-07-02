@@ -6,3 +6,5 @@ gerrit/etc/*key*
 gerrit.config
 secure.config
 replication.config
+.idea
+**/*.pem
