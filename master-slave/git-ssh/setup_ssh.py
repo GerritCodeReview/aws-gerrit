@@ -53,7 +53,6 @@ This script setup Gerrit configuration and its plugins when the container spins 
 
 It reads from:
  - AWS Secret Manager: Statically defined.
- - gerrit.setup: Statically defined.
  - environment variables: Dinamycally defined.
 
 """
