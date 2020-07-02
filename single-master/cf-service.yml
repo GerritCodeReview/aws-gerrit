@@ -88,6 +88,27 @@ Parameters:
       Description: JGit cache size
       Type: String
       Default: 12g
+  LDAPServer:
+      Description: LDAP server URL
+      Type: String
+  LDAPUsername:
+      Description: Username to bind to the LDAP server with
+      Type: String
+  LDAPAccountBase:
+      Description: Root of the tree containing all user accounts
+      Type: String
+  LDAPGroupBase:
+      Description: Root of the tree containing all group objects
+      Type: String
+  SMTPServer:
+      Description: SMTP server URL
+      Type: String
+  SMTPUsername:
+      Description: User name to authenticate with, if required for relay
+      Type: String
+  SMTPDomain:
+      Description: Domain to be used in the From field
+      Type: String
 
 Resources:
     Service:
@@ -133,6 +154,20 @@ Resources:
                       Value: !Ref GerritHeapLimit
                     - Name: JGIT_CACHE_SIZE
                       Value: !Ref JgitCacheSize
+                    - Name: LDAP_SERVER
+                      Value: !Ref LDAPServer
+                    - Name: LDAP_USERNAME
+                      Value: !Ref LDAPUsername
+                    - Name: LDAP_ACCOUNT_BASE
+                      Value: !Ref LDAPAccountBase
+                    - Name: LDAP_GROUP_BASE
+                      Value: !Ref LDAPGroupBase
+                    - Name: SMTP_SERVER
+                      Value: !Ref SMTPServer
+                    - Name: SMTP_USERNAME
+                      Value: !Ref SMTPUsername
+                    - Name: SMTP_DOMAIN
+                      Value: !Ref SMTPDomain
                   MountPoints:
                     - SourceVolume: !Ref GerritGitVolume
                       ContainerPath: /var/gerrit/git
