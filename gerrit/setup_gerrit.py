@@ -3,7 +3,6 @@
 import boto3
 import base64
 import os
-import configparser
 from botocore.exceptions import ClientError
 from jinja2 import Environment, FileSystemLoader
 
@@ -61,7 +60,6 @@ This script setup Gerrit configuration and its plugins when the container spins 
 
 It reads from:
  - AWS Secret Manager: Statically defined.
- - gerrit.setup: Statically defined.
  - environment variables: Dinamycally defined.
 
 """
@@ -120,8 +118,6 @@ with open(GERRIT_CONFIG_DIRECTORY + "secure.config", 'w',
     )
 
 BASE_CONFIG_DIR = "/tmp"
-config = configparser.ConfigParser()
-config.read(BASE_CONFIG_DIR + '/gerrit.setup')
 print("Setting Gerrit config in '" + GERRIT_CONFIG_DIRECTORY + "gerrit.config'")
 template = env.get_template("gerrit.config.template")
 
@@ -141,13 +137,13 @@ if 'HOSTED_ZONE_NAME' in os.environ:
 with open(GERRIT_CONFIG_DIRECTORY + "gerrit.config", 'w',
           encoding='utf-8') as f:
     config_for_template.update({
-        'LDAP_SERVER': config['ldap']['server'],
-        'LDAP_USERNAME': config['ldap']['username'],
-        'LDAP_ACCOUNT_BASE': config['ldap']['accountBase'],
-        'LDAP_GROUP_BASE': config['ldap']['groupBase'],
-        'SMTP_SERVER': config['smtp']["server"],
-        'SMTP_USER': config['smtp']["user"],
-        'SMTP_DOMAIN': config['smtp']["domain"],
+        'LDAP_SERVER': os.getenv('LDAP_SERVER'),
+        'LDAP_USERNAME': os.getenv('LDAP_USERNAME'),
+        'LDAP_ACCOUNT_BASE': os.getenv('LDAP_ACCOUNT_BASE'),
+        'LDAP_GROUP_BASE': os.getenv('LDAP_GROUP_BASE'),
+        'SMTP_SERVER': os.getenv('SMTP_SERVER'),
+        'SMTP_USERNAME': os.getenv('SMTP_USERNAME'),
+        'SMTP_DOMAIN': os.getenv('SMTP_DOMAIN'),
         'GERRIT_HEAP_LIMIT': os.getenv('GERRIT_HEAP_LIMIT'),
         'JGIT_CACHE_SIZE': os.getenv('JGIT_CACHE_SIZE')
     })
@@ -157,18 +153,17 @@ containerSlave = (os.getenv('CONTAINER_SLAVE') == 'true')
 if ((not containerSlave) and setupReplication):
     print("Setting Replication config in '" +
           GERRIT_CONFIG_DIRECTORY + "replication.config'")
-    config.read(BASE_CONFIG_DIR + '/replication.setup')
     template = env.get_template("replication.config.template")
     with open(GERRIT_CONFIG_DIRECTORY + "replication.config", 'w', encoding='utf-8') as f:
+        SLAVE_FQDN = os.getenv('SLAVE_SUBDOMAIN') + "." + os.getenv('HOSTED_ZONE_NAME')
         f.write(template.render(
-                SLAVE_1_URL=config['remote-slave']['url'],
-                SLAVE_1_AMDIN_URL=config['remote-slave']['adminUrl']
+                SLAVE_1_URL="git://" + SLAVE_FQDN + ":" + os.getenv('GIT_PORT') + "/${name}.git",
+                SLAVE_1_AMDIN_URL="ssh://gerrit@" + SLAVE_FQDN + ":" + os.getenv('GIT_SSH_PORT') + "/var/gerrit/git/${name}.git"
                 ))
 
 if (setupHA):
     print("Setting HA config in '" +
           GERRIT_CONFIG_DIRECTORY + "high-availability.config'")
-    config.read(BASE_CONFIG_DIR + '/high-availability.setup')
     template = env.get_template("high-availability.config.template")
     with open(GERRIT_CONFIG_DIRECTORY + "high-availability.config", 'w', encoding='utf-8') as f:
         f.write(template.render(HA_PEER_URL=os.getenv('HA_PEER_URL')))

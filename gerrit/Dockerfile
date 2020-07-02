@@ -8,8 +8,6 @@ COPY --chown=gerrit:gerrit ssh-config /var/gerrit/.ssh/config
 
 # Installing scripts to get SSH Keys from Secret Manager
 COPY --chown=gerrit:gerrit requirements.txt /tmp
-COPY --chown=gerrit:gerrit gerrit.setup /tmp
-COPY --chown=gerrit:gerrit replication.setup /tmp
 COPY --chown=gerrit:gerrit setup_gerrit.py /tmp
 RUN chmod +x /tmp/setup_gerrit.py \
     && pip3 install -r /tmp/requirements.txt

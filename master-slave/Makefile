@@ -38,9 +38,17 @@ service-master:
 		--template-body file://`pwd`/$(SERVICE_MASTER_TEMPLATE) \
 		--region $(AWS_REGION) \
 		--parameters \
+		ParameterKey=LDAPServer,ParameterValue=$(LDAP_SERVER) \
+		ParameterKey=LDAPUsername,ParameterValue=$(LDAP_USERNAME) \
+		ParameterKey=LDAPAccountBase,ParameterValue=$(LDAP_ACCOUNT_BASE) \
+		ParameterKey=LDAPGroupBase,ParameterValue=$(LDAP_GROUP_BASE) \
+		ParameterKey=SMTPServer,ParameterValue=$(SMTP_SERVER) \
+		ParameterKey=SMTPUsername,ParameterValue=$(SMTP_USERNAME) \
+		ParameterKey=SMTPDomain,ParameterValue=$(SMTP_DOMAIN) \
 		ParameterKey=ClusterStackName,ParameterValue=$(CLUSTER_STACK_NAME) \
 		ParameterKey=HostedZoneName,ParameterValue=$(HOSTED_ZONE_NAME) \
 		ParameterKey=Subdomain,ParameterValue=$(MASTER_SUBDOMAIN) \
+		ParameterKey=SlaveSubdomain,ParameterValue=$(SLAVE_SUBDOMAIN) \
 		ParameterKey=DockerRegistryUrl,ParameterValue=$(DOCKER_REGISTRY_URI) \
 		ParameterKey=CertificateArn,ParameterValue=$(SSL_CERTIFICATE_ARN) \
 		ParameterKey=SlaveServiceStackName,ParameterValue=$(SERVICE_SLAVE_STACK_NAME) \
@@ -58,6 +66,10 @@ service-slave:
 		--template-body file://`pwd`/$(SERVICE_SLAVE_TEMPLATE) \
 		--region $(AWS_REGION) \
 		--parameters \
+		ParameterKey=LDAPServer,ParameterValue=$(LDAP_SERVER) \
+		ParameterKey=LDAPUsername,ParameterValue=$(LDAP_USERNAME) \
+		ParameterKey=LDAPAccountBase,ParameterValue=$(LDAP_ACCOUNT_BASE) \
+		ParameterKey=LDAPGroupBase,ParameterValue=$(LDAP_GROUP_BASE) \
 		ParameterKey=ClusterStackName,ParameterValue=$(CLUSTER_STACK_NAME) \
 		ParameterKey=HostedZoneName,ParameterValue=$(HOSTED_ZONE_NAME) \
 		ParameterKey=Subdomain,ParameterValue=$(SLAVE_SUBDOMAIN) \
