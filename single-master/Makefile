@@ -34,6 +34,13 @@ service:
 		--template-body file://`pwd`/$(SERVICE_TEMPLATE) \
 		--region $(AWS_REGION) \
 		--parameters \
+		ParameterKey=LDAPServer,ParameterValue=$(LDAP_SERVER) \
+		ParameterKey=LDAPUsername,ParameterValue=\"$(LDAP_USERNAME)\" \
+		ParameterKey=LDAPAccountBase,ParameterValue=\"$(LDAP_ACCOUNT_BASE)\" \
+		ParameterKey=LDAPGroupBase,ParameterValue=\"$(LDAP_GROUP_BASE)\" \
+		ParameterKey=SMTPServer,ParameterValue=$(SMTP_SERVER) \
+		ParameterKey=SMTPUser,ParameterValue=$(SMTP_USER) \
+		ParameterKey=SMTPDomain,ParameterValue=$(SMTP_DOMAIN) \
 		ParameterKey=ClusterStackName,ParameterValue=$(CLUSTER_STACK_NAME) \
 		ParameterKey=HostedZoneName,ParameterValue=$(HOSTED_ZONE_NAME) \
 		ParameterKey=Subdomain,ParameterValue=$(SUBDOMAIN) \
