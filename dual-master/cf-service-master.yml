@@ -54,6 +54,14 @@ Parameters:
         Description: Gerrit SSH port
         Type: Number
         Default: 29418
+  GitPort:
+        Description: Git daemon port
+        Type: Number
+        Default: 9418
+  GitSSHPort:
+        Description: Git ssh port
+        Type: Number
+        Default: 1022
   CertificateArn:
         Description: SSL Certificates ARN
         Type: String
@@ -64,6 +72,9 @@ Parameters:
         Description: The subdomain of the Gerrit cluster
         Type: String
         Default: gerrit-master-demo
+  SlaveSubdomain:
+        Description: The subdomain of the Gerrit slave
+        Type: String
   LBSubdomain:
         Description: The subdomain of the Gerrit load balancer
         Type: String
@@ -125,7 +136,27 @@ Parameters:
       Description: JGit cache size
       Type: String
       Default: 12g
-
+  LDAPServer:
+      Description: LDAP server URL
+      Type: String
+  LDAPUsername:
+      Description: Username to bind to the LDAP server with
+      Type: String
+  LDAPAccountBase:
+      Description: Root of the tree containing all user accounts
+      Type: String
+  LDAPGroupBase:
+      Description: Root of the tree containing all group objects
+      Type: String
+  SMTPServer:
+      Description: SMTP server URL
+      Type: String
+  SMTPUsername:
+      Description: User name to authenticate with, if required for relay
+      Type: String
+  SMTPDomain:
+      Description: Domain to be used in the From field
+      Type: String
 
 Resources:
     Service:
@@ -181,6 +212,26 @@ Resources:
                       Value: !Ref GerritHeapLimit
                     - Name: JGIT_CACHE_SIZE
                       Value: !Ref JgitCacheSize
+                    - Name: LDAP_SERVER
+                      Value: !Ref LDAPServer
+                    - Name: LDAP_USERNAME
+                      Value: !Ref LDAPUsername
+                    - Name: LDAP_ACCOUNT_BASE
+                      Value: !Ref LDAPAccountBase
+                    - Name: LDAP_GROUP_BASE
+                      Value: !Ref LDAPGroupBase
+                    - Name: SMTP_SERVER
+                      Value: !Ref SMTPServer
+                    - Name: SMTP_USERNAME
+                      Value: !Ref SMTPUsername
+                    - Name: SMTP_DOMAIN
+                      Value: !Ref SMTPDomain
+                    - Name: GIT_PORT
+                      Value: !Ref GitPort
+                    - Name: GIT_SSH_PORT
+                      Value: !Ref GitSSHPort
+                    - Name: SLAVE_SUBDOMAIN
+                      Value: !Ref SlaveSubdomain
                   MountPoints:
                     - SourceVolume: !Ref GerritGitVolume
                       ContainerPath: /var/gerrit/git

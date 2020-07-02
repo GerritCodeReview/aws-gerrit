@@ -29,7 +29,7 @@
   smtpServer = {{ SMTP_SERVER  }}
   smtpEncryption = ssl
   sslVerify = false
-  smtpUser = {{ SMTP_USER }}
+  smtpUser = {{ SMTP_USERNAME }}
   enable = true
   from = ${user} (Gerrit) <gerrit@{{ SMTP_DOMAIN }}>
 
