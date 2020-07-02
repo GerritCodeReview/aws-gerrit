@@ -118,6 +118,18 @@ Parameters:
       Description: JGit cache size
       Type: String
       Default: 12g
+  LDAPServer:
+      Description: LDAP server URL
+      Type: String
+  LDAPUsername:
+      Description: Username to bind to the LDAP server with
+      Type: String
+  LDAPAccountBase:
+      Description: Root of the tree containing all user accounts
+      Type: String
+  LDAPGroupBase:
+      Description: Root of the tree containing all group objects
+      Type: String
 
 Resources:
     GerritService:
@@ -173,6 +185,14 @@ Resources:
                       Value: !Ref GerritHeapLimit
                     - Name: JGIT_CACHE_SIZE
                       Value: !Ref JgitCacheSize
+                    - Name: LDAP_SERVER
+                      Value: !Ref LDAPServer
+                    - Name: LDAP_USERNAME
+                      Value: !Ref LDAPUsername
+                    - Name: LDAP_ACCOUNT_BASE
+                      Value: !Ref LDAPAccountBase
+                    - Name: LDAP_GROUP_BASE
+                      Value: !Ref LDAPGroupBase
                   MountPoints:
                     - SourceVolume: !Ref GerritGitVolume
                       ContainerPath: /var/gerrit/git
