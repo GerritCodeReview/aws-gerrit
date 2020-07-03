@@ -93,31 +93,6 @@ a single EC2 instance won't be enough for all the services that will be ran*
 
 Follow the steps described in the [Prerequisites](../Prerequisites.md) section
 
-### Publish custom Gerrit Docker image
-
-* Create the repository in the Docker registry:
-  `aws ecr create-repository --repository-name aws-gerrit/gerrit`
-* Set the Docker registry URI in `DOCKER_REGISTRY_URI`
-* Create a `gerrit.setup` and set the correct parameters
- * An example of the possible setting are in `gerrit.setup.template`
- * The structure and parameters of `gerrit.setup` are the same as a normal `gerrit.config`
- * Refer to the [Gerrit Configuration Documentation](https://gerrit-review.googlesource.com/Documentation/config-gerrit.html)
-   for the meaning of the parameters
-* Add the plugins you want to install in `./gerrit/plugins`
-* Publish the image: `make gerrit-publish`
-
-### Publish SSH Agent
-
-* Create the repository in the Docker registry:
-  `aws ecr create-repository --repository-name aws-gerrit/git-ssh`
-* Publish the image: `make git-ssh-publish`
-
-### Publish Git Daemon
-
-* Create the repository in the Docker registry:
-  `aws ecr create-repository --repository-name aws-gerrit/git-daemon`
-* Publish the image: `make git-daemon-publish`
-
 ### Getting Started
 
 * Create the cluster, services and DNS routing stacks:
@@ -193,3 +168,7 @@ create one in the [LDAP folder](../ldap/README.md).
 
 If you want to monitor your system, you can add a Prometheus and Grafana stack.
 [Here](../monitoring/README.md) you can find the details on how to add it.
+
+### Docker
+
+Refer to the [Docker](../Docker.md) section for information on how to setup docker or how to publish images

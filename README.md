@@ -28,6 +28,9 @@ of the infrastructure and the application.
 To manage your AWS services via command line you will need to install
 [AWS CLI](https://aws.amazon.com/cli/) and set it up to point to your account.
 
+To build gerrit and related-components' images
+[Docker](https://www.docker.com/)
+
 ## Templates
 
 * [Standalone Gerrit master sandbox with LDAP authentication](/single-master/README.md)
