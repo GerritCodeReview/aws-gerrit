@@ -8,20 +8,6 @@ exposed by master and slave, and Grafana to display them.
 
 ## Prerequisites
 
-### Publish custom Prometheus Docker image
-
-* Create the repository in the Docker registry:
-  `aws ecr create-repository --repository-name aws-gerrit/prometheus`
-
-* From the main cookbook, publish the image: `make prometheus-publish`
-
-### Publish custom Grafana Docker image
-
-* Create the repository in the Docker registry:
-  `aws ecr create-repository --repository-name aws-gerrit/grafana`
-
-* From the main cookbook, publish the image: `make grafana-publish`
-
 ### Import a Prometheus Bearer Token
 
 * [Generate](https://www.uuidgenerator.net/) a Token
@@ -69,3 +55,7 @@ aws cloudformation describe-stacks \
 The default credentials are:
 * user `admin`
 * password `admin`
+
+### Docker
+
+Refer to the [Docker](../Docker.md) section for information on how to setup docker or how to publish images
