@@ -90,28 +90,6 @@ This is the list of available parameters:
 
 Follow the steps described in the [Prerequisites](../Prerequisites.md) section
 
-### Publish custom Gerrit Docker image
-
-* Create the repository in the Docker registry:
-  `aws ecr create-repository --repository-name aws-gerrit/gerrit`
-* Set the Docker registry URI in `DOCKER_REGISTRY_URI`
-* Create a `gerrit.setup` and set the correct parameters
- * An example of the possible setting are in `gerrit.setup.template`
- * The structure and parameters of `gerrit.setup` are the same as a normal `gerrit.config`
- * Refer to the [Gerrit Configuration Documentation](https://gerrit-review.googlesource.com/Documentation/config-gerrit.html)
-   for the meaning of the parameters
-* Add the plugins you want to install in `./gerrit/plugins`
-* Publish the image: `make gerrit-publish`
-
-### Publish custom HAProxy Docker image
-
-* Create the HAProxy and the logging sidecar repository in the Docker registry:
-  `aws ecr create-repository --repository-name aws-gerrit/haproxy`
-  `aws ecr create-repository --repository-name aws-gerrit/syslog-sidecar`
-* Publish the images:
-  `make haproxy-publish`
-  `make syslog-sidecar-publish`
-
 ### Getting Started
 
 * Create the cluster, services and DNS routing stacks:
@@ -171,3 +149,7 @@ but by default all EC2 instances are blocking it. To enable port 25 please follo
 
 If you need a testing LDAP server you can find details on how to easily
 create one in the [LDAP folder](../ldap/README.md).
+
+### Docker
+
+Refer to the [Docker](../Docker.md) section for information on how to setup docker or how to publish images
