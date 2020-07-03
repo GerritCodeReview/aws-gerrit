@@ -5,11 +5,12 @@ in HA in ECS. The 2 masters will share the Git repositories via NFS, using EFS.
 
 ## Architecture
 
-Four templates are provided in this example:
+The following templates are provided in this example:
 * `cf-cluster`: define the ECS cluster and the networking stack
-* `cf-service-master-1`: define the service stack running Gerrit master 1
-* `cf-service-master-2`: define the service stack running Gerrit master 2
+* `cf-service-master`: define the service stack running the gerrit master
 * `cf-dns-route`: define the DNS routing for the service
+* `cf-service-slave`: define the service stack running the gerrit replica
+* `cf-service-lb`: define the LBs in front of gerrit masters (this includes haproxy as well as NLB)
 
 ### Networking
 
