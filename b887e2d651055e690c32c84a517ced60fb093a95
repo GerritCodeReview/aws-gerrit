@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f0b01e6_e8e4a1ea",
+        "filename": "dual-master/cf-service-slave.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-07-03T14:06:53Z",
+      "side": 1,
+      "message": "not needed in slave",
+      "range": {
+        "startLine": 136,
+        "startChar": 2,
+        "endLine": 141,
+        "endChar": 18
+      },
+      "revId": "b887e2d651055e690c32c84a517ced60fb093a95",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bed386b7_14f33ae6",
+        "filename": "master-slave/cf-service-slave.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-07-03T14:06:53Z",
+      "side": 1,
+      "message": "not needed in slave",
+      "range": {
+        "startLine": 133,
+        "startChar": 0,
+        "endLine": 141,
+        "endChar": 18
+      },
+      "revId": "b887e2d651055e690c32c84a517ced60fb093a95",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
