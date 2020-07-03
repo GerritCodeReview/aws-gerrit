@@ -56,12 +56,18 @@ step-by-step guide on how to setup you Gerrit Code Review in AWS.
 
 However, keep reading this guide for a more exhaustive explanation.
 
-### Setup
+### Prerequisites
 
-The `setup.env.template` is an example of setup file for the creation of the stacks.
+Follow the steps described in the [Prerequisites](../Prerequisites.md) section
 
-Before creating the stacks, create a `setup.env` in the `Makefile` directory and
-correctly set the value of the environment variables.
+### Configuration
+
+Each recipe provides a `setup.env.template` file which is a template for configuring the Gerrit stacks.
+Copy that into a `setup.env` and set the correct values for the  provided environment variables.
+
+```bash
+cp setup.env.template setup.env
+```
 
 This is the list of available parameters:
 
@@ -83,10 +89,6 @@ This is the list of available parameters:
 * `JGIT_CACHE_SIZE`: Maximum number of bytes to load and cache in memory from pack files.
   See [Gerrit documentation](https://gerrit-review.googlesource.com/Documentation/config-gerrit.html#core.packedGitLimit)
   for more details. `12g` by default.
-
-### Prerequisites
-
-Follow the steps described in the [Prerequisites](../Prerequisites.md) section
 
 ### Getting Started
 
