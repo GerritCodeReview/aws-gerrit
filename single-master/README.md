@@ -96,10 +96,13 @@ Follow the steps described in the [Prerequisites](../Prerequisites.md) section
 make create-all
 ```
 
-*NOTE: the creation of the cluster needs an EC2 key pair are useful when you need to connect
+It might take several minutes to build the stack.
+You can monitor the creations of the stacks in [CloudFormation](https://console.aws.amazon.com/cloudformation/home)
+
+* *NOTE*: the creation of the cluster needs an EC2 key pair are useful when you need to connect
 to the EC2 instances for troubleshooting purposes. The key pair is automatically generated
-and store them in a `pem` file on the current directory.
-To use when ssh-ing into your instances as follow: `ssh -i cluster-keys.pem ec2-user@<ec2_instance_ip>`*
+and stored in a `pem` file on the current directory.
+To use when ssh-ing into your instances as follow: `ssh -i cluster-keys.pem ec2-user@<ec2_instance_ip>`
 
 ### Cleaning up
 
