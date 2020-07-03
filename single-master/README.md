@@ -108,6 +108,11 @@ To use when ssh-ing into your instances as follow: `ssh -i cluster-keys.pem ec2-
 make delete-all
 ```
 
+Note that this will *not* delete:
+* Secrets stored in Secret Manager
+* SSL certificates
+* ECR repositories
+
 ### Access your Gerrit
 
 You Gerrit instance will be available at this URL: `http://<HOSTED_ZONE_NAME>.<SUBDOMAIN>`.
