@@ -110,24 +110,10 @@ You Gerrit instance will be available at this URL: `http://<HOSTED_ZONE_NAME>.<S
 
 The available ports are `8080` for HTTP and `29418` for SSH.
 
-# External services
+### External Services
 
-This is a list of external services that you might need to setup your stack and some suggestions
-on how to easily create them.
-
-## SMTP Server
-
-If you need to setup a SMTP service Amazon Simple Email Service can be used.
-Details how setup Amazon SES can be found [here](https://docs.aws.amazon.com/ses/latest/DeveloperGuide/send-email-set-up.html).
-
-To correctly setup email notifications Gerrit requires ssl protocol on default port 465 to
-be enabled on SMTP Server. It is possible to setup Gerrit to talk to standard SMTP port 25
-but by default all EC2 instances are blocking it. To enable port 25 please follow [this](https://aws.amazon.com/premiumsupport/knowledge-center/ec2-port-25-throttle/) link.
-
-## LDAP Server
-
-If you need a testing LDAP server you can find details on how to easily
-create one in the [LDAP folder](../ldap/README.md).
+If you need to setup some external services (maybe for testing purposes, such as SMTP or LDAP),
+you can follow the instructions [here](../README.md#external-services)
 
 ### Docker
 
