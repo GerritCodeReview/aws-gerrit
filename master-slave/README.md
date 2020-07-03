@@ -91,71 +91,7 @@ a single EC2 instance won't be enough for all the services that will be ran*
 
 ### Prerequisites
 
-As a prerequisite to run this stack, you will need:
-* a registered and correctly configured domain in
-[Route53](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/getting-started.html)
-* to [publish the Docker image](#publish-custom-gerrit-docker-image) with your
-Gerrit configuration in AWS ECR
-* to [publish the SSH Agent Docker image](#publish-ssh-agent) in AWS ECR
-* to [publish the Git Daemon Docker image](#publish-git-daemon) in AWS ECR
-* to [add Gerrit secrets](#add-gerrit-secrets-in-aws-secret-manager) in AWS Secret
-Manager
-* an SSL Certificate in AWS Certificate Manager (you can find more information on
-  how to create and handle certificates in AWS [here](https://aws.amazon.com/certificate-manager/getting-started/)
-
-### Add Gerrit Secrets in AWS Secret Manager
-
-[AWS Secret Manager](https://aws.amazon.com/secrets-manager/) is a secure way of
-storing and managing secrets of any type.
-
-The secrets you will have to add are the Gerrit SSH keys and the Register Email
-Private Key set in `secure.config`.
-
-#### SSH Keys
-
-The SSH keys you will need to add are the one usually created and used by Gerrit:
-* ssh_host_ecdsa_384_key
-* ssh_host_ecdsa_384_key.pub
-* ssh_host_ecdsa_521_key
-* ssh_host_ecdsa_521_key.pub
-* ssh_host_ecdsa_key
-* ssh_host_ecdsa_key.pub
-* ssh_host_ed25519_key
-* ssh_host_ed25519_key.pub
-* ssh_host_rsa_key
-* ssh_host_rsa_key.pub
-
-Plus a key used by the replication plugin:
-* replication_user_id_rsa
-* replication_user_id_rsa.pub
-
-Generate a random bearer token to be used for monitoring with Promtetheus:
-* `openssl rand -hex 20 > prometheus_bearer_token`
-
-You will have to create the keys and place them in a directory.
-
-#### Register Email Private Key
-
-You will need to create a secret and put it in a file called `registerEmailPrivateKey`
-in the same directory of the SSH keys.
-
-#### LDAP Password
-
-You will need to put the admin LDAP password in a file called `ldapPassword`
-in the same directory of the SSH keys.
-
-#### SMTP Password
-
-You will need to put the SMTP password in a file called `smtpPassword`
-in the same directory of the SSH keys.
-
-#### Import into AWS Secret Manager
-
-You can now run the [script](../gerrit/add_secrets_aws_secrets_manager.sh) to
-upload them to AWS Secret Manager:
-`add_secrets_aws_secrets_manager.sh /path/to/your/keys/directory secret_prefix aws-region-id`
-
-When `secret_prefix` is omitted, it is set to `gerrit_secret` by default.
+Follow the steps described in the [Prerequisites](../Prerequisites.md) section
 
 ### Publish custom Gerrit Docker image
 
