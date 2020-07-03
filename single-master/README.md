@@ -54,11 +54,11 @@ step-by-step guide on how to setup you Gerrit Code Review in AWS.
 
 However, keep reading this guide for a more exhaustive explanation.
 
-### Prerequisites
+### 0 - Prerequisites
 
 Follow the steps described in the [Prerequisites](../Prerequisites.md) section
 
-### Configuration
+### 1 - Configuration
 
 Each recipe provides a `setup.env.template` file which is a template for configuring the Gerrit stacks.
 Copy that into a `setup.env` and set the correct values for the  provided environment variables.
@@ -88,7 +88,7 @@ This is the list of available parameters:
   See [Gerrit documentation](https://gerrit-review.googlesource.com/Documentation/config-gerrit.html#core.packedGitLimit)
   for more details. `12g` by default.
 
-### Getting Started
+### 2 - Deploy
 
 * Create the cluster, service and DNS routing stacks:
 

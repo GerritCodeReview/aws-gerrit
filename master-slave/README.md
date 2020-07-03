@@ -54,11 +54,11 @@ Four templates are provided in this example:
 
 ## How to run it
 
-### Prerequisites
+### 0 - Prerequisites
 
 Follow the steps described in the [Prerequisites](../Prerequisites.md) section
 
-### Configuration
+### 1 - Configuration
 
 Each recipe provides a `setup.env.template` file which is a template for configuring the Gerrit stacks.
 Copy that into a `setup.env` and set the correct values for the  provided environment variables.
@@ -95,7 +95,7 @@ This is the list of available parameters:
 `CLUSTER_DESIRED_CAPACITY` value to at least 2. The resources provided by
 a single EC2 instance won't be enough for all the services that will be ran*
 
-### Getting Started
+### 2 - Deploy
 
 * Create the cluster, services and DNS routing stacks:
 
