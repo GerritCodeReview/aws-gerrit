@@ -54,6 +54,12 @@ If you are dealing with small repos, you can switch to burst mode.
 * All the logs are forwarded to AWS CloudWatch in the LogGroup with the cluster
   stack name
 
+### Monitoring
+
+* Standard CloudWatch monitoring metrics for each component
+* Prometheus and Grafana stack is currently not available for dual-master, but a change is in progress to allow this
+ (see [Issue 12979](https://bugs.chromium.org/p/gerrit/issues/detail?id=12979))
+
 ## How to run it
 
 ### Setup

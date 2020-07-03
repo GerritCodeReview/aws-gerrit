@@ -45,6 +45,7 @@ Two templates are provided in this example:
 ### Monitoring
 
 * Standard CloudWatch monitoring metrics for each component
+* Optionally Prometheus and Grafana stack (see [here](../monitoring/README.md))
 
 ## How to run it
 

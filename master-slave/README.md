@@ -145,10 +145,10 @@ Gerrit slave instance ports:
 * HTTP `9080`
 * SSH `39418`
 
-### External Services
+### Monitoring
 
-If you need to setup some external services (maybe for testing purposes, such as SMTP or LDAP),
-you can follow the instructions [here](../README.md#external-services)
+* Standard CloudWatch monitoring metrics for each component
+* Optionally Prometheus and Grafana stack (see [here](../monitoring/README.md))
 
 ## Monitoring
 
