@@ -54,12 +54,18 @@ Four templates are provided in this example:
 
 ## How to run it
 
-### Setup
+### Prerequisites
 
-The `setup.env.template` is an example of setup file for the creation of the stacks.
+Follow the steps described in the [Prerequisites](../Prerequisites.md) section
 
-Before creating the stacks, create a `setup.env` in the `Makefile` directory and
-correctly set the value of the environment variables.
+### Configuration
+
+Each recipe provides a `setup.env.template` file which is a template for configuring the Gerrit stacks.
+Copy that into a `setup.env` and set the correct values for the  provided environment variables.
+
+```bash
+cp setup.env.template setup.env
+```
 
 This is the list of available parameters:
 
@@ -88,10 +94,6 @@ This is the list of available parameters:
 *NOTE: if you are planning to run the monitoring stack, set the
 `CLUSTER_DESIRED_CAPACITY` value to at least 2. The resources provided by
 a single EC2 instance won't be enough for all the services that will be ran*
-
-### Prerequisites
-
-Follow the steps described in the [Prerequisites](../Prerequisites.md) section
 
 ### Getting Started
 
