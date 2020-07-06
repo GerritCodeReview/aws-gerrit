@@ -23,3 +23,7 @@ aws ecr create-repository --repository-name aws-gerrit/grafana
 
 * an SSL Certificate in AWS Certificate Manager (you can find more information on
   how to create and handle certificates in AWS [here](https://aws.amazon.com/certificate-manager/getting-started/)
+
+* An S3 bucket is required in order to store cloudformation templates that are used to build the stacks. You must
+edit the `common.env` file and set the `TEMPLATE_BUCKET_NAME`. The bucket will then be created the first time you run
+a deployment. Note that the at the moment the bucket accessibility is public.
