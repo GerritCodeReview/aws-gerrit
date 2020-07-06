@@ -7,6 +7,9 @@ Parameters:
   SlaveServiceStackName:
     Type: String
     Default: gerrit-slave
+  TemplateBucketName:
+    Description: S3 bucket containing cloudformation templates
+    Type: String
   ClusterStackName:
       Description: Stack name of the ECS cluster to deply the serivces
       Type: String
@@ -328,7 +331,7 @@ Resources:
     ECSTaskExecutionRoleStack:
       Type: AWS::CloudFormation::Stack
       Properties:
-        TemplateURL: https://aws-gerrit-cf-templates.s3.amazonaws.com/cf-gerrit-task-execution-role.yml
+        TemplateURL: !Join [ '', ['https://', !Ref TemplateBucketName, '.s3.amazonaws.com/cf-gerrit-task-execution-role.yml'] ]
         TimeoutInMinutes: '5'
 
 Outputs:
