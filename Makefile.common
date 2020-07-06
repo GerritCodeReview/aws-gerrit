@@ -7,6 +7,12 @@ cluster-keys:
 		aws ec2 create-key-pair --region $(AWS_REGION) --key-name $(CLUSTER_KEYS) --query 'KeyMaterial' --output text > $(CLUSTER_KEYS).pem
 
 upload-common-templates:
-	export AWS_PAGER=; aws s3api head-bucket --bucket $(TEMPLATE_BUCKET_NAME) 2>/dev/null || aws s3api create-bucket --bucket $(TEMPLATE_BUCKET_NAME)
+	$(eval CREATE_BUCKET_PARAMS := --bucket $(TEMPLATE_BUCKET_NAME))
+ifneq ("$(AWS_REGION)", "us-east-1")
+		$(eval CREATE_BUCKET_PARAMS := $(CREATE_BUCKET_PARAMS) --create-bucket-configuration LocationConstraint=$(AWS_REGION))
+endif
+
+	export AWS_PAGER=; aws s3api head-bucket --bucket $(TEMPLATE_BUCKET_NAME) 2>/dev/null || \
+		aws s3api create-bucket $(CREATE_BUCKET_PARAMS)
 	aws s3 cp ../common-templates/cf-gerrit-task-execution-role.yml s3://$(TEMPLATE_BUCKET_NAME)/
 	aws s3 cp ../common-templates/cf-gerrit-network-stack.yml s3://$(TEMPLATE_BUCKET_NAME)/
