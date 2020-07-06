@@ -8,6 +8,9 @@ Parameters:
       Description: Stack name of the ECS cluster to deply the serivces
       Type: String
       Default: gerrit-cluster
+  TemplateBucketName:
+      Description: S3 bucket containing cloudformation templates
+      Type: String
   EnvironmentName:
       Description: An environment name that will be prefixed to resource names
       Type: String
