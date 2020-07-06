@@ -1,4 +1,5 @@
 include setup.env
+include ../common.env
 include ../Makefile.common
 
 CLUSTER_TEMPLATE:=cf-cluster.yml
@@ -50,6 +51,7 @@ service-master-1:
 		ParameterKey=SMTPUser,ParameterValue=$(SMTP_USER) \
 		ParameterKey=SMTPDomain,ParameterValue=$(SMTP_DOMAIN) \
 		ParameterKey=ClusterStackName,ParameterValue=$(CLUSTER_STACK_NAME) \
+		ParameterKey=TemplateBucketName,ParameterValue=$(TEMPLATE_BUCKET_NAME) \
 		ParameterKey=HostedZoneName,ParameterValue=$(HOSTED_ZONE_NAME) \
 		ParameterKey=Subdomain,ParameterValue=$(MASTER1_SUBDOMAIN) \
 		ParameterKey=SlaveSubdomain,ParameterValue=$(SLAVE_SUBDOMAIN) \
@@ -88,6 +90,7 @@ service-master-2:
 		ParameterKey=SMTPUser,ParameterValue=$(SMTP_USER) \
 		ParameterKey=SMTPDomain,ParameterValue=$(SMTP_DOMAIN) \
 		ParameterKey=ClusterStackName,ParameterValue=$(CLUSTER_STACK_NAME) \
+		ParameterKey=TemplateBucketName,ParameterValue=$(TEMPLATE_BUCKET_NAME) \
 		ParameterKey=HostedZoneName,ParameterValue=$(HOSTED_ZONE_NAME) \
 		ParameterKey=Subdomain,ParameterValue=$(MASTER2_SUBDOMAIN) \
 		ParameterKey=SlaveSubdomain,ParameterValue=$(SLAVE_SUBDOMAIN) \
@@ -123,6 +126,7 @@ service-slave:
 		ParameterKey=LDAPAccountBase,ParameterValue=\"$(LDAP_ACCOUNT_BASE)\" \
 		ParameterKey=LDAPGroupBase,ParameterValue=\"$(LDAP_GROUP_BASE)\" \
 		ParameterKey=ClusterStackName,ParameterValue=$(CLUSTER_STACK_NAME) \
+		ParameterKey=TemplateBucketName,ParameterValue=$(TEMPLATE_BUCKET_NAME) \
 		ParameterKey=HostedZoneName,ParameterValue=$(HOSTED_ZONE_NAME) \
 		ParameterKey=Subdomain,ParameterValue=$(SLAVE_SUBDOMAIN) \
 		ParameterKey=DockerRegistryUrl,ParameterValue=$(DOCKER_REGISTRY_URI) \
