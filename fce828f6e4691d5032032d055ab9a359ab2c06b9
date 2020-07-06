@@ -16,6 +16,46 @@
       "revId": "fce828f6e4691d5032032d055ab9a359ab2c06b9",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7f5bb55_09125cc5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-07-06T23:45:13Z",
+      "side": 1,
+      "message": "Good job @Tony. I would also update the README.md with the instructions.",
+      "revId": "fce828f6e4691d5032032d055ab9a359ab2c06b9",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "37de432b_2c32a0a3",
+        "filename": "gerrit/etc/gerrit.config.template",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-07-06T23:45:13Z",
+      "side": 1,
+      "message": "I believe SMTP_USER was more consistent with the actual config variable name.",
+      "range": {
+        "startLine": 32,
+        "startChar": 16,
+        "endLine": 32,
+        "endChar": 29
+      },
+      "revId": "fce828f6e4691d5032032d055ab9a359ab2c06b9",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
     }
   ]
 }
