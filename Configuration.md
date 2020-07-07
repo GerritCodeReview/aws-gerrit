@@ -28,6 +28,7 @@ Configuration values affecting deployment environment and cluster properties
 
 Configuration values to spec up Gerrit containers.
 
+* `CLUSTER_INSTANCE_TYPE`: Optional. The EC2 instance Type used to run the cluster. `m4.10xlarge` by default.
 * `GERRIT_RAM`: RAM allocated (MiB) to the Gerrit container. `70000` by default.
 * `GERRIT_CPU`: vCPU units allocated to the Gerrit container. `10240` by default.
 * `GERRIT_HEAP_LIMIT`: Maximum heap size of the Java process running Gerrit, in bytes.
