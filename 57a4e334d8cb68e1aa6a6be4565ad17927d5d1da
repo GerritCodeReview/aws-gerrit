@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37bb3b5f_485b5232",
+        "filename": "Prerequisites.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-07-07T00:06:27Z",
+      "side": 1,
+      "message": "nit: wrap long lines.",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 117
+      },
+      "revId": "57a4e334d8cb68e1aa6a6be4565ad17927d5d1da",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49c3541e_6cff9134",
+        "filename": "master-slave/Makefile",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-07-07T00:06:27Z",
+      "side": 1,
+      "message": "Does the order matter? It looks different than the one in the other templates.",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 21
+      },
+      "revId": "57a4e334d8cb68e1aa6a6be4565ad17927d5d1da",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6032d943_a590e000",
+        "filename": "single-master/Makefile",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-07-07T00:06:27Z",
+      "side": 1,
+      "message": "Inconsistent ordering: does the order matter?",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 26
+      },
+      "revId": "57a4e334d8cb68e1aa6a6be4565ad17927d5d1da",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
