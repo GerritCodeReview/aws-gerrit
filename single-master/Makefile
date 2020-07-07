@@ -20,13 +20,18 @@ create-all: upload-common-templates \
 						dns-routing wait-for-dns-routing-creation
 
 cluster: cluster-keys
+	$(eval PARAMS := ParameterKey=ECSKeyName,ParameterValue=$(CLUSTER_KEYS))
+ifdef CLUSTER_INSTANCE_TYPE
+		$(eval PARAMS := $(PARAMS) ParameterKey=InstanceType,ParameterValue=$(CLUSTER_INSTANCE_TYPE))
+endif
+
 	$(AWS_FC_COMMAND) create-stack \
 		--stack-name $(CLUSTER_STACK_NAME) \
 		--capabilities CAPABILITY_IAM  \
 		--template-body file://`pwd`/$(CLUSTER_TEMPLATE) \
 		--region $(AWS_REGION) \
-		--parameters \
-		ParameterKey=ECSKeyName,ParameterValue=$(CLUSTER_KEYS)
+		--parameters $(PARAMS)
+
 
 service:
 	$(AWS_FC_COMMAND) create-stack \
