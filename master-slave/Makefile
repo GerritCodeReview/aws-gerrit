@@ -1,5 +1,5 @@
+include ../common.env # Must be included before setup.env because the latter depends on it
 include setup.env
-include ../common.env
 include ../Makefile.common
 
 CLUSTER_TEMPLATE:=cf-cluster.yml
