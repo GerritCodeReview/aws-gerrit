@@ -77,8 +77,10 @@ Configuration values affecting deployment environment and cluster properties
 * Create the cluster, service and DNS routing stacks:
 
 ```
-make create-all
+make [AWS_REGION] [AWS_PREFIX] create-all
 ```
+
+The optional `AWS_REGION` and `AWS_REFIX` allow you to define where it will be deployed and what it will be named.
 
 It might take several minutes to build the stack.
 You can monitor the creations of the stacks in [CloudFormation](https://console.aws.amazon.com/cloudformation/home)
@@ -91,8 +93,10 @@ To use when ssh-ing into your instances as follow: `ssh -i cluster-keys.pem ec2-
 ### Cleaning up
 
 ```
-make delete-all
+make [AWS_REGION] [AWS_PREFIX] delete-all
 ```
+
+The optional `AWS_REGION` and `AWS_REFIX` allow you to specify exactly which stack you target for deletion.
 
 Note that this will *not* delete:
 * Secrets stored in Secret Manager
