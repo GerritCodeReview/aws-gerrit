@@ -15,6 +15,8 @@ deploy. Please refer to the individual recipes to understand what additional var
 
 Configuration values affecting deployment environment and cluster properties
 
+* `AWS_REGION`: Optional. Which region to deploy to. `us-east-1` by default.
+* `AWS_PREFIX`: Optional. A string to prefix stacks and resources with. `gerrit` by default.
 * `DOCKER_REGISTRY_URI`: Mandatory. URI of the Docker registry. See the
   [prerequisites](Prerequisites.md) section for more details.
 * `SSL_CERTIFICATE_ARN`: Mandatory. ARN of the wildcard SSL Certificate, covering both master nodes.
