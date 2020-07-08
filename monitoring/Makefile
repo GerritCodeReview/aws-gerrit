@@ -1,3 +1,4 @@
+include ../common.env # Must be included before setup.env because the latter depends on it
 include ../$(RECIPE)/setup.env
 
 AWS_FC_COMMAND=export AWS_PAGER=;aws cloudformation
