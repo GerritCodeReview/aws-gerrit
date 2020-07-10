@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "da1cb72a_534c71fb",
+        "filename": "dual-master/Makefile",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-07-10T08:39:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba299ecf_df52276d",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 57
+      },
+      "revId": "4853c7043ec11906f00f38e8200a9a0347f903cc",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "833d76b2_2943744d",
         "filename": "master-slave/Makefile",
         "patchSetId": 2
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Ack",
       "parentUuid": "833d76b2_2943744d",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 57
+      },
+      "revId": "4853c7043ec11906f00f38e8200a9a0347f903cc",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d0f83da1_5bdbbb95",
+        "filename": "master-slave/Makefile",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-07-10T08:39:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfc5a30b_3919dad0",
       "range": {
         "startLine": 26,
         "startChar": 0,
@@ -178,6 +226,30 @@
       "side": 1,
       "message": "Ack",
       "parentUuid": "5e6d829a_fb1a4d5b",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 73
+      },
+      "revId": "4853c7043ec11906f00f38e8200a9a0347f903cc",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "930d152a_7fdea7b3",
+        "filename": "single-master/Makefile",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-07-10T08:39:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9541b35c_5f170365",
       "range": {
         "startLine": 23,
         "startChar": 0,
