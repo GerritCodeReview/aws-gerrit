@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ba299ecf_df52276d",
+        "filename": "dual-master/Makefile",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-07-10T08:04:01Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "459b8a31_bb9c923e",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 57
+      },
+      "revId": "4853c7043ec11906f00f38e8200a9a0347f903cc",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "833d76b2_2943744d",
         "filename": "master-slave/Makefile",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "cfc5a30b_3919dad0",
+        "filename": "master-slave/Makefile",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-07-10T08:04:01Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "833d76b2_2943744d",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 57
+      },
+      "revId": "4853c7043ec11906f00f38e8200a9a0347f903cc",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cadb825b_83e54825",
         "filename": "master-slave/setup.env.template",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2020-07-10T06:33:14Z",
       "side": 1,
       "message": "Can we define a lower-spec default? So that people won\u0027t be burning $$ by mistake?",
+      "range": {
+        "startLine": 3,
+        "startChar": 24,
+        "endLine": 3,
+        "endChar": 34
+      },
+      "revId": "4853c7043ec11906f00f38e8200a9a0347f903cc",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3234b37e_09159d59",
+        "filename": "master-slave/setup.env.template",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-07-10T08:04:01Z",
+      "side": 1,
+      "message": "this is not the default, but just an example value in the template, a guideline.\nHowevwer, the default is set to the same value in the cf template Parameter section: that\u0027s the one we should change first to allow people to save $$.\n\nHowever, if we were to lower this value we would also need to tune accordingly CPU and Memory to accomodate, if you get the values wrong the stack will just fail to allocate required resourced.\n\nThis needs careful tuning and I would suggest to have this as a separate change.\n\nWDYT?",
+      "parentUuid": "cadb825b_83e54825",
       "range": {
         "startLine": 3,
         "startChar": 24,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "9541b35c_5f170365",
+        "filename": "single-master/Makefile",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-07-10T08:04:01Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5e6d829a_fb1a4d5b",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 73
+      },
+      "revId": "4853c7043ec11906f00f38e8200a9a0347f903cc",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6a72eb5_6171c7b4",
         "filename": "single-master/setup.env.template",
         "patchSetId": 2
@@ -114,6 +210,30 @@
       "revId": "4853c7043ec11906f00f38e8200a9a0347f903cc",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ce3b89b_b51a417e",
+        "filename": "single-master/setup.env.template",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-07-10T08:04:01Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b6a72eb5_6171c7b4",
+      "range": {
+        "startLine": 3,
+        "startChar": 23,
+        "endLine": 3,
+        "endChar": 34
+      },
+      "revId": "4853c7043ec11906f00f38e8200a9a0347f903cc",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     }
   ]
 }
