@@ -19,7 +19,7 @@ aws ecr create-repository --repository-name aws-gerrit/prometheus
 aws ecr create-repository --repository-name aws-gerrit/grafana
 ```
 
-* to upload required secrets to AWS Secret Manager. You can follow the steps [here](Secrets.md))
+* to upload required credentials to AWS Secret Manager execute the [secrets configuration documentation steps](Secrets.md).
 
 * an SSL Certificate in AWS Certificate Manager (you can find more information on
   how to create and handle certificates in AWS [here](https://aws.amazon.com/certificate-manager/getting-started/)
