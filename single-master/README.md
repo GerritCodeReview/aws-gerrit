@@ -5,7 +5,7 @@ in ECS
 
 ## Architecture
 
-Two templates are provided in this example:
+Three templates are provided in this example:
 * `cf-cluster`: define the ECS cluster and the networking stack
 * `cf-service`: defined the service stack running Gerrit
 * `cf-dns-route`: defined the DNS routing for the service
