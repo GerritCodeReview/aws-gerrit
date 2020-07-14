@@ -16,6 +16,24 @@
       "revId": "582b67f8775cb885981a1d629fa48610e714d1a7",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f2f62f1b_ecfe9812",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-07-14T22:10:20Z",
+      "side": 1,
+      "message": "\u003e This is not reducing the default specs of single-master.\n\u003e The defaults are defined here [1]\n\u003e \n\u003e This is just changing the template, the user will possibly base their configuration on.\n\u003e \n\u003e \n\u003e [1]https://gerrit.googlesource.com/aws-gerrit/+/505adb74849474a777556616fba27bf7c0713f48/single-master/cf-cluster.yml#21\n\nGood catch, will amend the default as well. Thanks for the pointer.",
+      "parentUuid": "f65c3910_dca4adcf",
+      "revId": "582b67f8775cb885981a1d629fa48610e714d1a7",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
     }
   ]
 }
