@@ -38,6 +38,7 @@ endif
 		--parameters \
 		ParameterKey=DesiredCapacity,ParameterValue=$(CLUSTER_DESIRED_CAPACITY) \
 		ParameterKey=ECSKeyName,ParameterValue=$(CLUSTER_KEYS) \
+		ParameterKey=InternetGatewayIdProp,ParameterValue=$(INTERNET_GATEWAY_ID) \
 		$(OPTIONAL_PARAMS)
 
 service-master-1:
