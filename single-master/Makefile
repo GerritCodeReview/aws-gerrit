@@ -25,7 +25,8 @@ cluster: cluster-keys
 		--template-body file://`pwd`/$(CLUSTER_TEMPLATE) \
 		--region $(AWS_REGION) \
 		--parameters \
-		ParameterKey=ECSKeyName,ParameterValue=$(CLUSTER_KEYS)
+		ParameterKey=ECSKeyName,ParameterValue=$(CLUSTER_KEYS) \
+		ParameterKey=InternetGatewayIdProp,ParameterValue=$(INTERNET_GATEWAY_ID)
 
 service:
 	$(AWS_FC_COMMAND) create-stack \
