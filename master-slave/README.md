@@ -75,7 +75,6 @@ Configuration values affecting deployment environment and cluster properties
 * `CLUSTER_DESIRED_CAPACITY`: Optional. Number of EC2 instances composing the cluster. `1` by default.
 
 *NOTE*: if you are planning to run the monitoring stack, set the
-`CLUSTER_DESIRED_CAPACITY` value to at least 2. The resources provided by
 a single EC2 instance won't be enough for all the services that will be ran*
 
 * `PROMETHEUS_SUBDOMAIN`: Optional. Prometheus subdomain. For example: `<AWS_PREFIX>-prometheus`

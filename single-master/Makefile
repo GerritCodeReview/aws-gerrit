@@ -31,6 +31,7 @@ endif
 		--region $(AWS_REGION) \
 		--parameters \
 		ParameterKey=ECSKeyName,ParameterValue=$(CLUSTER_KEYS) \
+		ParameterKey=InternetGatewayIdProp,ParameterValue=$(INTERNET_GATEWAY_ID) \
 		$(OPTIONAL_PARAMS)
 
 service:
