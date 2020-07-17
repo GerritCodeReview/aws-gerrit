@@ -33,6 +33,10 @@ Parameters:
       Description: An environment name that will be prefixed to resource names
       Type: String
       Default: test
+  InternetGatewayIdProp:
+    Type: String
+    Default: ""
+    Description: Internet Gateway id if empty Internet Gateway will be created
 Mappings:
   # Hard values for the subnet masks. These masks define
   # the range of internal IP addresses that can be assigned.
@@ -45,6 +49,8 @@ Mappings:
       CIDR: '10.0.0.0/16'
     PublicOne:
       CIDR: '10.0.0.0/24'
+Conditions:
+  CreateInternetGateway: !Equals [!Ref InternetGatewayIdProp, ""]
 Resources:
   VPC:
     Type: AWS::EC2::VPC
@@ -69,12 +75,13 @@ Resources:
   # in the public subnets have public IP addresses and the routing table
   # sends network traffic via the internet gateway.
   InternetGateway:
+    Condition: CreateInternetGateway
     Type: AWS::EC2::InternetGateway
   GatewayAttachement:
     Type: AWS::EC2::VPCGatewayAttachment
     Properties:
       VpcId: !Ref 'VPC'
-      InternetGatewayId: !Ref 'InternetGateway'
+      InternetGatewayId: !If [CreateInternetGateway, !Ref 'InternetGateway', !Ref 'InternetGatewayIdProp' ]
   PublicRouteTable:
     Type: AWS::EC2::RouteTable
     Properties:
@@ -85,7 +92,7 @@ Resources:
     Properties:
       RouteTableId: !Ref 'PublicRouteTable'
       DestinationCidrBlock: '0.0.0.0/0'
-      GatewayId: !Ref 'InternetGateway'
+      GatewayId: !If [CreateInternetGateway, !Ref 'InternetGateway', !Ref 'InternetGatewayIdProp' ]
   PublicSubnetOneRouteTableAssociation:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
