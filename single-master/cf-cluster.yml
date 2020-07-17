@@ -25,6 +25,10 @@ Parameters:
       c3.2xlarge, c3.4xlarge, c3.8xlarge, r3.large, r3.xlarge, r3.2xlarge, r3.4xlarge,
       r3.8xlarge, i2.xlarge, i2.2xlarge, i2.4xlarge, i2.8xlarge]
     ConstraintDescription: Please choose a valid instance type.
+  InternetGatewayIdProp:
+    Type: String
+    Default: ""
+    Description: Internet Gateway id. If empty Internet Gateway will be created
   ECSKeyName:
     Type: String
     Default: gerrit-cluster-keys
@@ -170,6 +174,8 @@ Resources:
     Properties:
       TemplateURL: https://aws-gerrit-cf-templates.s3.amazonaws.com/cf-gerrit-network-stack.yml
       TimeoutInMinutes: '25'
+      Parameters:
+        InternetGatewayIdProp: !Ref 'InternetGatewayIdProp'
 
 Outputs:
   ClusterName:
