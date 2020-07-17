@@ -1,0 +1,81 @@
+<<<<<<< HEAD   (a9449c Allow usage of predefined Internet Gateway)
+=======
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Deploy a service into an ECS cluster behind a public load balancer.
+
+Parameters:
+  InternetGatewayIdProp:
+    Type: String
+    Default: ""
+    Description: Internet Gateway id. If empty Internet Gateway will be created
+
+Mappings:
+  # Hard values for the subnet masks. These masks define
+  # the range of internal IP addresses that can be assigned.
+  # The VPC can have all IP's from 10.0.0.0 to 10.0.255.255
+  # There is the subnet which cover the ranges:
+  #
+  # 10.0.0.0 - 10.0.0.255
+  SubnetConfig:
+    VPC:
+      CIDR: '10.0.0.0/16'
+    PublicOne:
+      CIDR: '10.0.0.0/24'
+
+Conditions:
+  CreateInternetGateway: !Equals [!Ref InternetGatewayIdProp, ""]
+Resources:
+  VPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      CidrBlock: !FindInMap ['SubnetConfig', 'VPC', 'CIDR']
+
+  # Public subnets, where containers can have public IP addresses
+  PublicSubnetOne:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone:
+         Fn::Select:
+         - 0
+         - Fn::GetAZs: {Ref: 'AWS::Region'}
+      VpcId: !Ref 'VPC'
+      CidrBlock: !FindInMap ['SubnetConfig', 'PublicOne', 'CIDR']
+      MapPublicIpOnLaunch: true
+
+  # Setup networking resources for the public subnets. Containers
+  # in the public subnets have public IP addresses and the routing table
+  # sends network traffic via the internet gateway.
+  InternetGateway:
+    Condition: CreateInternetGateway
+    Type: AWS::EC2::InternetGateway
+  GatewayAttachement:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId: !Ref 'VPC'
+      InternetGatewayId: !If [CreateInternetGateway, !Ref 'InternetGateway', !Ref 'InternetGatewayIdProp' ]
+  PublicRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref 'VPC'
+  PublicRoute:
+    Type: AWS::EC2::Route
+    DependsOn: GatewayAttachement
+    Properties:
+      RouteTableId: !Ref 'PublicRouteTable'
+      DestinationCidrBlock: '0.0.0.0/0'
+      GatewayId: !If [CreateInternetGateway, !Ref 'InternetGateway', !Ref 'InternetGatewayIdProp' ]
+  PublicSubnetOneRouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PublicSubnetOne
+      RouteTableId: !Ref PublicRouteTable
+Outputs:
+  VPCRef:
+    Value: !Ref VPC
+  PublicSubnetOneRef:
+    Value: !Ref PublicSubnetOne
+  PublicOneCIDR:
+    Value: !FindInMap ['SubnetConfig', 'PublicOne', 'CIDR']
+>>>>>>> CHANGE (e2fc33 Allow usage of predefined Internet Gateway)

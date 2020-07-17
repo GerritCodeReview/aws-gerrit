@@ -80,8 +80,13 @@ This is the list of available parameters:
 * `JGIT_CACHE_SIZE`: Maximum number of bytes to load and cache in memory from pack files.
   See [Gerrit documentation](https://gerrit-review.googlesource.com/Documentation/config-gerrit.html#core.packedGitLimit)
   for more details. `12g` by default.
+<<<<<<< HEAD   (a9449c Allow usage of predefined Internet Gateway)
 * `INTERNET_GATEWAY_ID`: Optional. Id of the existing Internet Gateway. If not set Internet Gateway
   will be created.
+=======
+* `INTERNET_GATEWAY_ID`: Optional. Id of the existing Internet Gateway.
+  If not set, create a new Internet Gateway.
+>>>>>>> CHANGE (e2fc33 Allow usage of predefined Internet Gateway)
 
 ### Prerequisites
 
