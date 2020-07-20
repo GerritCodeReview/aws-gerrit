@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7709cb39_4e34184a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-07-20T22:13:41Z",
+      "side": 1,
+      "message": "Fails for me when creating a single-master recipe:\naws ec2 describe-key-pairs --region us-east-1 --key-names luca-gerrit-cluster-keys \u003e /dev/null 2\u003e\u00261 || \\\n\t\taws ec2 create-key-pair --region us-east-1 --key-name luca-gerrit-cluster-keys --query \u0027KeyMaterial\u0027 --output text \u003e luca-gerrit-cluster-keys.pem\nexport AWS_PAGER\u003d;aws cloudformation create-stack \\\n\t\t--stack-name luca-gerrit-cluster \\\n\t\t--capabilities CAPABILITY_IAM  \\\n\t\t--template-body file://`pwd`/cf-cluster.yml \\\n\t\t--region us-east-1 \\\n\t\t--parameters \\\n\t\tParameterKey\u003dECSKeyName,ParameterValue\u003dluca-gerrit-cluster-keys \\\n\t\tParameterKey\u003dInternetGatewayIdProp,ParameterValue\u003d\n\nAn error occurred (ValidationError) when calling the CreateStack operation: Parameters: [InternetGatewayIdProp] do not exist in the template",
+      "revId": "b5a33e75099c0bc6b05b3dc2b09ff828b5c58543",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    }
+  ]
+}
