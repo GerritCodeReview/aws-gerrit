@@ -9,3 +9,4 @@ cluster-keys:
 upload-common-templates:
 	export AWS_PAGER=; aws s3api head-bucket --bucket $(TEMPLATE_BUCKET_NAME) 2>/dev/null || aws s3api create-bucket --bucket $(TEMPLATE_BUCKET_NAME)
 	aws s3 cp ../common-templates/cf-gerrit-task-execution-role.yml s3://$(TEMPLATE_BUCKET_NAME)/
+	aws s3 cp ../common-templates/cf-gerrit-network-stack.yml s3://$(TEMPLATE_BUCKET_NAME)/
