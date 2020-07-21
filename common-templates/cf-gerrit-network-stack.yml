@@ -6,7 +6,10 @@ Parameters:
     Type: String
     Default: ""
     Description: Internet Gateway id. If empty Internet Gateway will be created
-
+  VPCIdProp:
+    Type: String
+    Default: ""
+    Description: VPC id. If empty VPC will be created
 Mappings:
   # Hard values for the subnet masks. These masks define
   # the range of internal IP addresses that can be assigned.
@@ -22,8 +25,10 @@ Mappings:
 
 Conditions:
   CreateInternetGateway: !Equals [!Ref InternetGatewayIdProp, ""]
+  CreateVPC: !Equals [!Ref VPCIdProp, ""]
 Resources:
   VPC:
+    Condition: CreateVPC
     Type: AWS::EC2::VPC
     Properties:
       EnableDnsSupport: true
@@ -38,7 +43,7 @@ Resources:
          Fn::Select:
          - 0
          - Fn::GetAZs: {Ref: 'AWS::Region'}
-      VpcId: !Ref 'VPC'
+      VpcId: !If [CreateVPC, !Ref 'VPC', !Ref 'VPCIdProp' ]
       CidrBlock: !FindInMap ['SubnetConfig', 'PublicOne', 'CIDR']
       MapPublicIpOnLaunch: true
 
@@ -51,12 +56,12 @@ Resources:
   GatewayAttachement:
     Type: AWS::EC2::VPCGatewayAttachment
     Properties:
-      VpcId: !Ref 'VPC'
+      VpcId: !If [CreateVPC, !Ref 'VPC', !Ref 'VPCIdProp' ]
       InternetGatewayId: !If [CreateInternetGateway, !Ref 'InternetGateway', !Ref 'InternetGatewayIdProp' ]
   PublicRouteTable:
     Type: AWS::EC2::RouteTable
     Properties:
-      VpcId: !Ref 'VPC'
+      VpcId: !If [CreateVPC, !Ref 'VPC', !Ref 'VPCIdProp' ]
   PublicRoute:
     Type: AWS::EC2::Route
     DependsOn: GatewayAttachement
@@ -71,7 +76,7 @@ Resources:
       RouteTableId: !Ref PublicRouteTable
 Outputs:
   VPCRef:
-    Value: !Ref VPC
+    Value: !If [CreateVPC, !Ref 'VPC', !Ref 'VPCIdProp' ]
   PublicSubnetOneRef:
     Value: !Ref PublicSubnetOne
   PublicOneCIDR:

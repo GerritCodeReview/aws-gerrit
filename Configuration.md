@@ -41,6 +41,8 @@ Configuration values to spec up Gerrit containers.
   for more details. `12g` by default.
 * `INTERNET_GATEWAY_ID`: Optional. Id of the existing Internet Gateway.
   If not set, create a new Internet Gateway
+* `VPC_ID`: Optional. Id of the existing VPC.
+  If not set, create a new VPC.
 
 #### LDAP
 
