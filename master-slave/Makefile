@@ -30,7 +30,8 @@ cluster: cluster-keys
 		--parameters \
 		ParameterKey=DesiredCapacity,ParameterValue=$(CLUSTER_DESIRED_CAPACITY) \
 		ParameterKey=ECSKeyName,ParameterValue=$(CLUSTER_KEYS) \
-		ParameterKey=InternetGatewayIdProp,ParameterValue=$(INTERNET_GATEWAY_ID)
+		ParameterKey=InternetGatewayIdProp,ParameterValue=$(INTERNET_GATEWAY_ID) \
+		ParameterKey=VPCIdProp,ParameterValue=$(VPC_ID)
 
 service-master:
 	$(AWS_FC_COMMAND) create-stack \

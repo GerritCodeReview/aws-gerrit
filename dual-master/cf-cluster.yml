@@ -29,6 +29,10 @@ Parameters:
     Type: String
     Default: ""
     Description: Internet Gateway id. If empty Internet Gateway will be created
+  VPCIdProp:
+    Type: String
+    Default: ""
+    Description: VPC id. If empty VPC will be created
   ECSKeyName:
     Type: String
     Default: gerrit-cluster-keys
@@ -255,6 +259,7 @@ Resources:
       TimeoutInMinutes: '25'
       Parameters:
         InternetGatewayIdProp: !Ref 'InternetGatewayIdProp'
+        VPCIdProp: !Ref 'VPCIdProp'
 
 Outputs:
   ClusterName:
