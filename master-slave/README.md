@@ -88,6 +88,8 @@ This is the list of available parameters:
   If not set, create a new Internet Gateway.
 * `VPC_ID`: Optional. Id of the existing VPC.
   If not set, create a new VPC.
+* `SUBNET_ID`: Optional. Id of the existing Subnet.
+  If not set, create a new Network Stack.
 
 *NOTE: if you are planning to run the monitoring stack, set the
 `CLUSTER_DESIRED_CAPACITY` value to at least 2. The resources provided by

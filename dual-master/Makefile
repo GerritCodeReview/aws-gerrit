@@ -35,7 +35,8 @@ cluster: cluster-keys
 		ParameterKey=ECSKeyName,ParameterValue=$(CLUSTER_KEYS) \
 		ParameterKey=InstanceType,ParameterValue=$(CLUSTER_INSTANCE_TYPE) \
 		ParameterKey=InternetGatewayIdProp,ParameterValue=$(INTERNET_GATEWAY_ID) \
-		ParameterKey=VPCIdProp,ParameterValue=$(VPC_ID)
+		PrameterKey=VPCIdProp,ParameterValue=$(VPC_ID) \
+		ParameterKey=SubnetIdProp,ParameterValue=$(SUBNET_ID)
 
 service-master-1:
 	$(AWS_FC_COMMAND) create-stack \

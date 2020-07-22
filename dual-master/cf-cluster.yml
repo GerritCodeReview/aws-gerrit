@@ -33,6 +33,10 @@ Parameters:
     Type: String
     Default: ""
     Description: VPC id. If empty VPC will be created
+  SubnetIdProp:
+    Type: String
+    Default: ""
+    Description: Subnet id. If empty Network Stack will be created
   ECSKeyName:
     Type: String
     Default: gerrit-cluster-keys
@@ -260,6 +264,7 @@ Resources:
       Parameters:
         InternetGatewayIdProp: !Ref 'InternetGatewayIdProp'
         VPCIdProp: !Ref 'VPCIdProp'
+        SubnetIdProp: !Ref 'SubnetIdProp'
 
 Outputs:
   ClusterName:
