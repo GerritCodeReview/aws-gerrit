@@ -10,6 +10,10 @@ Parameters:
     Type: String
     Default: ""
     Description: VPC id. If empty VPC will be created
+  SubnetIdProp:
+    Type: String
+    Default: ""
+    Description: Subnet id. If empty Network Stack will be created
 Mappings:
   # Hard values for the subnet masks. These masks define
   # the range of internal IP addresses that can be assigned.
@@ -24,8 +28,11 @@ Mappings:
       CIDR: '10.0.0.0/24'
 
 Conditions:
-  CreateInternetGateway: !Equals [!Ref InternetGatewayIdProp, ""]
   CreateVPC: !Equals [!Ref VPCIdProp, ""]
+  CreateNetworkStack: !Equals [!Ref SubnetIdProp, ""]
+  CreateInternetGateway: !And
+     - !Equals [!Ref InternetGatewayIdProp, ""]
+     - !Condition CreateNetworkStack
 Resources:
   VPC:
     Condition: CreateVPC
@@ -37,6 +44,7 @@ Resources:
 
   # Public subnets, where containers can have public IP addresses
   PublicSubnetOne:
+    Condition: CreateNetworkStack
     Type: AWS::EC2::Subnet
     Properties:
       AvailabilityZone:
@@ -54,15 +62,18 @@ Resources:
     Condition: CreateInternetGateway
     Type: AWS::EC2::InternetGateway
   GatewayAttachement:
+    Condition: CreateNetworkStack
     Type: AWS::EC2::VPCGatewayAttachment
     Properties:
       VpcId: !If [CreateVPC, !Ref 'VPC', !Ref 'VPCIdProp' ]
       InternetGatewayId: !If [CreateInternetGateway, !Ref 'InternetGateway', !Ref 'InternetGatewayIdProp' ]
   PublicRouteTable:
+    Condition: CreateNetworkStack
     Type: AWS::EC2::RouteTable
     Properties:
       VpcId: !If [CreateVPC, !Ref 'VPC', !Ref 'VPCIdProp' ]
   PublicRoute:
+    Condition: CreateNetworkStack
     Type: AWS::EC2::Route
     DependsOn: GatewayAttachement
     Properties:
@@ -70,6 +81,7 @@ Resources:
       DestinationCidrBlock: '0.0.0.0/0'
       GatewayId: !If [CreateInternetGateway, !Ref 'InternetGateway', !Ref 'InternetGatewayIdProp' ]
   PublicSubnetOneRouteTableAssociation:
+    Condition: CreateNetworkStack
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
       SubnetId: !Ref PublicSubnetOne
@@ -78,6 +90,6 @@ Outputs:
   VPCRef:
     Value: !If [CreateVPC, !Ref 'VPC', !Ref 'VPCIdProp' ]
   PublicSubnetOneRef:
-    Value: !Ref PublicSubnetOne
+    Value: !If [CreateNetworkStack, !Ref 'PublicSubnetOne', !Ref 'SubnetIdProp' ]
   PublicOneCIDR:
     Value: !FindInMap ['SubnetConfig', 'PublicOne', 'CIDR']
