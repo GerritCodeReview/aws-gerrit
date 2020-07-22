@@ -33,6 +33,7 @@ endif
 		ParameterKey=ECSKeyName,ParameterValue=$(CLUSTER_KEYS) \
 		ParameterKey=InternetGatewayIdProp,ParameterValue=$(INTERNET_GATEWAY_ID) \
 		ParameterKey=VPCIdProp,ParameterValue=$(VPC_ID) \
+		ParameterKey=SubnetIdProp,ParameterValue=$(SUBNET_ID) \
 		$(OPTIONAL_PARAMS)
 
 service:
