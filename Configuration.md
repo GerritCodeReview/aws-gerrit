@@ -43,6 +43,8 @@ Configuration values to spec up Gerrit containers.
   If not set, create a new Internet Gateway
 * `VPC_ID`: Optional. Id of the existing VPC.
   If not set, create a new VPC.
+* `SUBNET_ID`: Optional. Id of the existing Subnet.
+  If not set, create a new Network Stack.
 
 #### LDAP
 
