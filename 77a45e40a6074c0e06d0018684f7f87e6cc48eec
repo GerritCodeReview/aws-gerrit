@@ -16,6 +16,24 @@
       "revId": "77a45e40a6074c0e06d0018684f7f87e6cc48eec",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e3aa7b5d_dd52c590",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-07-23T11:37:22Z",
+      "side": 1,
+      "message": "I was trying to implement that but unfortunately it requires more fundamental refactoring. Problem is that during the instance startup we need access to internet to install cloudwatch-agent. I\u0027m not sure why we haven\u0027t created AMI with all necessary configuration and extras already installed.\n\nTo summarise I believe we should add that functionality in a separate change because it requires more fundamental refactoring.\n\nhere is a script we are calling to during the instance startup:\n#!/bin/bash -xe\n          echo ECS_CLUSTER\u003d${ECSCluster} \u003e\u003e /etc/ecs/ecs.config\n          # Make sure latest version of the helper scripts are installed as per recommendation:\n          # https://github.com/awsdocs/aws-cloudformation-user-guide/blob/master/doc_source/cfn-helper-scripts-reference.md#using-the-latest-version\n          yum install -y aws-cfn-bootstrap\n          # Get the CloudWatch Logs agent\n          echo -e \"\n            {\\\"logs\\\":\n              {\\\"logs_collected\\\":\n                {\\\"files\\\":\n                  {\\\"collect_list\\\":\n                    [\n                      {\\\"file_path\\\": \\\"/var/lib/docker/volumes/gerrit-logs/_data/httpd_log\\\",\n                      \\\"log_group_name\\\": \\\"${AWS::StackName}\\\",\n                      \\\"log_stream_name\\\": \\\"${EnvironmentName}/{instance_id}/httpd_log\\\",\n                      \\\"timezone\\\": \\\"UTC\\\"\n                      },\n                      {\\\"file_path\\\": \\\"/var/lib/docker/volumes/gerrit-logs/_data/sshd_log\\\",\n                      \\\"log_group_name\\\": \\\"${AWS::StackName}\\\",\n                      \\\"log_stream_name\\\": \\\"${EnvironmentName}/{instance_id}/sshd_log\\\",\n                      \\\"timezone\\\": \\\"UTC\\\"\n                      },\n                      {\\\"file_path\\\": \\\"/var/lib/docker/volumes/gerrit-logs/_data/gc_log\\\",\n                      \\\"log_group_name\\\": \\\"${AWS::StackName}\\\",\n                      \\\"log_stream_name\\\": \\\"${EnvironmentName}/{instance_id}/gc_log\\\",\n                      \\\"timezone\\\": \\\"UTC\\\"\n                      },\n                      {\\\"file_path\\\": \\\"/var/lib/docker/volumes/gerrit-logs/_data/audit_log\\\",\n                      \\\"log_group_name\\\": \\\"${AWS::StackName}\\\",\n                      \\\"log_stream_name\\\": \\\"${EnvironmentName}/{instance_id}/audit_log\\\",\n                      \\\"timezone\\\": \\\"UTC\\\"\n                      }\n                    ]\n                  }\n                }\n              }\n            }\" \u003e\u003e /home/ec2-user/gerritlogsaccess.json\n          # Install the CloudWatch Logs agent\n          yum install -y wget\n          wget https://s3.amazonaws.com/amazoncloudwatch-agent/centos/amd64/latest/amazon-cloudwatch-agent.rpm\n          rpm -U ./amazon-cloudwatch-agent.rpm\n          /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -c file:/home/ec2-user/gerritlogsaccess.json -s\n          # Signal to CloudFormation aws-cfn-bootstrap has been correctly updated\n          /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource ECSAutoScalingGroup --region ${AWS::Region}",
+      "parentUuid": "6f3df3c3_88cda56b",
+      "revId": "77a45e40a6074c0e06d0018684f7f87e6cc48eec",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     }
   ]
 }
