@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "390b096e_d14c1e6c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-07-23T21:22:28Z",
+      "side": 1,
+      "message": "This has been already addressed on master. We don\u0027t have anyone requesting this feature on stable-3.1. Do we really need it?",
+      "revId": "e2fc33f4513c8ce9a7f42d74432e101a37d6cf2c",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    }
+  ]
+}
