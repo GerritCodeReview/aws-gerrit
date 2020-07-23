@@ -34,6 +34,24 @@
       "revId": "77a45e40a6074c0e06d0018684f7f87e6cc48eec",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "779fba3a_307ce89e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-07-23T20:42:58Z",
+      "side": 1,
+      "message": "OK to address this concern in a separate change. However, we should allow to just create the stack without having to necessarily require an internet gateway. The service could be used inside the VPC, there isn\u0027t a specific requirement for us to be reachable by the general internet, isn\u0027t it?",
+      "parentUuid": "e3aa7b5d_dd52c590",
+      "revId": "77a45e40a6074c0e06d0018684f7f87e6cc48eec",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     }
   ]
 }
