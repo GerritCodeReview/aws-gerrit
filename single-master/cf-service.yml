@@ -302,7 +302,7 @@ Resources:
     ECSTaskExecutionRoleStack:
       Type: AWS::CloudFormation::Stack
       Properties:
-        TemplateURL: https://aws-gerrit-cf-templates.s3.amazonaws.com/cf-gerrit-task-execution-role.yml
+        TemplateURL: !Join [ '', ['https://', !Ref TemplateBucketName, '.s3.amazonaws.com/cf-gerrit-task-execution-role.yml'] ]
         TimeoutInMinutes: '5'
 
 Outputs:

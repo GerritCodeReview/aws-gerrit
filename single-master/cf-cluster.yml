@@ -3,6 +3,9 @@ Description: A stack for deploying containerized applications onto a cluster of 
              hosts using Elastic Container Service. This stack runs containers on
              hosts that are in a public VPC subnet.
 Parameters:
+  TemplateBucketName:
+    Description: S3 bucket containing cloudformation templates
+    Type: String
   DesiredCapacity:
     Type: Number
     Default: '1'
@@ -180,7 +183,7 @@ Resources:
   ECSTaskNetworkStack:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: https://aws-gerrit-cf-templates.s3.amazonaws.com/cf-gerrit-network-stack.yml
+      TemplateURL: !Join [ '', ['https://', !Ref TemplateBucketName, '.s3.amazonaws.com/cf-gerrit-network-stack.yml'] ]
       TimeoutInMinutes: '25'
       Parameters:
         InternetGatewayIdProp: !Ref 'InternetGatewayIdProp'
