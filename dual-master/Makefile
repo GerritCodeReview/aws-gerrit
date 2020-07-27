@@ -27,7 +27,7 @@ create-all: upload-common-templates \
 
 cluster: cluster-keys
 ifdef CLUSTER_INSTANCE_TYPE
-		$(eval OPTIONAL_PARAMS := $(OPTIONAL_PARAMS) ParameterKey=InstanceType,ParameterValue=$(CLUSTER_INSTANCE_TYPE))
+		$(eval CLUSTER_OPTIONAL_PARAMS := $(CLUSTER_OPTIONAL_PARAMS) ParameterKey=InstanceType,ParameterValue=$(CLUSTER_INSTANCE_TYPE))
 endif
 
 	$(AWS_FC_COMMAND) create-stack \
@@ -41,7 +41,7 @@ endif
 		ParameterKey=InternetGatewayIdProp,ParameterValue=$(INTERNET_GATEWAY_ID) \
 		ParameterKey=VPCIdProp,ParameterValue=$(VPC_ID) \
 		ParameterKey=SubnetIdProp,ParameterValue=$(SUBNET_ID) \
-		$(OPTIONAL_PARAMS)
+		$(CLUSTER_OPTIONAL_PARAMS)
 
 service-master-1:
 	$(AWS_FC_COMMAND) create-stack \
@@ -80,7 +80,6 @@ service-master-1:
 		ParameterKey=GerritCPU,ParameterValue=$(GERRIT_CPU) \
 		ParameterKey=GerritHeapLimit,ParameterValue=$(GERRIT_HEAP_LIMIT) \
 		ParameterKey=JgitCacheSize,ParameterValue=$(JGIT_CACHE_SIZE)
-
 
 service-master-2:
 	$(AWS_FC_COMMAND) create-stack \
@@ -146,6 +145,10 @@ service-slave:
 		ParameterKey=JgitCacheSize,ParameterValue=$(JGIT_CACHE_SIZE)
 
 service-lb:
+ifdef LOAD_BALANCER_SCHEME
+		$(eval SERVICE_OPTIONAL_PARAMS := $(SERVICE_OPTIONAL_PARAMS) ParameterKey=LoadBalancerScheme,ParameterValue=$(LOAD_BALANCER_SCHEME))
+endif
+
 	$(AWS_FC_COMMAND) create-stack \
 		--stack-name $(LOAD_BALANCER_STACK_NAME) \
 		--capabilities CAPABILITY_IAM  \
@@ -161,7 +164,8 @@ service-lb:
 		ParameterKey=CertificateArn,ParameterValue=$(SSL_CERTIFICATE_ARN) \
 		ParameterKey=Subdomain,ParameterValue=$(LB_SUBDOMAIN) \
 		ParameterKey=HAProxyDockerImage,ParameterValue=aws-gerrit/haproxy:$(HAPROXY_HEAD_SHA1) \
-		ParameterKey=SidecarDockerImage,ParameterValue=aws-gerrit/syslog-sidecar:$(SYSLOG_HEAD_SHA1)
+		ParameterKey=SidecarDockerImage,ParameterValue=aws-gerrit/syslog-sidecar:$(SYSLOG_HEAD_SHA1) \
+		$(SERVICE_OPTIONAL_PARAMS)
 
 dns-routing:
 	$(AWS_FC_COMMAND) create-stack \
