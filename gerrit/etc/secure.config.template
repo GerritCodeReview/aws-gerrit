@@ -1,6 +1,6 @@
 [auth]
 	registerEmailPrivateKey = {{ REGISTER_EMAIL_PRIVATE_KEY }}
 [ldap]
-	password = {{ LDAP_PASSWORD }}
+	password = "{{ LDAP_PASSWORD }}"
 [sendemail]
   smtpPass = {{ SMTP_PASSWORD }}
