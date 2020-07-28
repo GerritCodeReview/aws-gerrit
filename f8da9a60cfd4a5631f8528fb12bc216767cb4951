@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e762691_b3d0c447",
+        "filename": "gerrit/etc/secure.config.template",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-07-28T08:40:25Z",
+      "side": 1,
+      "message": "Does this mean that LDAP_PASSWORD should always be set _without_ quotes then?\nIf so, I think we should document it.\n\nAlso, What if LDAP_PASSWORD contains a quote, is that allowed?\nIf so, should we escape them?",
+      "range": {
+        "startLine": 4,
+        "startChar": 13,
+        "endLine": 4,
+        "endChar": 31
+      },
+      "revId": "f8da9a60cfd4a5631f8528fb12bc216767cb4951",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
