@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de043b6c_6aa23a2c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-07-28T14:47:48Z",
+      "side": 1,
+      "message": "I\u0027d rather say \"Allow to define Load Balancer schema (i.e. internal Vs internet facing)\"...or something similar",
+      "range": {
+        "startLine": 7,
+        "startChar": 6,
+        "endLine": 7,
+        "endChar": 40
+      },
+      "revId": "5cf5ef0a2cb6d52a48da6bfc8019e78d2a13de6e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "309d1d8d_5b0a25e1",
+        "filename": "dual-master/Makefile",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-07-28T14:47:48Z",
+      "side": 1,
+      "message": "Can we document this value and how to use it in the README?",
+      "range": {
+        "startLine": 149,
+        "startChar": 112,
+        "endLine": 149,
+        "endChar": 132
+      },
+      "revId": "5cf5ef0a2cb6d52a48da6bfc8019e78d2a13de6e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
