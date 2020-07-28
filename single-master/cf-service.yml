@@ -48,6 +48,11 @@ Parameters:
         Description: The subdomain of the Gerrit cluster
         Type: String
         Default: gerrit-master-demo
+  LoadBalancerScheme:
+        Description: Load Balancer schema, The nodes of an Internet-facing load balancer have public IP addresses.
+        Type: String
+        Default: internet-facing
+        AllowedValues: [internal, internet-facing]
   GerritKeyPrefix:
         Description: Gerrit credentials keys prefix
         Type: String
@@ -247,7 +252,7 @@ Resources:
         Type: AWS::ElasticLoadBalancingV2::LoadBalancer
         Properties:
             Type: network
-            Scheme: internet-facing
+            Scheme: !Ref 'LoadBalancerScheme'
             Subnets:
               - Fn::ImportValue:
                   !Join [':', [!Ref 'ClusterStackName', 'PublicSubnetOne']]

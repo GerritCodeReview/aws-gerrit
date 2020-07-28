@@ -45,6 +45,8 @@ Configuration values to spec up Gerrit containers.
   If not set, create a new VPC.
 * `SUBNET_ID`: Optional. Id of the existing Subnet.
   If not set, create a new Network Stack.
+* LOAD_BALANCER_SCHEME: Optional. The Load Balancer scheme type. `internet-facing` by default.
+  Allowed values: internal, internet-facing
 
 #### LDAP
 
