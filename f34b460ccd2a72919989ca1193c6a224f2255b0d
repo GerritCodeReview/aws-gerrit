@@ -39,6 +39,30 @@
       "revId": "f34b460ccd2a72919989ca1193c6a224f2255b0d",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8b6b00b_4f84a25d",
+        "filename": "Secrets.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-07-29T08:17:31Z",
+      "side": 1,
+      "message": "Good point I will do that in a separate change",
+      "parentUuid": "14986e5e_2f901164",
+      "range": {
+        "startLine": 69,
+        "startChar": 27,
+        "endLine": 69,
+        "endChar": 91
+      },
+      "revId": "f34b460ccd2a72919989ca1193c6a224f2255b0d",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
     }
   ]
 }
