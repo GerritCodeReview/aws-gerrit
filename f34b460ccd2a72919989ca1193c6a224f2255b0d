@@ -16,6 +16,29 @@
       "revId": "f34b460ccd2a72919989ca1193c6a224f2255b0d",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "14986e5e_2f901164",
+        "filename": "Secrets.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-07-29T08:16:36Z",
+      "side": 1,
+      "message": "This is leaking the implementation details. Also, what about if the password contains both \\ and \" ?\n\nIt should be addressed by using the \u0027git config\u0027 CLI to set values retried from AWS Credentials.",
+      "range": {
+        "startLine": 69,
+        "startChar": 27,
+        "endLine": 69,
+        "endChar": 91
+      },
+      "revId": "f34b460ccd2a72919989ca1193c6a224f2255b0d",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
     }
   ]
 }
