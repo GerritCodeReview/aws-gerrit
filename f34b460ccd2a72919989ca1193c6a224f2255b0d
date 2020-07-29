@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "999f9fdb_83b093de",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-07-29T08:13:48Z",
+      "side": 1,
+      "message": "Post-merge -1: @Tony\u0027s comments were not addressed.",
+      "revId": "f34b460ccd2a72919989ca1193c6a224f2255b0d",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    }
+  ]
+}

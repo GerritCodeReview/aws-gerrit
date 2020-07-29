@@ -46,6 +46,30 @@
       "revId": "f8da9a60cfd4a5631f8528fb12bc216767cb4951",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f3fc99c5_1b3d9530",
+        "filename": "gerrit/etc/secure.config.template",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-07-29T08:13:48Z",
+      "side": 1,
+      "message": "I don\u0027t believe you addressed @Tony\u0027s comments.\n\nWe should move to set this value using the \u0027git config\u0027 command line, which would correctly escape the value when needed.",
+      "parentUuid": "c9b74772_3a0cd30d",
+      "range": {
+        "startLine": 4,
+        "startChar": 13,
+        "endLine": 4,
+        "endChar": 31
+      },
+      "revId": "f8da9a60cfd4a5631f8528fb12bc216767cb4951",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     }
   ]
 }
