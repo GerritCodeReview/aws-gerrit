@@ -45,6 +45,7 @@ Three templates are provided in this example:
 ### Monitoring
 
 * Standard CloudWatch monitoring metrics for each component
+* Application level CloudWatch monitoring can be enabled as described [here](../Configuration.md#cloudwatch-monitoring)
 * Prometheus and Grafana stack is not available for this recipe yet. However the work has been done for
 the dual-master recipe and it could be easily adapted (you can find the relevant issue
 [here](https://bugs.chromium.org/p/gerrit/issues/detail?id=13092)).

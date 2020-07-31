@@ -51,6 +51,7 @@ Four templates are provided in this example:
 ### Monitoring
 
 * Standard CloudWatch monitoring metrics for each component
+* Application level CloudWatch monitoring can be enabled as described [here](../Configuration.md#cloudwatch-monitoring)
 
 ## How to run it
 

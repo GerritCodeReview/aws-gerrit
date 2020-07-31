@@ -55,6 +55,22 @@
 [receive]
 	enableSignedPush = false
 
+{% if METRICS_CLOUDWATCH_ENABLED == "true" %}
+[plugin "metrics-reporter-cloudwatch"]
+   namespace = {{ METRICS_CLOUDWATCH_NAMESPACE }}
+   rate = {{ METRICS_CLOUDWATCH_RATE }}
+   jvmMetrics = {{ METRICS_CLOUDWATCH_JVM_ENABLED }}
+   initialDelay = {{ METRICS_CLOUDWATCH_INITIAL_DELAY }}
+   dryRun = {{ METRICS_CLOUDWATCH_DRY_RUN }}
+
+{% if METRICS_CLOUDWATCH_EXCLUDE_METRICS_LIST is defined and METRICS_CLOUDWATCH_EXCLUDE_METRICS_LIST|length %}
+ {% set excludedMetricsList = METRICS_CLOUDWATCH_EXCLUDE_METRICS_LIST.split(',') %}
+ {% for excluded in excludedMetricsList %}
+   excludeMetrics = {{ excluded }}
+ {% endfor %}
+{% endif %}
+{% endif %}
+
 {% if PROMETHEUS_BEARER_TOKEN is defined %}
 
 [plugin "javamelody"]
