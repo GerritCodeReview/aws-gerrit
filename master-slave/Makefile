@@ -72,8 +72,7 @@ endif
 		ParameterKey=GerritRAM,ParameterValue=$(GERRIT_RAM) \
 		ParameterKey=GerritCPU,ParameterValue=$(GERRIT_CPU) \
 		ParameterKey=GerritHeapLimit,ParameterValue=$(GERRIT_HEAP_LIMIT) \
-		ParameterKey=JgitCacheSize,ParameterValue=$(JGIT_CACHE_SIZE) \
-		$(SERVICE_OPTIONAL_PARAMS)
+		ParameterKey=JgitCacheSize,ParameterValue=$(JGIT_CACHE_SIZE)
 
 service-slave:
 ifdef LOAD_BALANCER_SCHEME
@@ -101,8 +100,7 @@ endif
 		ParameterKey=GerritRAM,ParameterValue=$(GERRIT_RAM) \
 		ParameterKey=GerritCPU,ParameterValue=$(GERRIT_CPU) \
 		ParameterKey=GerritHeapLimit,ParameterValue=$(GERRIT_HEAP_LIMIT) \
-		ParameterKey=JgitCacheSize,ParameterValue=$(JGIT_CACHE_SIZE) \
-		$(SERVICE_OPTIONAL_PARAMS)
+		ParameterKey=JgitCacheSize,ParameterValue=$(JGIT_CACHE_SIZE)
 
 dns-routing:
 	$(AWS_FC_COMMAND) create-stack \

@@ -29,6 +29,8 @@ Resources:
                   # Allow the ECS tasks to upload logs to CloudWatch
                   - 'logs:CreateLogStream'
                   - 'logs:PutLogEvents'
+                  # Allow the ECS tasks to push metrics to CloudWatch
+                  - 'cloudwatch:PutMetricData'
                 Resource: '*'
           - PolicyName: AmazonECSTaskSecretManagerRolePolicy
             PolicyDocument:

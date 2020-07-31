@@ -73,4 +73,3 @@ See more details [here](https://gerrit-review.googlesource.com/Documentation/con
   See [Gerrit documentation](https://gerrit-review.googlesource.com/Documentation/config-gerrit.html#sendemail.smtpUser)
 * `SMTP_DOMAIN`: Mandatory. Domain to be used in the "From" field of any generated email messages
   See [Gerrit documentation](https://gerrit-review.googlesource.com/Documentation/config-gerrit.html#sendemail.from)
-
