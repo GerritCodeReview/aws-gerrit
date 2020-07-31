@@ -37,7 +37,7 @@ endif
 		ParameterKey=SubnetIdProp,ParameterValue=$(SUBNET_ID) \
 		$(CLUSTER_OPTIONAL_PARAMS)
 
-service:
+service: set-optional-params-metrics-cloudwatch
 ifdef LOAD_BALANCER_SCHEME
 		$(eval SERVICE_OPTIONAL_PARAMS := $(SERVICE_OPTIONAL_PARAMS) ParameterKey=LoadBalancerScheme,ParameterValue=$(LOAD_BALANCER_SCHEME))
 endif
@@ -67,7 +67,8 @@ endif
 		ParameterKey=GerritCPU,ParameterValue=$(GERRIT_CPU) \
 		ParameterKey=GerritHeapLimit,ParameterValue=$(GERRIT_HEAP_LIMIT) \
 		ParameterKey=JgitCacheSize,ParameterValue=$(JGIT_CACHE_SIZE) \
-		$(SERVICE_OPTIONAL_PARAMS)
+		$(SERVICE_OPTIONAL_PARAMS) \
+		$(METRICS_CW_OPTIONAL_PARAMS)
 
 dns-routing:
 	$(AWS_FC_COMMAND) create-stack \

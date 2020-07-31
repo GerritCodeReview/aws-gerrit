@@ -16,3 +16,26 @@ endif
 		aws s3api create-bucket $(CREATE_BUCKET_PARAMS)
 	aws s3 cp ../common-templates/cf-gerrit-task-execution-role.yml s3://$(TEMPLATE_BUCKET_NAME)/
 	aws s3 cp ../common-templates/cf-gerrit-network-stack.yml s3://$(TEMPLATE_BUCKET_NAME)/
+
+set-optional-params-metrics-cloudwatch:
+ifdef METRICS_CLOUDWATCH_ENABLED
+		$(eval METRICS_CW_OPTIONAL_PARAMS := $(METRICS_CW_OPTIONAL_PARAMS) ParameterKey=MetricsCloudwatchEnabled,ParameterValue=$(METRICS_CLOUDWATCH_ENABLED))
+endif
+ifdef METRICS_CLOUDWATCH_NAMESPACE
+		$(eval METRICS_CW_OPTIONAL_PARAMS := $(METRICS_CW_OPTIONAL_PARAMS) ParameterKey=MetricsCloudwatchNamespace,ParameterValue=$(METRICS_CLOUDWATCH_NAMESPACE))
+endif
+ifdef METRICS_CLOUDWATCH_RATE
+		$(eval METRICS_CW_OPTIONAL_PARAMS := $(METRICS_CW_OPTIONAL_PARAMS) ParameterKey=MetricsCloudwatchRate,ParameterValue=$(METRICS_CLOUDWATCH_RATE))
+endif
+ifdef METRICS_CLOUDWATCH_INITIAL_DELAY
+		$(eval METRICS_CW_OPTIONAL_PARAMS := $(METRICS_CW_OPTIONAL_PARAMS) ParameterKey=MetricsCloudwatchInitialDelay,ParameterValue=$(METRICS_CLOUDWATCH_INITIAL_DELAY))
+endif
+ifdef METRICS_CLOUDWATCH_JVM_ENABLED
+		$(eval METRICS_CW_OPTIONAL_PARAMS := $(METRICS_CW_OPTIONAL_PARAMS) ParameterKey=MetricsCloudwatchJVMEnabled,ParameterValue=$(METRICS_CLOUDWATCH_JVM_ENABLED))
+endif
+ifdef METRICS_CLOUDWATCH_DRY_RUN
+		$(eval METRICS_CW_OPTIONAL_PARAMS := $(METRICS_CW_OPTIONAL_PARAMS) ParameterKey=MetricsCloudwatchDryRun,ParameterValue=$(METRICS_CLOUDWATCH_DRY_RUN))
+endif
+ifdef METRICS_CLOUDWATCH_EXCLUDE_METRICS_LIST
+		$(eval METRICS_CW_OPTIONAL_PARAMS := $(METRICS_CW_OPTIONAL_PARAMS) ParameterKey=MetricsCloudwatchExcludeMetrics,ParameterValue=\"$(METRICS_CLOUDWATCH_EXCLUDE_METRICS_LIST)\")
+endif
