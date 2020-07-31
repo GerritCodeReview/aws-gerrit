@@ -67,6 +67,12 @@ endif
 		ParameterKey=GerritCPU,ParameterValue=$(GERRIT_CPU) \
 		ParameterKey=GerritHeapLimit,ParameterValue=$(GERRIT_HEAP_LIMIT) \
 		ParameterKey=JgitCacheSize,ParameterValue=$(JGIT_CACHE_SIZE) \
+		ParameterKey=MetricsCloudwatchEnabled,ParameterValue=$(METRICS_CLOUDWATCH_ENABLED) \
+		ParameterKey=MetricsCloudwatchNamespace,ParameterValue=$(METRICS_CLOUDWATCH_NAMESPACE) \
+		ParameterKey=MetricsCloudwatchRate,ParameterValue=$(METRICS_CLOUDWATCH_RATE) \
+		ParameterKey=MetricsCloudwatchInitialDelay,ParameterValue=$(METRICS_CLOUDWATCH_INITIAL_DELAY) \
+		ParameterKey=MetricsCloudwatchJVMEnabled,ParameterValue=$(METRICS_CLOUDWATCH_JVM_ENABLED) \
+		ParameterKey=MetricsCloudwatchDryRun,ParameterValue=$(METRICS_CLOUDWATCH_DRY_RUN) \
 		$(SERVICE_OPTIONAL_PARAMS)
 
 dns-routing:

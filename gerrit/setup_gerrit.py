@@ -145,7 +145,13 @@ with open(GERRIT_CONFIG_DIRECTORY + "gerrit.config", 'w',
         'SMTP_USER': os.getenv('SMTP_USER'),
         'SMTP_DOMAIN': os.getenv('SMTP_DOMAIN'),
         'GERRIT_HEAP_LIMIT': os.getenv('GERRIT_HEAP_LIMIT'),
-        'JGIT_CACHE_SIZE': os.getenv('JGIT_CACHE_SIZE')
+        'JGIT_CACHE_SIZE': os.getenv('JGIT_CACHE_SIZE'),
+        'METRICS_CLOUDWATCH_ENABLED': os.getenv('METRICS_CLOUDWATCH_ENABLED'),
+        'METRICS_CLOUDWATCH_NAMESPACE': os.getenv('METRICS_CLOUDWATCH_NAMESPACE'),
+        'METRICS_CLOUDWATCH_RATE': os.getenv('METRICS_CLOUDWATCH_RATE'),
+        'METRICS_CLOUDWATCH_JVM_ENABLED': os.getenv('METRICS_CLOUDWATCH_JVM_ENABLED'),
+        'METRICS_CLOUDWATCH_INITIAL_DELAY': os.getenv('METRICS_CLOUDWATCH_INITIAL_DELAY'),
+        'METRICS_CLOUDWATCH_DRY_RUN': os.getenv('METRICS_CLOUDWATCH_DRY_RUN')
     })
     f.write(template.render(config_for_template))
 

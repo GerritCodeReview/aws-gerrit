@@ -55,6 +55,16 @@
 [receive]
 	enableSignedPush = false
 
+{% if METRICS_CLOUDWATCH_ENABLED is sameas true %}
+[plugin "metrics-reporter-cloudwatch"]
+   namespace = {{ METRICS_CLOUDWATCH_NAMESPACE }}
+   rate = {{ METRICS_CLOUDWATCH_RATE }}
+   jvmMetrics = {{ METRICS_CLOUDWATCH_JVM_ENABLED }}
+   initialDelay = {{ METRICS_CLOUDWATCH_INITIAL_DELAY }}
+   dryRun = {{ METRICS_CLOUDWATCH_DRY_RUN }}
+   #excludeMetrics = TODO
+{% endif %}
+
 {% if PROMETHEUS_BEARER_TOKEN is defined %}
 
 [plugin "javamelody"]
