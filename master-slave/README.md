@@ -52,6 +52,7 @@ Four templates are provided in this example:
 
 * Standard CloudWatch monitoring metrics for each component
 * Application level CloudWatch monitoring can be enabled as described [here](../Configuration.md#cloudwatch-monitoring)
+* Optionally Prometheus and Grafana stack (see [here](../monitoring/README.md))
 
 ## How to run it
 
@@ -141,16 +142,6 @@ Gerrit master instance ports:
 Gerrit slave instance ports:
 * HTTP `9080`
 * SSH `39418`
-
-### Monitoring
-
-* Standard CloudWatch monitoring metrics for each component
-* Optionally Prometheus and Grafana stack (see [here](../monitoring/README.md))
-
-## Monitoring
-
-If you want to monitor your system, you can add a Prometheus and Grafana stack.
-[Here](../monitoring/README.md) you can find the details on how to add it.
 
 ### Docker
 
