@@ -29,6 +29,12 @@ cluster: cluster-keys
 ifdef CLUSTER_INSTANCE_TYPE
 		$(eval CLUSTER_OPTIONAL_PARAMS := $(CLUSTER_OPTIONAL_PARAMS) ParameterKey=InstanceType,ParameterValue=$(CLUSTER_INSTANCE_TYPE))
 endif
+ifdef FILESYSTEM_THROUGHPUT_MODE
+		$(eval CLUSTER_OPTIONAL_PARAMS := $(CLUSTER_OPTIONAL_PARAMS) ParameterKey=FileSystemThroughputMode,ParameterValue=$(FILESYSTEM_THROUGHPUT_MODE))
+endif
+ifdef FILESYSTEM_PROVISIONED_THROUGHPUT_IN_MIBPS
+		$(eval CLUSTER_OPTIONAL_PARAMS := $(CLUSTER_OPTIONAL_PARAMS) ParameterKey=ProvisionedThroughputInMibps,ParameterValue=$(FILESYSTEM_PROVISIONED_THROUGHPUT_IN_MIBPS))
+endif
 
 	$(AWS_FC_COMMAND) create-stack \
 		--stack-name $(CLUSTER_STACK_NAME) \
