@@ -45,7 +45,7 @@ Three templates are provided in this example:
 ### Monitoring
 
 * Standard CloudWatch monitoring metrics for each component
-* Application level CloudWatch monitoring can be enabled as described [here](#cloudwatch-monitoring)
+* Application level CloudWatch monitoring can be enabled as described [here](../Configuration.md#cloudwatch-monitoring)
 * Prometheus and Grafana stack is not available for this recipe yet. However the work has been done for
 the dual-master recipe and it could be easily adapted (you can find the relevant issue
 [here](https://bugs.chromium.org/p/gerrit/issues/detail?id=13092)).
@@ -72,27 +72,6 @@ On top of that, you might set the additional parameters, specific for this recip
 Configuration values affecting deployment environment and cluster properties
 
 * `SERVICE_STACK_NAME`: Optional. Name of the service stack. `gerrit-service` by default.
-
-#### CloudWatch Monitoring
-
-Application level metrics for CloudWatch are available through the
-[metrics-reporter-cloudwatch](https://gerrit.googlesource.com/plugins/metrics-reporter-cloudwatch/)
-plugin.
-
-* `METRICS_CLOUDWATCH_ENABLED`: Optional - Boolean.
-Whether to publish metrics to CloudWatch. Default: false
-* `METRICS_CLOUDWATCH_NAMESPACE`: Optional - String.
-The CloudWatch namespace for Gerrit metrics. Default: _gerrit_
-* `METRICS_CLOUDWATCH_RATE`: Optional - String.
-The rate at which metrics should be fired to AWS. Default: _60s_
-* `METRICS_CLOUDWATCH_INITIAL_DELAY`: Optional - String.
-The time to delay the first reporting execution. Default: _0_
-* `METRICS_CLOUDWATCH_JVM_ENABLED`: Optional - Boolean.
-Publish JVM metrics. Default: _false_
-* `METRICS_CLOUDWATCH_DRY_RUN`: Optional - Boolean.
-Log.DEBUG the metrics, rather than publishing. Default: _false_
-* `METRICS_CLOUDWATCH_EXCLUDE_METRICS_LIST`: Optional. Comma-separated list.
- Regex patterns to exclude from publishing. Default: empty string.
 
 ### 2 - Deploy
 
