@@ -126,19 +126,19 @@ Parameters:
   GerritRAM:
       Description: RAM to allocate to the Gerrit container
       Type: Number
-      Default: 70000
+      Default: 6000
   GerritCPU:
       Description: vCPU to allocate to the Gerrit container
       Type: Number
-      Default: 10240
+      Default: 1024
   GerritHeapLimit:
       Description: Gerrit Heap limit
       Type: String
-      Default: 35g
+      Default: 6g
   JgitCacheSize:
       Description: JGit cache size
       Type: String
-      Default: 12g
+      Default: 3g
   LDAPServer:
       Description: LDAP server URL
       Type: String
