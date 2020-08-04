@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec9404a7_d7cced14",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-04T08:28:48Z",
+      "side": 1,
+      "message": "Thanks @marcin this is now ready for review again.\nI will address other recipes as separate changes",
+      "revId": "a124cdb1d98b6c8266bdf38f0a517a95100f1ae8",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    }
+  ]
+}
