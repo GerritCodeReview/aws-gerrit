@@ -133,6 +133,37 @@ Parameters:
   LDAPGroupBase:
       Description: Root of the tree containing all group objects
       Type: String
+  MetricsCloudwatchEnabled:
+    Description: Whether gerrit metrics should be published to cloudwatch
+    Type: String
+    Default: false
+    AllowedValues: [true, false]
+  MetricsCloudwatchNamespace:
+    Description: The CloudWatch namespace for Gerrit metrics
+    Type: String
+    Default: gerrit
+  MetricsCloudwatchRate:
+    Description: The rate at which metrics should be fired to AWS
+    Type: String
+    Default: 60s
+  MetricsCloudwatchInitialDelay:
+    Description: The time to delay the first reporting execution
+    Type: String
+    Default: 0
+  MetricsCloudwatchJVMEnabled:
+    Description: Whether JVM metrics shoiuld be published to cloudwatch
+    Type: String
+    Default: false
+    AllowedValues: [true, false]
+  MetricsCloudwatchDryRun:
+    Description: The reporter will log.DEBUG the metrics, instead of doing a real POST to CloudWatch
+    Type: String
+    Default: false
+    AllowedValues: [true, false]
+  MetricsCloudwatchExcludeMetrics:
+    Description: Comma separated list of regex patterns to exclude metrics reported to CloudWatch
+    Type: CommaDelimitedList
+    Default: ''
 
 Resources:
     GerritService:
@@ -196,6 +227,20 @@ Resources:
                       Value: !Ref LDAPAccountBase
                     - Name: LDAP_GROUP_BASE
                       Value: !Ref LDAPGroupBase
+                    - Name: METRICS_CLOUDWATCH_ENABLED
+                      Value: !Ref MetricsCloudwatchEnabled
+                    - Name: METRICS_CLOUDWATCH_NAMESPACE
+                      Value: !Ref MetricsCloudwatchNamespace
+                    - Name: METRICS_CLOUDWATCH_RATE
+                      Value: !Ref MetricsCloudwatchRate
+                    - Name: METRICS_CLOUDWATCH_INITIAL_DELAY
+                      Value: !Ref MetricsCloudwatchInitialDelay
+                    - Name: METRICS_CLOUDWATCH_JVM_ENABLED
+                      Value: !Ref MetricsCloudwatchJVMEnabled
+                    - Name: METRICS_CLOUDWATCH_DRY_RUN
+                      Value: !Ref MetricsCloudwatchDryRun
+                    - Name: METRICS_CLOUDWATCH_EXCLUDE_METRICS_LIST
+                      Value: !Join [',', !Ref MetricsCloudwatchExcludeMetrics]
                   MountPoints:
                     - SourceVolume: !Ref GerritGitVolume
                       ContainerPath: /var/gerrit/git

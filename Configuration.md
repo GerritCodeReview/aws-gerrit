@@ -48,6 +48,27 @@ Configuration values to spec up Gerrit containers.
 * LOAD_BALANCER_SCHEME: Optional. The Load Balancer scheme type. `internet-facing` by default.
   Allowed values: internal, internet-facing
 
+#### CloudWatch Monitoring
+
+Application level metrics for CloudWatch are available through the
+[metrics-reporter-cloudwatch](https://gerrit.googlesource.com/plugins/metrics-reporter-cloudwatch/)
+plugin.
+
+* `METRICS_CLOUDWATCH_ENABLED`: Optional - Boolean.
+Whether to publish metrics to CloudWatch. Default: false
+* `METRICS_CLOUDWATCH_NAMESPACE`: Optional - String.
+The CloudWatch namespace for Gerrit metrics. Default: _gerrit_
+* `METRICS_CLOUDWATCH_RATE`: Optional - String.
+The rate at which metrics should be fired to AWS. Default: _60s_
+* `METRICS_CLOUDWATCH_INITIAL_DELAY`: Optional - String.
+The time to delay the first reporting execution. Default: _0_
+* `METRICS_CLOUDWATCH_JVM_ENABLED`: Optional - Boolean.
+Publish JVM metrics. Default: _false_
+* `METRICS_CLOUDWATCH_DRY_RUN`: Optional - Boolean.
+Log.DEBUG the metrics, rather than publishing. Default: _false_
+* `METRICS_CLOUDWATCH_EXCLUDE_METRICS_LIST`: Optional. Comma-separated list.
+ Regex patterns to exclude from publishing. Default: empty string.
+
 #### LDAP
 
 Configuration values related to LDAP integration.

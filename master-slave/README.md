@@ -51,7 +51,7 @@ Four templates are provided in this example:
 ### Monitoring
 
 * Standard CloudWatch monitoring metrics for each component
-* Application level CloudWatch monitoring can be enabled as described [here](#cloudwatch-monitoring)
+* Application level CloudWatch monitoring can be enabled as described [here](../Configuration.md#cloudwatch-monitoring)
 
 ## How to run it
 
@@ -81,27 +81,6 @@ a single EC2 instance won't be enough for all the services that will be ran*
 
 * `PROMETHEUS_SUBDOMAIN`: Optional. Prometheus subdomain. For example: `<AWS_PREFIX>-prometheus`
 * `GRAFANA_SUBDOMAIN`: Optional. Grafana subdomain. For example: `<AWS_PREFIX>-grafana`
-
-#### CloudWatch Monitoring
-
-Application level metrics for CloudWatch are available through the
-[metrics-reporter-cloudwatch](https://gerrit.googlesource.com/plugins/metrics-reporter-cloudwatch/)
-plugin.
-
-* `METRICS_CLOUDWATCH_ENABLED`: Optional - Boolean.
-Whether to publish metrics to CloudWatch. Default: false
-* `METRICS_CLOUDWATCH_NAMESPACE`: Optional - String.
-The CloudWatch namespace for Gerrit metrics. Default: _gerrit_
-* `METRICS_CLOUDWATCH_RATE`: Optional - String.
-The rate at which metrics should be fired to AWS. Default: _60s_
-* `METRICS_CLOUDWATCH_INITIAL_DELAY`: Optional - String.
-The time to delay the first reporting execution. Default: _0_
-* `METRICS_CLOUDWATCH_JVM_ENABLED`: Optional - Boolean.
-Publish JVM metrics. Default: _false_
-* `METRICS_CLOUDWATCH_DRY_RUN`: Optional - Boolean.
-Log.DEBUG the metrics, rather than publishing. Default: _false_
-* `METRICS_CLOUDWATCH_EXCLUDE_METRICS_LIST`: Optional. Comma-separated list.
- Regex patterns to exclude from publishing. Default: empty string.
 
 ### 2 - Deploy
 
