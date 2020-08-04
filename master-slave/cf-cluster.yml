@@ -57,7 +57,7 @@ Resources:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupDescription: Access to the ECS hosts that run containers
-      VpcId: !Ref 'VPC'
+      VpcId: !GetAtt ECSTaskNetworkStack.Outputs.VPCRef
       SecurityGroupIngress:
           # Allow access to NLB from anywhere on the internet
           - CidrIp: 0.0.0.0/0
@@ -75,7 +75,7 @@ Resources:
     Type: AWS::AutoScaling::AutoScalingGroup
     Properties:
       VPCZoneIdentifier:
-        - !Ref PublicSubnetOne
+        - !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneRef
       LaunchConfigurationName: !Ref 'ContainerInstances'
       MinSize: '1'
       MaxSize: !Ref 'MaxSize'
