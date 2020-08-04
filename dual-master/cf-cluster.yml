@@ -48,6 +48,19 @@ Parameters:
       Description: An environment name used to build the log stream names
       Type: String
       Default: test
+  FileSystemThroughputMode:
+    Description:  Gerrit shared filesystem throughput mode
+    Type: String
+    Default: bursting
+    AllowedValues: [bursting, provisioned]
+  ProvisionedThroughputInMibps:
+    Description:  The fs throughput, measured in MiB/s. Valid values are 1-1024.
+    Type: Number
+    Default: 256
+
+Conditions:
+  isProvisionedThroughput: !Equals [!Ref FileSystemThroughputMode, "provisioned"]
+
 Resources:
   # ECS Resources
   ECSCluster:
@@ -238,8 +251,8 @@ Resources:
   FileSystem:
     Type: AWS::EFS::FileSystem
     Properties:
-      ThroughputMode: provisioned
-      ProvisionedThroughputInMibps: 1024
+      ThroughputMode: !Ref FileSystemThroughputMode
+      ProvisionedThroughputInMibps: !If [isProvisionedThroughput, !Ref ProvisionedThroughputInMibps, !Ref "AWS::NoValue"]
       FileSystemTags:
         - Key: Name
           Value: "multi-master-git-repo"
