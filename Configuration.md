@@ -30,15 +30,19 @@ Configuration values affecting deployment environment and cluster properties
 
 Configuration values to spec up Gerrit containers.
 
-* `CLUSTER_INSTANCE_TYPE`: Optional. The EC2 instance Type used to run the cluster. `m4.10xlarge` by default.
-* `GERRIT_RAM`: RAM allocated (MiB) to the Gerrit container. `70000` by default.
-* `GERRIT_CPU`: vCPU units allocated to the Gerrit container. `10240` by default.
+* `CLUSTER_INSTANCE_TYPE`: Optional. The EC2 instance Type used to run the cluster. The default value
+is recipe-specific:
+  * single-master: `m4.large`
+  * master-slave: `m4.xlarge`
+  * dual-master: `m4.2xlarge`
+* `GERRIT_RAM`: RAM allocated (MiB) to the Gerrit container. `6000` by default.
+* `GERRIT_CPU`: vCPU units allocated to the Gerrit container. `1024` by default.
 * `GERRIT_HEAP_LIMIT`: Maximum heap size of the Java process running Gerrit, in bytes.
   See [Gerrit documentation](https://gerrit-review.googlesource.com/Documentation/config-gerrit.html#container.heapLimit)
-  `35g` by default.
+  `6g` by default.
 * `JGIT_CACHE_SIZE`: Maximum number of bytes to load and cache in memory from pack files.
   See [Gerrit documentation](https://gerrit-review.googlesource.com/Documentation/config-gerrit.html#core.packedGitLimit)
-  for more details. `12g` by default.
+  for more details. `3g` by default.
 * `INTERNET_GATEWAY_ID`: Optional. Id of the existing Internet Gateway.
   If not set, create a new Internet Gateway
 * `VPC_ID`: Optional. Id of the existing VPC.
