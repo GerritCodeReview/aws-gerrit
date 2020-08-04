@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f4a8517d_a3978f36",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-04T07:50:47Z",
+      "side": 1,
+      "message": "Thanks @marcin, let me check if I forgot something.\nthis change is getting quite big now, so I will probably split this into a chain that will address different recipes separately.",
+      "parentUuid": "e7ab1250_19e02c72",
+      "revId": "2f0e7d74b3b59d73075c5f9bb23a0a0dfd214000",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "701cc4ea_601b475d",
         "filename": "common-templates/cf-gerrit-task-execution-role.yml",
         "patchSetId": 3
@@ -39,6 +57,30 @@
       "revId": "2f0e7d74b3b59d73075c5f9bb23a0a0dfd214000",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc64c723_ec8cd8e3",
+        "filename": "common-templates/cf-gerrit-task-execution-role.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-04T07:50:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "701cc4ea_601b475d",
+      "range": {
+        "startLine": 32,
+        "startChar": 34,
+        "endLine": 32,
+        "endChar": 39
+      },
+      "revId": "2f0e7d74b3b59d73075c5f9bb23a0a0dfd214000",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     }
   ]
 }
