@@ -50,7 +50,7 @@ endif
 		ParameterKey=SubnetIdProp,ParameterValue=$(SUBNET_ID) \
 		$(CLUSTER_OPTIONAL_PARAMS)
 
-service-master-1:
+service-master-1: set-service-optional-params-metrics-cloudwatch
 	$(AWS_FC_COMMAND) create-stack \
 		--stack-name $(SERVICE_MASTER1_STACK_NAME) \
 		--capabilities CAPABILITY_IAM  \
@@ -86,9 +86,10 @@ service-master-1:
 		ParameterKey=GerritRAM,ParameterValue=$(GERRIT_RAM) \
 		ParameterKey=GerritCPU,ParameterValue=$(GERRIT_CPU) \
 		ParameterKey=GerritHeapLimit,ParameterValue=$(GERRIT_HEAP_LIMIT) \
-		ParameterKey=JgitCacheSize,ParameterValue=$(JGIT_CACHE_SIZE)
+		ParameterKey=JgitCacheSize,ParameterValue=$(JGIT_CACHE_SIZE) \
+		$(SERVICE_OPTIONAL_PARAMS)
 
-service-master-2:
+service-master-2: set-service-optional-params-metrics-cloudwatch
 	$(AWS_FC_COMMAND) create-stack \
 		--stack-name $(SERVICE_MASTER2_STACK_NAME) \
 		--capabilities CAPABILITY_IAM  \
@@ -125,9 +126,10 @@ service-master-2:
 		ParameterKey=GerritRAM,ParameterValue=$(GERRIT_RAM) \
 		ParameterKey=GerritCPU,ParameterValue=$(GERRIT_CPU) \
 		ParameterKey=GerritHeapLimit,ParameterValue=$(GERRIT_HEAP_LIMIT) \
-		ParameterKey=JgitCacheSize,ParameterValue=$(JGIT_CACHE_SIZE)
+		ParameterKey=JgitCacheSize,ParameterValue=$(JGIT_CACHE_SIZE) \
+		$(SERVICE_OPTIONAL_PARAMS)
 
-service-slave:
+service-slave: set-service-optional-params-metrics-cloudwatch
 	$(AWS_FC_COMMAND) create-stack \
 		--stack-name $(SERVICE_SLAVE_STACK_NAME) \
 		--capabilities CAPABILITY_IAM  \
@@ -149,11 +151,12 @@ service-slave:
 		ParameterKey=GerritRAM,ParameterValue=$(GERRIT_RAM) \
 		ParameterKey=GerritCPU,ParameterValue=$(GERRIT_CPU) \
 		ParameterKey=GerritHeapLimit,ParameterValue=$(GERRIT_HEAP_LIMIT) \
-		ParameterKey=JgitCacheSize,ParameterValue=$(JGIT_CACHE_SIZE)
+		ParameterKey=JgitCacheSize,ParameterValue=$(JGIT_CACHE_SIZE) \
+		$(SERVICE_OPTIONAL_PARAMS)
 
 service-lb:
 ifdef LOAD_BALANCER_SCHEME
-		$(eval SERVICE_OPTIONAL_PARAMS := $(SERVICE_OPTIONAL_PARAMS) ParameterKey=LoadBalancerScheme,ParameterValue=$(LOAD_BALANCER_SCHEME))
+		$(eval SERVICE_LB_OPTIONAL_PARAMS := $(SERVICE_LB_OPTIONAL_PARAMS) ParameterKey=LoadBalancerScheme,ParameterValue=$(LOAD_BALANCER_SCHEME))
 endif
 
 	$(AWS_FC_COMMAND) create-stack \
@@ -172,7 +175,7 @@ endif
 		ParameterKey=Subdomain,ParameterValue=$(LB_SUBDOMAIN) \
 		ParameterKey=HAProxyDockerImage,ParameterValue=aws-gerrit/haproxy:$(HAPROXY_HEAD_SHA1) \
 		ParameterKey=SidecarDockerImage,ParameterValue=aws-gerrit/syslog-sidecar:$(SYSLOG_HEAD_SHA1) \
-		$(SERVICE_OPTIONAL_PARAMS)
+		$(SERVICE_LB_OPTIONAL_PARAMS)
 
 dns-routing:
 	$(AWS_FC_COMMAND) create-stack \

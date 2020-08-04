@@ -57,6 +57,7 @@ If you are dealing with small repos, you can switch to burst mode.
 ### Monitoring
 
 * Standard CloudWatch monitoring metrics for each component
+* Application level CloudWatch monitoring can be enabled as described [here](../Configuration.md#cloudwatch-monitoring)
 * Prometheus and Grafana stack is currently not available for dual-master, but a change is in progress to allow this
  (see [Issue 12979](https://bugs.chromium.org/p/gerrit/issues/detail?id=12979))
 
