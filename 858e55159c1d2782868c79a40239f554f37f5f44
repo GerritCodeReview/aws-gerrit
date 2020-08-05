@@ -118,6 +118,30 @@
       "revId": "858e55159c1d2782868c79a40239f554f37f5f44",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dd5d063a_f868e21f",
+        "filename": "master-slave/README.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-05T14:48:21Z",
+      "side": 1,
+      "message": "\u003e We already use Cloudwatch anyway, correct? Is CloudWatch more expensive than running the EC2 instances of Grafana/Prometheus?\n\nIt depends on how big are the ec2 instances and how frequently are metrics sent. It _can_ be cheaper. Cloudwatch is notoriously expensive.\n\n\u003e Sure, but I\u0027ll park this change for now. If we remove Prometheus/Grafana, we don\u0027t need it right?\n\nAt the moment the \"monitoring\" title is duplicated 3 times in the README.md, whilst only one entry should exist. So I believe this change is meaningful regardless the prometheus/grafana decision (it will only affect the existence of that line in the diff, not the change itself).\n\nWouldn\u0027t it be better, If we decided to remove prometheus/grafana, that that piece of documentation will go as part of *that* change instead of blocking this one?",
+      "parentUuid": "80b75fbc_8ad2b583",
+      "range": {
+        "startLine": 55,
+        "startChar": 13,
+        "endLine": 55,
+        "endChar": 35
+      },
+      "revId": "858e55159c1d2782868c79a40239f554f37f5f44",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
     }
   ]
 }
