@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "322c3ef4_4a6ad8d5",
+        "filename": "master-slave/cf-service-master.yml",
+        "patchSetId": 5
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-05T16:33:51Z",
+      "side": 1,
+      "message": "Does the dry-run make sense to be configurable? Why would you like to have it set as dry-run in production?",
+      "range": {
+        "startLine": 160,
+        "startChar": 0,
+        "endLine": 164,
+        "endChar": 32
+      },
+      "revId": "3252b3a09a5df1d20102804d7007cb2bc182d96d",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
