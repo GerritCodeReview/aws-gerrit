@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8f67f565_f2c8979a",
+        "filename": "Makefile.common",
+        "patchSetId": 9
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-05T13:51:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "df8d96bb_b1afe0eb",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 5
+      },
+      "revId": "b06fc9e33699c99b986d4f17a7a700ca0f8bb3c9",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eea85d12_5eec8ab9",
         "filename": "gerrit/setup_gerrit.py",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "b06fc9e33699c99b986d4f17a7a700ca0f8bb3c9",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2ec4171_6d5bdf20",
+        "filename": "gerrit/setup_gerrit.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-05T13:51:17Z",
+      "side": 1,
+      "message": "imho, I think it does make sense.\n- The deployment is not necessarily a production one: these recipes can be used for any environment.\n\n- The user might want to do some tuning to find out what metrics are _actually_ sent to cw before actually start paying (what filters to apply, etc)",
+      "parentUuid": "eea85d12_5eec8ab9",
+      "range": {
+        "startLine": 154,
+        "startChar": 8,
+        "endLine": 154,
+        "endChar": 78
+      },
+      "revId": "b06fc9e33699c99b986d4f17a7a700ca0f8bb3c9",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d6d4e6c3_2e2134be",
+        "filename": "single-master/README.md",
+        "patchSetId": 9
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-05T13:51:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fd48b9e6_cfe33bae",
+      "range": {
+        "startLine": 92,
+        "startChar": 0,
+        "endLine": 93,
+        "endChar": 63
+      },
+      "revId": "b06fc9e33699c99b986d4f17a7a700ca0f8bb3c9",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c44d584_5c2eca35",
         "filename": "single-master/cf-service.yml",
         "patchSetId": 9
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "58cf4995_6ae5bc3f",
+        "filename": "single-master/cf-service.yml",
+        "patchSetId": 9
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-05T13:51:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4c44d584_5c2eca35",
+      "range": {
+        "startLine": 142,
+        "startChar": 0,
+        "endLine": 146,
+        "endChar": 32
+      },
+      "revId": "b06fc9e33699c99b986d4f17a7a700ca0f8bb3c9",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66a08b63_918e8b7e",
         "filename": "single-master/cf-service.yml",
         "patchSetId": 9
@@ -114,6 +210,30 @@
       "revId": "b06fc9e33699c99b986d4f17a7a700ca0f8bb3c9",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b0b6b5c_0797ce43",
+        "filename": "single-master/cf-service.yml",
+        "patchSetId": 9
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-05T13:51:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "66a08b63_918e8b7e",
+      "range": {
+        "startLine": 220,
+        "startChar": 0,
+        "endLine": 221,
+        "endChar": 57
+      },
+      "revId": "b06fc9e33699c99b986d4f17a7a700ca0f8bb3c9",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     }
   ]
 }
