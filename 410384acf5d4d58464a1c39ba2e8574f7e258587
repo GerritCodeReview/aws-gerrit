@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c902018c_cdc184fb",
+        "filename": "master-slave/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-08-05T13:15:22Z",
+      "side": 0,
+      "message": "this should be a separate change",
+      "range": {
+        "startLine": 84,
+        "startChar": 0,
+        "endLine": 104,
+        "endChar": 66
+      },
+      "revId": "410384acf5d4d58464a1c39ba2e8574f7e258587",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f4c3b36_7230569d",
+        "filename": "single-master/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-08-05T13:15:22Z",
+      "side": 0,
+      "message": "same as above. Separate change",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 0
+      },
+      "revId": "410384acf5d4d58464a1c39ba2e8574f7e258587",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
