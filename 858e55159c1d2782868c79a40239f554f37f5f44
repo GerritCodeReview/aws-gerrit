@@ -70,6 +70,30 @@
       "revId": "858e55159c1d2782868c79a40239f554f37f5f44",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8c4f7280_1003e4c0",
+        "filename": "master-slave/README.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-05T14:07:35Z",
+      "side": 1,
+      "message": "It\u0027s a good question. Cloudwatch is expensive, so some users might decide to use that instead, perhaps?.\n\nWe can definitely consider removing grafana/prometheus support, but I think that conversation should be addressed separately from this change.\n\nWDYT?",
+      "parentUuid": "4ab1450a_fd8f6ca4",
+      "range": {
+        "startLine": 55,
+        "startChar": 13,
+        "endLine": 55,
+        "endChar": 35
+      },
+      "revId": "858e55159c1d2782868c79a40239f554f37f5f44",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     }
   ]
 }
