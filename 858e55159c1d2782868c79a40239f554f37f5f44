@@ -94,6 +94,30 @@
       "revId": "858e55159c1d2782868c79a40239f554f37f5f44",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "80b75fbc_8ad2b583",
+        "filename": "master-slave/README.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-05T14:28:44Z",
+      "side": 1,
+      "message": "\u003e It\u0027s a good question. Cloudwatch is expensive, so some users might decide to use that instead, perhaps?.\n\nWe already use Cloudwatch anyway, correct? Is CloudWatch more expensive than running the EC2 instances of Grafana/Prometheus?\n\n\u003e We can definitely consider removing grafana/prometheus support, but I think that conversation should be addressed separately from this change.\n\u003e \n\u003e WDYT?\n\nSure, but I\u0027ll park this change for now. If we remove Prometheus/Grafana, we don\u0027t need it right?",
+      "parentUuid": "8c4f7280_1003e4c0",
+      "range": {
+        "startLine": 55,
+        "startChar": 13,
+        "endLine": 55,
+        "endChar": 35
+      },
+      "revId": "858e55159c1d2782868c79a40239f554f37f5f44",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     }
   ]
 }
