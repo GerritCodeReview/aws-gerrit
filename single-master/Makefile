@@ -41,6 +41,9 @@ service: set-optional-params-metrics-cloudwatch
 ifdef LOAD_BALANCER_SCHEME
 		$(eval SERVICE_OPTIONAL_PARAMS := $(SERVICE_OPTIONAL_PARAMS) ParameterKey=LoadBalancerScheme,ParameterValue=$(LOAD_BALANCER_SCHEME))
 endif
+ifdef GERRIT_INSTANCE_ID
+		$(eval SERVICE_OPTIONAL_PARAMS := $(SERVICE_OPTIONAL_PARAMS) ParameterKey=InstanceId,ParameterValue=$(GERRIT_INSTANCE_ID))
+endif
 
 	$(AWS_FC_COMMAND) create-stack \
 		--stack-name $(SERVICE_STACK_NAME) \
