@@ -30,7 +30,7 @@ gerrit-get-plugins:
 	|| { echo >&2 "Cannot download healthcheck plugin: Check internet connection. Aborting"; exit 1; }
 
 	@echo "Downloading Metrics Reporter Cloudwatch plugin $(GERRIT_BRANCH)"
-	wget $(GERRIT_CI)/plugin-metrics-reporter-cloudwatch-bazel-master-$(GERRIT_BRANCH)/$(LAST_BUILD)/metrics-reporter-cloudwatch/metrics-reporter-cloudwatch.jar \
+	wget $(GERRIT_CI)/plugin-metrics-reporter-cloudwatch-bazel-$(GERRIT_BRANCH)/$(LAST_BUILD)/metrics-reporter-cloudwatch/metrics-reporter-cloudwatch.jar \
 	-O ./plugins/healthcheck.jar \
 	|| { echo >&2 "Cannot download metrics-reporter-cloudwatch plugin: Check internet connection. Aborting"; exit 1; }
 
