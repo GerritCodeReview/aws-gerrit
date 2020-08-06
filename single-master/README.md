@@ -72,6 +72,7 @@ On top of that, you might set the additional parameters, specific for this recip
 Configuration values affecting deployment environment and cluster properties
 
 * `SERVICE_STACK_NAME`: Optional. Name of the service stack. `gerrit-service` by default.
+* `GERRIT_INSTANCE_ID`: Optional. identifier for the Gerrit instance.
 
 ### 2 - Deploy
 

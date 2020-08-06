@@ -2,6 +2,7 @@
 	basePath = git
 	canonicalWebUrl = http://localhost
 	serverId = 0f56469f-dfe4-4f28-aca7-803eba7845e0
+	instanceId = {{ GERRIT_INSTANCE_ID }}
 [core]
 	packedGitLimit = {{ JGIT_CACHE_SIZE }}
 [database]
