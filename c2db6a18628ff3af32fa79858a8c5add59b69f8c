@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1cf49a93_8bc2c81d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-06T07:59:33Z",
+      "side": 1,
+      "message": "m4.large provides 2 CPUs and 8Gb Memory.\n\nBear in mind that the default at the moment is across all recipes, so we have:\n\n* single-master: should be enough.\n\n* dual-master: should be enough. because the desired cluster capacity needs to be more than 1 anyway to accomodate for all masters and replicas.\n\n* master-slave: I don\u0027t think it\u0027s enough.\nWe will have 4 containers running (master, slave, ssh daemon, git daemon). To accomodate each one we would need to have less than .5 vCPU assigned to each container.\n\nLet me try if I can tune the parameters accordingly.\nAlternatively we can provide different default for different recipes, rather than trying to fit all on the same instance type.",
+      "parentUuid": "4cf2e712_0331562d",
+      "range": {
+        "startLine": 10,
+        "startChar": 15,
+        "endLine": 10,
+        "endChar": 38
+      },
+      "revId": "c2db6a18628ff3af32fa79858a8c5add59b69f8c",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b7088849_ee2f2a95",
         "filename": "/COMMIT_MSG",
         "patchSetId": 3
