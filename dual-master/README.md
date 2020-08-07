@@ -93,6 +93,14 @@ default: `bursting`. More info [here](https://docs.aws.amazon.com/AWSCloudFormat
 * `FILESYSTEM_PROVISIONED_THROUGHPUT_IN_MIBPS`: Optional. Only used when `FILESYSTEM_THROUGHPUT_MODE` is set to `provisioned`.
 default: `256`.
 
+* `GERRIT_SLAVE_INSTANCE_ID`: Optional. identifier for the Gerrit slave instance.
+"gerrit-dual-master-SLAVE" by default.
+* `GERRIT_MASTER1_INSTANCE_ID`: Optional. identifier for the Gerrit master1 instance.
+"gerrit-dual-master-MASTER1" by default.
+* `GERRIT_MASTER2_INSTANCE_ID`: Optional. identifier for the Gerrit master2 instance.
+"gerrit-dual-master-MASTER2" by default.
+
+
 ### 2 - Deploy
 
 * Create the cluster, services and DNS routing stacks:
