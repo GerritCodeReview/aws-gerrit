@@ -160,6 +160,10 @@ Parameters:
   SMTPDomain:
       Description: Domain to be used in the From field
       Type: String
+  InstanceId:
+    Description: Optional identifier for the Gerrit instance
+    Type: String
+    Default: gerrit-dual-master-MASTER
   MetricsCloudwatchEnabled:
     Description: Whether gerrit metrics should be published to cloudwatch
     Type: String
@@ -266,6 +270,8 @@ Resources:
                       Value: !Ref GitSSHPort
                     - Name: SLAVE_SUBDOMAIN
                       Value: !Ref SlaveSubdomain
+                    - Name: GERRIT_INSTANCE_ID
+                      Value: !Ref InstanceId
                     - Name: METRICS_CLOUDWATCH_ENABLED
                       Value: !Ref MetricsCloudwatchEnabled
                     - Name: METRICS_CLOUDWATCH_NAMESPACE

@@ -51,6 +51,10 @@ endif
 		$(CLUSTER_OPTIONAL_PARAMS)
 
 service-master-1: set-optional-params-metrics-cloudwatch
+ifdef GERRIT_MASTER1_INSTANCE_ID
+		$(eval MASTER1_SERVICE_OPTIONAL_PARAMS := $(MASTER1_SERVICE_OPTIONAL_PARAMS) ParameterKey=InstanceId,ParameterValue=$(GERRIT_MASTER1_INSTANCE_ID))
+endif
+
 	$(AWS_FC_COMMAND) create-stack \
 		--stack-name $(SERVICE_MASTER1_STACK_NAME) \
 		--capabilities CAPABILITY_IAM  \
@@ -87,9 +91,14 @@ service-master-1: set-optional-params-metrics-cloudwatch
 		ParameterKey=GerritCPU,ParameterValue=$(GERRIT_CPU) \
 		ParameterKey=GerritHeapLimit,ParameterValue=$(GERRIT_HEAP_LIMIT) \
 		ParameterKey=JgitCacheSize,ParameterValue=$(JGIT_CACHE_SIZE) \
+		$(MASTER1_SERVICE_OPTIONAL_PARAMS) \
 		$(METRICS_CW_OPTIONAL_PARAMS)
 
 service-master-2: set-optional-params-metrics-cloudwatch
+ifdef GERRIT_MASTER2_INSTANCE_ID
+		$(eval MASTER2_SERVICE_OPTIONAL_PARAMS := $(MASTER2_SERVICE_OPTIONAL_PARAMS) ParameterKey=InstanceId,ParameterValue=$(GERRIT_MASTER2_INSTANCE_ID))
+endif
+
 	$(AWS_FC_COMMAND) create-stack \
 		--stack-name $(SERVICE_MASTER2_STACK_NAME) \
 		--capabilities CAPABILITY_IAM  \
@@ -127,9 +136,14 @@ service-master-2: set-optional-params-metrics-cloudwatch
 		ParameterKey=GerritCPU,ParameterValue=$(GERRIT_CPU) \
 		ParameterKey=GerritHeapLimit,ParameterValue=$(GERRIT_HEAP_LIMIT) \
 		ParameterKey=JgitCacheSize,ParameterValue=$(JGIT_CACHE_SIZE) \
+		$(MASTER2_SERVICE_OPTIONAL_PARAMS) \
 		$(METRICS_CW_OPTIONAL_PARAMS)
 
 service-slave: set-optional-params-metrics-cloudwatch
+ifdef GERRIT_SLAVE_INSTANCE_ID
+		$(eval SLAVE_SERVICE_OPTIONAL_PARAMS := $(SLAVE_SERVICE_OPTIONAL_PARAMS) ParameterKey=InstanceId,ParameterValue=$(GERRIT_SLAVE_INSTANCE_ID))
+endif
+
 	$(AWS_FC_COMMAND) create-stack \
 		--stack-name $(SERVICE_SLAVE_STACK_NAME) \
 		--capabilities CAPABILITY_IAM  \
@@ -152,6 +166,7 @@ service-slave: set-optional-params-metrics-cloudwatch
 		ParameterKey=GerritCPU,ParameterValue=$(GERRIT_CPU) \
 		ParameterKey=GerritHeapLimit,ParameterValue=$(GERRIT_HEAP_LIMIT) \
 		ParameterKey=JgitCacheSize,ParameterValue=$(JGIT_CACHE_SIZE) \
+		$(SLAVE_SERVICE_OPTIONAL_PARAMS) \
 		$(METRICS_CW_OPTIONAL_PARAMS)
 
 service-lb:
