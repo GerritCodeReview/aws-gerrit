@@ -138,6 +138,9 @@ Parameters:
   LDAPGroupBase:
       Description: Root of the tree containing all group objects
       Type: String
+  InstanceId:
+    Description: Optional identifier for the Gerrit instance
+    Type: String
   MetricsCloudwatchEnabled:
     Description: Whether gerrit metrics should be published to cloudwatch
     Type: String
@@ -232,6 +235,8 @@ Resources:
                       Value: !Ref LDAPAccountBase
                     - Name: LDAP_GROUP_BASE
                       Value: !Ref LDAPGroupBase
+                    - Name: GERRIT_INSTANCE_ID
+                      Value: !Ref InstanceId
                     - Name: METRICS_CLOUDWATCH_ENABLED
                       Value: !Ref MetricsCloudwatchEnabled
                     - Name: METRICS_CLOUDWATCH_NAMESPACE
