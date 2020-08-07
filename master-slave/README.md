@@ -75,6 +75,10 @@ Configuration values affecting deployment environment and cluster properties
 * `MASTER_SUBDOMAIN`: Optional. Name of the master sub domain. `gerrit-master-demo` by default.
 * `SLAVE_SUBDOMAIN`: Optional. Name of the slave sub domain. `gerrit-slave-demo` by default.
 * `CLUSTER_DESIRED_CAPACITY`: Optional. Number of EC2 instances composing the cluster. `1` by default.
+* `GERRIT_MASTER_INSTANCE_ID`: Optional. Identifier for the Gerrit master instance.
+"gerrit-master-slave-MASTER" by default.
+* `GERRIT_SLAVE_INSTANCE_ID`: Optional. Identifier for the Gerrit slave instance.
+"gerrit-master-slave-SLAVE" by default.
 
 *NOTE*: if you are planning to run the monitoring stack, set the
 `CLUSTER_DESIRED_CAPACITY` value to at least 2. The resources provided by
