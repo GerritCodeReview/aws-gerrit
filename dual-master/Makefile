@@ -87,6 +87,7 @@ service-master-1: set-optional-params-metrics-cloudwatch
 		ParameterKey=GerritCPU,ParameterValue=$(GERRIT_CPU) \
 		ParameterKey=GerritHeapLimit,ParameterValue=$(GERRIT_HEAP_LIMIT) \
 		ParameterKey=JgitCacheSize,ParameterValue=$(JGIT_CACHE_SIZE) \
+		ParameterKey=InstanceId,ParameterValue=gerrit-master-slave-MASTER-1 \
 		$(METRICS_CW_OPTIONAL_PARAMS)
 
 service-master-2: set-optional-params-metrics-cloudwatch
@@ -127,6 +128,7 @@ service-master-2: set-optional-params-metrics-cloudwatch
 		ParameterKey=GerritCPU,ParameterValue=$(GERRIT_CPU) \
 		ParameterKey=GerritHeapLimit,ParameterValue=$(GERRIT_HEAP_LIMIT) \
 		ParameterKey=JgitCacheSize,ParameterValue=$(JGIT_CACHE_SIZE) \
+		ParameterKey=InstanceId,ParameterValue=gerrit-master-slave-MASTER-2 \
 		$(METRICS_CW_OPTIONAL_PARAMS)
 
 service-slave: set-optional-params-metrics-cloudwatch
@@ -152,6 +154,7 @@ service-slave: set-optional-params-metrics-cloudwatch
 		ParameterKey=GerritCPU,ParameterValue=$(GERRIT_CPU) \
 		ParameterKey=GerritHeapLimit,ParameterValue=$(GERRIT_HEAP_LIMIT) \
 		ParameterKey=JgitCacheSize,ParameterValue=$(JGIT_CACHE_SIZE) \
+		ParameterKey=InstanceId,ParameterValue=gerrit-master-slave-SLAVE \
 		$(METRICS_CW_OPTIONAL_PARAMS)
 
 service-lb:
