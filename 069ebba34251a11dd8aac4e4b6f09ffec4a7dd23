@@ -178,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "ea58982f_20d6f441",
+        "filename": "single-master/cf-service.yml",
+        "patchSetId": 4
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-10T19:59:53Z",
+      "side": 1,
+      "message": "\u003e I am not sure,\n\u003e I think it could be a problem with either, or perhaps more likely with the metric itself (as I mentioned this morning).\n\u003e \n\u003e As it stands this graph is not useful, so I suggest to remove it and look at this as a separate change?\n\u003e \n\u003e WDYT?\n\nThe metric is useful (JVM memory used): if the value is incorrect, let\u0027s understand where is the problem and fix it. From the picture, it doesn\u0027t look like a delta vs. cumulative metric problem but just the metric value looks wrong.\n\nWe can keep the graph and raise an issue on the misalignment of the metric: then we can fix the issue wherever it is. How does it sound?",
+      "parentUuid": "cd732f90_667fbb13",
+      "revId": "069ebba34251a11dd8aac4e4b6f09ffec4a7dd23",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2e38dd52_855bc6f4",
         "filename": "single-master/cf-service.yml",
         "patchSetId": 4
