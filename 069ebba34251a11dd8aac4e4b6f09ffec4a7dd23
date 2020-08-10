@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "5bd0691a_b752cbb6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-10T09:46:31Z",
+      "side": 1,
+      "message": "Also, sorry I forgot about this: should we need metrics on git-receive-pack as well as git-upload-pack?\nThis would be useful for load tests that push to gerrit as well as reading.",
+      "revId": "069ebba34251a11dd8aac4e4b6f09ffec4a7dd23",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1eaaae2_b855e384",
         "filename": "single-master/cf-service.yml",
         "patchSetId": 4
