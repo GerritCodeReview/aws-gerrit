@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d082972_66ac5631",
+        "filename": "single-master/Makefile",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-10T19:53:04Z",
+      "side": 1,
+      "message": "This should be passed as a parameters, like the others.",
+      "range": {
+        "startLine": 70,
+        "startChar": 41,
+        "endLine": 70,
+        "endChar": 61
+      },
+      "revId": "b0340abfd5ff80572399e2d37e3b9bce758274b7",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
