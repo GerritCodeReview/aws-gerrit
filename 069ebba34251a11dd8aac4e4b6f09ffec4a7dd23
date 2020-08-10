@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1eaaae2_b855e384",
+        "filename": "single-master/cf-service.yml",
+        "patchSetId": 4
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-10T08:57:58Z",
+      "side": 1,
+      "message": "This metric doesn\u0027t look right.\nThe CPU load seems to be unbounded and cumulative, it just keeps increasing[1].\nDo you find the same behavior?\n\n[1] https://ibb.co/0BtQYZx",
+      "revId": "069ebba34251a11dd8aac4e4b6f09ffec4a7dd23",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc0e2934_a8efec37",
+        "filename": "single-master/cf-service.yml",
+        "patchSetId": 4
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-10T08:57:58Z",
+      "side": 1,
+      "message": "The Y axis of this graph could do with a better unit choice (or at least express the fact they are Gb)[1]\n\n[1]https://ibb.co/k3fycsr",
+      "revId": "069ebba34251a11dd8aac4e4b6f09ffec4a7dd23",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "624a86f9_685bdcfd",
+        "filename": "single-master/cf-service.yml",
+        "patchSetId": 4
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-10T08:57:58Z",
+      "side": 1,
+      "message": "I was expecting this metric[1] to be the same as the one exposed by javamelody[2], but they are very different. The former averages at 250Mb, the latter 130Mb at  Is this expected?\n\n[1] https://ibb.co/StZstFK\n[2] https://ibb.co/jfRmYbc",
+      "revId": "069ebba34251a11dd8aac4e4b6f09ffec4a7dd23",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e38dd52_855bc6f4",
+        "filename": "single-master/cf-service.yml",
+        "patchSetId": 4
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-10T08:57:58Z",
+      "side": 1,
+      "message": "Some average metrics are aggregated with a granularity of 1 minute and some with a granularity of 5 minutes. Any reason for that?\nI think it would be more consistent to choose one and have them all set on that value.\n\nWDYT?",
+      "range": {
+        "startLine": 456,
+        "startChar": 0,
+        "endLine": 457,
+        "endChar": 40
+      },
+      "revId": "069ebba34251a11dd8aac4e4b6f09ffec4a7dd23",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
