@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0d21fe5_7084ce87",
+        "filename": "dual-master/Makefile",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-10T11:01:01Z",
+      "side": 1,
+      "message": "Why hardcoded and not taken from an environment variable?",
+      "range": {
+        "startLine": 90,
+        "startChar": 41,
+        "endLine": 90,
+        "endChar": 68
+      },
+      "revId": "a6ba995d825f62050fa26718c5c1c5089923fdcd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "195b3ffb_5fdd3935",
+        "filename": "dual-master/Makefile",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-10T11:01:01Z",
+      "side": 1,
+      "message": "Why hardcoded and not taken from an environment variable?",
+      "range": {
+        "startLine": 131,
+        "startChar": 41,
+        "endLine": 131,
+        "endChar": 68
+      },
+      "revId": "a6ba995d825f62050fa26718c5c1c5089923fdcd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "394cc555_d7680f7f",
+        "filename": "dual-master/Makefile",
+        "patchSetId": 3
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-10T11:01:01Z",
+      "side": 1,
+      "message": "Why hardcoded and not taken from an environment variable?",
+      "range": {
+        "startLine": 157,
+        "startChar": 42,
+        "endLine": 157,
+        "endChar": 65
+      },
+      "revId": "a6ba995d825f62050fa26718c5c1c5089923fdcd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
