@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a93aa1cf_ab6d0178",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-10T10:10:56Z",
+      "side": 1,
+      "message": "Good idea, but it can be done as a follow-up, isn\u0027t it?",
+      "parentUuid": "5bd0691a_b752cbb6",
+      "revId": "069ebba34251a11dd8aac4e4b6f09ffec4a7dd23",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1eaaae2_b855e384",
         "filename": "single-master/cf-service.yml",
         "patchSetId": 4
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "77f1c36d_a037762c",
+        "filename": "single-master/cf-service.yml",
+        "patchSetId": 4
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-10T10:10:56Z",
+      "side": 1,
+      "message": "It\u0027s a nit IMHO.",
+      "parentUuid": "bc0e2934_a8efec37",
+      "revId": "069ebba34251a11dd8aac4e4b6f09ffec4a7dd23",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "624a86f9_685bdcfd",
         "filename": "single-master/cf-service.yml",
         "patchSetId": 4
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "d889b00f_f70f9f76",
+        "filename": "single-master/cf-service.yml",
+        "patchSetId": 4
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-10T10:10:56Z",
+      "side": 1,
+      "message": "\u003e I was expecting this metric[1] to be the same as the one exposed by javamelody[2], but they are very different. The former averages at 250Mb, the latter 130Mb at  Is this expected?\n\u003e \n\u003e [1] https://ibb.co/StZstFK\n\u003e [2] https://ibb.co/jfRmYbc\n\nDo you believe this is a problem with the dashboard? Or is this a problem with the cloudwatch plugin?",
+      "parentUuid": "624a86f9_685bdcfd",
+      "revId": "069ebba34251a11dd8aac4e4b6f09ffec4a7dd23",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2e38dd52_855bc6f4",
         "filename": "single-master/cf-service.yml",
         "patchSetId": 4
@@ -81,6 +135,30 @@
       "writtenOn": "2020-08-10T08:57:58Z",
       "side": 1,
       "message": "Some average metrics are aggregated with a granularity of 1 minute and some with a granularity of 5 minutes. Any reason for that?\nI think it would be more consistent to choose one and have them all set on that value.\n\nWDYT?",
+      "range": {
+        "startLine": 456,
+        "startChar": 0,
+        "endLine": 457,
+        "endChar": 40
+      },
+      "revId": "069ebba34251a11dd8aac4e4b6f09ffec4a7dd23",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92ba5eee_5b95b059",
+        "filename": "single-master/cf-service.yml",
+        "patchSetId": 4
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-10T10:10:56Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "2e38dd52_855bc6f4",
       "range": {
         "startLine": 456,
         "startChar": 0,
