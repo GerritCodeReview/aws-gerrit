@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aee0a909_1063fb11",
+        "filename": "master-slave/Makefile",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-10T10:59:55Z",
+      "side": 1,
+      "message": "Why hardcoded and not taken from an environment variable?",
+      "range": {
+        "startLine": 76,
+        "startChar": 41,
+        "endLine": 76,
+        "endChar": 67
+      },
+      "revId": "79740aeb7c911edc22f63d9acd603bdff174ef1f",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f35d47bc_9d47ceba",
+        "filename": "master-slave/Makefile",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-10T10:59:55Z",
+      "side": 1,
+      "message": "Why hardcoded and not taken from an environment variable?",
+      "range": {
+        "startLine": 107,
+        "startChar": 41,
+        "endLine": 107,
+        "endChar": 66
+      },
+      "revId": "79740aeb7c911edc22f63d9acd603bdff174ef1f",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
