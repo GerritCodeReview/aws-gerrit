@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "a6f5aa39_da6d94cc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-11T21:36:36Z",
+      "side": 1,
+      "message": "dual-master?",
+      "range": {
+        "startLine": 12,
+        "startChar": 16,
+        "endLine": 12,
+        "endChar": 33
+      },
+      "revId": "1922b653fbccefa69750dc2e7f5f633ad45cfac8",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c821cf9_36e9f254",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-11T21:36:36Z",
+      "side": 1,
+      "message": "dual-master?",
+      "range": {
+        "startLine": 13,
+        "startChar": 17,
+        "endLine": 13,
+        "endChar": 34
+      },
+      "revId": "1922b653fbccefa69750dc2e7f5f633ad45cfac8",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6acf6f2b_219db66e",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 6
