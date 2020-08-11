@@ -153,7 +153,8 @@ with open(GERRIT_CONFIG_DIRECTORY + "gerrit.config", 'w',
         'METRICS_CLOUDWATCH_JVM_ENABLED': os.getenv('METRICS_CLOUDWATCH_JVM_ENABLED'),
         'METRICS_CLOUDWATCH_INITIAL_DELAY': os.getenv('METRICS_CLOUDWATCH_INITIAL_DELAY'),
         'METRICS_CLOUDWATCH_DRY_RUN': os.getenv('METRICS_CLOUDWATCH_DRY_RUN'),
-        'METRICS_CLOUDWATCH_EXCLUDE_METRICS_LIST': os.getenv('METRICS_CLOUDWATCH_EXCLUDE_METRICS_LIST')
+        'METRICS_CLOUDWATCH_EXCLUDE_METRICS_LIST': os.getenv('METRICS_CLOUDWATCH_EXCLUDE_METRICS_LIST'),
+        'MULTISITE_ENABLED': os.getenv('MULTISITE_ENABLED'),
     })
     f.write(template.render(config_for_template))
 
@@ -164,7 +165,11 @@ if ((not containerSlave) and setupReplication):
     template = env.get_template("replication.config.template")
     with open(GERRIT_CONFIG_DIRECTORY + "replication.config", 'w', encoding='utf-8') as f:
         SLAVE_FQDN = os.getenv('SLAVE_SUBDOMAIN') + "." + os.getenv('HOSTED_ZONE_NAME')
+        OTHER_SITE_FQDN = os.getenv('OTHER_SITE_SUBDOMAIN') + "." + os.getenv('HOSTED_ZONE_NAME')
         f.write(template.render(
+                MULTISITE_ENABLED=os.getenv('MULTISITE_ENABLED'),
+                OTHER_SITE_URL="git://" + OTHER_SITE_FQDN + ":" + os.getenv('GIT_PORT') + "/${name}.git",
+                OTHER_SITE_ADMIN_URL="ssh://gerrit@" + OTHER_SITE_FQDN + ":" + os.getenv('GIT_SSH_PORT') + "/var/gerrit/git/${name}.git",
                 SLAVE_1_URL="git://" + SLAVE_FQDN + ":" + os.getenv('GIT_PORT') + "/${name}.git",
                 SLAVE_1_AMDIN_URL="ssh://gerrit@" + SLAVE_FQDN + ":" + os.getenv('GIT_SSH_PORT') + "/var/gerrit/git/${name}.git"
                 ))
