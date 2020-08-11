@@ -27,6 +27,8 @@
 
 [sendemail]
   smtpServer = {{ SMTP_SERVER  }}
+  connectTimeout = 30 s
+  threadPoolSize = 2
   smtpEncryption = ssl
   sslVerify = false
   smtpUser = {{ SMTP_USER }}
