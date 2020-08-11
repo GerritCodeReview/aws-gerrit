@@ -1,0 +1,26 @@
+[index]
+  maxTries = 6
+  retryInterval = 30000
+  numStripedLocks = 100
+
+[broker]
+  indexEventTopic = gerrit_index
+  streamEventTopic = gerrit_stream_events
+  projectListEventTopic = gerrit_project_list
+  cacheEventTopic = gerrit_cache
+
+[kafka]
+  # TODO: Configure this
+  bootstrapServers = target-1:29092,target-2.internal:39092
+
+  indexEventTopic = gerrit_index
+  streamEventTopic = gerrit_stream_events
+  projectListEventTopic = gerrit_project_list
+  cacheEventTopic = gerrit_cache
+
+[kafka "subscriber"]
+  pollingIntervalMs = 1000
+  KafkaProp-autoCommitIntervalMs = 1000
+
+[kafka "publisher"]
+  KafkaProp-maxRequestSize = 10485760
