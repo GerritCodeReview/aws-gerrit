@@ -18,3 +18,16 @@
   replicateProjectDeletions = true
   replicateHiddenProjects = true
   timeout = 60
+
+{% if MULTISITE_ENABLED is defined and MULTISITE_ENABLED == "true" %}
+[remote "other-site"]
+  url = {{ OTHER_SITE_URL }}
+  adminUrl = {{ OTHER_SITE_ADMIN_URL }}
+  mirror = true
+  push = +refs/*:refs/*
+  threads = 10
+  createMissingRepositories = true
+  replicateProjectDeletions = true
+  replicateHiddenProjects = true
+  timeout = 60
+{% endif %}

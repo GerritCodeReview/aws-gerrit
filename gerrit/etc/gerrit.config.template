@@ -3,6 +3,12 @@
 	canonicalWebUrl = http://localhost
 	serverId = 0f56469f-dfe4-4f28-aca7-803eba7845e0
 	instanceId = {{ GERRIT_INSTANCE_ID }}
+
+{% if MULTISITE_ENABLED is defined and MULTISITE_ENABLED == "true" %}
+	installDbModule = com.googlesource.gerrit.plugins.multisite.GitModule
+	installModule = com.googlesource.gerrit.plugins.multisite.Module
+	installModule = com.gerritforge.gerrit.eventbroker.BrokerApiModule
+{% endif %}
 [core]
 	packedGitLimit = {{ JGIT_CACHE_SIZE }}
 [database]
@@ -45,8 +51,27 @@
 	requestLog = true
 [cache]
 	directory = cache
+
+{% if MULTISITE_ENABLED is defined and MULTISITE_ENABLED == "true" %}
+[cache "web_sessions"]
+	memoryLimit = 32768
+	maxAge = 2 days
+{% endif %}
+
 [plugins]
 	allowRemoteAdmin = true
+
+{% if MULTISITE_ENABLED is defined and MULTISITE_ENABLED == "true" %}
+[plugin "kafka-events"]
+    sendAsync = true
+    bootstrapServers = target-0:19092,target-1
+    groupId = 2f3753e9-bd02-46c6-b106-3ee4f0255772
+    numberOfSubscribers = 6
+    autoCommitIntervalMs = 1000
+    maxRequestSize = 10485760
+    securityProtocol = SSL
+{% endif %}
+
 [container]
 	heapLimit = {{ GERRIT_HEAP_LIMIT }}
 	javaOptions = "-Dflogger.backend_factory=com.google.common.flogger.backend.log4j.Log4jBackendFactory#getInstance"
