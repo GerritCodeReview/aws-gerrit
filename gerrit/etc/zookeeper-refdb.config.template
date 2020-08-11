@@ -1,0 +1,2 @@
+[ref-database "zookeeper"]
+  connectString = target1:22181,target2:32181
