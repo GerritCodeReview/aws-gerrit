@@ -77,22 +77,66 @@ Parameters:
       Description: HAPRoxy Syslog Sidecar service name
       Type: String
       Default: gerrit-haproxy-sidecar
+  Master1GitSSHHostPort:
+    Description: SSH port for Git ops exposed on the host running this gerrit master1 instance
+    Type: Number
+  Master2GitSSHHostPort:
+    Description: SSH port for Git ops exposed on the host running this gerrit master2 instance
+    Type: Number
+  Master1GitHostPort:
+    Description: Git port exposed on the host running this gerrit master1 instance
+    Type: Number
+  Master2GitHostPort:
+    Description: Git port exposed on the host running this gerrit master2 instance
+    Type: Number
+  AdminSSHHostPort:
+    Description: SSH port for Git ops exposed by haproxy
+    Type: Number
+  GitHostPort:
+    Description: Port for Git ops exposed by haproxy
+    Type: Number
+  Master1GitDaemonServiceName:
+    Description: The name of the Git Daemon associated to the master 1 instance.
+    Type: String
+  Master1GitSSHServiceName:
+    Description: The name of the SSH Daemon associated to the master 1 instance.
+    Type: String
+  Master2GitDaemonServiceName:
+    Description: The name of the Git Daemon associated to the master 2 instance.
+    Type: String
+  Master2GitSSHServiceName:
+    Description: The name of the SSH Daemon associated to the master 2 instance.
+    Type: String
 
 Resources:
     LBService:
         Type: AWS::ECS::Service
         DependsOn:
           - HTTPListener
+          - GitAdminSSHListener
+          - GitListener
         Properties:
-            Cluster:
-              Fn::ImportValue:
-                  !Join [':', [!Ref 'ClusterStackName', 'ClusterName']]
-            DesiredCount: !Ref DesiredCount
-            TaskDefinition: !Ref TaskDefinition
-            LoadBalancers:
-                - ContainerName: !Ref LBServiceName
-                  ContainerPort: !Ref HTTPContainerPort
-                  TargetGroupArn: !Ref HTTPTargetGroup
+          Cluster:
+            Fn::ImportValue:
+              !Join [':', [!Ref 'ClusterStackName', 'ClusterName']]
+          DesiredCount: !Ref DesiredCount
+          TaskDefinition: !Ref TaskDefinition
+          LoadBalancers:
+            - ContainerName: !Ref LBServiceName
+              ContainerPort: !Ref HTTPContainerPort
+              TargetGroupArn: !Ref HTTPTargetGroup
+            - ContainerName: !Ref Master1GitSSHServiceName
+              ContainerPort: 1022
+              TargetGroupArn: !Ref GitSSHTargetGroup
+            - ContainerName: !Ref Master2GitSSHServiceName
+              ContainerPort: 1022
+              TargetGroupArn: !Ref GitSSHTargetGroup
+            - ContainerName: !Ref Master1GitDaemonServiceName
+              ContainerPort: 9418
+              TargetGroupArn: !Ref GitTargetGroup
+            - ContainerName: !Ref Master2GitDaemonServiceName
+              ContainerPort: 9418
+              TargetGroupArn: !Ref GitTargetGroup
 
     TaskDefinition:
         Type: AWS::ECS::TaskDefinition
@@ -112,6 +156,14 @@ Resources:
                     - Name: GERRIT_MASTER_2_URL
                       Value:
                         Fn::ImportValue: !Join [':', [!Ref 'Master2ServiceStackName', 'PublicLoadBalancerDNSName']]
+                    - Name: GERRIT_MASTER_1_GIT_SSH_PORT
+                      Value: !Ref Master1GitSSHHostPort
+                    - Name: GERRIT_MASTER_2_GIT_SSH_PORT
+                      Value: !Ref Master2GitSSHHostPort
+                    - Name: GERRIT_MASTER_1_GIT_PORT
+                      Value: !Ref Master1GitHostPort
+                    - Name: GERRIT_MASTER_2_GIT_PORT
+                      Value: !Ref Master2GitHostPort
                     - Name: SYSLOG_SIDECAR
                       Value: !Ref SyslogSidecarServiceName
                   Cpu: 1024
@@ -119,6 +171,12 @@ Resources:
                   PortMappings:
                     - ContainerPort: !Ref HTTPContainerPort
                       HostPort: !Ref HTTPHostPort
+                      Protocol: tcp
+                    - ContainerPort: 1022
+                      HostPort: !Ref AdminSSHHostPort
+                      Protocol: tcp
+                    - ContainerPort: 9418
+                      HostPort: !Ref GitHostPort
                       Protocol: tcp
                   Links:
                     - !Ref SyslogSidecarServiceName
@@ -180,6 +238,48 @@ Resources:
             LoadBalancerArn: !Ref LoadBalancer
             Port: !Ref HTTPSHostPort
             Protocol: TLS
+
+    GitAdminSSHListener:
+      Type: AWS::ElasticLoadBalancingV2::Listener
+      DependsOn: LoadBalancer
+      Properties:
+        DefaultActions:
+          - Type: forward
+            TargetGroupArn: !Ref GitSSHTargetGroup
+        LoadBalancerArn: !Ref LoadBalancer
+        Port: !Ref AdminSSHHostPort
+        Protocol: TCP
+
+    GitSSHTargetGroup:
+      Type: AWS::ElasticLoadBalancingV2::TargetGroup
+      DependsOn: LoadBalancer
+      Properties:
+        VpcId:
+          Fn::ImportValue:
+            !Join [':', [!Ref 'ClusterStackName', 'VPCId']]
+        Port: !Ref AdminSSHHostPort
+        Protocol: TCP
+
+    GitListener:
+      Type: AWS::ElasticLoadBalancingV2::Listener
+      DependsOn: LoadBalancer
+      Properties:
+        DefaultActions:
+          - Type: forward
+            TargetGroupArn: !Ref GitTargetGroup
+        LoadBalancerArn: !Ref LoadBalancer
+        Port: !Ref GitHostPort
+        Protocol: TCP
+
+    GitTargetGroup:
+      Type: AWS::ElasticLoadBalancingV2::TargetGroup
+      DependsOn: LoadBalancer
+      Properties:
+        VpcId:
+          Fn::ImportValue:
+            !Join [':', [!Ref 'ClusterStackName', 'VPCId']]
+        Port: !Ref GitHostPort
+        Protocol: TCP
 
 Outputs:
   PublicLoadBalancerDNSName:

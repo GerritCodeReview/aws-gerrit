@@ -34,6 +34,20 @@ frontend gitssh
 
     default_backend ssh
 
+frontend git-admin-ssh
+    bind *:1022
+    mode tcp
+    timeout client 5m
+
+    default_backend gerrit-git-admin-ssh
+
+frontend git-admin-ssh
+    bind *:9418
+    mode tcp
+    timeout client 5m
+
+    default_backend git
+
 backend master
     mode http
     balance roundrobin
@@ -65,6 +79,17 @@ backend ssh
     server gerrit-ssh-1 $GERRIT_MASTER_1_URL:29418 check port 8080 inter 10s
     server gerrit-ssh-2 $GERRIT_MASTER_2_URL:29418 check port 8080 inter 10s backup
 
+backend git-sh
+    mode tcp
+    option redispatch
+    option httpchk GET /config/server/healthcheck~status HTTP/1.0
+    http-check expect status 200
+    balance source
+    timeout connect 10s
+    timeout server 5m
+    server gerrit-ssh-1 $GERRIT_MASTER_1_URL:29418 check port 8080 inter 10s
+    server gerrit-ssh-2 $GERRIT_MASTER_2_URL:29418 check port 8080 inter 10s backup
+
 backend gerrit-ssh-1
     mode http
     option forwardfor
@@ -74,3 +99,45 @@ backend gerrit-ssh-2
     mode http
     option forwardfor
     server gerrit-ssh-2 $GERRIT_MASTER_2_URL:29418
+
+backend gerrit-git-admin-ssh
+    mode tcp
+    option redispatch
+    option httpchk GET /config/server/healthcheck~status HTTP/1.0
+    http-check expect status 200
+    balance source
+    timeout connect 10s
+    timeout server 5m
+    server gerrit-git-admin-ssh-1 $GERRIT_MASTER_1_URL:$GERRIT_MASTER_1_GIT_SSH_PORT check port 8080 inter 10s
+    server gerrit-git-admin-ssh-2 $GERRIT_MASTER_2_URL:$GERRIT_MASTER_2_GIT_SSH_PORT check port 8080 inter 10s backup
+
+backend gerrit-git-admin-ssh-1
+    mode http
+    option forwardfor
+    server gerrit-git-admin-ssh-1 $GERRIT_MASTER_1_URL:$GERRIT_MASTER_1_GIT_SSH_PORT
+
+backend gerrit-git-admin-ssh-2
+    mode http
+    option forwardfor
+    server gerrit-git-admin-ssh-2 $GERRIT_MASTER_2_URL:$GERRIT_MASTER_2_GIT_SSH_PORT
+
+backend git
+    mode tcp
+    option redispatch
+    option httpchk GET /config/server/healthcheck~status HTTP/1.0
+    http-check expect status 200
+    balance source
+    timeout connect 10s
+    timeout server 5m
+    server git-1 $GERRIT_MASTER_1_URL:$GERRIT_MASTER_1_GIT_PORT check port 8080 inter 10s
+    server git-2 $GERRIT_MASTER_2_URL:$GERRIT_MASTER_2_GIT_PORT check port 8080 inter 10s backup
+
+backend git-1
+    mode http
+    option forwardfor
+    server git-1 $GERRIT_MASTER_1_URL:$GERRIT_MASTER_1_GIT_PORT
+
+backend git-2
+    mode http
+    option forwardfor
+    server git-2 $GERRIT_MASTER_2_URL:$GERRIT_MASTER_2_GIT_PORT

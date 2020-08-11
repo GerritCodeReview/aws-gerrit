@@ -191,6 +191,35 @@ Parameters:
     Description: Comma separated list of regex patterns to exclude metrics reported to CloudWatch
     Type: CommaDelimitedList
     Default: ''
+  MultiSiteEnabled:
+    Description: Whether this gerrit is part of a multi-site cluster deployment
+    Type: String
+    Default: false
+    AllowedValues: [true, false]
+  OtherSiteFQDN:
+    Description: The fully qualified domain name of the other site
+    Type: String
+    Default: ''
+  MasterGitDaemonServiceName:
+    Description: The name of the Git Daemon associated to this master instance.
+    Type: String
+    Default: gerrit-master-git-daemon
+  MasterGitSSHServiceName:
+    Description: The name of the SSH Daemon associated to this master instance.
+    Type: String
+    Default: gerrit-master-ssh-daemon
+  MasterGitPort:
+    Description: Git port exposed on the host running this gerrit master instance
+    Type: Number
+    Default: 19418
+  MasterGitSSHContainerPort:
+    Description: SSH port for git ops open wihin this master container instance
+    Type: Number
+    Default: 22
+  MasterGitSSHHostPort:
+    Description: SSH port for git ops exposed on the host running this gerrit master instance
+    Type: Number
+    Default: 2022
 
 Resources:
     Service:
@@ -280,6 +309,10 @@ Resources:
                       Value: !Ref MetricsCloudwatchDryRun
                     - Name: METRICS_CLOUDWATCH_EXCLUDE_METRICS_LIST
                       Value: !Join [',', !Ref MetricsCloudwatchExcludeMetrics]
+                    - Name: MULTISITE_ENABLED
+                      Value: !Ref MultiSiteEnabled
+                    - Name: OTHER_SITE_FQDN
+                      Value: !Ref OtherSiteFQDN
                   MountPoints:
                     - SourceVolume: !Ref GerritGitVolume
                       ContainerPath: /var/gerrit/git
@@ -312,6 +345,51 @@ Resources:
                         awslogs-group: !Ref ClusterStackName
                         awslogs-region: !Ref AWS::Region
                         awslogs-stream-prefix: !Ref EnvironmentName
+                - Name: !Ref MasterGitDaemonServiceName
+                  Essential: true
+                  Image: !Sub '${DockerRegistryUrl}/${GitDaemonDockerImage}'
+                  MountPoints:
+                    - SourceVolume: !Ref GerritGitVolume
+                      ContainerPath: /var/gerrit/git
+                  Cpu: 256
+                  Memory: 512
+                  PortMappings:
+                    - ContainerPort: !Ref GitPort
+                      HostPort: !Ref MasterGitPort
+                      Protocol: tcp
+                  LogConfiguration:
+                    LogDriver: awslogs
+                    Options:
+                      awslogs-group: !Ref ClusterStackName
+                      awslogs-region: !Ref AWS::Region
+                      awslogs-stream-prefix: !Ref EnvironmentName
+                - Name: !Ref MasterGitSSHServiceName
+                  Essential: true
+                  Image: !Sub '${DockerRegistryUrl}/${GitSSHDockerImage}'
+                  Environment:
+                    - Name: TZ
+                      Value: US/Pacific
+                    - Name: SSH_USERS
+                      Value: gerrit:1000:1000
+                    - Name: AWS_REGION
+                      Value: !Ref AWS::Region
+                    - Name: GERRIT_KEY_PREFIX
+                      Value: !Ref GerritKeyPrefix
+                  MountPoints:
+                    - SourceVolume: !Ref GerritGitVolume
+                      ContainerPath: /var/gerrit/git
+                  Cpu: 256
+                  Memory: 512
+                  PortMappings:
+                    - ContainerPort: !Ref MasterGitSSHContainerPort
+                      HostPort: !Ref MasterGitSSHHostPort
+                      Protocol: tcp
+                  LogConfiguration:
+                    LogDriver: awslogs
+                    Options:
+                      awslogs-group: !Ref ClusterStackName
+                      awslogs-region: !Ref AWS::Region
+                      awslogs-stream-prefix: !Ref EnvironmentName
             Volumes:
               - Name: !Ref 'GerritGitVolume'
                 Host:

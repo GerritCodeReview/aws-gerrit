@@ -17,6 +17,7 @@ AWS_FC_COMMAND=export AWS_PAGER=;aws cloudformation
 				gerrit-build gerrit-publish haproxy-publish syslog-sidecar-publish
 
 create-all: upload-common-templates \
+						git-daemon-publish git-ssh-publish \
 						gerrit-publish haproxy-publish syslog-sidecar-publish \
 						cluster wait-for-cluster-creation \
 						service-slave service-master-1 \
@@ -51,6 +52,11 @@ endif
 		$(CLUSTER_OPTIONAL_PARAMS)
 
 service-master-1: set-optional-params-metrics-cloudwatch
+ifdef MULTISITE_ENABLED
+		$(eval MULTISITE_OPTIONAL_PARAMS := $(MULTISITE_OPTIONAL_PARAMS) ParameterKey=MultiSiteEnabled,ParameterValue=$(MULTISITE_ENABLED))
+		$(eval MULTISITE_OPTIONAL_PARAMS := $(MULTISITE_OPTIONAL_PARAMS) ParameterKey=OtherSiteFQDN,ParameterValue=$(OTHER_SITE_FQDN))
+endif
+
 	$(AWS_FC_COMMAND) create-stack \
 		--stack-name $(SERVICE_MASTER1_STACK_NAME) \
 		--capabilities CAPABILITY_IAM  \
@@ -87,9 +93,15 @@ service-master-1: set-optional-params-metrics-cloudwatch
 		ParameterKey=GerritCPU,ParameterValue=$(GERRIT_CPU) \
 		ParameterKey=GerritHeapLimit,ParameterValue=$(GERRIT_HEAP_LIMIT) \
 		ParameterKey=JgitCacheSize,ParameterValue=$(JGIT_CACHE_SIZE) \
+		$(MULTISITE_OPTIONAL_PARAMS) \
 		$(METRICS_CW_OPTIONAL_PARAMS)
 
 service-master-2: set-optional-params-metrics-cloudwatch
+ifdef MULTISITE_ENABLED
+		$(eval MULTISITE_OPTIONAL_PARAMS := $(MULTISITE_OPTIONAL_PARAMS) ParameterKey=MultiSiteEnabled,ParameterValue=$(MULTISITE_ENABLED))
+		$(eval MULTISITE_OPTIONAL_PARAMS := $(MULTISITE_OPTIONAL_PARAMS) ParameterKey=OtherSiteFQDN,ParameterValue=$(OTHER_SITE_FQDN))
+endif
+
 	$(AWS_FC_COMMAND) create-stack \
 		--stack-name $(SERVICE_MASTER2_STACK_NAME) \
 		--capabilities CAPABILITY_IAM  \
@@ -127,6 +139,7 @@ service-master-2: set-optional-params-metrics-cloudwatch
 		ParameterKey=GerritCPU,ParameterValue=$(GERRIT_CPU) \
 		ParameterKey=GerritHeapLimit,ParameterValue=$(GERRIT_HEAP_LIMIT) \
 		ParameterKey=JgitCacheSize,ParameterValue=$(JGIT_CACHE_SIZE) \
+		$(MULTISITE_OPTIONAL_PARAMS) \
 		$(METRICS_CW_OPTIONAL_PARAMS)
 
 service-slave: set-optional-params-metrics-cloudwatch
