@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "590f81ee_7daca2ee",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-12T13:26:12Z",
+      "side": 1,
+      "message": "Are you sure this number is correct?\nI have seen around ~500 tbh.\n\nEach time a new dimension is attached to the metric (i.e. instanceId) then that\u0027s treated as a separate metric from CW.\n\nHow about we just say *many*?",
+      "range": {
+        "startLine": 9,
+        "startChar": 14,
+        "endLine": 9,
+        "endChar": 33
+      },
+      "revId": "a8366f18684a1197ccb6161251837488d996e49a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2360899_16e365ad",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-12T13:26:12Z",
+      "side": 1,
+      "message": "exposes",
+      "range": {
+        "startLine": 9,
+        "startChar": 7,
+        "endLine": 9,
+        "endChar": 13
+      },
+      "revId": "a8366f18684a1197ccb6161251837488d996e49a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
