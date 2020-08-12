@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b8322f2_f43811ec",
+        "filename": "master-slave/README.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-08-12T16:20:23Z",
+      "side": 1,
+      "message": "nit: upper case",
+      "range": {
+        "startLine": 78,
+        "startChar": 41,
+        "endLine": 78,
+        "endChar": 43
+      },
+      "revId": "72438aee788f46636cd3dc78d7870a3737e156f9",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a0596a5_d165cdd5",
+        "filename": "master-slave/README.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-08-12T16:20:23Z",
+      "side": 1,
+      "message": "nit: upper case",
+      "range": {
+        "startLine": 80,
+        "startChar": 40,
+        "endLine": 80,
+        "endChar": 42
+      },
+      "revId": "72438aee788f46636cd3dc78d7870a3737e156f9",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
