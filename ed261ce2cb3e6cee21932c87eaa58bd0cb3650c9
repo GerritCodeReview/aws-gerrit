@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd3fbde4_84c0f15d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-08-12T00:18:09Z",
+      "side": 1,
+      "message": "Ok, it didn\u0027t work because now we have to use InstanceId. It\u0027s not like in grafana. When InstanceId is added new metric is created, without it metric is not updated ",
+      "revId": "ed261ce2cb3e6cee21932c87eaa58bd0cb3650c9",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    }
+  ]
+}
