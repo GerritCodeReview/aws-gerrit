@@ -151,7 +151,7 @@ Parameters:
   MetricsCloudwatchExcludeMetrics:
     Description: Comma separated list of regex patterns to exclude metrics reported to CloudWatch
     Type: CommaDelimitedList
-    Default: ''
+    Default: '^(?!.*(sshd\\/sessions\\/connected|proc\\/cpu\\/usage|jgit\\/block_cache\\/cache_used|jvm\\.memory\\.total.used|proc\\/cpu\\/system_load|jvm\\.gc\\.G1-Old-Generation\\.time|proc\\/jvm\\/thread\\/num_live|git\\/upload-pack\\/request_count_total|http\\/server\\/rest_api\\/server_latency_total|http\\/server\\/success_count_total|http\\/server\\/error_count_total|queue\\/index_batch\\/total_scheduled_tasks_count|queue\\/receive_commits\\/total_scheduled_tasks_count|queue\\/work_queue\\/total_scheduled_tasks_count|queue\\/ssh_command_start\\/total_scheduled_tasks_count|queue\\/send_email\\/scheduled_tasks|jgit\\/block_cache\\/open_files|jgit\\/block_cache\\/cache_used)).*'
 
 Conditions:
   CreateCloudwatchDashboard: !Equals [!Ref MetricsCloudwatchEnabled, true]
