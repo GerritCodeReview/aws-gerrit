@@ -37,7 +37,7 @@ endif
 		ParameterKey=SubnetIdProp,ParameterValue=$(SUBNET_ID) \
 		$(CLUSTER_OPTIONAL_PARAMS)
 
-service: set-optional-params-metrics-cloudwatch
+service: set-optional-params-metrics-cloudwatch set-optional-params-smtp
 ifdef LOAD_BALANCER_SCHEME
 		$(eval SERVICE_OPTIONAL_PARAMS := $(SERVICE_OPTIONAL_PARAMS) ParameterKey=LoadBalancerScheme,ParameterValue=$(LOAD_BALANCER_SCHEME))
 endif
