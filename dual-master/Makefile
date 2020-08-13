@@ -17,6 +17,7 @@ AWS_FC_COMMAND=export AWS_PAGER=;aws cloudformation
 				gerrit-build gerrit-publish haproxy-publish syslog-sidecar-publish
 
 create-all: upload-common-templates \
+						git-daemon-publish git-ssh-publish \
 						gerrit-publish haproxy-publish syslog-sidecar-publish \
 						cluster wait-for-cluster-creation \
 						service-slave service-master-1 \
