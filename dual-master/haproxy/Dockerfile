@@ -8,5 +8,6 @@ RUN apt-get update && \
     chown haproxy: /var/lib/haproxy /var/run/haproxy
 
 COPY haproxy.cfg.template /usr/local/etc/haproxy/
+COPY haproxy.cfg.multisite.template /usr/local/etc/haproxy/
 
 COPY docker-entrypoint.sh /

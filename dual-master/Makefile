@@ -7,19 +7,26 @@ SERVICE_MASTER_TEMPLATE:=cf-service-master.yml
 SERVICE_SLAVE_TEMPLATE:=cf-service-slave.yml
 DNS_ROUTING_TEMPLATE:=cf-dns-route.yml
 LOAD_BALANCER_TEMPLATE:=cf-service-lb.yml
+SERVICE_REPLICATION_TEMPLATE:=cf-service-replication.yml
 AWS_FC_COMMAND=export AWS_PAGER=;aws cloudformation
 
 .PHONY: create-all delete-all \
+				wait-for-replication-creation wait-for-service-replication-deletion service-replication delete-service-replication \
 				cluster cluster-keys service-master-1 service-master-2 service-slave dns-routing \
 				wait-for-cluster-creation wait-for-service-master-1-creation wait-for-service-master-2-creation wait-for-service-slave-creation wait-for-dns-routing-creation \
 				wait-for-cluster-deletion wait-for-service-master-1-deletion wait-for-service-master-2-deletion wait-for-service-slave-deletion wait-for-dns-routing-deletion \
 				service-lb wait-for-service-lb-deletion wait-for-service-lb-creation \
 				gerrit-build gerrit-publish haproxy-publish syslog-sidecar-publish
 
+ifeq ($(MULTISITE_ENABLED),true)
+optional_replication_targets=service-replication wait-for-service-replication-creation
+endif
+
 create-all: upload-common-templates \
 						git-daemon-publish git-ssh-publish \
 						gerrit-publish haproxy-publish syslog-sidecar-publish \
 						cluster wait-for-cluster-creation \
+						$(optional_replication_targets) \
 						service-slave service-master-1 \
 						wait-for-service-master-1-creation wait-for-service-slave-creation \
 						service-master-2 wait-for-service-master-2-creation \
@@ -140,6 +147,22 @@ endif
 		$(MASTER2_SERVICE_OPTIONAL_PARAMS) \
 		$(METRICS_CW_OPTIONAL_PARAMS)
 
+service-replication:
+	$(AWS_FC_COMMAND) create-stack \
+		--stack-name $(SERVICE_REPLICATION_STACK_NAME) \
+		--capabilities CAPABILITY_IAM  \
+		--template-body file://`pwd`/$(SERVICE_REPLICATION_TEMPLATE) \
+		--region $(AWS_REGION) \
+		--parameters \
+		ParameterKey=GitReplicationServiceName,ParameterValue=$(SERVICE_REPLICATION_STACK_NAME) \
+		ParameterKey=ClusterStackName,ParameterValue=$(CLUSTER_STACK_NAME) \
+		ParameterKey=TemplateBucketName,ParameterValue=$(TEMPLATE_BUCKET_NAME) \
+		ParameterKey=DockerRegistryUrl,ParameterValue=$(DOCKER_REGISTRY_URI) \
+		ParameterKey=DesiredCount,ParameterValue=$(SERVICE_REPLICATION_DESIRED_COUNT) \
+		ParameterKey=GerritKeyPrefix,ParameterValue=$(GERRIT_KEY_PREFIX) \
+		ParameterKey=HostedZoneName,ParameterValue=$(HOSTED_ZONE_NAME) \
+		ParameterKey=GitReplicationSubdomain,ParameterValue=$(GIT_REPLICATION_SUBDOMAIN)
+
 service-slave: set-optional-params-metrics-cloudwatch
 ifdef GERRIT_SLAVE_INSTANCE_ID
 		$(eval SLAVE_SERVICE_OPTIONAL_PARAMS := $(SLAVE_SERVICE_OPTIONAL_PARAMS) ParameterKey=InstanceId,ParameterValue=$(GERRIT_SLAVE_INSTANCE_ID))
@@ -174,6 +197,9 @@ service-lb:
 ifdef LOAD_BALANCER_SCHEME
 		$(eval SERVICE_OPTIONAL_PARAMS := $(SERVICE_OPTIONAL_PARAMS) ParameterKey=LoadBalancerScheme,ParameterValue=$(LOAD_BALANCER_SCHEME))
 endif
+ifdef MULTISITE_ENABLED
+		$(eval MULTISITE_OPTIONAL_PARAMS := $(MULTISITE_OPTIONAL_PARAMS) ParameterKey=MultiSiteEnabled,ParameterValue=$(MULTISITE_ENABLED))
+endif
 
 	$(AWS_FC_COMMAND) create-stack \
 		--stack-name $(LOAD_BALANCER_STACK_NAME) \
@@ -184,6 +210,7 @@ endif
 		ParameterKey=ClusterStackName,ParameterValue=$(CLUSTER_STACK_NAME) \
 		ParameterKey=Master1ServiceStackName,ParameterValue=$(SERVICE_MASTER1_STACK_NAME) \
 		ParameterKey=Master2ServiceStackName,ParameterValue=$(SERVICE_MASTER2_STACK_NAME) \
+		ParameterKey=ReplicationServiceStackName,ParameterValue=$(SERVICE_REPLICATION_STACK_NAME) \
 		ParameterKey=HostedZoneName,ParameterValue=$(HOSTED_ZONE_NAME) \
 		ParameterKey=DockerRegistryUrl,ParameterValue=$(DOCKER_REGISTRY_URI) \
 		ParameterKey=GerritKeyPrefix,ParameterValue=$(GERRIT_KEY_PREFIX)\
@@ -191,6 +218,7 @@ endif
 		ParameterKey=Subdomain,ParameterValue=$(LB_SUBDOMAIN) \
 		ParameterKey=HAProxyDockerImage,ParameterValue=aws-gerrit/haproxy:$(HAPROXY_HEAD_SHA1) \
 		ParameterKey=SidecarDockerImage,ParameterValue=aws-gerrit/syslog-sidecar:$(SYSLOG_HEAD_SHA1) \
+		$(MULTISITE_OPTIONAL_PARAMS) \
 		$(SERVICE_OPTIONAL_PARAMS)
 
 dns-routing:
@@ -217,6 +245,13 @@ wait-for-service-master-1-creation:
 	--stack-name $(SERVICE_MASTER1_STACK_NAME) \
 	--region $(AWS_REGION)
 	@echo "*** Service stack '$(SERVICE_MASTER1_STACK_NAME)' created"
+
+wait-for-service-replication-creation:
+	@echo "*** Wait for service replication stack '$(SERVICE_REPLICATION_STACK_NAME)' creation"
+	$(AWS_FC_COMMAND) wait stack-create-complete \
+	--stack-name $(SERVICE_REPLICATION_STACK_NAME) \
+	--region $(AWS_REGION)
+	@echo "*** Service stack '$(SERVICE_REPLICATION_STACK_NAME)' created"
 
 wait-for-service-master-2-creation:
 	@echo "*** Wait for service master stack '$(SERVICE_MASTER2_STACK_NAME)' creation"
@@ -288,6 +323,13 @@ wait-for-dns-routing-deletion:
 	--region $(AWS_REGION)
 	@echo "*** DNS routing stack '$(DNS_ROUTING_STACK_NAME)' deleted"
 
+wait-for-service-replication-deletion:
+	@echo "*** Wait for service replication stack '$(SERVICE_REPLICATION_STACK_NAME)' deletion"
+	$(AWS_FC_COMMAND) wait stack-delete-complete \
+	--stack-name $(SERVICE_REPLICATION_STACK_NAME) \
+	--region $(AWS_REGION)
+	@echo "*** Service stack '$(SERVICE_REPLICATION_STACK_NAME)' deleted"
+
 delete-cluster:
 	$(AWS_FC_COMMAND) delete-stack \
 	--stack-name $(CLUSTER_STACK_NAME) \
@@ -313,6 +355,11 @@ delete-service-lb:
 	--stack-name $(LOAD_BALANCER_STACK_NAME) \
 	--region $(AWS_REGION)
 
+delete-service-replication:
+	$(AWS_FC_COMMAND) delete-stack \
+	--stack-name $(SERVICE_REPLICATION_STACK_NAME) \
+	--region $(AWS_REGION)
+
 delete-dns-routing:
 	$(AWS_FC_COMMAND) delete-stack \
 	--stack-name $(DNS_ROUTING_STACK_NAME) \
@@ -322,6 +369,7 @@ delete-all: delete-dns-routing wait-for-dns-routing-deletion \
 						delete-service-lb wait-for-service-lb-deletion \
 						delete-service-master-1 delete-service-master-2 delete-service-slave \
 						wait-for-service-master-1-deletion wait-for-service-master-2-deletion wait-for-service-slave-deletion \
+						delete-service-replication wait-for-service-replication-deletion \
 						delete-cluster wait-for-cluster-deletion
 
 gerrit-publish:

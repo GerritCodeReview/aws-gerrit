@@ -47,6 +47,10 @@ Parameters:
         Description: HAProxy HTTP port
         Type: Number
         Default: 80
+  GitAdminSSHHostPort:
+        Description: Git ssh port
+        Type: Number
+        Default: 1022
   CertificateArn:
         Description: SSL Certificates ARN
         Type: String
@@ -73,10 +77,22 @@ Parameters:
       Description: Stack name of the ECS Master Gerrit service
       Type: String
       Default: gerrit-service-master-2
+  ReplicationServiceStackName:
+    Description: Stack name of the ECS Replication Service
+    Type: String
+    Default: gerrit-service-replication
   SyslogSidecarServiceName:
       Description: HAPRoxy Syslog Sidecar service name
       Type: String
       Default: gerrit-haproxy-sidecar
+  MultiSiteEnabled:
+    Description: Whether this is a multi-site deployment
+    Type: String
+    Default: false
+    AllowedValues: [true, false]
+
+Conditions:
+  IsMultisiteEnabled: !Equals [!Ref MultiSiteEnabled, "true"]
 
 Resources:
     LBService:
@@ -112,6 +128,14 @@ Resources:
                     - Name: GERRIT_MASTER_2_URL
                       Value:
                         Fn::ImportValue: !Join [':', [!Ref 'Master2ServiceStackName', 'PublicLoadBalancerDNSName']]
+                    - Name: MULTISITE_ENABLED
+                      Value: !Ref MultiSiteEnabled
+                    - !If [IsMultisiteEnabled, {
+                        Name: GERRIT_REPLICATION_URL,
+                        Value: {
+                          "Fn::ImportValue": !Join [':', [!Ref 'ReplicationServiceStackName', 'ReplicationLoadBalancerDNSName']]
+                        }
+                      }, !Ref "AWS::NoValue" ]
                     - Name: SYSLOG_SIDECAR
                       Value: !Ref SyslogSidecarServiceName
                   Cpu: 1024
@@ -120,6 +144,11 @@ Resources:
                     - ContainerPort: !Ref HTTPContainerPort
                       HostPort: !Ref HTTPHostPort
                       Protocol: tcp
+                    - !If [IsMultisiteEnabled, {
+                        ContainerPort: !Ref GitAdminSSHHostPort,
+                        HostPort: !Ref GitAdminSSHHostPort,
+                        Protocol: tcp
+                    }, !Ref "AWS::NoValue" ]
                   Links:
                     - !Ref SyslogSidecarServiceName
                   LogConfiguration:
@@ -180,6 +209,18 @@ Resources:
             LoadBalancerArn: !Ref LoadBalancer
             Port: !Ref HTTPSHostPort
             Protocol: TLS
+
+    GitAdminSSHListener:
+      Type: AWS::ElasticLoadBalancingV2::Listener
+      Condition: IsMultisiteEnabled
+      DependsOn: LoadBalancer
+      Properties:
+        DefaultActions:
+          - Type: forward
+            TargetGroupArn: !Ref HTTPTargetGroup
+        LoadBalancerArn: !Ref LoadBalancer
+        Port: !Ref GitAdminSSHHostPort
+        Protocol: TCP
 
 Outputs:
   PublicLoadBalancerDNSName:

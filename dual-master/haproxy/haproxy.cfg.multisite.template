@@ -74,3 +74,29 @@ backend gerrit-ssh-2
     mode http
     option forwardfor
     server gerrit-ssh-2 $GERRIT_MASTER_2_URL:29418
+
+###########################################################
+# Handling of requests on port 1022, for git ops over SSH #
+# TODO: This should only be enabled when on MULTI_SITE    #
+###########################################################
+frontend frontend-git-admin-ssh
+    bind *:1022
+    mode tcp
+    timeout client 5m
+
+    default_backend backend-git-admin-ssh
+
+backend backend-git-admin-ssh
+    mode tcp
+    option redispatch
+    option httpchk GET /config/server/healthcheck~status HTTP/1.0
+    http-check expect status 200
+    balance source
+    timeout connect 10s
+    timeout server 5m
+    server backend-git-admin-ssh-1 $GERRIT_REPLICATION_URL:1022 check port 8080 inter 10s
+
+backend backend-git-admin-ssh-1
+    mode http
+    option forwardfor
+    server backend-git-admin-ssh-1 $GERRIT_REPLICATION_URL:1022

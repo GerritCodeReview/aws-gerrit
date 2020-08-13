@@ -12,6 +12,14 @@ if [ "$1" = 'haproxy' ]; then
 	set -- "$(which haproxy-systemd-wrapper)" -p /run/haproxy.pid "$@"
 fi
 
-envsubst < /usr/local/etc/haproxy/haproxy.cfg.template > /usr/local/etc/haproxy/haproxy.cfg
+export HA_TEMPLATE=/usr/local/etc/haproxy/haproxy.cfg.template
+if [ "$MULTISITE_ENABLED" = "true" ]; then
+  HA_TEMPLATE=/usr/local/etc/haproxy/haproxy.cfg.multisite.template
+fi
+
+echo "***** MULTISITE_ENABLED: '$MULTISITE_ENABLED'."
+echo "**** Using '$HA_TEMPLATE' template."
+
+envsubst < "$HA_TEMPLATE" > /usr/local/etc/haproxy/haproxy.cfg
 
 exec "$@"
