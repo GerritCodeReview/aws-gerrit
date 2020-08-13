@@ -50,7 +50,7 @@ endif
 		ParameterKey=SubnetIdProp,ParameterValue=$(SUBNET_ID) \
 		$(CLUSTER_OPTIONAL_PARAMS)
 
-service-master-1: set-optional-params-metrics-cloudwatch
+service-master-1: set-optional-params-metrics-cloudwatch set-optional-params-smtp
 ifdef GERRIT_MASTER1_INSTANCE_ID
 		$(eval MASTER1_SERVICE_OPTIONAL_PARAMS := $(MASTER1_SERVICE_OPTIONAL_PARAMS) ParameterKey=InstanceId,ParameterValue=$(GERRIT_MASTER1_INSTANCE_ID))
 endif
@@ -94,7 +94,7 @@ endif
 		$(MASTER1_SERVICE_OPTIONAL_PARAMS) \
 		$(METRICS_CW_OPTIONAL_PARAMS)
 
-service-master-2: set-optional-params-metrics-cloudwatch
+service-master-2: set-optional-params-metrics-cloudwatch set-optional-params-smtp
 ifdef GERRIT_MASTER2_INSTANCE_ID
 		$(eval MASTER2_SERVICE_OPTIONAL_PARAMS := $(MASTER2_SERVICE_OPTIONAL_PARAMS) ParameterKey=InstanceId,ParameterValue=$(GERRIT_MASTER2_INSTANCE_ID))
 endif

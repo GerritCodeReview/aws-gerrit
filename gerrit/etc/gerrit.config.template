@@ -30,8 +30,9 @@
   smtpServer = {{ SMTP_SERVER  }}
   connectTimeout = 30 s
   threadPoolSize = 2
-  smtpEncryption = ssl
-  sslVerify = false
+  smtpEncryption = {{ SMTP_ENCRYPTION }}
+  smtpServerPort = {{ SMTP_SERVER_PORT }}
+  sslVerify = {{ SMTP_SSL_VERIFY }}
   smtpUser = {{ SMTP_USER }}
   enable = true
   from = ${user} (Gerrit) <gerrit@{{ SMTP_DOMAIN }}>
