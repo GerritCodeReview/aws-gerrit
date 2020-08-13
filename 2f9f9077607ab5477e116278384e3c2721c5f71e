@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83927e65_58bb1316",
+        "filename": "Makefile.common",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-13T13:04:18Z",
+      "side": 1,
+      "message": "I think it would be best not set these value into SERVICE_OPTIONAL_PARAMS but to a more specific one, i.e. SMTP_OPTIONAL_PARAMS, so that we can control better which parameters are passed to which targets.\n\nIf a slave target for example, was being called with SERVICE_OPTIONAL_PARAMS, it would fail because SMTP variable is set globally and slave does not take SMTP parmeters.\n\nHope it makes sense.",
+      "range": {
+        "startLine": 45,
+        "startChar": 9,
+        "endLine": 45,
+        "endChar": 32
+      },
+      "revId": "2f9f9077607ab5477e116278384e3c2721c5f71e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
