@@ -1,0 +1,174 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Service to allow replication over EFS
+Parameters:
+  GitReplicationServiceName:
+    Description: The name of the Git replication service
+    Type: String
+    Default: git-replication-service
+  GitReplicationSubdomain:
+    Description: The subdomain of the Git replication endpoint
+    Type: String
+    Default: git-replication
+  HostedZoneName:
+    Description: The route53 HostedZoneName.
+    Type: String
+  GitAdminSSHContainerName:
+    Description: The name of the Git Admin SSH container
+    Type: String
+    Default: git-admin-ssh-container
+  GitAdminSSHContainerPort:
+    Description: Git Admin SSH Container port
+    Type: Number
+    Default: 22
+  ClusterStackName:
+      Description: Stack name of the ECS cluster to deply the serivces
+      Type: String
+      Default: gerrit-cluster
+  TemplateBucketName:
+      Description: S3 bucket containing cloudformation templates
+      Type: String
+  EnvironmentName:
+      Description: An environment name used to build the log stream names
+      Type: String
+      Default: test
+  GitSSHDockerImage:
+    Description: Git SSH Docker image
+    Type: String
+    Default: aws-gerrit/git-ssh:latest
+  DockerRegistryUrl:
+        Description: Docker registry URL
+        Type: String
+  DesiredCount:
+        Description: How many instances of this task should we run across our cluster?
+        Type: Number
+        Default: 1
+  GitAdminSSHHostPort:
+        Description: Git ssh port
+        Type: Number
+        Default: 1022
+  GerritKeyPrefix:
+        Description: Gerrit credentials keys prefix
+        Type: String
+  GerritGitVolume:
+      Description: Gerrit git volume name
+      Type: String
+      Default: gerrit-git-master
+
+Resources:
+    Service:
+        Type: AWS::ECS::Service
+        DependsOn:
+          - GitAdminSSHListener
+        Properties:
+            Cluster:
+              Fn::ImportValue:
+                  !Join [':', [!Ref 'ClusterStackName', 'ClusterName']]
+            DesiredCount: !Ref DesiredCount
+            TaskDefinition: !Ref TaskDefinition
+            LoadBalancers:
+                - ContainerName: !Ref GitAdminSSHContainerName
+                  ContainerPort: !Ref GitAdminSSHContainerPort
+                  TargetGroupArn: !Ref GitAdminSSHTargetGroup
+
+    TaskDefinition:
+        Type: AWS::ECS::TaskDefinition
+        Properties:
+            Family: !Join ['', [!Ref GitReplicationServiceName, TaskDefinition]]
+            TaskRoleArn: !GetAtt ECSTaskExecutionRoleStack.Outputs.TaskExecutionRoleRef
+            ExecutionRoleArn: !GetAtt ECSTaskExecutionRoleStack.Outputs.TaskExecutionRoleRef
+            NetworkMode: bridge
+            ContainerDefinitions:
+                - Name: !Ref GitAdminSSHContainerName
+                  Essential: true
+                  Image: !Sub '${DockerRegistryUrl}/${GitSSHDockerImage}'
+                  Environment:
+                    - Name: TZ
+                      Value: US/Pacific
+                    - Name: SSH_USERS
+                      Value: gerrit:1000:1000
+                    - Name: AWS_REGION
+                      Value: !Ref AWS::Region
+                    - Name: GERRIT_KEY_PREFIX
+                      Value: !Ref GerritKeyPrefix
+                  MountPoints:
+                    - SourceVolume: !Ref GerritGitVolume
+                      ContainerPath: /var/gerrit/git
+                  Cpu: 256
+                  Memory: 512
+                  PortMappings:
+                    - ContainerPort: !Ref GitAdminSSHContainerPort
+                      HostPort: !Ref GitAdminSSHHostPort
+                      Protocol: tcp
+                  LogConfiguration:
+                    LogDriver: awslogs
+                    Options:
+                      awslogs-group: !Ref ClusterStackName
+                      awslogs-region: !Ref AWS::Region
+                      awslogs-stream-prefix: !Ref EnvironmentName
+            Volumes:
+              - Name: !Ref GerritGitVolume
+                Host:
+                  SourcePath: "/mnt/efs/gerrit-shared/git"
+
+    LoadBalancer:
+        Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+        Properties:
+            Type: network
+            Scheme: internet-facing
+            Subnets:
+              - Fn::ImportValue:
+                  !Join [':', [!Ref 'ClusterStackName', 'PublicSubnetOne']]
+            Tags:
+                - Key: Name
+                  Value: !Join ['-', [!Ref 'EnvironmentName', !Ref GitReplicationServiceName, 'nlb']]
+
+    GitAdminSSHTargetGroup:
+      Type: AWS::ElasticLoadBalancingV2::TargetGroup
+      DependsOn: LoadBalancer
+      Properties:
+        VpcId:
+          Fn::ImportValue:
+            !Join [':', [!Ref 'ClusterStackName', 'VPCId']]
+        Port: !Ref GitAdminSSHHostPort
+        Protocol: TCP
+
+    GitAdminSSHListener:
+      Type: AWS::ElasticLoadBalancingV2::Listener
+      DependsOn: LoadBalancer
+      Properties:
+        DefaultActions:
+          - Type: forward
+            TargetGroupArn: !Ref GitAdminSSHTargetGroup
+        LoadBalancerArn: !Ref LoadBalancer
+        Port: !Ref GitAdminSSHHostPort
+        Protocol: TCP
+
+    ReplicationDnsRecord:
+      Type: AWS::Route53::RecordSet
+      Properties:
+        Name: !Sub '${GitReplicationSubdomain}.${HostedZoneName}'
+        HostedZoneName: !Sub '${HostedZoneName}.'
+        Comment: DNS name for the Replication service.
+        Type: A
+        AliasTarget:
+          DNSName: !GetAtt 'LoadBalancer.DNSName'
+          HostedZoneId: !GetAtt 'LoadBalancer.CanonicalHostedZoneID'
+          EvaluateTargetHealth: False
+
+    ECSTaskExecutionRoleStack:
+      Type: AWS::CloudFormation::Stack
+      Properties:
+        TemplateURL: !Join [ '', ['https://', !Ref TemplateBucketName, '.s3.amazonaws.com/cf-gerrit-task-execution-role.yml'] ]
+        TimeoutInMinutes: '5'
+
+Outputs:
+  ReplicationLoadBalancerDNSName:
+    Description: The url of the replication load balancer
+    Value: !GetAtt 'LoadBalancer.DNSName'
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'ReplicationLoadBalancerDNSName' ] ]
+  ReplicationDNSRecord:
+    Description: Alias DNS record for the replication load balancer URL
+    Value: !Sub '${GitReplicationSubdomain}.${HostedZoneName}'
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'ReplicationDNSRecord' ] ]
