@@ -12,6 +12,12 @@ The following templates are provided in this example:
 * `cf-service-slave`: define the service stack running the gerrit replica
 * `cf-service-lb`: define the LBs in front of gerrit masters (this includes haproxy as well as NLB)
 
+When the dual-master is deployed as `multi-site` then these additional templates will
+be executed:
+
+* `cf-service-replication`: Define a replication stack that will allow git replication
+over the EFS volume, which is mounted by the master instances.
+
 ### Networking
 
 * Single VPC:
@@ -103,6 +109,8 @@ default: `256`.
 
 ### 2 - Deploy
 
+#### Single-Site
+
 * Create the cluster, services and DNS routing stacks:
 
 ```
@@ -118,6 +126,24 @@ You can monitor the creations of the stacks in [CloudFormation](https://console.
 to the EC2 instances for troubleshooting purposes. The key pair is automatically generated
 and stored in a `pem` file on the current directory.
 To use when ssh-ing into your instances as follow: `ssh -i cluster-keys.pem ec2-user@<ec2_instance_ip>`
+
+#### Replication-Service
+
+Optionally this recipe can be deployed so that replication *to* master instances
+is available.
+
+By setting the environment variable `REPLICATION_SERVICE_ENABLED=true`, this recipe will
+set up and configure additional resources that will allow other other sites to replicate
+to a specific endpoint, exposed as:
+
+* For GIT replication
+`$(GIT_REPLICATION_SUBDOMAIN).$(HOSTED_ZONE_NAME):9148`
+
+* For Git Admin replication
+`$(GIT_REPLICATION_SUBDOMAIN).$(HOSTED_ZONE_NAME):1022`
+
+The service will persist git data on the same EFS volume mounted by the gerrit
+master1 and gerrit master2. 
 
 ### Cleaning up
 
