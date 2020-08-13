@@ -39,3 +39,14 @@ endif
 ifdef METRICS_CLOUDWATCH_EXCLUDE_METRICS_LIST
 		$(eval METRICS_CW_OPTIONAL_PARAMS := $(METRICS_CW_OPTIONAL_PARAMS) ParameterKey=MetricsCloudwatchExcludeMetrics,ParameterValue=\"$(METRICS_CLOUDWATCH_EXCLUDE_METRICS_LIST)\")
 endif
+
+set-optional-params-smtp:
+ifdef SMTP_SERVER_PORT
+		$(eval SMTP_OPTIONAL_PARAMS := $(SMTP_OPTIONAL_PARAMS) ParameterKey=SMTPServerPort,ParameterValue=$(SMTP_SERVER_PORT))
+endif
+ifdef SMTP_ENCRYPTION
+		$(eval SMTP_OPTIONAL_PARAMS := $(SMTP_OPTIONAL_PARAMS) ParameterKey=SMTPEncryption,ParameterValue=$(SMTP_ENCRYPTION))
+endif
+ifdef SMTP_SSL_VERIFY
+		$(eval SMTP_OPTIONAL_PARAMS := $(SMTP_OPTIONAL_PARAMS) ParameterKey=SMTPSslVerify,ParameterValue=$(SMTP_SSL_VERIFY))
+endif

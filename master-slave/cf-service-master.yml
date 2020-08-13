@@ -129,12 +129,26 @@ Parameters:
   SMTPServer:
       Description: SMTP server URL
       Type: String
+  SMTPServerPort:
+      Description: SMTP server port
+      Type: Number
+      Default: 465
   SMTPUser:
       Description: User name to authenticate with, if required for relay
       Type: String
   SMTPDomain:
       Description: Domain to be used in the From field
       Type: String
+  SMTPEncryption:
+      Description: Encryption to be used
+      Type: String
+      Default: ssl
+      AllowedValues: ['ssl', 'tls', 'none']
+  SMTPSslVerify:
+      Description: If false and SMTPEncryption is 'ssl' or 'tls', Gerrit will not verify the server certificate when it connects to send an email message.
+      Type: String
+      Default: true
+      AllowedValues: [true, false]
   InstanceId:
     Description: Optional identifier for the Gerrit instance
     Type: String
@@ -227,6 +241,12 @@ Resources:
                       Value: !Ref LDAPGroupBase
                     - Name: SMTP_SERVER
                       Value: !Ref SMTPServer
+                    - Name: SMTP_SERVER_PORT
+                      Value: !Ref SMTPServerPort
+                    - Name: SMTP_ENCRYPTION
+                      Value: !Ref SMTPEncryption
+                    - Name: SMTP_SSL_VERIFY
+                      Value: !Ref SMTPSslVerify
                     - Name: SMTP_USER
                       Value: !Ref SMTPUser
                     - Name: SMTP_DOMAIN
