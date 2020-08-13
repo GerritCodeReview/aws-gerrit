@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8a49135_cfe15362",
+        "filename": "Configuration.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-13T12:33:41Z",
+      "side": 1,
+      "message": "Why 465 and not 25? I that the default in AWS?",
+      "range": {
+        "startLine": 99,
+        "startChar": 11,
+        "endLine": 99,
+        "endChar": 14
+      },
+      "revId": "4e0de1d3708a2b53956c676462806496ce37c7a2",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d27b60c6_e7d1ed82",
+        "filename": "Configuration.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-13T12:33:41Z",
+      "side": 1,
+      "message": "nit: space at EOL",
+      "range": {
+        "startLine": 106,
+        "startChar": 14,
+        "endLine": 106,
+        "endChar": 15
+      },
+      "revId": "4e0de1d3708a2b53956c676462806496ce37c7a2",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf02d4ca_c9b19987",
+        "filename": "Configuration.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-13T12:33:41Z",
+      "side": 1,
+      "message": "It should be true by default.",
+      "range": {
+        "startLine": 110,
+        "startChar": 11,
+        "endLine": 110,
+        "endChar": 16
+      },
+      "revId": "4e0de1d3708a2b53956c676462806496ce37c7a2",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
