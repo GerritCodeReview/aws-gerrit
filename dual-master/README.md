@@ -12,6 +12,12 @@ The following templates are provided in this example:
 * `cf-service-slave`: define the service stack running the gerrit replica
 * `cf-service-lb`: define the LBs in front of gerrit masters (this includes haproxy as well as NLB)
 
+When the recipe enables the replication_service then these additional templates will
+be executed:
+
+* `cf-service-replication`: Define a replication stack that will allow git replication
+over the EFS volume, which is mounted by the master instances.
+
 ### Networking
 
 * Single VPC:
@@ -100,6 +106,16 @@ default: `256`.
 * `GERRIT_MASTER2_INSTANCE_ID`: Optional. Identifier for the Gerrit master2 instance.
 "gerrit-dual-master-MASTER2" by default.
 
+#### REPLICATION SERVICE
+
+* `REPLICATION_SERVICE_ENABLED`: Optional. Whether to expose a replication endpoint.
+"false" by default.
+* `SERVICE_REPLICATION_STACK_NAME`: Optional. The name of the replication service stack.
+"git-replication-service" by default.
+* `SERVICE_REPLICATION_DESIRED_COUNT`: Optional. Number of wanted replication tasks.
+"1" by default.
+* `GIT_REPLICATION_SUBDOMAIN`: Optional. The subdomain to use for the replication endpoint.
+"git-replication" by default.
 
 ### 2 - Deploy
 
@@ -118,6 +134,27 @@ You can monitor the creations of the stacks in [CloudFormation](https://console.
 to the EC2 instances for troubleshooting purposes. The key pair is automatically generated
 and stored in a `pem` file on the current directory.
 To use when ssh-ing into your instances as follow: `ssh -i cluster-keys.pem ec2-user@<ec2_instance_ip>`
+
+#### Replication-Service
+
+Optionally this recipe can be deployed so that replication *to* master instances
+is available.
+
+By setting the environment variable `REPLICATION_SERVICE_ENABLED=true`, this recipe will
+set up and configure additional resources that will allow other other sites to replicate
+to a specific endpoint, exposed as:
+
+* For GIT replication
+`$(GIT_REPLICATION_SUBDOMAIN).$(HOSTED_ZONE_NAME):9148`
+
+* For Git Admin replication
+`$(GIT_REPLICATION_SUBDOMAIN).$(HOSTED_ZONE_NAME):1022`
+
+The service will persist git data on the same EFS volume mounted by the gerrit
+master1 and gerrit master2.
+
+Note that the replication endpoint is not internet-facing, thus replication requests
+must be coming from a peered VCP.
 
 ### Cleaning up
 
