@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ada6dea3_9185febd",
+        "filename": "Configuration.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-08-13T12:42:47Z",
+      "side": 1,
+      "message": "Gerrit default for encryption is none that\u0027s why it\u0027s 25, aws-gerrit default is ssl so I believe it should be 465. If we want to change aws-default to be that same as Gerrit it should be 25 than. WDYT?",
+      "parentUuid": "c8a49135_cfe15362",
+      "range": {
+        "startLine": 99,
+        "startChar": 11,
+        "endLine": 99,
+        "endChar": 14
+      },
+      "revId": "4e0de1d3708a2b53956c676462806496ce37c7a2",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d27b60c6_e7d1ed82",
         "filename": "Configuration.md",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "901c455e_a234ffc8",
+        "filename": "Configuration.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-08-13T12:42:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d27b60c6_e7d1ed82",
+      "range": {
+        "startLine": 106,
+        "startChar": 14,
+        "endLine": 106,
+        "endChar": 15
+      },
+      "revId": "4e0de1d3708a2b53956c676462806496ce37c7a2",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf02d4ca_c9b19987",
         "filename": "Configuration.md",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2020-08-13T12:33:41Z",
       "side": 1,
       "message": "It should be true by default.",
+      "range": {
+        "startLine": 110,
+        "startChar": 11,
+        "endLine": 110,
+        "endChar": 16
+      },
+      "revId": "4e0de1d3708a2b53956c676462806496ce37c7a2",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fc5233b_4565291d",
+        "filename": "Configuration.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-08-13T12:42:47Z",
+      "side": 1,
+      "message": "Same as above currently for aws-gerrit it was hardcoded to false so I\u0027ve put default as false",
+      "parentUuid": "bf02d4ca_c9b19987",
       "range": {
         "startLine": 110,
         "startChar": 11,
