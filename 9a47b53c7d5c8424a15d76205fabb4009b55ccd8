@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "929f78ba_60981667",
+        "filename": "dual-master/cf-service-master.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-08-14T13:31:39Z",
+      "side": 1,
+      "message": "But for end user is always external, when it\u0027s defined in setup.env it needs to be escaped with \u0027$$$$\u0027 that\u0027s why I\u0027ve mentioned that it must be escaped. But you are right it\u0027s confusing with the default I will change the default to \u0027$$$$\u0027",
+      "parentUuid": "8436aafa_7681195b",
+      "range": {
+        "startLine": 157,
+        "startChar": 42,
+        "endLine": 157,
+        "endChar": 43
+      },
+      "revId": "9a47b53c7d5c8424a15d76205fabb4009b55ccd8",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c979d78f_c158fc07",
         "filename": "dual-master/cf-service-slave.yml",
         "patchSetId": 1
