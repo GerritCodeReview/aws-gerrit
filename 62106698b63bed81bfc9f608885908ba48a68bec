@@ -16,6 +16,24 @@
       "revId": "62106698b63bed81bfc9f608885908ba48a68bec",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "39baec9a_ab9343b2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-14T18:02:52Z",
+      "side": 1,
+      "message": "Yes, exactly my thinking was that \"multi-site\" recipe will just be two deployments of dual-master with replication and multi-site capabilities.\n\nAs in, if you have another gerrit site somewhere (which possibly you deployed using the same recipe, in a different region), you can \"point\" to it.\n\nThis change allows to be \"pointed to\" by exposing a replication service.\nThe next one allows to \"point to\" by configuring the replication.config accordingly.\n\nThen on top of this we\u0027ll need another CR to configure multi-site plugins and that should be it.\n\nHope it makes sense.",
+      "parentUuid": "92a7473e_2338d780",
+      "revId": "62106698b63bed81bfc9f608885908ba48a68bec",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     }
   ]
 }
