@@ -16,6 +16,598 @@
       "revId": "60502c717a3fd5276de5142cc708f713517d7987",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "94701789_12e19324",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-14T21:41:43Z",
+      "side": 1,
+      "message": "I like this, but the term \u0027MULTISITE\u0027 is a bit out of scope IMHO.\nThe replication mechanism has nothing to do with the Gerrit multi-site plugin or configuration. You could use this remote for replicating to a remote Git replication service.\n\nWDYT?",
+      "revId": "60502c717a3fd5276de5142cc708f713517d7987",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "21c059a3_707d5fd1",
+        "filename": "dual-master/Makefile",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-14T21:41:43Z",
+      "side": 1,
+      "message": "REMOTE",
+      "range": {
+        "startLine": 68,
+        "startChar": 6,
+        "endLine": 68,
+        "endChar": 15
+      },
+      "revId": "60502c717a3fd5276de5142cc708f713517d7987",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d7c5347_064f97b6",
+        "filename": "dual-master/Makefile",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-14T21:41:43Z",
+      "side": 1,
+      "message": "REMOTE",
+      "range": {
+        "startLine": 69,
+        "startChar": 9,
+        "endLine": 69,
+        "endChar": 18
+      },
+      "revId": "60502c717a3fd5276de5142cc708f713517d7987",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19eab760_053a3bd8",
+        "filename": "dual-master/Makefile",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-14T21:41:43Z",
+      "side": 1,
+      "message": "REMOTE",
+      "range": {
+        "startLine": 69,
+        "startChar": 127,
+        "endLine": 69,
+        "endChar": 136
+      },
+      "revId": "60502c717a3fd5276de5142cc708f713517d7987",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b9cc15a_5efc9c92",
+        "filename": "dual-master/Makefile",
+        "patchSetId": 4
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-14T21:41:43Z",
+      "side": 1,
+      "message": "REMOTE",
+      "range": {
+        "startLine": 108,
+        "startChar": 4,
+        "endLine": 108,
+        "endChar": 13
+      },
+      "revId": "60502c717a3fd5276de5142cc708f713517d7987",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be174ec1_dce13013",
+        "filename": "dual-master/Makefile",
+        "patchSetId": 4
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-14T21:41:43Z",
+      "side": 1,
+      "message": "REMOTE",
+      "range": {
+        "startLine": 120,
+        "startChar": 6,
+        "endLine": 120,
+        "endChar": 15
+      },
+      "revId": "60502c717a3fd5276de5142cc708f713517d7987",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4acae63b_3acf27ed",
+        "filename": "dual-master/Makefile",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-14T21:41:43Z",
+      "side": 1,
+      "message": "REMOTE",
+      "range": {
+        "startLine": 121,
+        "startChar": 40,
+        "endLine": 121,
+        "endChar": 49
+      },
+      "revId": "60502c717a3fd5276de5142cc708f713517d7987",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82a4b73d_ce692660",
+        "filename": "dual-master/Makefile",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-14T21:41:43Z",
+      "side": 1,
+      "message": "REMOTE",
+      "range": {
+        "startLine": 121,
+        "startChar": 9,
+        "endLine": 121,
+        "endChar": 18
+      },
+      "revId": "60502c717a3fd5276de5142cc708f713517d7987",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21476a50_ea173ace",
+        "filename": "dual-master/Makefile",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-14T21:41:43Z",
+      "side": 1,
+      "message": "REMOTE",
+      "range": {
+        "startLine": 121,
+        "startChar": 127,
+        "endLine": 121,
+        "endChar": 136
+      },
+      "revId": "60502c717a3fd5276de5142cc708f713517d7987",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6f6b0ad_8d030b2e",
+        "filename": "dual-master/Makefile",
+        "patchSetId": 4
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-14T21:41:43Z",
+      "side": 1,
+      "message": "REMOTE",
+      "range": {
+        "startLine": 161,
+        "startChar": 4,
+        "endLine": 161,
+        "endChar": 13
+      },
+      "revId": "60502c717a3fd5276de5142cc708f713517d7987",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c324aea_9d614a1c",
+        "filename": "dual-master/README.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-14T21:41:43Z",
+      "side": 1,
+      "message": "REMOTE",
+      "range": {
+        "startLine": 124,
+        "startChar": 3,
+        "endLine": 124,
+        "endChar": 12
+      },
+      "revId": "60502c717a3fd5276de5142cc708f713517d7987",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c644cac0_2080bd89",
+        "filename": "dual-master/README.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-14T21:41:43Z",
+      "side": 1,
+      "message": "a",
+      "range": {
+        "startLine": 124,
+        "startChar": 84,
+        "endLine": 124,
+        "endChar": 97
+      },
+      "revId": "60502c717a3fd5276de5142cc708f713517d7987",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebfc8d41_4debc1c4",
+        "filename": "dual-master/README.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-14T21:41:43Z",
+      "side": 1,
+      "message": "remote",
+      "range": {
+        "startLine": 127,
+        "startChar": 32,
+        "endLine": 127,
+        "endChar": 42
+      },
+      "revId": "60502c717a3fd5276de5142cc708f713517d7987",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d75022f_48f2eb81",
+        "filename": "dual-master/README.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-14T21:41:43Z",
+      "side": 1,
+      "message": "to a remote Git site",
+      "range": {
+        "startLine": 129,
+        "startChar": 22,
+        "endLine": 129,
+        "endChar": 56
+      },
+      "revId": "60502c717a3fd5276de5142cc708f713517d7987",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6841e863_d9ccda1d",
+        "filename": "dual-master/cf-service-master.yml",
+        "patchSetId": 4
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-14T21:41:43Z",
+      "side": 1,
+      "message": "Remote",
+      "range": {
+        "startLine": 216,
+        "startChar": 2,
+        "endLine": 216,
+        "endChar": 11
+      },
+      "revId": "60502c717a3fd5276de5142cc708f713517d7987",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56e1958d_d3cc0835",
+        "filename": "dual-master/cf-service-master.yml",
+        "patchSetId": 4
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-14T21:41:43Z",
+      "side": 1,
+      "message": "remote",
+      "range": {
+        "startLine": 217,
+        "startChar": 52,
+        "endLine": 217,
+        "endChar": 65
+      },
+      "revId": "60502c717a3fd5276de5142cc708f713517d7987",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3a1316f_3937e983",
+        "filename": "dual-master/cf-service-master.yml",
+        "patchSetId": 4
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-14T21:41:43Z",
+      "side": 1,
+      "message": "REMOTE",
+      "range": {
+        "startLine": 319,
+        "startChar": 28,
+        "endLine": 319,
+        "endChar": 37
+      },
+      "revId": "60502c717a3fd5276de5142cc708f713517d7987",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86224f20_3ee4afce",
+        "filename": "dual-master/cf-service-master.yml",
+        "patchSetId": 4
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-14T21:41:43Z",
+      "side": 1,
+      "message": "Remote",
+      "range": {
+        "startLine": 320,
+        "startChar": 34,
+        "endLine": 320,
+        "endChar": 43
+      },
+      "revId": "60502c717a3fd5276de5142cc708f713517d7987",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "237d21e2_14128b80",
+        "filename": "dual-master/setup.env.template",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-14T21:41:43Z",
+      "side": 1,
+      "message": "REMOTE",
+      "range": {
+        "startLine": 11,
+        "startChar": 2,
+        "endLine": 11,
+        "endChar": 11
+      },
+      "revId": "60502c717a3fd5276de5142cc708f713517d7987",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea503691_ab36382a",
+        "filename": "gerrit/etc/replication.config.template",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-14T21:41:43Z",
+      "side": 1,
+      "message": "REMOTE",
+      "range": {
+        "startLine": 23,
+        "startChar": 6,
+        "endLine": 23,
+        "endChar": 15
+      },
+      "revId": "60502c717a3fd5276de5142cc708f713517d7987",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b63d388_498d4560",
+        "filename": "gerrit/etc/replication.config.template",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-14T21:41:43Z",
+      "side": 1,
+      "message": "Should this a parameter as well?",
+      "range": {
+        "startLine": 24,
+        "startChar": 9,
+        "endLine": 24,
+        "endChar": 25
+      },
+      "revId": "60502c717a3fd5276de5142cc708f713517d7987",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "305d4c10_b930281f",
+        "filename": "gerrit/etc/replication.config.template",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-14T21:41:43Z",
+      "side": 1,
+      "message": "If the Git/SSH and Git ports aren\u0027t configurable, does it make sense to. make the full URL parametric? Why not simply making the hostname parametric?",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 45
+      },
+      "revId": "60502c717a3fd5276de5142cc708f713517d7987",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b7de8ab_ded563f4",
+        "filename": "gerrit/setup_gerrit.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-14T21:41:43Z",
+      "side": 1,
+      "message": "REMOTE",
+      "range": {
+        "startLine": 171,
+        "startChar": 8,
+        "endLine": 171,
+        "endChar": 17
+      },
+      "revId": "60502c717a3fd5276de5142cc708f713517d7987",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83481b3c_461a9b27",
+        "filename": "gerrit/setup_gerrit.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-14T21:41:43Z",
+      "side": 1,
+      "message": "REMOTE",
+      "range": {
+        "startLine": 171,
+        "startChar": 38,
+        "endLine": 171,
+        "endChar": 47
+      },
+      "revId": "60502c717a3fd5276de5142cc708f713517d7987",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83f78a31_da3d50be",
+        "filename": "gerrit/setup_gerrit.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-14T21:41:43Z",
+      "side": 1,
+      "message": "REMOTE",
+      "range": {
+        "startLine": 175,
+        "startChar": 16,
+        "endLine": 175,
+        "endChar": 25
+      },
+      "revId": "60502c717a3fd5276de5142cc708f713517d7987",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1300ba3c_230da051",
+        "filename": "gerrit/setup_gerrit.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-14T21:41:43Z",
+      "side": 1,
+      "message": "REMOTE",
+      "range": {
+        "startLine": 176,
+        "startChar": 16,
+        "endLine": 176,
+        "endChar": 26
+      },
+      "revId": "60502c717a3fd5276de5142cc708f713517d7987",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
     }
   ]
 }
