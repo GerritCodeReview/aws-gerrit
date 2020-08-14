@@ -62,6 +62,9 @@ service-master-1: set-optional-params-metrics-cloudwatch
 ifdef GERRIT_MASTER1_INSTANCE_ID
 		$(eval MASTER1_SERVICE_OPTIONAL_PARAMS := $(MASTER1_SERVICE_OPTIONAL_PARAMS) ParameterKey=InstanceId,ParameterValue=$(GERRIT_MASTER1_INSTANCE_ID))
 endif
+ifdef MULTISITE_REPLICATION_TARGET_URL
+		$(eval MULTISITE_OPTIONAL_PARAMS := $(MULTISITE_OPTIONAL_PARAMS) ParameterKey=MultiSiteReplicationTargetURL,ParameterValue=$(MULTISITE_REPLICATION_TARGET_URL))
+endif
 
 	$(AWS_FC_COMMAND) create-stack \
 		--stack-name $(SERVICE_MASTER1_STACK_NAME) \
@@ -99,12 +102,16 @@ endif
 		ParameterKey=GerritCPU,ParameterValue=$(GERRIT_CPU) \
 		ParameterKey=GerritHeapLimit,ParameterValue=$(GERRIT_HEAP_LIMIT) \
 		ParameterKey=JgitCacheSize,ParameterValue=$(JGIT_CACHE_SIZE) \
+		$(MULTISITE_OPTIONAL_PARAMS) \
 		$(MASTER1_SERVICE_OPTIONAL_PARAMS) \
 		$(METRICS_CW_OPTIONAL_PARAMS)
 
 service-master-2: set-optional-params-metrics-cloudwatch
 ifdef GERRIT_MASTER2_INSTANCE_ID
 		$(eval MASTER2_SERVICE_OPTIONAL_PARAMS := $(MASTER2_SERVICE_OPTIONAL_PARAMS) ParameterKey=InstanceId,ParameterValue=$(GERRIT_MASTER2_INSTANCE_ID))
+endif
+ifdef MULTISITE_REPLICATION_TARGET_URL
+		$(eval MULTISITE_OPTIONAL_PARAMS := $(MULTISITE_OPTIONAL_PARAMS) ParameterKey=MultiSiteReplicationTargetURL,ParameterValue=$(MULTISITE_REPLICATION_TARGET_URL))
 endif
 
 	$(AWS_FC_COMMAND) create-stack \
@@ -144,11 +151,12 @@ endif
 		ParameterKey=GerritCPU,ParameterValue=$(GERRIT_CPU) \
 		ParameterKey=GerritHeapLimit,ParameterValue=$(GERRIT_HEAP_LIMIT) \
 		ParameterKey=JgitCacheSize,ParameterValue=$(JGIT_CACHE_SIZE) \
+		$(MULTISITE_OPTIONAL_PARAMS) \
 		$(MASTER2_SERVICE_OPTIONAL_PARAMS) \
 		$(METRICS_CW_OPTIONAL_PARAMS)
 
 service-replication:
-	$(AWS_FC_COMMAND) create-stack \
+	$(AWS_FC_COMMAND) update-stack \
 		--stack-name $(SERVICE_REPLICATION_STACK_NAME) \
 		--capabilities CAPABILITY_IAM  \
 		--template-body file://`pwd`/$(SERVICE_REPLICATION_TEMPLATE) \
