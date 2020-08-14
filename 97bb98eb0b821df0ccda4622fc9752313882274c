@@ -66,6 +66,30 @@
     },
     {
       "key": {
+        "uuid": "3f0cc4aa_22922be9",
+        "filename": "dual-master/cf-service-lb.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-14T14:19:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06b4ca7b_41f9b045",
+      "range": {
+        "startLine": 88,
+        "startChar": 2,
+        "endLine": 88,
+        "endChar": 18
+      },
+      "revId": "97bb98eb0b821df0ccda4622fc9752313882274c",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "331a1262_44c742b6",
         "filename": "dual-master/cf-service-lb.yml",
         "patchSetId": 3
@@ -254,6 +278,30 @@
     },
     {
       "key": {
+        "uuid": "18ad9393_2167afbc",
+        "filename": "dual-master/haproxy/Dockerfile",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-14T14:19:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b104302_f6376d32",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 59
+      },
+      "revId": "97bb98eb0b821df0ccda4622fc9752313882274c",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01ff939d_14ade7c0",
         "filename": "dual-master/haproxy/haproxy.cfg.multisite.template",
         "patchSetId": 3
@@ -321,6 +369,24 @@
       "revId": "97bb98eb0b821df0ccda4622fc9752313882274c",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48946d4f_0f1fac3a",
+        "filename": "dual-master/haproxy/haproxy.cfg.template",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-14T14:19:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb20b672_48dffbde",
+      "revId": "97bb98eb0b821df0ccda4622fc9752313882274c",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     },
     {
       "key": {

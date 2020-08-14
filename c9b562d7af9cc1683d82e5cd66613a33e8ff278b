@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d211516_90666b7d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-14T14:19:47Z",
+      "side": 1,
+      "message": "Given that this is a replication service that will serve EFS (and indirectly the masters), should we refer to it as MasterReplicationService?",
+      "revId": "c9b562d7af9cc1683d82e5cd66613a33e8ff278b",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    }
+  ]
+}
