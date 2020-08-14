@@ -21,7 +21,7 @@
   server = {{ LDAP_SERVER }}
   username = {{ LDAP_USERNAME }}
   accountBase = {{ LDAP_ACCOUNT_BASE }}
-  accountPattern = (&(objectClass=person)(uid=${username}))
+  accountPattern = {{ LDAP_ACCOUNT_PATTERN }}
   accountFullName = displayName
   accountEmailAddress = mail
   groupBase = {{ LDAP_GROUP_BASE }}

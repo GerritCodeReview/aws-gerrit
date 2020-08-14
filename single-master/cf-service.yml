@@ -108,6 +108,10 @@ Parameters:
   LDAPGroupBase:
       Description: Root of the tree containing all group objects
       Type: String
+  LDAPAccountPattern:
+      Description: Query pattern to use when searching for a user account
+      Type: String
+      Default: (&(objectClass=person)(uid=${username}))
   SMTPServer:
       Description: SMTP server URL
       Type: String
@@ -219,6 +223,8 @@ Resources:
                       Value: !Ref LDAPUsername
                     - Name: LDAP_ACCOUNT_BASE
                       Value: !Ref LDAPAccountBase
+                    - Name: LDAP_ACCOUNT_PATTERN
+                      Value: !Ref LDAPAccountPattern
                     - Name: LDAP_GROUP_BASE
                       Value: !Ref LDAPGroupBase
                     - Name: SMTP_SERVER

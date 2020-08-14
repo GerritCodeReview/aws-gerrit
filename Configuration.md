@@ -86,6 +86,10 @@ See more details [here](https://gerrit-review.googlesource.com/Documentation/con
   See [Gerrit documentation](https://gerrit-review.googlesource.com/Documentation/config-gerrit.html#ldap.accountBase)
 * `LDAP_GROUP_BASE`: Mandatory. Root of the tree containing all group objects
   See [Gerrit documentation](https://gerrit-review.googlesource.com/Documentation/config-gerrit.html#ldap.groupBase)
+* `LDAP_ACCOUNT_PATTERN`: Optional. Query pattern to use when searching for a user account. Please noticed that '$' needs to
+   be escaped with '$$$$', for example (&(objectClass=person)(uid=$$$${username}))
+  See [Gerrit documentation](https://gerrit-review.googlesource.com/Documentation/config-gerrit.html#ldap.accountPattern)
+  Default: (&(objectClass=person)(uid=${username}))
 
 #### SMTP
 
