@@ -55,6 +55,92 @@
     },
     {
       "key": {
+        "uuid": "4b79bee2_72e06700",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-14T21:12:58Z",
+      "side": 1,
+      "message": "Good work @Tony. Just some minor issues.\n\nHave you checked also that the recipe still works fine *without* replication?",
+      "revId": "62106698b63bed81bfc9f608885908ba48a68bec",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bc197f26_9c387e1b",
+        "filename": "dual-master/Makefile",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-14T21:12:58Z",
+      "side": 1,
+      "message": "Those aren\u0027t needed if REPLICATION_SERVICE_ENABLED is false",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 120
+      },
+      "revId": "62106698b63bed81bfc9f608885908ba48a68bec",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "618462fc_33fe4b09",
+        "filename": "dual-master/Makefile",
+        "patchSetId": 10
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-14T21:12:58Z",
+      "side": 1,
+      "message": "Those are not needed if SERVICE_REPLICATION_ENABLED is false",
+      "range": {
+        "startLine": 379,
+        "startChar": 0,
+        "endLine": 379,
+        "endChar": 72
+      },
+      "revId": "62106698b63bed81bfc9f608885908ba48a68bec",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2885ba42_34246118",
+        "filename": "dual-master/README.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-14T21:12:58Z",
+      "side": 1,
+      "message": "Would it be better to mention SERVICE_REPLICATION_ENABLED\u003dtrue as condition?",
+      "range": {
+        "startLine": 15,
+        "startChar": 16,
+        "endLine": 15,
+        "endChar": 47
+      },
+      "revId": "62106698b63bed81bfc9f608885908ba48a68bec",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cab3dfdd_465166c3",
         "filename": "dual-master/README.md",
         "patchSetId": 10
@@ -167,6 +253,99 @@
         "startChar": 3,
         "endLine": 115,
         "endChar": 36
+      },
+      "revId": "62106698b63bed81bfc9f608885908ba48a68bec",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6443ddf6_fd12f389",
+        "filename": "dual-master/README.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-14T21:12:58Z",
+      "side": 1,
+      "message": "This is an interesting point: one may want to scale up the replication service if needed. Good to know that ECS would manage that. @Tony have you tried with more than one? Does it work?",
+      "parentUuid": "6dcc02c7_fd206175",
+      "range": {
+        "startLine": 115,
+        "startChar": 3,
+        "endLine": 115,
+        "endChar": 36
+      },
+      "revId": "62106698b63bed81bfc9f608885908ba48a68bec",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35e6e64c_ba08d3cd",
+        "filename": "dual-master/README.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-14T21:12:58Z",
+      "side": 1,
+      "message": "onto the share EFS volume",
+      "range": {
+        "startLine": 140,
+        "startChar": 59,
+        "endLine": 140,
+        "endChar": 80
+      },
+      "revId": "62106698b63bed81bfc9f608885908ba48a68bec",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ef6c900_c0d28a10",
+        "filename": "dual-master/README.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-14T21:12:58Z",
+      "side": 1,
+      "message": "VPC",
+      "range": {
+        "startLine": 157,
+        "startChar": 29,
+        "endLine": 157,
+        "endChar": 32
+      },
+      "revId": "62106698b63bed81bfc9f608885908ba48a68bec",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad97c78b_bdd9eccc",
+        "filename": "dual-master/cf-service-replication.yml",
+        "patchSetId": 10
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-14T21:12:58Z",
+      "side": 1,
+      "message": "onto",
+      "range": {
+        "startLine": 2,
+        "startChar": 42,
+        "endLine": 2,
+        "endChar": 46
       },
       "revId": "62106698b63bed81bfc9f608885908ba48a68bec",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
