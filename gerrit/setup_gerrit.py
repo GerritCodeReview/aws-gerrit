@@ -168,9 +168,12 @@ if ((not containerSlave) and setupReplication):
     template = env.get_template("replication.config.template")
     with open(GERRIT_CONFIG_DIRECTORY + "replication.config", 'w', encoding='utf-8') as f:
         SLAVE_FQDN = os.getenv('SLAVE_SUBDOMAIN') + "." + os.getenv('HOSTED_ZONE_NAME')
+        MULTISITE_TARGET = os.getenv('MULTISITE_REPLICATION_TARGET_URL', '')
         f.write(template.render(
                 SLAVE_1_URL="git://" + SLAVE_FQDN + ":" + os.getenv('GIT_PORT') + "/${name}.git",
-                SLAVE_1_AMDIN_URL="ssh://gerrit@" + SLAVE_FQDN + ":" + os.getenv('GIT_SSH_PORT') + "/var/gerrit/git/${name}.git"
+                SLAVE_1_AMDIN_URL="ssh://gerrit@" + SLAVE_FQDN + ":" + os.getenv('GIT_SSH_PORT') + "/var/gerrit/git/${name}.git",
+                MULTISITE_TARGET_URL="git://" + MULTISITE_TARGET + ":" + os.getenv('GIT_PORT') + "/${name}.git",
+                MULTISITE_ADMIN_TARGET_URL="ssh://gerrit@" + MULTISITE_TARGET + ":" + os.getenv('GIT_SSH_PORT') + "/var/gerrit/git/${name}.git",
                 ))
 
 if (setupHA):
