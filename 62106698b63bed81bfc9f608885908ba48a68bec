@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92a7473e_2338d780",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-08-14T17:58:38Z",
+      "side": 1,
+      "message": "Is this meant to be part of the dual-master recipe? If so, I suppose the dual master recipe will evolve into a more generic multi-master/multi-site recipe. Is my assumption correct?",
+      "revId": "62106698b63bed81bfc9f608885908ba48a68bec",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    }
+  ]
+}
