@@ -81,6 +81,30 @@
       "revId": "62106698b63bed81bfc9f608885908ba48a68bec",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "742f88c4_df4ff27e",
+        "filename": "dual-master/README.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-08-14T18:08:35Z",
+      "side": 1,
+      "message": "The problem is that ECS will try to spin up another task using the same ports, unless I am missing something. This will end up in a collision since the ports are already in use and ECS won\u0027t be able to spin up more than one task.",
+      "parentUuid": "c3c06e65_1ba40418",
+      "range": {
+        "startLine": 115,
+        "startChar": 3,
+        "endLine": 115,
+        "endChar": 36
+      },
+      "revId": "62106698b63bed81bfc9f608885908ba48a68bec",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
     }
   ]
 }
