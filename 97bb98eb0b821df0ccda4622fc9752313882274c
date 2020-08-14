@@ -1,0 +1,193 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f03f4c7a_9406d5b0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-14T13:14:03Z",
+      "side": 1,
+      "message": "I like the idea of breaking down the multi-site setup in different steps, tackling the replication service as first step.\n\nI believe it would make sense then to only do the replication, without adding the extra changes to HAProxy. WDYT?",
+      "revId": "97bb98eb0b821df0ccda4622fc9752313882274c",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f0fe8339_ff4f08f4",
+        "filename": "dual-master/cf-service-lb.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-14T13:14:03Z",
+      "side": 1,
+      "message": "Should this be called ReplicationEnabled?",
+      "range": {
+        "startLine": 88,
+        "startChar": 2,
+        "endLine": 88,
+        "endChar": 18
+      },
+      "revId": "97bb98eb0b821df0ccda4622fc9752313882274c",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "331a1262_44c742b6",
+        "filename": "dual-master/cf-service-lb.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-14T13:14:03Z",
+      "side": 1,
+      "message": "to include a replication service",
+      "range": {
+        "startLine": 89,
+        "startChar": 25,
+        "endLine": 89,
+        "endChar": 45
+      },
+      "revId": "97bb98eb0b821df0ccda4622fc9752313882274c",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71e837e0_b70a1acd",
+        "filename": "dual-master/cf-service-lb.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-14T13:14:03Z",
+      "side": 1,
+      "message": "REPLICATION_SERVICE",
+      "range": {
+        "startLine": 131,
+        "startChar": 28,
+        "endLine": 131,
+        "endChar": 37
+      },
+      "revId": "97bb98eb0b821df0ccda4622fc9752313882274c",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc2d96af_09bfdb0d",
+        "filename": "dual-master/cf-service-replication.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-14T13:14:03Z",
+      "side": 1,
+      "message": "internet-facing? The replication service has no security or authentication: that would allow anyone from the internet to steal or tamper with the repository.\n\nIt must be an internal load balancer.",
+      "range": {
+        "startLine": 117,
+        "startChar": 20,
+        "endLine": 117,
+        "endChar": 35
+      },
+      "revId": "97bb98eb0b821df0ccda4622fc9752313882274c",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b981dcf_419752c5",
+        "filename": "dual-master/haproxy/Dockerfile",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-14T13:14:03Z",
+      "side": 1,
+      "message": "Is this change focused on replication? Or are you already adding the multi-site configuration? If it is replication-only, I won\u0027t add any HAProxy change.",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 59
+      },
+      "revId": "97bb98eb0b821df0ccda4622fc9752313882274c",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01ff939d_14ade7c0",
+        "filename": "dual-master/haproxy/haproxy.cfg.multisite.template",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-14T13:14:03Z",
+      "side": 1,
+      "message": "We do not need to use HAProxy for the replication services: the AWS NLB would be more than enough.",
+      "revId": "97bb98eb0b821df0ccda4622fc9752313882274c",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "951dc345_c84c1b3c",
+        "filename": "dual-master/haproxy/haproxy.cfg.template",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-14T13:14:03Z",
+      "side": 1,
+      "message": "Missing line at EOF. Did you add this file change by mistake?",
+      "revId": "97bb98eb0b821df0ccda4622fc9752313882274c",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60bcd194_3f280962",
+        "filename": "dual-master/setup.env.template",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-14T13:14:03Z",
+      "side": 1,
+      "message": "REPLICATION_SERVICE",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 9
+      },
+      "revId": "97bb98eb0b821df0ccda4622fc9752313882274c",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
