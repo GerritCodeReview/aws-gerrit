@@ -65,6 +65,9 @@ endif
 ifdef LDAP_ACCOUNT_PATTERN
 		$(eval MASTER1_SERVICE_OPTIONAL_PARAMS := $(MASTER1_SERVICE_OPTIONAL_PARAMS) ParameterKey=LDAPAccountPattern,ParameterValue=\"$(LDAP_ACCOUNT_PATTERN)\")
 endif
+ifdef MULTISITE_REPLICATION_TARGET_URL
+		$(eval MULTISITE_OPTIONAL_PARAMS := $(MULTISITE_OPTIONAL_PARAMS) ParameterKey=MultiSiteReplicationTargetURL,ParameterValue=$(MULTISITE_REPLICATION_TARGET_URL))
+endif
 
 	$(AWS_FC_COMMAND) create-stack \
 		--stack-name $(SERVICE_MASTER1_STACK_NAME) \
@@ -102,6 +105,7 @@ endif
 		ParameterKey=GerritCPU,ParameterValue=$(GERRIT_CPU) \
 		ParameterKey=GerritHeapLimit,ParameterValue=$(GERRIT_HEAP_LIMIT) \
 		ParameterKey=JgitCacheSize,ParameterValue=$(JGIT_CACHE_SIZE) \
+		$(MULTISITE_OPTIONAL_PARAMS) \
 		$(MASTER1_SERVICE_OPTIONAL_PARAMS) \
 		$(METRICS_CW_OPTIONAL_PARAMS) \
 		$(SMTP_OPTIONAL_PARAMS)
@@ -112,6 +116,9 @@ ifdef GERRIT_MASTER2_INSTANCE_ID
 endif
 ifdef LDAP_ACCOUNT_PATTERN
 		$(eval MASTER2_SERVICE_OPTIONAL_PARAMS := $(MASTER2_SERVICE_OPTIONAL_PARAMS) ParameterKey=LDAPAccountPattern,ParameterValue=\"$(LDAP_ACCOUNT_PATTERN)\")
+endif
+ifdef MULTISITE_REPLICATION_TARGET_URL
+		$(eval MULTISITE_OPTIONAL_PARAMS := $(MULTISITE_OPTIONAL_PARAMS) ParameterKey=MultiSiteReplicationTargetURL,ParameterValue=$(MULTISITE_REPLICATION_TARGET_URL))
 endif
 
 	$(AWS_FC_COMMAND) create-stack \
@@ -151,6 +158,7 @@ endif
 		ParameterKey=GerritCPU,ParameterValue=$(GERRIT_CPU) \
 		ParameterKey=GerritHeapLimit,ParameterValue=$(GERRIT_HEAP_LIMIT) \
 		ParameterKey=JgitCacheSize,ParameterValue=$(JGIT_CACHE_SIZE) \
+		$(MULTISITE_OPTIONAL_PARAMS) \
 		$(MASTER2_SERVICE_OPTIONAL_PARAMS) \
 		$(METRICS_CW_OPTIONAL_PARAMS) \
 		$(SMTP_OPTIONAL_PARAMS)
