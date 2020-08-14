@@ -117,6 +117,17 @@ default: `256`.
 * `GIT_REPLICATION_SUBDOMAIN`: Optional. The subdomain to use for the replication endpoint.
 "git-replication" by default.
 
+It is also posssible to replicate *to* an extra target by providing a FQDN.
+The target is expected to expose port 9148 and port 1022 for git and git admin
+operations respectively.
+
+* `REMOTE_REPLICATION_TARGET_HOST`: Optional.  The fully qualified domain name of a remote replication target.
+Empty by default.
+
+The replication service and the remote replication target represent the reading
+and writing sides of Git replication: by enabling both of them, it is possible to
+establish replication to a remote Git site.
+
 ### 2 - Deploy
 
 * Create the cluster, services and DNS routing stacks:
