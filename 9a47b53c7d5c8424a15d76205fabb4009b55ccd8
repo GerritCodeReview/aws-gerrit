@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "8436aafa_7681195b",
+        "filename": "dual-master/cf-service-master.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-14T13:24:54Z",
+      "side": 1,
+      "message": "Ahah, so the \u0027$$$$\u0027 needs to be used ONLY IF the variable is defined inside the Makefile, but not if it is defined externally, correct?\n\nCan you clarify that in the documentation?",
+      "parentUuid": "f4581fb7_64ac746a",
+      "range": {
+        "startLine": 157,
+        "startChar": 42,
+        "endLine": 157,
+        "endChar": 43
+      },
+      "revId": "9a47b53c7d5c8424a15d76205fabb4009b55ccd8",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c979d78f_c158fc07",
         "filename": "dual-master/cf-service-slave.yml",
         "patchSetId": 1
