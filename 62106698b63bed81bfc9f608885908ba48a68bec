@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "542ce8e1_bc1693a2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-08-14T18:27:07Z",
+      "side": 1,
+      "message": "Makes sense. My concerne is that we will have to add loads of logic in the wrapping script to accomodate the different setup you might end up with.\n\nThat was the reason why, for example, single-master and dual-master has been treated as different recipe. single-master as well it is just a simple version of dual-master, hence we could have used a single recipe with some extra logic in the wrapping scripts.\n\nOff course the price to pay in having separate recipes is repetition of the CFs. The aim of shared templates was to reduce the repetition.",
+      "parentUuid": "39baec9a_ab9343b2",
+      "revId": "62106698b63bed81bfc9f608885908ba48a68bec",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cab3dfdd_465166c3",
         "filename": "dual-master/README.md",
         "patchSetId": 10
