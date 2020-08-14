@@ -55,6 +55,9 @@ service-master-1: set-optional-params-metrics-cloudwatch set-optional-params-smt
 ifdef GERRIT_MASTER1_INSTANCE_ID
 		$(eval MASTER1_SERVICE_OPTIONAL_PARAMS := $(MASTER1_SERVICE_OPTIONAL_PARAMS) ParameterKey=InstanceId,ParameterValue=$(GERRIT_MASTER1_INSTANCE_ID))
 endif
+ifdef LDAP_ACCOUNT_PATTERN
+		$(eval MASTER1_SERVICE_OPTIONAL_PARAMS := $(MASTER1_SERVICE_OPTIONAL_PARAMS) ParameterKey=LDAPAccountPattern,ParameterValue=\"$(LDAP_ACCOUNT_PATTERN)\")
+endif
 
 	$(AWS_FC_COMMAND) create-stack \
 		--stack-name $(SERVICE_MASTER1_STACK_NAME) \
@@ -99,6 +102,9 @@ endif
 service-master-2: set-optional-params-metrics-cloudwatch set-optional-params-smtp
 ifdef GERRIT_MASTER2_INSTANCE_ID
 		$(eval MASTER2_SERVICE_OPTIONAL_PARAMS := $(MASTER2_SERVICE_OPTIONAL_PARAMS) ParameterKey=InstanceId,ParameterValue=$(GERRIT_MASTER2_INSTANCE_ID))
+endif
+ifdef LDAP_ACCOUNT_PATTERN
+		$(eval MASTER2_SERVICE_OPTIONAL_PARAMS := $(MASTER2_SERVICE_OPTIONAL_PARAMS) ParameterKey=LDAPAccountPattern,ParameterValue=\"$(LDAP_ACCOUNT_PATTERN)\")
 endif
 
 	$(AWS_FC_COMMAND) create-stack \
@@ -145,6 +151,9 @@ endif
 service-slave: set-optional-params-metrics-cloudwatch
 ifdef GERRIT_SLAVE_INSTANCE_ID
 		$(eval SLAVE_SERVICE_OPTIONAL_PARAMS := $(SLAVE_SERVICE_OPTIONAL_PARAMS) ParameterKey=InstanceId,ParameterValue=$(GERRIT_SLAVE_INSTANCE_ID))
+endif
+ifdef LDAP_ACCOUNT_PATTERN
+		$(eval SLAVE_SERVICE_OPTIONAL_PARAMS := $(SLAVE_SERVICE_OPTIONAL_PARAMS) ParameterKey=LDAPAccountPattern,ParameterValue=\"$(LDAP_ACCOUNT_PATTERN)\")
 endif
 
 	$(AWS_FC_COMMAND) create-stack \

@@ -133,6 +133,10 @@ Parameters:
   LDAPGroupBase:
       Description: Root of the tree containing all group objects
       Type: String
+  LDAPAccountPattern:
+      Description: Query pattern to use when searching for a user account
+      Type: String
+      Default: (&(objectClass=person)(uid=${username}))
   InstanceId:
     Description: Optional identifier for the Gerrit instance
     Type: String
@@ -231,6 +235,8 @@ Resources:
                       Value: !Ref LDAPAccountBase
                     - Name: LDAP_GROUP_BASE
                       Value: !Ref LDAPGroupBase
+                    - Name: LDAP_ACCOUNT_PATTERN
+                      Value: !Ref LDAPAccountPattern
                     - Name: GERRIT_INSTANCE_ID
                       Value: !Ref InstanceId
                     - Name: METRICS_CLOUDWATCH_ENABLED
