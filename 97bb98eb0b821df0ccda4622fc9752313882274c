@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "06b4ca7b_41f9b045",
+        "filename": "dual-master/cf-service-lb.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-14T13:30:21Z",
+      "side": 1,
+      "message": "I was wondering how to name the parameter that would drive the multi-site configuration.\n\nMy initial thought was to have a MultiSiteEnabled that would then trigger the creation of both multi-site plugins/configuration *and* replication.\n\nBut I have been thinking that having two separate ones might give us more granularity on how to deploy.\n\nSo yes, let\u0027s have this as ReplicationEnabled only. I\u0027ll change the parameters names accordingly everywhere.",
+      "parentUuid": "f0fe8339_ff4f08f4",
+      "range": {
+        "startLine": 88,
+        "startChar": 2,
+        "endLine": 88,
+        "endChar": 18
+      },
+      "revId": "97bb98eb0b821df0ccda4622fc9752313882274c",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "331a1262_44c742b6",
         "filename": "dual-master/cf-service-lb.yml",
         "patchSetId": 3
@@ -62,6 +86,30 @@
       "revId": "97bb98eb0b821df0ccda4622fc9752313882274c",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a7f2ab4_91b04815",
+        "filename": "dual-master/cf-service-lb.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-14T13:30:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "331a1262_44c742b6",
+      "range": {
+        "startLine": 89,
+        "startChar": 25,
+        "endLine": 89,
+        "endChar": 45
+      },
+      "revId": "97bb98eb0b821df0ccda4622fc9752313882274c",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +136,30 @@
     },
     {
       "key": {
+        "uuid": "d60f6691_d4996f0c",
+        "filename": "dual-master/cf-service-lb.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-14T13:30:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "71e837e0_b70a1acd",
+      "range": {
+        "startLine": 131,
+        "startChar": 28,
+        "endLine": 131,
+        "endChar": 37
+      },
+      "revId": "97bb98eb0b821df0ccda4622fc9752313882274c",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc2d96af_09bfdb0d",
         "filename": "dual-master/cf-service-replication.yml",
         "patchSetId": 3
@@ -99,6 +171,30 @@
       "writtenOn": "2020-08-14T13:14:03Z",
       "side": 1,
       "message": "internet-facing? The replication service has no security or authentication: that would allow anyone from the internet to steal or tamper with the repository.\n\nIt must be an internal load balancer.",
+      "range": {
+        "startLine": 117,
+        "startChar": 20,
+        "endLine": 117,
+        "endChar": 35
+      },
+      "revId": "97bb98eb0b821df0ccda4622fc9752313882274c",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46696a6d_c91f0200",
+        "filename": "dual-master/cf-service-replication.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-14T13:30:21Z",
+      "side": 1,
+      "message": "Makes sense, this is just there as a WIP.\nThe only way to get access to that LB from one site to the other is to peer the two VPCs, which I didn\u0027t want to do quite yet during development.\n\nI will do that and make this internal only",
+      "parentUuid": "fc2d96af_09bfdb0d",
       "range": {
         "startLine": 117,
         "startChar": 20,
@@ -134,6 +230,30 @@
     },
     {
       "key": {
+        "uuid": "6b104302_f6376d32",
+        "filename": "dual-master/haproxy/Dockerfile",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-14T13:30:21Z",
+      "side": 1,
+      "message": "My bad, I was under the impression that we wanted every incoming request to go to the LB (centralized logging, stats, etc).\n\nI will remove this, it\u0027ll make this change shorter and easier to review and test.\n\nCan you remind me why connections to gerrit masters do have to go through HAproxy? is it for stickiness?",
+      "parentUuid": "3b981dcf_419752c5",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 59
+      },
+      "revId": "97bb98eb0b821df0ccda4622fc9752313882274c",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "01ff939d_14ade7c0",
         "filename": "dual-master/haproxy/haproxy.cfg.multisite.template",
         "patchSetId": 3
@@ -151,6 +271,24 @@
     },
     {
       "key": {
+        "uuid": "a9fbe2d2_fc0cbd56",
+        "filename": "dual-master/haproxy/haproxy.cfg.multisite.template",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-14T13:30:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "01ff939d_14ade7c0",
+      "revId": "97bb98eb0b821df0ccda4622fc9752313882274c",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "951dc345_c84c1b3c",
         "filename": "dual-master/haproxy/haproxy.cfg.template",
         "patchSetId": 3
@@ -162,6 +300,24 @@
       "writtenOn": "2020-08-14T13:14:03Z",
       "side": 1,
       "message": "Missing line at EOF. Did you add this file change by mistake?",
+      "revId": "97bb98eb0b821df0ccda4622fc9752313882274c",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb20b672_48dffbde",
+        "filename": "dual-master/haproxy/haproxy.cfg.template",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-14T13:30:21Z",
+      "side": 1,
+      "message": "yep, I am still working on this, I\u0027ll remove it before adding reviewers to this change.",
+      "parentUuid": "951dc345_c84c1b3c",
       "revId": "97bb98eb0b821df0ccda4622fc9752313882274c",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
@@ -188,6 +344,30 @@
       "revId": "97bb98eb0b821df0ccda4622fc9752313882274c",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b600211d_9ff01615",
+        "filename": "dual-master/setup.env.template",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-14T13:30:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "60bcd194_3f280962",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 9
+      },
+      "revId": "97bb98eb0b821df0ccda4622fc9752313882274c",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     }
   ]
 }
