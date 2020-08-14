@@ -195,6 +195,10 @@ Parameters:
     Description: Comma separated list of regex patterns to exclude metrics reported to CloudWatch
     Type: CommaDelimitedList
     Default: ''
+  MultiSiteReplicationTargetURL:
+    Description: The fully qualified domain name of an additional replication target
+    Type: String
+    Default: ''
 
 Resources:
     Service:
@@ -286,6 +290,8 @@ Resources:
                       Value: !Ref MetricsCloudwatchDryRun
                     - Name: METRICS_CLOUDWATCH_EXCLUDE_METRICS_LIST
                       Value: !Join [',', !Ref MetricsCloudwatchExcludeMetrics]
+                    - Name: MULTISITE_REPLICATION_TARGET_URL
+                      Value: !Ref MultiSiteReplicationTargetURL
                   MountPoints:
                     - SourceVolume: !Ref GerritGitVolume
                       ContainerPath: /var/gerrit/git
