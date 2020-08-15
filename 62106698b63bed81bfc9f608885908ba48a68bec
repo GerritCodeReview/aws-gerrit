@@ -72,6 +72,42 @@
     },
     {
       "key": {
+        "uuid": "d7a1fe60_54d3d90b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-15T09:52:41Z",
+      "side": 1,
+      "message": "Yes I have tested that thoroughly, it does work without replication.",
+      "parentUuid": "4b79bee2_72e06700",
+      "revId": "62106698b63bed81bfc9f608885908ba48a68bec",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4aba9b9d_10a5a319",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-15T09:52:41Z",
+      "side": 1,
+      "message": "I see your point @ponch. I think both approaches have trade-offs.\n\nI chose to extend the dual-master recipe rather than creating a new one from scratch because 100% of the existing CF would have been copied over, whilst accommodating the \"extra\" part seemed just a matter of few conditional values and Ifs (If you look at the diff of this change you\u0027ll see that only has a minor change to the Makefile and it doesn\u0027t even touch any other cf template).\n\nI think the benefit of this approach is that we have less code to maintain and we can triage/fix both recipes in an easier way: there\u0027s already *loads\" of repetition among recipes and I wanted to contain this to go even further.\n\nExtensive use of shared templates could be an approach (or CDK), but it would require some refactoring on the existing code and I thought it was out of the scope of this change.\n\n@luca, @marcin, @ponch WDYT?",
+      "parentUuid": "542ce8e1_bc1693a2",
+      "revId": "62106698b63bed81bfc9f608885908ba48a68bec",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc197f26_9c387e1b",
         "filename": "dual-master/Makefile",
         "patchSetId": 10
@@ -95,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "0475b6ef_068b9e5d",
+        "filename": "dual-master/Makefile",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-15T09:52:41Z",
+      "side": 1,
+      "message": "Yes, but this is just the list of phony targets: they should be all mentioned in the phony target to indicate that they won\u0027t produce any file.",
+      "parentUuid": "bc197f26_9c387e1b",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 120
+      },
+      "revId": "62106698b63bed81bfc9f608885908ba48a68bec",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "618462fc_33fe4b09",
         "filename": "dual-master/Makefile",
         "patchSetId": 10
@@ -106,6 +166,30 @@
       "writtenOn": "2020-08-14T21:12:58Z",
       "side": 1,
       "message": "Those are not needed if SERVICE_REPLICATION_ENABLED is false",
+      "range": {
+        "startLine": 379,
+        "startChar": 0,
+        "endLine": 379,
+        "endChar": 72
+      },
+      "revId": "62106698b63bed81bfc9f608885908ba48a68bec",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf78069b_86e4e694",
+        "filename": "dual-master/Makefile",
+        "patchSetId": 10
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-15T09:52:41Z",
+      "side": 1,
+      "message": "Whilst this is true, I thought it was better to always make sure they are deleted (A recipe *might* have been previously created with those targets for example, despite the _current_ setup configuration).\nWhen they don\u0027t exist it will be just a noop, so I think it just make the deletion operation more solid.\n\nWDYT?",
+      "parentUuid": "618462fc_33fe4b09",
       "range": {
         "startLine": 379,
         "startChar": 0,
@@ -138,6 +222,30 @@
       "revId": "62106698b63bed81bfc9f608885908ba48a68bec",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cd7cc9c_010b9215",
+        "filename": "dual-master/README.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-15T09:52:41Z",
+      "side": 1,
+      "message": "I will add a link to the relevant configuration section where more information can be gathered.",
+      "parentUuid": "2885ba42_34246118",
+      "range": {
+        "startLine": 15,
+        "startChar": 16,
+        "endLine": 15,
+        "endChar": 47
+      },
+      "revId": "62106698b63bed81bfc9f608885908ba48a68bec",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     },
     {
       "key": {
@@ -284,6 +392,30 @@
     },
     {
       "key": {
+        "uuid": "32537f9a_43c9bb4a",
+        "filename": "dual-master/README.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-15T09:52:41Z",
+      "side": 1,
+      "message": "Yes I tested this and it works.\nI have deployed dual-master with service replication enabled and a desired count of 2[1].\nECS placement strategy placed one one one EC2 instance[2] and one on another[3].\n\nECS has a concept of placement-strategy (which can also be tweaked). The first thing it will do is:\n\n`Identify the instances that satisfy the CPU, memory, and port requirements in the task definition.`\n\nYou can see more details in the AWS official docs[4]\n\n[1] https://ibb.co/ftVJPKc\n[2] https://ibb.co/C5xMtjc\n[3] https://ibb.co/QXtf5Yv\n[4] https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-placement.html",
+      "parentUuid": "6443ddf6_fd12f389",
+      "range": {
+        "startLine": 115,
+        "startChar": 3,
+        "endLine": 115,
+        "endChar": 36
+      },
+      "revId": "62106698b63bed81bfc9f608885908ba48a68bec",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35e6e64c_ba08d3cd",
         "filename": "dual-master/README.md",
         "patchSetId": 10
@@ -304,6 +436,30 @@
       "revId": "62106698b63bed81bfc9f608885908ba48a68bec",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef8ba24f_339ea842",
+        "filename": "dual-master/README.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-15T09:52:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35e6e64c_ba08d3cd",
+      "range": {
+        "startLine": 140,
+        "startChar": 59,
+        "endLine": 140,
+        "endChar": 80
+      },
+      "revId": "62106698b63bed81bfc9f608885908ba48a68bec",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     },
     {
       "key": {
@@ -330,6 +486,30 @@
     },
     {
       "key": {
+        "uuid": "cc39eaf4_40e13920",
+        "filename": "dual-master/README.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-15T09:52:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ef6c900_c0d28a10",
+      "range": {
+        "startLine": 157,
+        "startChar": 29,
+        "endLine": 157,
+        "endChar": 32
+      },
+      "revId": "62106698b63bed81bfc9f608885908ba48a68bec",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad97c78b_bdd9eccc",
         "filename": "dual-master/cf-service-replication.yml",
         "patchSetId": 10
@@ -350,6 +530,30 @@
       "revId": "62106698b63bed81bfc9f608885908ba48a68bec",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67d5e08e_ded3db8f",
+        "filename": "dual-master/cf-service-replication.yml",
+        "patchSetId": 10
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-15T09:52:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad97c78b_bdd9eccc",
+      "range": {
+        "startLine": 2,
+        "startChar": 42,
+        "endLine": 2,
+        "endChar": 46
+      },
+      "revId": "62106698b63bed81bfc9f608885908ba48a68bec",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     }
   ]
 }
