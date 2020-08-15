@@ -59,6 +59,30 @@
     },
     {
       "key": {
+        "uuid": "5cbf2b5c_4e9e8ca6",
+        "filename": "dual-master/Makefile",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-15T10:19:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21c059a3_707d5fd1",
+      "range": {
+        "startLine": 68,
+        "startChar": 6,
+        "endLine": 68,
+        "endChar": 15
+      },
+      "revId": "60502c717a3fd5276de5142cc708f713517d7987",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d7c5347_064f97b6",
         "filename": "dual-master/Makefile",
         "patchSetId": 4
@@ -105,6 +129,54 @@
     },
     {
       "key": {
+        "uuid": "ce1faaf7_16b81832",
+        "filename": "dual-master/Makefile",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-15T10:19:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d7c5347_064f97b6",
+      "range": {
+        "startLine": 69,
+        "startChar": 9,
+        "endLine": 69,
+        "endChar": 18
+      },
+      "revId": "60502c717a3fd5276de5142cc708f713517d7987",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c8904570_87799167",
+        "filename": "dual-master/Makefile",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-15T10:19:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19eab760_053a3bd8",
+      "range": {
+        "startLine": 69,
+        "startChar": 127,
+        "endLine": 69,
+        "endChar": 136
+      },
+      "revId": "60502c717a3fd5276de5142cc708f713517d7987",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b9cc15a_5efc9c92",
         "filename": "dual-master/Makefile",
         "patchSetId": 4
@@ -128,6 +200,30 @@
     },
     {
       "key": {
+        "uuid": "b6fc636e_e63b8bc4",
+        "filename": "dual-master/Makefile",
+        "patchSetId": 4
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-15T10:19:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b9cc15a_5efc9c92",
+      "range": {
+        "startLine": 108,
+        "startChar": 4,
+        "endLine": 108,
+        "endChar": 13
+      },
+      "revId": "60502c717a3fd5276de5142cc708f713517d7987",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be174ec1_dce13013",
         "filename": "dual-master/Makefile",
         "patchSetId": 4
@@ -148,6 +244,30 @@
       "revId": "60502c717a3fd5276de5142cc708f713517d7987",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7919e39f_a546885b",
+        "filename": "dual-master/Makefile",
+        "patchSetId": 4
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-15T10:19:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be174ec1_dce13013",
+      "range": {
+        "startLine": 120,
+        "startChar": 6,
+        "endLine": 120,
+        "endChar": 15
+      },
+      "revId": "60502c717a3fd5276de5142cc708f713517d7987",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     },
     {
       "key": {
@@ -220,6 +340,78 @@
     },
     {
       "key": {
+        "uuid": "6c23aa1f_6b8dfc27",
+        "filename": "dual-master/Makefile",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-15T10:19:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82a4b73d_ce692660",
+      "range": {
+        "startLine": 121,
+        "startChar": 9,
+        "endLine": 121,
+        "endChar": 18
+      },
+      "revId": "60502c717a3fd5276de5142cc708f713517d7987",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6e5f20f2_90b5d4f8",
+        "filename": "dual-master/Makefile",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-15T10:19:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4acae63b_3acf27ed",
+      "range": {
+        "startLine": 121,
+        "startChar": 40,
+        "endLine": 121,
+        "endChar": 49
+      },
+      "revId": "60502c717a3fd5276de5142cc708f713517d7987",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a3138cc5_889279ac",
+        "filename": "dual-master/Makefile",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-15T10:19:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21476a50_ea173ace",
+      "range": {
+        "startLine": 121,
+        "startChar": 127,
+        "endLine": 121,
+        "endChar": 136
+      },
+      "revId": "60502c717a3fd5276de5142cc708f713517d7987",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6f6b0ad_8d030b2e",
         "filename": "dual-master/Makefile",
         "patchSetId": 4
@@ -240,6 +432,30 @@
       "revId": "60502c717a3fd5276de5142cc708f713517d7987",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08c71d77_6d8cac31",
+        "filename": "dual-master/Makefile",
+        "patchSetId": 4
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-15T10:19:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6f6b0ad_8d030b2e",
+      "range": {
+        "startLine": 161,
+        "startChar": 4,
+        "endLine": 161,
+        "endChar": 13
+      },
+      "revId": "60502c717a3fd5276de5142cc708f713517d7987",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     },
     {
       "key": {
@@ -289,6 +505,54 @@
     },
     {
       "key": {
+        "uuid": "e4863b3a_1a1efb95",
+        "filename": "dual-master/README.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-15T10:19:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c324aea_9d614a1c",
+      "range": {
+        "startLine": 124,
+        "startChar": 3,
+        "endLine": 124,
+        "endChar": 12
+      },
+      "revId": "60502c717a3fd5276de5142cc708f713517d7987",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "05ee9eb1_215df8b6",
+        "filename": "dual-master/README.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-15T10:19:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c644cac0_2080bd89",
+      "range": {
+        "startLine": 124,
+        "startChar": 84,
+        "endLine": 124,
+        "endChar": 97
+      },
+      "revId": "60502c717a3fd5276de5142cc708f713517d7987",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ebfc8d41_4debc1c4",
         "filename": "dual-master/README.md",
         "patchSetId": 4
@@ -309,6 +573,30 @@
       "revId": "60502c717a3fd5276de5142cc708f713517d7987",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41788536_e4c6a2e5",
+        "filename": "dual-master/README.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-15T10:19:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebfc8d41_4debc1c4",
+      "range": {
+        "startLine": 127,
+        "startChar": 32,
+        "endLine": 127,
+        "endChar": 42
+      },
+      "revId": "60502c717a3fd5276de5142cc708f713517d7987",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     },
     {
       "key": {
@@ -335,6 +623,30 @@
     },
     {
       "key": {
+        "uuid": "f699d7e7_31bb069d",
+        "filename": "dual-master/README.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-15T10:19:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d75022f_48f2eb81",
+      "range": {
+        "startLine": 129,
+        "startChar": 22,
+        "endLine": 129,
+        "endChar": 56
+      },
+      "revId": "60502c717a3fd5276de5142cc708f713517d7987",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6841e863_d9ccda1d",
         "filename": "dual-master/cf-service-master.yml",
         "patchSetId": 4
@@ -355,6 +667,30 @@
       "revId": "60502c717a3fd5276de5142cc708f713517d7987",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ade351d_655a200b",
+        "filename": "dual-master/cf-service-master.yml",
+        "patchSetId": 4
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-15T10:19:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6841e863_d9ccda1d",
+      "range": {
+        "startLine": 216,
+        "startChar": 2,
+        "endLine": 216,
+        "endChar": 11
+      },
+      "revId": "60502c717a3fd5276de5142cc708f713517d7987",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     },
     {
       "key": {
@@ -381,6 +717,30 @@
     },
     {
       "key": {
+        "uuid": "f1da0456_d728a569",
+        "filename": "dual-master/cf-service-master.yml",
+        "patchSetId": 4
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-15T10:19:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56e1958d_d3cc0835",
+      "range": {
+        "startLine": 217,
+        "startChar": 52,
+        "endLine": 217,
+        "endChar": 65
+      },
+      "revId": "60502c717a3fd5276de5142cc708f713517d7987",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3a1316f_3937e983",
         "filename": "dual-master/cf-service-master.yml",
         "patchSetId": 4
@@ -401,6 +761,30 @@
       "revId": "60502c717a3fd5276de5142cc708f713517d7987",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81da2032_6300f82f",
+        "filename": "dual-master/cf-service-master.yml",
+        "patchSetId": 4
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-15T10:19:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3a1316f_3937e983",
+      "range": {
+        "startLine": 319,
+        "startChar": 28,
+        "endLine": 319,
+        "endChar": 37
+      },
+      "revId": "60502c717a3fd5276de5142cc708f713517d7987",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     },
     {
       "key": {
@@ -427,6 +811,30 @@
     },
     {
       "key": {
+        "uuid": "7abb46dd_140cadc1",
+        "filename": "dual-master/cf-service-master.yml",
+        "patchSetId": 4
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-15T10:19:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86224f20_3ee4afce",
+      "range": {
+        "startLine": 320,
+        "startChar": 34,
+        "endLine": 320,
+        "endChar": 43
+      },
+      "revId": "60502c717a3fd5276de5142cc708f713517d7987",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "237d21e2_14128b80",
         "filename": "dual-master/setup.env.template",
         "patchSetId": 4
@@ -447,6 +855,30 @@
       "revId": "60502c717a3fd5276de5142cc708f713517d7987",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3491ada_523382d3",
+        "filename": "dual-master/setup.env.template",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-15T10:19:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "237d21e2_14128b80",
+      "range": {
+        "startLine": 11,
+        "startChar": 2,
+        "endLine": 11,
+        "endChar": 11
+      },
+      "revId": "60502c717a3fd5276de5142cc708f713517d7987",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     },
     {
       "key": {
@@ -473,6 +905,30 @@
     },
     {
       "key": {
+        "uuid": "30bb591e_af9bee23",
+        "filename": "gerrit/etc/replication.config.template",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-15T10:19:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea503691_ab36382a",
+      "range": {
+        "startLine": 23,
+        "startChar": 6,
+        "endLine": 23,
+        "endChar": 15
+      },
+      "revId": "60502c717a3fd5276de5142cc708f713517d7987",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b63d388_498d4560",
         "filename": "gerrit/etc/replication.config.template",
         "patchSetId": 4
@@ -496,6 +952,30 @@
     },
     {
       "key": {
+        "uuid": "a802ca36_9fdbc920",
+        "filename": "gerrit/etc/replication.config.template",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-15T10:19:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b63d388_498d4560",
+      "range": {
+        "startLine": 24,
+        "startChar": 9,
+        "endLine": 24,
+        "endChar": 25
+      },
+      "revId": "60502c717a3fd5276de5142cc708f713517d7987",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "305d4c10_b930281f",
         "filename": "gerrit/etc/replication.config.template",
         "patchSetId": 4
@@ -507,6 +987,30 @@
       "writtenOn": "2020-08-14T21:41:43Z",
       "side": 1,
       "message": "If the Git/SSH and Git ports aren\u0027t configurable, does it make sense to. make the full URL parametric? Why not simply making the hostname parametric?",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 45
+      },
+      "revId": "60502c717a3fd5276de5142cc708f713517d7987",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "334fb6a1_54e58271",
+        "filename": "gerrit/etc/replication.config.template",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-15T10:19:45Z",
+      "side": 1,
+      "message": "These variables are not provided by the user, but computed by setup_gerrit.py script (L175-L176).\nWe could just pass the REMOTE_TARGET_URL to the template, and have the non-configurable parts just hardcoded in the replication.config.\n\nHowever I wanted the generation of the remote target done in the same way as the generation of the slave target.\n\nIf we want to change that, should be do it for both as a follow up?",
+      "parentUuid": "305d4c10_b930281f",
       "range": {
         "startLine": 25,
         "startChar": 0,
@@ -565,6 +1069,54 @@
     },
     {
       "key": {
+        "uuid": "3a496470_a8d17cb3",
+        "filename": "gerrit/setup_gerrit.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-15T10:19:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83481b3c_461a9b27",
+      "range": {
+        "startLine": 171,
+        "startChar": 38,
+        "endLine": 171,
+        "endChar": 47
+      },
+      "revId": "60502c717a3fd5276de5142cc708f713517d7987",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d07aa03b_27047d47",
+        "filename": "gerrit/setup_gerrit.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-15T10:19:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b7de8ab_ded563f4",
+      "range": {
+        "startLine": 171,
+        "startChar": 8,
+        "endLine": 171,
+        "endChar": 17
+      },
+      "revId": "60502c717a3fd5276de5142cc708f713517d7987",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83f78a31_da3d50be",
         "filename": "gerrit/setup_gerrit.py",
         "patchSetId": 4
@@ -588,6 +1140,30 @@
     },
     {
       "key": {
+        "uuid": "96eb15da_6dc23485",
+        "filename": "gerrit/setup_gerrit.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-15T10:19:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83f78a31_da3d50be",
+      "range": {
+        "startLine": 175,
+        "startChar": 16,
+        "endLine": 175,
+        "endChar": 25
+      },
+      "revId": "60502c717a3fd5276de5142cc708f713517d7987",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1300ba3c_230da051",
         "filename": "gerrit/setup_gerrit.py",
         "patchSetId": 4
@@ -608,6 +1184,30 @@
       "revId": "60502c717a3fd5276de5142cc708f713517d7987",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c191745_bef468af",
+        "filename": "gerrit/setup_gerrit.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-15T10:19:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1300ba3c_230da051",
+      "range": {
+        "startLine": 176,
+        "startChar": 16,
+        "endLine": 176,
+        "endChar": 26
+      },
+      "revId": "60502c717a3fd5276de5142cc708f713517d7987",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     }
   ]
 }
