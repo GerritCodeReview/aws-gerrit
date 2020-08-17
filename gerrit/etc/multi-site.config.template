@@ -1,0 +1,11 @@
+[index]
+  maxTries = 6
+  retryInterval = 30000
+  numStripedLocks = 100
+
+[kafka "subscriber"]
+  pollingIntervalMs = 1000
+  KafkaProp-autoCommitIntervalMs = 1000
+
+[kafka "publisher"]
+  KafkaProp-maxRequestSize = 10485760
