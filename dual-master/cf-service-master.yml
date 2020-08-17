@@ -158,6 +158,24 @@ Parameters:
     Description: The fully qualified domain name of a remote replication target
     Type: String
     Default: ''
+  MultiSiteEnabled:
+    Description: Whether this gerrit is part of a multi-site cluster deployment
+    Type: String
+    Default: false
+  MultiSiteKafkaBrokers:
+    Description: Comma separated list of Kafka broker hosts (host:port) to use for publishing events to the message broker
+    Type: CommaDelimitedList
+    Default: ''
+  MultiSiteZookeeperConnectString:
+    Description: Connection string to Zookeeper
+    Type: String
+    Default: ''
+  MultiSiteZookeeperRootNode:
+    Description: Root node to use in Zookeeper to store/retrieve information
+    Type: String
+    ConstraintDescription: Choose a slash-separated ('/') string not starting with a slash ('/')
+    AllowedPattern: '^[^\/].*'
+    Default: 'gerrit/multi-site'
 
 Mappings:
   Gerrit:
@@ -287,6 +305,15 @@ Resources:
                       Value: !Join [',', !Ref MetricsCloudwatchExcludeMetrics]
                     - Name: REMOTE_REPLICATION_TARGET_HOST
                       Value: !Ref RemoteReplicationTargetHost
+                    - Name: MULTISITE_ENABLED
+                      Value: !Ref MultiSiteEnabled
+                    - Name: MULTISITE_KAFKA_BROKERS
+                      Value: !Join [',', !Ref MultiSiteKafkaBrokers]
+                    - Name: MULTISITE_ZOOKEEPER_CONNECT_STRING
+                      Value: !Ref MultiSiteZookeeperConnectString
+                    - Name: MULTISITE_ZOOKEEPER_ROOT_NODE
+                      Value: !Ref MultiSiteZookeeperRootNode
+
                   MountPoints:
                     - SourceVolume: !FindInMap ['Gerrit', 'Volume', 'Git']
                       ContainerPath: /var/gerrit/git
