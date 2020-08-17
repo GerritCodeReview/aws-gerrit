@@ -8,6 +8,7 @@ from jinja2 import Environment, FileSystemLoader
 
 setupReplication = (os.getenv('SETUP_REPLICATION') == 'true')
 setupHA = (os.getenv('SETUP_HA') == 'true')
+setupMultiSite = (os.getenv('MULTISITE_ENABLED') == 'true')
 
 def get_secret(secret_name):
     # Create a Secrets Manager client
@@ -157,7 +158,9 @@ with open(GERRIT_CONFIG_DIRECTORY + "gerrit.config", 'w',
         'METRICS_CLOUDWATCH_JVM_ENABLED': os.getenv('METRICS_CLOUDWATCH_JVM_ENABLED'),
         'METRICS_CLOUDWATCH_INITIAL_DELAY': os.getenv('METRICS_CLOUDWATCH_INITIAL_DELAY'),
         'METRICS_CLOUDWATCH_DRY_RUN': os.getenv('METRICS_CLOUDWATCH_DRY_RUN'),
-        'METRICS_CLOUDWATCH_EXCLUDE_METRICS_LIST': os.getenv('METRICS_CLOUDWATCH_EXCLUDE_METRICS_LIST')
+        'METRICS_CLOUDWATCH_EXCLUDE_METRICS_LIST': os.getenv('METRICS_CLOUDWATCH_EXCLUDE_METRICS_LIST'),
+        'MULTISITE_ENABLED': os.getenv('MULTISITE_ENABLED'),
+        'MULTISITE_KAFKA_BROKERS': os.getenv('MULTISITE_KAFKA_BROKERS')
     })
     f.write(template.render(config_for_template))
 
@@ -169,11 +172,16 @@ if ((not containerSlave) and setupReplication):
     with open(GERRIT_CONFIG_DIRECTORY + "replication.config", 'w', encoding='utf-8') as f:
         SLAVE_FQDN = os.getenv('SLAVE_SUBDOMAIN') + "." + os.getenv('HOSTED_ZONE_NAME')
         REMOTE_TARGET = os.getenv('REMOTE_REPLICATION_TARGET_HOST', '')
+        # In a multi-site setup, the very first replication needs to be
+        # triggered manually from site-A to site-B, once the latter is ready,
+        # thus "REPLICATE_ON_STARTUP" needs to be disabled
+        REPLICATE_ON_STARTUP = "false" if setupMultiSite else "true"
         f.write(template.render(
                 SLAVE_1_URL="git://" + SLAVE_FQDN + ":" + os.getenv('GIT_PORT') + "/${name}.git",
                 SLAVE_1_AMDIN_URL="ssh://gerrit@" + SLAVE_FQDN + ":" + os.getenv('GIT_SSH_PORT') + "/var/gerrit/git/${name}.git",
                 REMOTE_TARGET_URL="git://" + REMOTE_TARGET + ":" + os.getenv('GIT_PORT') + "/${name}.git",
                 REMOTE_ADMIN_TARGET_URL="ssh://gerrit@" + REMOTE_TARGET + ":" + os.getenv('GIT_SSH_PORT') + "/var/gerrit/git/${name}.git",
+                REPLICATE_ON_STARTUP=REPLICATE_ON_STARTUP
                 ))
 
 if (setupHA):
@@ -181,4 +189,31 @@ if (setupHA):
           GERRIT_CONFIG_DIRECTORY + "high-availability.config'")
     template = env.get_template("high-availability.config.template")
     with open(GERRIT_CONFIG_DIRECTORY + "high-availability.config", 'w', encoding='utf-8') as f:
-        f.write(template.render(HA_PEER_URL=os.getenv('HA_PEER_URL')))
+        f.write(template.render(
+            HA_PEER_URL=os.getenv('HA_PEER_URL'),
+            MULTISITE_ENABLED=os.getenv('MULTISITE_ENABLED')
+        ))
+
+if setupMultiSite:
+    CONFIGURATION_FILE = "multi-site.config"
+    CONFIGURATION_TARGET = GERRIT_CONFIG_DIRECTORY + CONFIGURATION_FILE
+    TEMPLATE_FILE = CONFIGURATION_FILE + ".template"
+
+    print("*** "+ CONFIGURATION_TARGET)
+    template = env.get_template(TEMPLATE_FILE)
+    with open(CONFIGURATION_TARGET, 'w', encoding='utf-8') as f:
+        f.write(template.render(
+            # no variables expansion
+        ))
+
+    CONFIGURATION_FILE = "zookeeper-refdb.config"
+    CONFIGURATION_TARGET = GERRIT_CONFIG_DIRECTORY + CONFIGURATION_FILE
+    TEMPLATE_FILE = CONFIGURATION_FILE + ".template"
+
+    print("*** "+ CONFIGURATION_TARGET)
+    template = env.get_template("zookeeper-refdb.config.template")
+    with open(CONFIGURATION_TARGET, 'w', encoding='utf-8') as f:
+        f.write(template.render(
+            MULTISITE_ZOOKEEPER_CONNECT_STRING=os.getenv('MULTISITE_ZOOKEEPER_CONNECT_STRING'),
+            MULTISITE_ZOOKEEPER_ROOT_NODE=os.getenv('MULTISITE_ZOOKEEPER_ROOT_NODE')
+        ))
