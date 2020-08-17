@@ -8,6 +8,7 @@ from jinja2 import Environment, FileSystemLoader
 
 setupReplication = (os.getenv('SETUP_REPLICATION') == 'true')
 setupHA = (os.getenv('SETUP_HA') == 'true')
+setupMultiSite = (os.getenv('MULTISITE_ENABLED') == 'true')
 
 def get_secret(secret_name):
     # Create a Secrets Manager client
@@ -157,7 +158,8 @@ with open(GERRIT_CONFIG_DIRECTORY + "gerrit.config", 'w',
         'METRICS_CLOUDWATCH_JVM_ENABLED': os.getenv('METRICS_CLOUDWATCH_JVM_ENABLED'),
         'METRICS_CLOUDWATCH_INITIAL_DELAY': os.getenv('METRICS_CLOUDWATCH_INITIAL_DELAY'),
         'METRICS_CLOUDWATCH_DRY_RUN': os.getenv('METRICS_CLOUDWATCH_DRY_RUN'),
-        'METRICS_CLOUDWATCH_EXCLUDE_METRICS_LIST': os.getenv('METRICS_CLOUDWATCH_EXCLUDE_METRICS_LIST')
+        'METRICS_CLOUDWATCH_EXCLUDE_METRICS_LIST': os.getenv('METRICS_CLOUDWATCH_EXCLUDE_METRICS_LIST'),
+        'MULTISITE_ENABLED': os.getenv('MULTISITE_ENABLED')
     })
     f.write(template.render(config_for_template))
 
@@ -182,3 +184,26 @@ if (setupHA):
     template = env.get_template("high-availability.config.template")
     with open(GERRIT_CONFIG_DIRECTORY + "high-availability.config", 'w', encoding='utf-8') as f:
         f.write(template.render(HA_PEER_URL=os.getenv('HA_PEER_URL')))
+
+if setupMultiSite:
+    CONFIGURATION_FILE = "multi-site.config"
+    CONFIGURATION_TARGET = GERRIT_CONFIG_DIRECTORY + CONFIGURATION_FILE
+    TEMPLATE_FILE = CONFIGURATION_FILE + ".template"
+
+    print("*** "+ CONFIGURATION_TARGET)
+    template = env.get_template(TEMPLATE_FILE)
+    with open(CONFIGURATION_TARGET, 'w', encoding='utf-8') as f:
+        f.write(template.render(
+            MULTISITE_KAFKA_BROKERS=os.getenv('MULTISITE_KAFKA_BROKERS')
+        ))
+
+    CONFIGURATION_FILE = "zookeeper-refdb.config"
+    CONFIGURATION_TARGET = GERRIT_CONFIG_DIRECTORY + CONFIGURATION_FILE
+    TEMPLATE_FILE = CONFIGURATION_FILE + ".template"
+
+    print("*** "+ CONFIGURATION_TARGET)
+    template = env.get_template("zookeeper-refdb.config.template")
+    with open(CONFIGURATION_TARGET, 'w', encoding='utf-8') as f:
+        f.write(template.render(
+            MULTISITE_ZOOKEEPER_CONNECT_STRING=os.getenv('MULTISITE_ZOOKEEPER_CONNECT_STRING')
+        ))
