@@ -15,6 +15,7 @@ RUN chmod +x /tmp/setup_gerrit.py \
 USER gerrit
 
 COPY --chown=gerrit:gerrit plugins /var/gerrit/plugins
+COPY --chown=gerrit:gerrit lib /var/gerrit/lib
 COPY --chown=gerrit:gerrit etc /var/gerrit/etc
 
 # Install AWS cli
