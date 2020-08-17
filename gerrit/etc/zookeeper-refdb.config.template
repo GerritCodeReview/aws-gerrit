@@ -1,0 +1,4 @@
+[ref-database "zookeeper"]
+  connectString = {{ MULTISITE_ZOOKEEPER_CONNECT_STRING }}
+  sslConnection = true
+  rootNode = {{ MULTISITE_ZOOKEEPER_ROOT_NODE }}
