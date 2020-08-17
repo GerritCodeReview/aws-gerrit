@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "83feaa37_ac6e30c2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-08-17T16:38:58Z",
+      "side": 1,
+      "message": "I was trying to put myself in the shoes of the final user...as a user I would like something that just works out of the box with minimum configuration, i.e.: the less parameters I need to set the better. If you think selecting dual-master Vs multi-site won\u0027t require too many additional parameters I think it is ok.",
+      "parentUuid": "4aba9b9d_10a5a319",
+      "revId": "62106698b63bed81bfc9f608885908ba48a68bec",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc197f26_9c387e1b",
         "filename": "dual-master/Makefile",
         "patchSetId": 10
