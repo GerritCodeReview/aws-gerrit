@@ -7,10 +7,10 @@ docker-registry-login:
 
 gerrit-get-plugins:
 	# Make sure Prometheus Metrics exporter plugin is installed
-	mkdir -p $(@D)/plugins
+	mkdir -p $(@D)/{plugins,lib}
 
-	@echo "Ensure no plugins are left from previous deployments"
-	rm -f $(@D)/plugins/*.jar
+	@echo "Ensure no plugins or libraries are left from previous deployments"
+	rm -f $(@D)/{plugins,lib}/*.jar
 
 	@echo "Downloading metrics-reporter-prometheus plugin $(GERRIT_BRANCH)"
 	wget $(GERRIT_CI)/plugin-metrics-reporter-prometheus-bazel-master-$(GERRIT_BRANCH)/$(LAST_BUILD)/metrics-reporter-prometheus/metrics-reporter-prometheus.jar \
@@ -36,6 +36,39 @@ gerrit-get-plugins:
 	wget $(GERRIT_CI)/plugin-metrics-reporter-cloudwatch-bazel-$(GERRIT_BRANCH)/$(LAST_BUILD)/metrics-reporter-cloudwatch/metrics-reporter-cloudwatch.jar \
 	-O ./plugins/metrics-reporter-cloudwatch.jar \
 	|| { echo >&2 "Cannot download metrics-reporter-cloudwatch plugin: Check internet connection. Aborting"; exit 1; }
+
+ifeq ($(MULTISITE_ENABLED),true)
+	@echo "Downloading multi-site plugin $(GERRIT_BRANCH)"
+	wget $(GERRIT_CI)/plugin-multi-site-bazel-$(GERRIT_BRANCH)/$(LAST_BUILD)/multi-site/multi-site.jar \
+	-O ./plugins/multi-site.jar \
+	|| { echo >&2 "Cannot download multi-site plugin: Check internet connection. Aborting"; exit 1; }
+
+	@echo "Symlink multi-site plugin into lib"
+	ln -sf ../plugins/multi-site.jar ./lib/multi-site.jar
+
+	@echo "Symlink replication plugin into lib"
+	ln -sf ../plugins/replication.jar lib/replication.jar
+
+	@echo "Downloading events-broker library"
+	wget $(MAVEN_ARCHIVE)/events-broker/$(EVENTSBROKER_LIB_VER)/events-broker-$(EVENTSBROKER_LIB_VER).jar \
+	-O lib/events-broker.jar \
+	|| { echo >&2 "Cannot download events-broker-library: Check internet connection. Aborting"; exit 1; }
+
+	@echo "Downloading kafka-events plugin $(GERRIT_BRANCH)"
+	wget $(GERRIT_CI)/plugin-kafka-events-bazel-$(GERRIT_BRANCH)/$(LAST_BUILD)/kafka-events/kafka-events.jar \
+	-O ./plugins/kafka-events.jar \
+	|| { echo >&2 "Cannot download kafka-events plugin: Check internet connection. Aborting"; exit 1; }
+
+	@echo "Downloading zookeper-refdb-3.5 plugin $(GERRIT_BRANCH)"
+	wget $(GERRIT_CI)/plugin-zookeeper-refdb-bazel-$(GERRIT_BRANCH)/$(LAST_BUILD)/zookeeper-refdb/zookeeper-refdb-zk-3.5.jar \
+	-O ./plugins/zookeeper-refdb.jar \
+	|| { echo >&2 "Cannot download zookeeper-refdb plugin: Check internet connection. Aborting"; exit 1; }
+
+	@echo "Downloading websession-broker plugin $(GERRIT_BRANCH)"
+	wget $(GERRIT_CI)/plugin-websession-broker-bazel-master-$(GERRIT_BRANCH)/$(LAST_BUILD)/websession-broker/websession-broker.jar \
+	-O ./plugins/websession-broker.jar \
+	|| { echo >&2 "Cannot download websession-broker plugin: Check internet connection. Aborting"; exit 1; }
+endif
 
 gerrit-build:
 	cat Dockerfile | \

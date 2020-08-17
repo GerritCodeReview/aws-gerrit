@@ -8,6 +8,15 @@ git config -f /var/gerrit/etc/gerrit.config container.slave "${CONTAINER_SLAVE:-
 if [ $CONTAINER_SLAVE ]; then
   echo "Slave mode..."
 
+  echo "Ensure master specific plugins and libraries are not installed:"
+  for jar in "lib/multi-site.jar" "plugins/multi-site.jar" "lib/replication.jar" \
+    "lib/events-broker.jar" "plugins/kafka-events.jar" "plugins/zookeeper-refdb.jar" \
+    "plugins/websession-broker.jar" "plugins/high-availability.jar"
+  do
+    echo "rm -f /var/gerrit/$jar"
+    rm -f /var/gerrit/"$jar"
+  done
+
   if [ ! -d /var/gerrit/git/All-Projects.git ] ||
      [ ! -d /var/gerrit/git/All-Users.git ] ||
      [ `git --git-dir=/var/gerrit/git/All-Projects.git show-ref | wc -l` -eq 0 ] ||
