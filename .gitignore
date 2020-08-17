@@ -1,8 +1,10 @@
 setup.env
 gerrit/plugins/*.jar
+gerrit/lib/*.jar
 gerrit/etc/*key*
 gerrit.config
 secure.config
 replication.config
+zookeeper-refdb.config
 .idea
 **/*.pem
