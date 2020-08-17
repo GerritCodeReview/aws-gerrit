@@ -50,3 +50,13 @@ endif
 ifdef SMTP_SSL_VERIFY
 		$(eval SMTP_OPTIONAL_PARAMS := $(SMTP_OPTIONAL_PARAMS) ParameterKey=SMTPSslVerify,ParameterValue=$(SMTP_SSL_VERIFY))
 endif
+
+set-optional-params-multisite:
+ifdef MULTISITE_ENABLED
+		$(eval MULTISITE_OPTIONAL_PARAMS := ParameterKey=MultiSiteEnabled,ParameterValue=$(MULTISITE_ENABLED))
+		$(eval MULTISITE_OPTIONAL_PARAMS := $(MULTISITE_OPTIONAL_PARAMS) ParameterKey=MultiSiteKafkaBrokers,ParameterValue=\"$(MULTISITE_KAFKA_BROKERS)\")
+		$(eval MULTISITE_OPTIONAL_PARAMS := $(MULTISITE_OPTIONAL_PARAMS) ParameterKey=MultiSiteZookeeperConnectString,ParameterValue=$(MULTISITE_ZOOKEEPER_CONNECT_STRING))
+endif
+ifdef MULTISITE_ZOOKEEPER_ROOT_NODE
+		$(eval MULTISITE_OPTIONAL_PARAMS := $(MULTISITE_OPTIONAL_PARAMS) ParameterKey=MultiSiteZookeeperRootNode,ParameterValue=$(MULTISITE_ZOOKEEPER_ROOT_NODE))
+endif
