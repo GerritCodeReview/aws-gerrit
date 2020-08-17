@@ -6,3 +6,11 @@
 
 [peerInfo "static"]
   url = {{ HA_PEER_URL }}
+
+{% if MULTISITE_ENABLED is defined and MULTISITE_ENABLED == "true" %}
+[websession]
+  synchronize = false
+{% endif %}
+
+[index]
+  synchronizeForced = false

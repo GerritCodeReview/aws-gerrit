@@ -6,7 +6,7 @@
 
 [gerrit]
   autoReload = true
-  replicateOnStartup = true
+  replicateOnStartup = {{ REPLICATE_ON_STARTUP }}
 
 [remote "slave-1"]
   url = {{ SLAVE_1_URL }}
