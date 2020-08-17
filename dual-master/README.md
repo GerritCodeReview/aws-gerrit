@@ -128,6 +128,35 @@ The replication service and the remote replication target represent the reading
 and writing sides of Git replication: by enabling both of them, it is possible to
 establish replication to a remote Git site.
 
+#### MULTI-SITE
+
+This recipe supports multi-site. Multi-site is a specific configuration of Gerrit that allows it
+to be part of distributed cluster of multiple Gerrit masters. No storage is shared among the
+Gerrit masters: syncing happens thanks to two media:
+* The `replication` plugin allow alignment of git data (see [replication service](#replication-service))
+for how to enable this.
+* The `multi-Site` group of plugins and resources allow the coordination and the exchange
+of gerrit specific events that are produced and consumed by the members of the cluster.
+(See the [multi-site design](https://gerrit.googlesource.com/plugins/multi-site/+/refs/heads/stable-3.2/DESIGN.md)
+for more information on this.
+
+##### Requirements
+* Kafka brokers and Zookeeper are not created by this recipe and are expected to exist and be
+reachable by the master instances resulting from the deployment of this recipe.
+* Replication service must be enabled to allow syncing of Git data.
+
+These are the parameters that need to be specified:
+
+* `MULTISITE_ENABLED`: Optional. Whether this Gerrit is part of a multi-site cluster deployment.
+"false" by default.
+* `MULTISITE_ZOOKEEPER_CONNECT_STRING`: Optional. Connection string to Zookeeper.
+Empty by default.
+* `MULTISITE_KAFKA_BROKERS`: Optional. Comma separated list of Kafka broker hosts (host:port)
+to use for publishing events to the message broker. Empty by default.
+* `MULTISITE_KAFKA_GROUP_ID`: Optional. Kafka consumer group for receiving messages.
+Needs to be the same for all cluster instances.
+Empty by default.
+
 ### 2 - Deploy
 
 * Create the cluster, services and DNS routing stacks:
