@@ -217,6 +217,22 @@ Parameters:
     Description: The fully qualified domain name of a remote replication target
     Type: String
     Default: ''
+  MultiSiteEnabled:
+    Description: Whether this gerrit is part of a multi-site cluster deployment
+    Type: String
+    Default: false
+  MultiSiteKafkaBrokers:
+    Description: Comma separated list of Kafka broker hosts (host:port) to use for publishing events to the message broker
+    Type: CommaDelimitedList
+    Default: ''
+  MultiSiteZookeeperConnectString:
+    Description: Connection string to Zookeeper
+    Type: String
+    Default: ''
+  MultiSiteKafkaGroupId:
+    Description: Kafka consumer group for receiving messages
+    Type: String
+    Default: ''
 
 Resources:
     Service:
@@ -318,6 +334,15 @@ Resources:
                       Value: !Join [',', !Ref MetricsCloudwatchExcludeMetrics]
                     - Name: REMOTE_REPLICATION_TARGET_HOST
                       Value: !Ref RemoteReplicationTargetHost
+                    - Name: MULTISITE_ENABLED
+                      Value: !Ref MultiSiteEnabled
+                    - Name: MULTISITE_KAFKA_BROKERS
+                      Value: !Join [',', !Ref MultiSiteKafkaBrokers]
+                    - Name: MULTISITE_KAFKA_GROUP_ID
+                      Value: !Ref MultiSiteKafkaGroupId
+                    - Name: MULTISITE_ZOOKEEPER_CONNECT_STRING
+                      Value: !Ref MultiSiteZookeeperConnectString
+
                   MountPoints:
                     - SourceVolume: !Ref GerritGitVolume
                       ContainerPath: /var/gerrit/git
