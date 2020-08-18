@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e1d56a0_1ae32170",
+        "filename": "dual-master/README.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-18T08:07:53Z",
+      "side": 1,
+      "message": "clusters.",
+      "range": {
+        "startLine": 134,
+        "startChar": 53,
+        "endLine": 134,
+        "endChar": 60
+      },
+      "revId": "f3eec95d1c157136f4f732923aa86c2ecbe2ce3a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d7a6422_4e1d7886",
+        "filename": "dual-master/README.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-18T08:07:53Z",
+      "side": 1,
+      "message": "distributed multi-site\n\nEvery site has its own cluster: reusing the wording \u0027cluster\u0027 for the multi-site deployment would generate confusion IMHO.",
+      "range": {
+        "startLine": 134,
+        "startChar": 14,
+        "endLine": 134,
+        "endChar": 33
+      },
+      "revId": "f3eec95d1c157136f4f732923aa86c2ecbe2ce3a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fa4a8ed_79a57bab",
+        "filename": "dual-master/README.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-18T08:07:53Z",
+      "side": 1,
+      "message": "clusters",
+      "range": {
+        "startLine": 135,
+        "startChar": 7,
+        "endLine": 135,
+        "endChar": 14
+      },
+      "revId": "f3eec95d1c157136f4f732923aa86c2ecbe2ce3a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79a1bf46_3544902c",
+        "filename": "dual-master/README.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-18T08:07:53Z",
+      "side": 1,
+      "message": "channels",
+      "range": {
+        "startLine": 135,
+        "startChar": 46,
+        "endLine": 135,
+        "endChar": 51
+      },
+      "revId": "f3eec95d1c157136f4f732923aa86c2ecbe2ce3a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cc7c82e_615df80d",
+        "filename": "dual-master/README.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-18T08:07:53Z",
+      "side": 1,
+      "message": "multi-site deployment",
+      "range": {
+        "startLine": 139,
+        "startChar": 79,
+        "endLine": 139,
+        "endChar": 86
+      },
+      "revId": "f3eec95d1c157136f4f732923aa86c2ecbe2ce3a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67cb307a_b44b6558",
+        "filename": "dual-master/cf-service-master.yml",
+        "patchSetId": 5
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-18T08:07:53Z",
+      "side": 1,
+      "message": "Isn\u0027t this set to the InstanceId value? If yes, what would be the benefit to define one extra parameter here?",
+      "range": {
+        "startLine": 232,
+        "startChar": 0,
+        "endLine": 235,
+        "endChar": 15
+      },
+      "revId": "f3eec95d1c157136f4f732923aa86c2ecbe2ce3a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ea9a692_ae78de2c",
+        "filename": "dual-master/setup.env.template",
+        "patchSetId": 5
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-18T08:07:53Z",
+      "side": 1,
+      "message": "In the multi-site deployment we use the instance-id here. What would be the value of using anything different?",
+      "range": {
+        "startLine": 4,
+        "startChar": 26,
+        "endLine": 4,
+        "endChar": 62
+      },
+      "revId": "f3eec95d1c157136f4f732923aa86c2ecbe2ce3a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fb985af_fc9e3b84",
+        "filename": "gerrit/Makefile",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-18T08:07:53Z",
+      "side": 1,
+      "message": "Can this be a symlink instead of a copy?",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 49
+      },
+      "revId": "f3eec95d1c157136f4f732923aa86c2ecbe2ce3a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5ff6dc3_44a844d7",
+        "filename": "gerrit/etc/gerrit.config.template",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-18T08:07:53Z",
+      "side": 1,
+      "message": "This setting is not multi-site dependent: it can be defined also without any multi-site setup.",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 60,
+        "endChar": 16
+      },
+      "revId": "f3eec95d1c157136f4f732923aa86c2ecbe2ce3a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b90067c9_6f8487dd",
+        "filename": "gerrit/etc/gerrit.config.template",
+        "patchSetId": 5
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-18T08:07:53Z",
+      "side": 1,
+      "message": "why not using the instance-id here?",
+      "range": {
+        "startLine": 107,
+        "startChar": 14,
+        "endLine": 107,
+        "endChar": 44
+      },
+      "revId": "f3eec95d1c157136f4f732923aa86c2ecbe2ce3a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62698745_cdfad0f6",
+        "filename": "gerrit/etc/multi-site.config.template",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-18T08:07:53Z",
+      "side": 1,
+      "message": "What is the value of using these custom names instead of the defaults?",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 32
+      },
+      "revId": "f3eec95d1c157136f4f732923aa86c2ecbe2ce3a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
