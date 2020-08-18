@@ -9,6 +9,9 @@ gerrit-get-plugins:
 	# Make sure Prometheus Metrics exporter plugin is installed
 	mkdir -p $(@D)/plugins
 
+	@echo "Ensure no plugins are left from previous deployments"
+	rm -f $(@D)/plugins/*.jar
+
 	@echo "Downloading metrics-reporter-prometheus plugin $(GERRIT_BRANCH)"
 	wget $(GERRIT_CI)/plugin-metrics-reporter-prometheus-bazel-master-$(GERRIT_BRANCH)/$(LAST_BUILD)/metrics-reporter-prometheus/metrics-reporter-prometheus.jar \
 	-O ./plugins/metrics-reporter-prometheus.jar \
