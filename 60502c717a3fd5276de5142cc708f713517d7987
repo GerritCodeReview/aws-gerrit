@@ -1047,6 +1047,30 @@
     },
     {
       "key": {
+        "uuid": "20b2c5a6_d4de6ef7",
+        "filename": "gerrit/etc/replication.config.template",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-18T09:56:21Z",
+      "side": 1,
+      "message": "If that isn\u0027t exposed, it\u0027s fine for me.",
+      "parentUuid": "dbf7fa06_67e3d0e8",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 45
+      },
+      "revId": "60502c717a3fd5276de5142cc708f713517d7987",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b7de8ab_ded563f4",
         "filename": "gerrit/setup_gerrit.py",
         "patchSetId": 4
