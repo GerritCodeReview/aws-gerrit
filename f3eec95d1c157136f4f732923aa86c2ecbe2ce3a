@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "efe86410_51d590d4",
+        "filename": "dual-master/README.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-18T09:47:18Z",
+      "side": 1,
+      "message": "This is the exact wording used in the multi-site README to describe what plugin does [1].\nDo you think is confusing?\n\n[1] https://gerrit.googlesource.com/plugins/multi-site/+/refs/heads/stable-3.2/README.md",
+      "parentUuid": "3d7a6422_4e1d7886",
+      "range": {
+        "startLine": 134,
+        "startChar": 14,
+        "endLine": 134,
+        "endChar": 33
+      },
+      "revId": "f3eec95d1c157136f4f732923aa86c2ecbe2ce3a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8fa4a8ed_79a57bab",
         "filename": "dual-master/README.md",
         "patchSetId": 5
@@ -94,6 +118,54 @@
     },
     {
       "key": {
+        "uuid": "3d707702_f08928f3",
+        "filename": "dual-master/README.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-18T09:47:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "79a1bf46_3544902c",
+      "range": {
+        "startLine": 135,
+        "startChar": 46,
+        "endLine": 135,
+        "endChar": 51
+      },
+      "revId": "f3eec95d1c157136f4f732923aa86c2ecbe2ce3a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2f843ee9_beda4286",
+        "filename": "dual-master/README.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-18T09:47:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8fa4a8ed_79a57bab",
+      "range": {
+        "startLine": 135,
+        "startChar": 7,
+        "endLine": 135,
+        "endChar": 14
+      },
+      "revId": "f3eec95d1c157136f4f732923aa86c2ecbe2ce3a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2cc7c82e_615df80d",
         "filename": "dual-master/README.md",
         "patchSetId": 5
@@ -117,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "8f9a3dc5_276e6f92",
+        "filename": "dual-master/README.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-18T09:47:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2cc7c82e_615df80d",
+      "range": {
+        "startLine": 139,
+        "startChar": 79,
+        "endLine": 139,
+        "endChar": 86
+      },
+      "revId": "f3eec95d1c157136f4f732923aa86c2ecbe2ce3a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67cb307a_b44b6558",
         "filename": "dual-master/cf-service-master.yml",
         "patchSetId": 5
@@ -128,6 +224,30 @@
       "writtenOn": "2020-08-18T08:07:53Z",
       "side": 1,
       "message": "Isn\u0027t this set to the InstanceId value? If yes, what would be the benefit to define one extra parameter here?",
+      "range": {
+        "startLine": 232,
+        "startChar": 0,
+        "endLine": 235,
+        "endChar": 15
+      },
+      "revId": "f3eec95d1c157136f4f732923aa86c2ecbe2ce3a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80d40a95_06c0c368",
+        "filename": "dual-master/cf-service-master.yml",
+        "patchSetId": 5
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-18T09:47:18Z",
+      "side": 1,
+      "message": "If we let this value be InstanceId, it would be different for all, doesn\u0027t the kafka.groupId need to be the same for all consumers?",
+      "parentUuid": "67cb307a_b44b6558",
       "range": {
         "startLine": 232,
         "startChar": 0,
@@ -163,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "71298d27_cb6fec44",
+        "filename": "dual-master/setup.env.template",
+        "patchSetId": 5
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-18T09:47:18Z",
+      "side": 1,
+      "message": "See above. I thought group.id ought to be the same across different consumers.",
+      "parentUuid": "3ea9a692_ae78de2c",
+      "range": {
+        "startLine": 4,
+        "startChar": 26,
+        "endLine": 4,
+        "endChar": 62
+      },
+      "revId": "f3eec95d1c157136f4f732923aa86c2ecbe2ce3a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9fb985af_fc9e3b84",
         "filename": "gerrit/Makefile",
         "patchSetId": 5
@@ -183,6 +327,30 @@
       "revId": "f3eec95d1c157136f4f732923aa86c2ecbe2ce3a",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d86ecd49_eb6399d3",
+        "filename": "gerrit/Makefile",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-18T09:47:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9fb985af_fc9e3b84",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 49
+      },
+      "revId": "f3eec95d1c157136f4f732923aa86c2ecbe2ce3a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +377,30 @@
     },
     {
       "key": {
+        "uuid": "888628aa_d58e04d8",
+        "filename": "gerrit/etc/gerrit.config.template",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-18T09:47:18Z",
+      "side": 1,
+      "message": "Ah good point, I will remove this then.",
+      "parentUuid": "a5ff6dc3_44a844d7",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 60,
+        "endChar": 16
+      },
+      "revId": "f3eec95d1c157136f4f732923aa86c2ecbe2ce3a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b90067c9_6f8487dd",
         "filename": "gerrit/etc/gerrit.config.template",
         "patchSetId": 5
@@ -220,6 +412,30 @@
       "writtenOn": "2020-08-18T08:07:53Z",
       "side": 1,
       "message": "why not using the instance-id here?",
+      "range": {
+        "startLine": 107,
+        "startChar": 14,
+        "endLine": 107,
+        "endChar": 44
+      },
+      "revId": "f3eec95d1c157136f4f732923aa86c2ecbe2ce3a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10332683_0cdbc68e",
+        "filename": "gerrit/etc/gerrit.config.template",
+        "patchSetId": 5
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-18T09:47:18Z",
+      "side": 1,
+      "message": "See my previous replies.",
+      "parentUuid": "b90067c9_6f8487dd",
       "range": {
         "startLine": 107,
         "startChar": 14,
@@ -252,6 +468,30 @@
       "revId": "f3eec95d1c157136f4f732923aa86c2ecbe2ce3a",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fceeca4_5bf4701a",
+        "filename": "gerrit/etc/multi-site.config.template",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-18T09:47:18Z",
+      "side": 1,
+      "message": "I got the configuration from a working installation of multi-site.\nI didn\u0027t know there was a default.\nI will remove this 😊",
+      "parentUuid": "62698745_cdfad0f6",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 32
+      },
+      "revId": "f3eec95d1c157136f4f732923aa86c2ecbe2ce3a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     }
   ]
 }
