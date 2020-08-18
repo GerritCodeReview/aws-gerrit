@@ -1023,6 +1023,30 @@
     },
     {
       "key": {
+        "uuid": "dbf7fa06_67e3d0e8",
+        "filename": "gerrit/etc/replication.config.template",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-18T08:51:18Z",
+      "side": 1,
+      "message": "@luca, any thought on this?",
+      "parentUuid": "334fb6a1_54e58271",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 45
+      },
+      "revId": "60502c717a3fd5276de5142cc708f713517d7987",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3b7de8ab_ded563f4",
         "filename": "gerrit/setup_gerrit.py",
         "patchSetId": 4
