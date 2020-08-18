@@ -1,12 +1,13 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: Deploy a service into an ECS cluster behind a public load balancer.
 Parameters:
-  GerritServiceName:
-    Type: String
-    Default: gerrit-master
   SlaveServiceStackName:
     Type: String
     Default: gerrit-slave
+  GerritInstanceNumber:
+    Description: Whether this is master1 or master2
+    Type: Number
+    AllowedValues: [1,2]
   ClusterStackName:
       Description: Stack name of the ECS cluster to deply the serivces
       Type: String
@@ -22,45 +23,17 @@ Parameters:
         Description: Gerrit official Docker image
         Type: String
         Default: aws-gerrit/gerrit:latest
-  GerritLBDockerImage:
-        Description: Load Balancer official Docker image
-        Type: String
-        Default: haproxy:1.7
   DockerRegistryUrl:
         Description: Docker registry URL
         Type: String
-  DesiredCount:
-        Description: How many instances of this task should we run across our cluster?
-        Type: Number
-        Default: 1
-  HTTPGerritLBPort:
-        Description: Gerrit Load balancer HTTP port
-        Type: Number
-        Default: 8080
   HTTPHostPort:
         Description: Gerrit HTTP port
         Type: Number
         Default: 8080
-  HTTPContainerPort:
-        Description: Gerrit HTTP port
-        Type: Number
-        Default: 8080
-  HTTPSHostPort:
-        Description: Gerrit HTTPS port
-        Type: Number
-        Default: 443
   SSHHostPort:
         Description: Gerrit SSH port
         Type: Number
         Default: 29418
-  SSHContainerPort:
-        Description: Gerrit SSH port
-        Type: Number
-        Default: 29418
-  GitPort:
-        Description: Git daemon port
-        Type: Number
-        Default: 9418
   GitSSHPort:
         Description: Git ssh port
         Type: Number
@@ -87,38 +60,6 @@ Parameters:
   PeerSubdomain:
         Description: The subdomain of the Gerrit cluster
         Type: String
-  GerritGitVolume:
-      Description: Gerrit git volume name
-      Type: String
-      Default: gerrit-git-master
-  GerritEventsVolume:
-      Description: Gerrit replication events volume name
-      Type: String
-      Default: gerrit-events-master
-  GerritWebsessionsVolume:
-      Description: Gerrit git volume name
-      Type: String
-      Default: gerrit-ha-websessions-master
-  GerritDataVolume:
-      Description: Gerrit data volume name
-      Type: String
-      Default: gerrit-data-master
-  GerritIndexVolume:
-      Description: Gerrit index volume name
-      Type: String
-      Default: gerrit-index-master
-  GerritCacheVolume:
-      Description: Gerrit cache volume name
-      Type: String
-      Default: gerrit-cache-master
-  GerritDbVolume:
-      Description: Gerrit db volume name
-      Type: String
-      Default: gerrit-db-master
-  GerritLogsVolume:
-      Description: Gerrit logs volume name
-      Type: String
-      Default: gerrit-logs-master
   ReindexAtSartup:
       Description: Force index reindexing at startup
       Type: String
@@ -218,6 +159,30 @@ Parameters:
     Type: String
     Default: ''
 
+Mappings:
+  Gerrit:
+    Volume:
+      Git: gerrit-git-master
+      Events: gerrit-events-master
+      Websessions: gerrit-ha-websessions-master
+      Data: gerrit-data-master
+      Index: gerrit-index-master
+      Cache: gerrit-cache-master
+      Db: gerrit-db-master
+      Logs: gerrit-logs-master
+    Service:
+      Name: gerrit-master
+    LoadBalancer:
+      HTTPPort: 8080
+    Container:
+      HTTPPort: 8080
+      SSHPort: 29418
+  Git:
+    Daemon:
+      Port: 9418
+    SSH:
+      Port: 1022
+
 Resources:
     Service:
         Type: AWS::ECS::Service
@@ -228,32 +193,34 @@ Resources:
             Cluster:
               Fn::ImportValue:
                   !Join [':', [!Ref 'ClusterStackName', 'ClusterName']]
-            DesiredCount: !Ref DesiredCount
+            DesiredCount: 1
             TaskDefinition: !Ref TaskDefinition
             LoadBalancers:
-                - ContainerName: !Ref GerritServiceName
-                  ContainerPort: !Ref HTTPContainerPort
+                - ContainerName: !FindInMap ['Gerrit', 'Service', 'Name']
+                  ContainerPort: !FindInMap ['Gerrit', 'Container', 'HTTPPort']
                   TargetGroupArn: !Ref HTTPTargetGroup
-                - ContainerName: !Ref GerritServiceName
-                  ContainerPort: !Ref SSHContainerPort
+                - ContainerName: !FindInMap ['Gerrit', 'Service', 'Name']
+                  ContainerPort: !FindInMap ['Gerrit', 'Container', 'SSHPort']
                   TargetGroupArn: !Ref SSHTargetGroup
 
     TaskDefinition:
         Type: AWS::ECS::TaskDefinition
         Properties:
-            Family: !Join ['', [!Ref GerritServiceName, TaskDefinition]]
+            Family: !Join ['', [!FindInMap ['Gerrit', 'Service', 'Name'], TaskDefinition]]
             TaskRoleArn: !GetAtt ECSTaskExecutionRoleStack.Outputs.TaskExecutionRoleRef
             ExecutionRoleArn: !GetAtt ECSTaskExecutionRoleStack.Outputs.TaskExecutionRoleRef
             NetworkMode: bridge
             ContainerDefinitions:
-                - Name: !Ref GerritServiceName
+                - Name: !FindInMap ['Gerrit', 'Service', 'Name']
                   Essential: true
                   Image: !Sub '${DockerRegistryUrl}/${DockerImage}'
                   Environment:
                     - Name: CANONICAL_WEB_URL
                       Value: !Sub 'https://${LBSubdomain}.${HostedZoneName}'
                     - Name: HTTPD_LISTEN_URL
-                      Value: !Sub 'proxy-https://*:${HTTPContainerPort}/'
+                      Value: !Sub
+                        - 'proxy-https://*:${HTTPContainerPort}/'
+                        - { HTTPContainerPort: !FindInMap ['Gerrit', 'Container', 'HTTPPort'] }
                     - Name: AWS_REGION
                       Value: !Ref AWS::Region
                     - Name: SETUP_REPLICATION
@@ -263,7 +230,9 @@ Resources:
                     - Name: SETUP_HA
                       Value: true
                     - Name: HA_PEER_URL
-                      Value: !Sub 'http://${PeerSubdomain}.${HostedZoneName}:${HTTPGerritLBPort}'
+                      Value: !Sub
+                        - 'http://${PeerSubdomain}.${HostedZoneName}:${HTTPGerritLBPort}'
+                        - { HTTPGerritLBPort: !FindInMap ['Gerrit', 'LoadBalancer', 'HTTPPort'] }
                     - Name: HOSTED_ZONE_NAME
                       Value: !Ref HostedZoneName
                     - Name: REINDEX_AT_STARTUP
@@ -295,9 +264,9 @@ Resources:
                     - Name: SMTP_DOMAIN
                       Value: !Ref SMTPDomain
                     - Name: GIT_PORT
-                      Value: !Ref GitPort
+                      Value: !FindInMap ['Git', 'Daemon', 'Port']
                     - Name: GIT_SSH_PORT
-                      Value: !Ref GitSSHPort
+                      Value: !FindInMap ['Git', 'SSH', 'Port']
                     - Name: SLAVE_SUBDOMAIN
                       Value: !Ref SlaveSubdomain
                     - Name: GERRIT_INSTANCE_ID
@@ -319,29 +288,29 @@ Resources:
                     - Name: REMOTE_REPLICATION_TARGET_HOST
                       Value: !Ref RemoteReplicationTargetHost
                   MountPoints:
-                    - SourceVolume: !Ref GerritGitVolume
+                    - SourceVolume: !FindInMap ['Gerrit', 'Volume', 'Git']
                       ContainerPath: /var/gerrit/git
-                    - SourceVolume: !Ref GerritWebsessionsVolume
+                    - SourceVolume: !FindInMap ['Gerrit', 'Volume', 'Websessions']
                       ContainerPath: /var/gerrit/high-availability
-                    - SourceVolume: !Ref GerritDataVolume
+                    - SourceVolume: !Join ['-', [!FindInMap ['Gerrit', 'Volume', 'Data'], !Ref 'GerritInstanceNumber']]
                       ContainerPath: /var/gerrit/data
-                    - SourceVolume: !Ref GerritIndexVolume
+                    - SourceVolume: !Join ['-', [!FindInMap ['Gerrit', 'Volume', 'Index'], !Ref 'GerritInstanceNumber']]
                       ContainerPath: /var/gerrit/index
-                    - SourceVolume: !Ref GerritCacheVolume
+                    - SourceVolume: !Join ['-', [!FindInMap ['Gerrit', 'Volume', 'Cache'], !Ref 'GerritInstanceNumber']]
                       ContainerPath: /var/gerrit/cache
-                    - SourceVolume: !Ref GerritDbVolume
+                    - SourceVolume: !Join ['-', [!FindInMap ['Gerrit', 'Volume', 'Db'], !Ref 'GerritInstanceNumber']]
                       ContainerPath: /var/gerrit/db
-                    - SourceVolume: !Ref GerritLogsVolume
+                    - SourceVolume: !Join ['-', [!FindInMap ['Gerrit', 'Volume', 'Logs'], !Ref 'GerritInstanceNumber']]
                       ContainerPath: /var/gerrit/logs
-                    - SourceVolume: !Ref GerritEventsVolume
+                    - SourceVolume: !Join ['-', [!FindInMap ['Gerrit', 'Volume', 'Events'], !Ref 'GerritInstanceNumber']]
                       ContainerPath: /var/gerrit/events
                   Cpu: !Ref GerritCPU
                   Memory: !Ref GerritRAM
                   PortMappings:
-                    - ContainerPort: !Ref HTTPContainerPort
+                    - ContainerPort: !FindInMap ['Gerrit', 'Container', 'HTTPPort']
                       HostPort: !Ref HTTPHostPort
                       Protocol: tcp
-                    - ContainerPort: !Ref SSHContainerPort
+                    - ContainerPort: !FindInMap ['Gerrit', 'Container', 'SSHPort']
                       HostPort: !Ref SSHHostPort
                       Protocol: tcp
                   LogConfiguration:
@@ -351,50 +320,50 @@ Resources:
                         awslogs-region: !Ref AWS::Region
                         awslogs-stream-prefix: !Ref EnvironmentName
             Volumes:
-              - Name: !Ref 'GerritGitVolume'
+              - Name: !FindInMap ['Gerrit', 'Volume', 'Git']
                 Host:
                   SourcePath: "/mnt/efs/gerrit-shared/git"
-              - Name: !Ref 'GerritEventsVolume'
+              - Name: !Join ['-', [!FindInMap ['Gerrit', 'Volume', 'Events'], !Ref 'GerritInstanceNumber']]
                 Host:
                   SourcePath: "/mnt/efs/gerrit-shared/events"
-              - Name: !Ref 'GerritWebsessionsVolume'
+              - Name: !FindInMap ['Gerrit', 'Volume', 'Websessions']
                 Host:
                   SourcePath: "/mnt/efs/gerrit-shared/high-availability"
-              - Name: !Ref 'GerritDbVolume'
+              - Name: !Join ['-', [!FindInMap ['Gerrit', 'Volume', 'Db'], !Ref 'GerritInstanceNumber']]
                 DockerVolumeConfiguration:
                   Scope: shared
                   Autoprovision: true
                   Driver: local
                   Labels:
-                    gerrit-db: !Join ['-', [!Ref EnvironmentName, !Ref GerritDbVolume]]
-              - Name: !Ref 'GerritDataVolume'
+                    gerrit-db: !Join ['-', [!Ref EnvironmentName, !FindInMap ['Gerrit', 'Volume', 'Db'], !Ref 'GerritInstanceNumber']]
+              - Name: !Join ['-', [!FindInMap ['Gerrit', 'Volume', 'Data'], !Ref 'GerritInstanceNumber']]
                 DockerVolumeConfiguration:
                   Scope: shared
                   Autoprovision: true
                   Driver: local
                   Labels:
-                    gerrit-data: !Join ['-', [!Ref EnvironmentName, !Ref GerritDataVolume]]
-              - Name: !Ref 'GerritCacheVolume'
+                    gerrit-data: !Join ['-', [!Ref EnvironmentName, !FindInMap ['Gerrit', 'Volume', 'Data'], !Ref 'GerritInstanceNumber']]
+              - Name: !Join ['-', [!FindInMap ['Gerrit', 'Volume', 'Cache'], !Ref 'GerritInstanceNumber']]
                 DockerVolumeConfiguration:
                   Scope: shared
                   Autoprovision: true
                   Driver: local
                   Labels:
-                    gerrit-cache: !Join ['-', [!Ref EnvironmentName, !Ref GerritCacheVolume]]
-              - Name: !Ref 'GerritIndexVolume'
+                    gerrit-cache: !Join ['-', [!Ref EnvironmentName, !FindInMap ['Gerrit', 'Volume', 'Cache'], !Ref 'GerritInstanceNumber']]
+              - Name: !Join ['-', [!FindInMap ['Gerrit', 'Volume', 'Index'], !Ref 'GerritInstanceNumber']]
                 DockerVolumeConfiguration:
                   Scope: shared
                   Autoprovision: true
                   Driver: local
                   Labels:
-                    gerrit-index: !Join ['-', [!Ref EnvironmentName, !Ref GerritIndexVolume]]
-              - Name: !Ref 'GerritLogsVolume'
+                    gerrit-index: !Join ['-', [!Ref EnvironmentName, !FindInMap ['Gerrit', 'Volume', 'Index'], !Ref 'GerritInstanceNumber']]
+              - Name: !Join ['-', [!FindInMap ['Gerrit', 'Volume', 'Logs'], !Ref 'GerritInstanceNumber']]
                 DockerVolumeConfiguration:
                   Scope: shared
                   Autoprovision: true
                   Driver: local
                   Labels:
-                    gerrit-logs: !Join ['-', [!Ref EnvironmentName, !Ref GerritLogsVolume]]
+                    gerrit-logs: !Join ['-', [!Ref EnvironmentName, !FindInMap ['Gerrit', 'Volume', 'Logs'], !Ref 'GerritInstanceNumber']]
 
 
     LoadBalancer:
@@ -407,7 +376,7 @@ Resources:
                   !Join [':', [!Ref 'ClusterStackName', 'PublicSubnetOne']]
             Tags:
                 - Key: Name
-                  Value: !Join ['-', [!Ref 'EnvironmentName', !Ref 'GerritServiceName', 'nlb']]
+                  Value: !Join ['-', [!Ref 'EnvironmentName', !FindInMap ['Gerrit', 'Service', 'Name'], 'nlb']]
 
     HTTPTargetGroup:
         Type: AWS::ElasticLoadBalancingV2::TargetGroup
@@ -416,7 +385,7 @@ Resources:
             VpcId:
               Fn::ImportValue:
                   !Join [':', [!Ref 'ClusterStackName', 'VPCId']]
-            Port: !Ref HTTPGerritLBPort
+            Port: !FindInMap ['Gerrit', 'LoadBalancer', 'HTTPPort']
             Protocol: TCP
 
     HTTPListener:
@@ -427,7 +396,7 @@ Resources:
             - Type: forward
               TargetGroupArn: !Ref HTTPTargetGroup
             LoadBalancerArn: !Ref LoadBalancer
-            Port: !Ref HTTPGerritLBPort
+            Port: !FindInMap ['Gerrit', 'LoadBalancer', 'HTTPPort']
             Protocol: TCP
 
     SSHTargetGroup:
