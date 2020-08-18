@@ -6,20 +6,26 @@ CLUSTER_TEMPLATE:=cf-cluster.yml
 SERVICE_MASTER_TEMPLATE:=cf-service-master.yml
 SERVICE_SLAVE_TEMPLATE:=cf-service-slave.yml
 DNS_ROUTING_TEMPLATE:=cf-dns-route.yml
+CLOUDWATCH_DASHBOARD_TEMPLATE:=cf-dashboard.yml
 AWS_FC_COMMAND=export AWS_PAGER=;aws cloudformation
 
 .PHONY: create-all delete-all \
-				cluster cluster-keys service-master service-slave dns-routing \
-				delete-cluster delete-service-master delete-service-slave delete-dns-routing \
-				wait-for-cluster-creation wait-for-service-master-creation wait-for-dns-routing-creation \
-				wait-for-cluster-deletion wait-for-service-master-deletion wait-for-dns-routing-deletion \
+				cluster cluster-keys service-master service-slave dns-routing dashboard \
+				delete-cluster delete-service-master delete-service-slave delete-dns-routing delete-dashboard \
+				wait-for-cluster-creation wait-for-service-master-creation wait-for-dns-routing-creation wait-for-dashboard \
+				wait-for-cluster-deletion wait-for-service-master-deletion wait-for-dns-routing-deletion wait-for-dashboard-deletion \
 				gerrit-build gerrit-publish
+
+ifeq ($(METRICS_CLOUDWATCH_ENABLED),true)
+optional_dashboard_targets=dashboard wait-for-dashboard-creation
+endif
 
 create-all: upload-common-templates \
 						gerrit-publish git-daemon-publish git-ssh-publish \
 						cluster wait-for-cluster-creation \
 						service-slave service-master \
 						wait-for-service-master-creation wait-for-service-slave-creation \
+						$(optional_dashboard_targets) \
 						dns-routing wait-for-dns-routing-creation
 
 cluster: cluster-keys
@@ -129,6 +135,31 @@ dns-routing:
 		ParameterKey=MasterServiceStackName,ParameterValue=$(SERVICE_MASTER_STACK_NAME) \
 		ParameterKey=SlaveServiceStackName,ParameterValue=$(SERVICE_SLAVE_STACK_NAME)
 
+dashboard: 
+ifeq ($(METRICS_CLOUDWATCH_ENABLED),true)
+ifdef GERRIT_MASTER_INSTANCE_ID
+	$(eval DASHBOARD_OPTIONAL_PARAMS := $(DASHBOARD_OPTIONAL_PARAMS) ParameterKey=MasterInstanceId,ParameterValue=$(GERRIT_MASTER_INSTANCE_ID))
+endif
+ifdef GERRIT_SLAVE_INSTANCE_ID
+	$(eval DASHBOARD_OPTIONAL_PARAMS := $(DASHBOARD_OPTIONAL_PARAMS) ParameterKey=SlaveInstanceId,ParameterValue=$(GERRIT_SLAVE_INSTANCE_ID))
+endif
+ifdef METRICS_CLOUDWATCH_NAMESPACE
+	$(eval DASHBOARD_OPTIONAL_PARAMS := $(DASHBOARD_OPTIONAL_PARAMS) ParameterKey=MetricsCloudwatchNamespace,ParameterValue=$(METRICS_CLOUDWATCH_NAMESPACE))
+endif
+
+	$(AWS_FC_COMMAND) create-stack \
+		--stack-name $(DASHBOARD_STACK_NAME) \
+		--capabilities CAPABILITY_IAM  \
+		--template-body file://`pwd`/$(CLOUDWATCH_DASHBOARD_TEMPLATE) \
+		--region $(AWS_REGION) \
+		--parameters \
+		$(DASHBOARD_OPTIONAL_PARAMS)
+
+else
+		@echo "METRICS_CLOUDWATCH_ENABLED is set to false. Dashboard creation skipped".
+endif
+
+
 wait-for-cluster-creation:
 	@echo "*** Wait for cluster stack '$(CLUSTER_STACK_NAME)' creation"
 	$(AWS_FC_COMMAND) wait stack-create-complete \
@@ -156,6 +187,13 @@ wait-for-dns-routing-creation:
 	--stack-name $(DNS_ROUTING_STACK_NAME) \
 	--region $(AWS_REGION)
 	@echo "*** DNS Routing stack '$(DNS_ROUTING_STACK_NAME)' created"
+
+wait-for-dashboard-creation:
+	@echo "*** Wait for dashboard stack '$(DASHBOARD_STACK_NAME)' creation"
+	$(AWS_FC_COMMAND) wait stack-create-complete \
+	--stack-name $(DASHBOARD_STACK_NAME) \
+	--region $(AWS_REGION)
+	@echo "*** Dashboard stack '$(DASHBOARD_STACK_NAME)' created"
 
 wait-for-cluster-deletion:
 	@echo "*** Wait for cluster stack '$(CLUSTER_STACK_NAME)' deletion"
@@ -185,6 +223,13 @@ wait-for-dns-routing-deletion:
 	--region $(AWS_REGION)
 	@echo "*** DNS routing stack '$(DNS_ROUTING_STACK_NAME)' deleted"
 
+wait-for-dashboard-deletion:
+	@echo "*** Wait for dashboard stack '$(DASHBOARD_STACK_NAME)' deletion"
+	$(AWS_FC_COMMAND) wait stack-delete-complete \
+	--stack-name $(DASHBOARD_STACK_NAME) \
+	--region $(AWS_REGION)
+	@echo "*** Dashboard stack '$(DASHBOARD_STACK_NAME)' deleted"
+
 delete-cluster:
 	$(AWS_FC_COMMAND) delete-stack \
 	--stack-name $(CLUSTER_STACK_NAME) \
@@ -205,10 +250,16 @@ delete-dns-routing:
 	--stack-name $(DNS_ROUTING_STACK_NAME) \
 	--region $(AWS_REGION)
 
+delete-dashboard:
+	$(AWS_FC_COMMAND) delete-stack \
+	--stack-name $(DASHBOARD_STACK_NAME) \
+	--region $(AWS_REGION)
+
 delete-all: delete-dns-routing wait-for-dns-routing-deletion \
 						delete-service-slave wait-for-service-slave-deletion \
 						delete-service-master wait-for-service-master-deletion \
-						delete-cluster wait-for-cluster-deletion
+						delete-cluster wait-for-cluster-deletion \
+						delete-dashboard wait-for-dashboard-deletion
 
 gerrit-publish:
 	$(MAKE) -C ../gerrit gerrit-publish RECIPE=master-slave
