@@ -5,11 +5,12 @@ and a single Gerrit slave in ECS
 
 ## Architecture
 
-Four templates are provided in this example:
+Five templates are provided in this example:
 * `cf-cluster`: define the ECS cluster and the networking stack
 * `cf-service-master`: define the service stack running Gerrit master
 * `cf-service-slave`: define the service stack running Gerrit slave
 * `cf-dns-route`: define the DNS routing for the service
+* `cf-dashboard`: define the CloudWatch dashboard for the services
 
 ### Networking
 
@@ -72,6 +73,7 @@ Configuration values affecting deployment environment and cluster properties
 
 * `SERVICE_MASTER_STACK_NAME`: Optional. Name of the master service stack. `gerrit-service-master` by default.
 * `SERVICE_SLAVE_STACK_NAME`: Optional. Name of the slave service stack. `gerrit-service-slave` by default.
+* `DASHBOARD_STACK_NAME` : Optional. Name of the dashboard stack. `gerrit-dashboard by default.
 * `MASTER_SUBDOMAIN`: Optional. Name of the master sub domain. `gerrit-master-demo` by default.
 * `SLAVE_SUBDOMAIN`: Optional. Name of the slave sub domain. `gerrit-slave-demo` by default.
 * `CLUSTER_DESIRED_CAPACITY`: Optional. Number of EC2 instances composing the cluster. `1` by default.
