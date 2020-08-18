@@ -126,6 +126,24 @@
     },
     {
       "key": {
+        "uuid": "1d1d8678_10fdb1f3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-18T08:34:36Z",
+      "side": 1,
+      "message": "Yeah of course, the minimum configuration approach makes sense and I think we are fulfilling this:\n\n* You can still deploy dual-master as before, without adding any additional parameter.\n\n* As a final user, if you *do* want to enable replication (or eventually, multi-site), then you *must* provide additional parameters, no much way round it. You have to provide a URL to replicate to, kafka brokers, etc.\n\nThose parameters will be required from the user regardless this being a separate recipe or an extension of the dual-master one.",
+      "parentUuid": "83feaa37_ac6e30c2",
+      "revId": "62106698b63bed81bfc9f608885908ba48a68bec",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc197f26_9c387e1b",
         "filename": "dual-master/Makefile",
         "patchSetId": 10
@@ -265,6 +283,30 @@
       "revId": "62106698b63bed81bfc9f608885908ba48a68bec",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ba1f5c0_3eb50d87",
+        "filename": "dual-master/Makefile",
+        "patchSetId": 10
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-18T08:34:36Z",
+      "side": 1,
+      "message": "Yep, many times",
+      "parentUuid": "1a9770c9_21a48580",
+      "range": {
+        "startLine": 379,
+        "startChar": 0,
+        "endLine": 379,
+        "endChar": 72
+      },
+      "revId": "62106698b63bed81bfc9f608885908ba48a68bec",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     },
     {
       "key": {
