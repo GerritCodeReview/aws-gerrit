@@ -59,7 +59,7 @@ Application level metrics for CloudWatch are available through the
 plugin.
 
 * `METRICS_CLOUDWATCH_ENABLED`: Optional - Boolean.
-Whether to publish metrics to CloudWatch. Default: false
+Whether to publish metrics to CloudWatch and create CloudWatch dashboard. Default: false
 * `METRICS_CLOUDWATCH_NAMESPACE`: Optional - String.
 The CloudWatch namespace for Gerrit metrics. Default: _gerrit_
 * `METRICS_CLOUDWATCH_RATE`: Optional - String.
