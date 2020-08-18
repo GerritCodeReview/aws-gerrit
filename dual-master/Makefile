@@ -75,6 +75,7 @@ endif
 		--template-body file://`pwd`/$(SERVICE_MASTER_TEMPLATE) \
 		--region $(AWS_REGION) \
 		--parameters \
+		ParameterKey=GerritInstanceNumber,ParameterValue=1 \
 		ParameterKey=LDAPServer,ParameterValue=$(LDAP_SERVER) \
 		ParameterKey=LDAPUsername,ParameterValue=\"$(LDAP_USERNAME)\" \
 		ParameterKey=LDAPAccountBase,ParameterValue=\"$(LDAP_ACCOUNT_BASE)\" \
@@ -93,14 +94,8 @@ endif
 		ParameterKey=SSHHostPort,ParameterValue=$(SSH_HOST_PORT_MASTER1) \
 		ParameterKey=GerritKeyPrefix,ParameterValue=$(GERRIT_KEY_PREFIX)\
 		ParameterKey=DockerImage,ParameterValue=aws-gerrit/gerrit:$(IMAGE_TAG) \
-		ParameterKey=GerritDataVolume,ParameterValue=gerrit-data-master-1 \
-		ParameterKey=GerritIndexVolume,ParameterValue=gerrit-index-master-1 \
-		ParameterKey=GerritCacheVolume,ParameterValue=gerrit-cache-master-1 \
-		ParameterKey=GerritDbVolume,ParameterValue=gerrit-db-master-1 \
-		ParameterKey=GerritLogsVolume,ParameterValue=gerrit-logs-master-1 \
 		ParameterKey=PeerSubdomain,ParameterValue=$(MASTER2_SUBDOMAIN) \
 		ParameterKey=LBSubdomain,ParameterValue=$(LB_SUBDOMAIN) \
-		ParameterKey=SlaveServiceStackName,ParameterValue=$(SERVICE_SLAVE_STACK_NAME) \
 		ParameterKey=GerritRAM,ParameterValue=$(GERRIT_RAM) \
 		ParameterKey=GerritCPU,ParameterValue=$(GERRIT_CPU) \
 		ParameterKey=GerritHeapLimit,ParameterValue=$(GERRIT_HEAP_LIMIT) \
@@ -127,6 +122,7 @@ endif
 		--template-body file://`pwd`/$(SERVICE_MASTER_TEMPLATE) \
 		--region $(AWS_REGION) \
 		--parameters \
+		ParameterKey=GerritInstanceNumber,ParameterValue=2 \
 		ParameterKey=LDAPServer,ParameterValue=$(LDAP_SERVER) \
 		ParameterKey=LDAPUsername,ParameterValue=\"$(LDAP_USERNAME)\" \
 		ParameterKey=LDAPAccountBase,ParameterValue=\"$(LDAP_ACCOUNT_BASE)\" \
@@ -145,14 +141,8 @@ endif
 		ParameterKey=SSHHostPort,ParameterValue=$(SSH_HOST_PORT_MASTER2) \
 		ParameterKey=GerritKeyPrefix,ParameterValue=$(GERRIT_KEY_PREFIX)\
 		ParameterKey=DockerImage,ParameterValue=aws-gerrit/gerrit:$(IMAGE_TAG) \
-		ParameterKey=GerritDataVolume,ParameterValue=gerrit-data-master-2 \
-		ParameterKey=GerritIndexVolume,ParameterValue=gerrit-index-master-2 \
-		ParameterKey=GerritCacheVolume,ParameterValue=gerrit-cache-master-2 \
-		ParameterKey=GerritDbVolume,ParameterValue=gerrit-db-master-2 \
-		ParameterKey=GerritLogsVolume,ParameterValue=gerrit-logs-master-2 \
 		ParameterKey=PeerSubdomain,ParameterValue=$(MASTER1_SUBDOMAIN) \
 		ParameterKey=LBSubdomain,ParameterValue=$(LB_SUBDOMAIN) \
-		ParameterKey=SlaveServiceStackName,ParameterValue=$(SERVICE_SLAVE_STACK_NAME) \
 		ParameterKey=ReindexAtSartup,ParameterValue=true \
 		ParameterKey=GerritRAM,ParameterValue=$(GERRIT_RAM) \
 		ParameterKey=GerritCPU,ParameterValue=$(GERRIT_CPU) \
