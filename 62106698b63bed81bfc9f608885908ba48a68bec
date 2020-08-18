@@ -173,6 +173,30 @@
     },
     {
       "key": {
+        "uuid": "13ac35b4_f846b544",
+        "filename": "dual-master/Makefile",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-18T07:37:46Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0475b6ef_068b9e5d",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 120
+      },
+      "revId": "62106698b63bed81bfc9f608885908ba48a68bec",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "618462fc_33fe4b09",
         "filename": "dual-master/Makefile",
         "patchSetId": 10
@@ -208,6 +232,30 @@
       "side": 1,
       "message": "Whilst this is true, I thought it was better to always make sure they are deleted (A recipe *might* have been previously created with those targets for example, despite the _current_ setup configuration).\nWhen they don\u0027t exist it will be just a noop, so I think it just make the deletion operation more solid.\n\nWDYT?",
       "parentUuid": "618462fc_33fe4b09",
+      "range": {
+        "startLine": 379,
+        "startChar": 0,
+        "endLine": 379,
+        "endChar": 72
+      },
+      "revId": "62106698b63bed81bfc9f608885908ba48a68bec",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a9770c9_21a48580",
+        "filename": "dual-master/Makefile",
+        "patchSetId": 10
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-18T07:37:46Z",
+      "side": 1,
+      "message": "Have you verified that the deletion of a non-existent stack won\u0027t fail?",
+      "parentUuid": "cf78069b_86e4e694",
       "range": {
         "startLine": 379,
         "startChar": 0,
@@ -422,6 +470,30 @@
       "side": 1,
       "message": "Yes I tested this and it works.\nI have deployed dual-master with service replication enabled and a desired count of 2[1].\nECS placement strategy placed one one one EC2 instance[2] and one on another[3].\n\nECS has a concept of placement-strategy (which can also be tweaked). The first thing it will do is:\n\n`Identify the instances that satisfy the CPU, memory, and port requirements in the task definition.`\n\nYou can see more details in the AWS official docs[4]\n\n[1] https://ibb.co/ftVJPKc\n[2] https://ibb.co/C5xMtjc\n[3] https://ibb.co/QXtf5Yv\n[4] https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-placement.html",
       "parentUuid": "6443ddf6_fd12f389",
+      "range": {
+        "startLine": 115,
+        "startChar": 3,
+        "endLine": 115,
+        "endChar": 36
+      },
+      "revId": "62106698b63bed81bfc9f608885908ba48a68bec",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "97d0b35e_68af477c",
+        "filename": "dual-master/README.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-18T07:37:46Z",
+      "side": 1,
+      "message": "Good stuff!",
+      "parentUuid": "32537f9a_43c9bb4a",
       "range": {
         "startLine": 115,
         "startChar": 3,
