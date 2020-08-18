@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da489fe5_54540a51",
+        "filename": "dual-master/README.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-18T07:52:50Z",
+      "side": 1,
+      "message": "_HOST?",
+      "range": {
+        "startLine": 124,
+        "startChar": 28,
+        "endLine": 124,
+        "endChar": 32
+      },
+      "revId": "37051a734f8520c5a0c296cecd095e36056c2138",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04e42799_65e9ccbb",
+        "filename": "dual-master/setup.env.template",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-18T07:52:50Z",
+      "side": 1,
+      "message": "Should this be logically \"attached\" to the section above?\n(e.g. remove the empty line at L10)\n\nAlso, the URL should be rename to HOST",
+      "revId": "37051a734f8520c5a0c296cecd095e36056c2138",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5290426_6510828a",
+        "filename": "gerrit/etc/replication.config.template",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-18T07:52:50Z",
+      "side": 1,
+      "message": "We do not typically put a URL here but rather a logical name.\nHowever, I believe it should work :-)",
+      "range": {
+        "startLine": 24,
+        "startChar": 9,
+        "endLine": 24,
+        "endChar": 30
+      },
+      "revId": "37051a734f8520c5a0c296cecd095e36056c2138",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    }
+  ]
+}
