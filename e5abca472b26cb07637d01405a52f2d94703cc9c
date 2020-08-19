@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5219e85b_b6ddc5a6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-19T08:37:35Z",
+      "side": 1,
+      "message": "Nope, this ticket is not solving that problem.\nThis is just ensuring that whatever the recipe is downloading is the *only* thing that gets deployed.\n\nBeing more precise in what the recipe is downloading is a follow-up ticket I think.\n\nWDYT?",
+      "parentUuid": "8b678cdb_2a9fc93c",
+      "revId": "e5abca472b26cb07637d01405a52f2d94703cc9c",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "acf54008_36f7b221",
         "filename": "gerrit/Makefile",
         "patchSetId": 2
@@ -39,6 +57,30 @@
       "revId": "e5abca472b26cb07637d01405a52f2d94703cc9c",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "081c9c87_b64c786b",
+        "filename": "gerrit/Makefile",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-19T08:37:35Z",
+      "side": 1,
+      "message": "lib directory is not part of the Dockerfile yet, no libraries are downloaded in the single-master, master-slave or dual-master recipe.\n\nThe clean up of the lib directory will need to be done for multi-site deployments, but that will be part of future changes.",
+      "parentUuid": "acf54008_36f7b221",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 26
+      },
+      "revId": "e5abca472b26cb07637d01405a52f2d94703cc9c",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     }
   ]
 }
