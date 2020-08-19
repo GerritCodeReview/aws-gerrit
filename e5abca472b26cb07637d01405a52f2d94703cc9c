@@ -46,6 +46,30 @@
       "revId": "e5abca472b26cb07637d01405a52f2d94703cc9c",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5ab1e50_e5c0d774",
+        "filename": "dual-master/cf-service-master.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-19T22:37:51Z",
+      "side": 0,
+      "message": "Cool, did you push already the next PS?",
+      "parentUuid": "85432499_7c9d61c1",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 21
+      },
+      "revId": "e5abca472b26cb07637d01405a52f2d94703cc9c",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
     }
   ]
 }
