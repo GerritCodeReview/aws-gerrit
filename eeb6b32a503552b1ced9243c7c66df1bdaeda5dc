@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "baa91282_3bf2cabb",
+        "filename": "dual-master/cf-service-lb.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-19T22:45:47Z",
+      "side": 1,
+      "message": "Why can\u0027t we reuse the SSHGerritPort? Is there any value in using a different one for the container?",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 22
+      },
+      "revId": "eeb6b32a503552b1ced9243c7c66df1bdaeda5dc",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
