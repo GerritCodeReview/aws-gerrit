@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c69f0e74_c75ff9f0",
+        "filename": "master-slave/Makefile",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-19T09:26:15Z",
+      "side": 1,
+      "message": "Those extra targets are needed only if you enable the dashboard",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 100
+      },
+      "revId": "9996f2898679e15201f90327c9531ce8775316c6",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
