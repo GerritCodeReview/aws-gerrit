@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f25bbd24_7dd16693",
+        "filename": "dual-master/README.md",
+        "patchSetId": 13
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-19T19:30:50Z",
+      "side": 1,
+      "message": "and accessible with server-side TLS security enabled.",
+      "range": {
+        "startLine": 144,
+        "startChar": 69,
+        "endLine": 144,
+        "endChar": 86
+      },
+      "revId": "07c78e97ff5c8dc1365cdfe2b6695df4b52905c2",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39c764cf_cc657f9d",
+        "filename": "dual-master/README.md",
+        "patchSetId": 13
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-19T19:30:50Z",
+      "side": 1,
+      "message": "Required (this is the chapter about multi-site, right?)",
+      "range": {
+        "startLine": 150,
+        "startChar": 23,
+        "endLine": 150,
+        "endChar": 31
+      },
+      "revId": "07c78e97ff5c8dc1365cdfe2b6695df4b52905c2",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "652cf85b_805d210d",
+        "filename": "gerrit/etc/multi-site.config.template",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-19T19:30:50Z",
+      "side": 1,
+      "message": "This config doesn\u0027t need any expansion: what is the purpose of having a template?",
+      "revId": "07c78e97ff5c8dc1365cdfe2b6695df4b52905c2",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbc158f2_46edff67",
+        "filename": "gerrit/setup_gerrit.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-19T19:30:50Z",
+      "side": 1,
+      "message": "Can we just add the file as-is to the image without all this expansion boilerplate?",
+      "range": {
+        "startLine": 198,
+        "startChar": 0,
+        "endLine": 207,
+        "endChar": 10
+      },
+      "revId": "07c78e97ff5c8dc1365cdfe2b6695df4b52905c2",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
