@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b72f7e07_4f12e856",
+        "filename": "dual-master/Makefile",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-19T09:31:21Z",
+      "side": 1,
+      "message": "If metrics cloudwatch id disabled, then you do not need those targets",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 102
+      },
+      "revId": "6d1b0c5f0d9ec9a677852f211eedd89cb41bb18f",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
