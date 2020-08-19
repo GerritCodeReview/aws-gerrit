@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "efde3630_a8c37fa4",
+        "filename": "master-slave/Makefile",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-08-19T14:39:00Z",
+      "side": 1,
+      "message": "I believe we should wait for it the same as we are waiting for dns. When running from command line we want to make sure that all elements are up and running",
+      "parentUuid": "3b2cec2f_d4766485",
+      "range": {
+        "startLine": 23,
+        "startChar": 71,
+        "endLine": 23,
+        "endChar": 98
+      },
+      "revId": "9996f2898679e15201f90327c9531ce8775316c6",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "194bc128_f2991467",
         "filename": "master-slave/Makefile",
         "patchSetId": 1
@@ -59,6 +83,24 @@
       "writtenOn": "2020-08-19T09:40:54Z",
       "side": 1,
       "message": "I know we do this in other parts of the code too, but this should probably be removed.\nSo that DASHBOARD_OPTIONAL_PARAMS is initialized to and empty value first so that it is _only_ populated with what\u0027s defined by this target:",
+      "revId": "9996f2898679e15201f90327c9531ce8775316c6",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09a21762_6c3e37be",
+        "filename": "master-slave/Makefile",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-08-19T14:39:00Z",
+      "side": 1,
+      "message": "Agree can we do that in a followup change for all params?",
+      "parentUuid": "194bc128_f2991467",
       "revId": "9996f2898679e15201f90327c9531ce8775316c6",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
@@ -82,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "a5c295da_b8e413a1",
+        "filename": "master-slave/Makefile",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-08-19T14:39:00Z",
+      "side": 1,
+      "message": "Tested, that works",
+      "parentUuid": "98a34dfd_66644329",
+      "revId": "9996f2898679e15201f90327c9531ce8775316c6",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ef3ff26d_894938ad",
         "filename": "master-slave/Makefile",
         "patchSetId": 1
@@ -93,6 +153,30 @@
       "writtenOn": "2020-08-19T09:40:54Z",
       "side": 1,
       "message": "Do we need this?",
+      "range": {
+        "startLine": 184,
+        "startChar": 0,
+        "endLine": 189,
+        "endChar": 62
+      },
+      "revId": "9996f2898679e15201f90327c9531ce8775316c6",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "272c8f04_77d15e26",
+        "filename": "master-slave/Makefile",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-08-19T14:39:00Z",
+      "side": 1,
+      "message": "Same as above I believe we should wait until all elements are done before we will finish the make create-all. We are doing the same thing with dns-routing. It indicates that all stack elements are created",
+      "parentUuid": "ef3ff26d_894938ad",
       "range": {
         "startLine": 184,
         "startChar": 0,
@@ -128,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "dce13135_7ec9f018",
+        "filename": "master-slave/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-08-19T14:39:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc11a84c_feb06f83",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 66
+      },
+      "revId": "9996f2898679e15201f90327c9531ce8775316c6",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41fa0219_a93a0457",
         "filename": "master-slave/README.md",
         "patchSetId": 1
@@ -148,6 +256,30 @@
       "revId": "9996f2898679e15201f90327c9531ce8775316c6",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbd37ff2_431d104b",
+        "filename": "master-slave/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-08-19T14:39:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41fa0219_a93a0457",
+      "range": {
+        "startLine": 76,
+        "startChar": 66,
+        "endLine": 76,
+        "endChar": 83
+      },
+      "revId": "9996f2898679e15201f90327c9531ce8775316c6",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     },
     {
       "key": {
@@ -174,6 +306,30 @@
     },
     {
       "key": {
+        "uuid": "2389fc46_e825ebf3",
+        "filename": "master-slave/cf-dashboard.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-08-19T14:39:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49966b47_7f12fa01",
+      "range": {
+        "startLine": 2,
+        "startChar": 13,
+        "endLine": 2,
+        "endChar": 43
+      },
+      "revId": "9996f2898679e15201f90327c9531ce8775316c6",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "628dc59f_67e22a80",
         "filename": "master-slave/cf-dashboard.yml",
         "patchSetId": 1
@@ -191,6 +347,24 @@
     },
     {
       "key": {
+        "uuid": "c1db8851_3dea476f",
+        "filename": "master-slave/cf-dashboard.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-08-19T14:39:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "628dc59f_67e22a80",
+      "revId": "9996f2898679e15201f90327c9531ce8775316c6",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5ce59de_4b8128e9",
         "filename": "master-slave/cf-dashboard.yml",
         "patchSetId": 1
@@ -202,6 +376,30 @@
       "writtenOn": "2020-08-19T09:40:54Z",
       "side": 1,
       "message": "Packfile, one word",
+      "range": {
+        "startLine": 371,
+        "startChar": 42,
+        "endLine": 371,
+        "endChar": 52
+      },
+      "revId": "9996f2898679e15201f90327c9531ce8775316c6",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5bc9620_f7705e11",
+        "filename": "master-slave/cf-dashboard.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-08-19T14:39:00Z",
+      "side": 1,
+      "message": "hmm on Grafana dashboard we have Pack files",
+      "parentUuid": "e5ce59de_4b8128e9",
       "range": {
         "startLine": 371,
         "startChar": 42,
