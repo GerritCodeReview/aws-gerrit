@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "45bbee40_9c8cb528",
+        "filename": "master-slave/Makefile",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-19T14:55:08Z",
+      "side": 1,
+      "message": "Yes, but we can wait *after* starting the dns-routing stack right? they can be created in parallel.\nWe do the same thing with slave and master creation[1], we don\u0027t wait for the slave to be created before the master does.\n\n```\ndns-routing dashboard\\\nwait-for-dns-routing-creation wait-for-dashboard-creation\n```\n\nNot a big deal if you don\u0027t think is necessary (perhaps the dashboard stack creation is really quick), I am just trying to reduce the time it takes to build a stack.\n\n\n[1]https://gerrit.googlesource.com/aws-gerrit/+/d9ccc2f6713e04f4474537f7f1858527751bf7cc/master-slave/Makefile#26",
+      "parentUuid": "efde3630_a8c37fa4",
+      "range": {
+        "startLine": 23,
+        "startChar": 71,
+        "endLine": 23,
+        "endChar": 98
+      },
+      "revId": "9996f2898679e15201f90327c9531ce8775316c6",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "194bc128_f2991467",
         "filename": "master-slave/Makefile",
         "patchSetId": 1
@@ -107,6 +131,24 @@
     },
     {
       "key": {
+        "uuid": "19f75fa2_81ba4d52",
+        "filename": "master-slave/Makefile",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-19T14:55:08Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "09a21762_6c3e37be",
+      "revId": "9996f2898679e15201f90327c9531ce8775316c6",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98a34dfd_66644329",
         "filename": "master-slave/Makefile",
         "patchSetId": 1
@@ -139,6 +181,24 @@
       "revId": "9996f2898679e15201f90327c9531ce8775316c6",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a2b685e_546f569e",
+        "filename": "master-slave/Makefile",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-19T14:55:08Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a5c295da_b8e413a1",
+      "revId": "9996f2898679e15201f90327c9531ce8775316c6",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +246,30 @@
       "revId": "9996f2898679e15201f90327c9531ce8775316c6",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a47680d3_2d951ab9",
+        "filename": "master-slave/Makefile",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-19T14:55:08Z",
+      "side": 1,
+      "message": "See above",
+      "parentUuid": "272c8f04_77d15e26",
+      "range": {
+        "startLine": 184,
+        "startChar": 0,
+        "endLine": 189,
+        "endChar": 62
+      },
+      "revId": "9996f2898679e15201f90327c9531ce8775316c6",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     },
     {
       "key": {
@@ -409,6 +493,30 @@
       "revId": "9996f2898679e15201f90327c9531ce8775316c6",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48052cf3_ea78bdf3",
+        "filename": "master-slave/cf-dashboard.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-19T14:55:08Z",
+      "side": 1,
+      "message": "Not a big deal, but I believe the official naming is Packfile[1]\n\n[1]https://git-scm.com/book/en/v2/Git-Internals-Packfiles",
+      "parentUuid": "b5bc9620_f7705e11",
+      "range": {
+        "startLine": 371,
+        "startChar": 42,
+        "endLine": 371,
+        "endChar": 52
+      },
+      "revId": "9996f2898679e15201f90327c9531ce8775316c6",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     }
   ]
 }
