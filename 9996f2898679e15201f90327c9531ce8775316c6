@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "c0fe5cbe_d8469260",
+        "filename": "master-slave/Makefile",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-08-19T15:02:08Z",
+      "side": 1,
+      "message": "Ok it was implemented like that when were waiting together with dns-creation, but now with the if in L19 it will be more difficult. And yes creating and deleting dashboard takes like 5 seconds",
+      "parentUuid": "45bbee40_9c8cb528",
+      "range": {
+        "startLine": 23,
+        "startChar": 71,
+        "endLine": 23,
+        "endChar": 98
+      },
+      "revId": "9996f2898679e15201f90327c9531ce8775316c6",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "194bc128_f2991467",
         "filename": "master-slave/Makefile",
         "patchSetId": 1
