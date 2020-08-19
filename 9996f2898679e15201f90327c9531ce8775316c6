@@ -22,6 +22,178 @@
       "revId": "9996f2898679e15201f90327c9531ce8775316c6",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b2cec2f_d4766485",
+        "filename": "master-slave/Makefile",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-19T09:40:54Z",
+      "side": 1,
+      "message": "The dashboard has no dependencies right?\nDo we need to wait for it to be created?",
+      "range": {
+        "startLine": 23,
+        "startChar": 71,
+        "endLine": 23,
+        "endChar": 98
+      },
+      "revId": "9996f2898679e15201f90327c9531ce8775316c6",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "194bc128_f2991467",
+        "filename": "master-slave/Makefile",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-19T09:40:54Z",
+      "side": 1,
+      "message": "I know we do this in other parts of the code too, but this should probably be removed.\nSo that DASHBOARD_OPTIONAL_PARAMS is initialized to and empty value first so that it is _only_ populated with what\u0027s defined by this target:",
+      "revId": "9996f2898679e15201f90327c9531ce8775316c6",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98a34dfd_66644329",
+        "filename": "master-slave/Makefile",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-19T09:40:54Z",
+      "side": 1,
+      "message": "When no parameters are set, is this still going to be working, since the ?\n\n`--parameters \\` will have no values",
+      "revId": "9996f2898679e15201f90327c9531ce8775316c6",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef3ff26d_894938ad",
+        "filename": "master-slave/Makefile",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-19T09:40:54Z",
+      "side": 1,
+      "message": "Do we need this?",
+      "range": {
+        "startLine": 184,
+        "startChar": 0,
+        "endLine": 189,
+        "endChar": 62
+      },
+      "revId": "9996f2898679e15201f90327c9531ce8775316c6",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc11a84c_feb06f83",
+        "filename": "master-slave/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-19T09:40:54Z",
+      "side": 1,
+      "message": "Should we mention, here (or somewhere) that only when METRICS_CLOUDWATCH_ENABLED\u003dtrue an actual dashboard will be created?",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 66
+      },
+      "revId": "9996f2898679e15201f90327c9531ce8775316c6",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41fa0219_a93a0457",
+        "filename": "master-slave/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-19T09:40:54Z",
+      "side": 1,
+      "message": "nit: missing closing backtick",
+      "range": {
+        "startLine": 76,
+        "startChar": 66,
+        "endLine": 76,
+        "endChar": 83
+      },
+      "revId": "9996f2898679e15201f90327c9531ce8775316c6",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49966b47_7f12fa01",
+        "filename": "master-slave/cf-dashboard.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-19T09:40:54Z",
+      "side": 1,
+      "message": "We could mention this is the master-slave dashboard",
+      "range": {
+        "startLine": 2,
+        "startChar": 13,
+        "endLine": 2,
+        "endChar": 43
+      },
+      "revId": "9996f2898679e15201f90327c9531ce8775316c6",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5ce59de_4b8128e9",
+        "filename": "master-slave/cf-dashboard.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-19T09:40:54Z",
+      "side": 1,
+      "message": "Packfile, one word",
+      "range": {
+        "startLine": 371,
+        "startChar": 42,
+        "endLine": 371,
+        "endChar": 52
+      },
+      "revId": "9996f2898679e15201f90327c9531ce8775316c6",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
     }
   ]
 }
