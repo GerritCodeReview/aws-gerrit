@@ -22,6 +22,121 @@
       "revId": "6d1b0c5f0d9ec9a677852f211eedd89cb41bb18f",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c58a01a9_fd7248dd",
+        "filename": "dual-master/Makefile",
+        "patchSetId": 2
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-19T09:46:55Z",
+      "side": 1,
+      "message": "Same comment as previous change:let\u0027s check this works when no parameters are set.",
+      "range": {
+        "startLine": 275,
+        "startChar": 2,
+        "endLine": 275,
+        "endChar": 30
+      },
+      "revId": "6d1b0c5f0d9ec9a677852f211eedd89cb41bb18f",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55f7845e_a09806fd",
+        "filename": "dual-master/Makefile",
+        "patchSetId": 2
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-19T09:46:55Z",
+      "side": 1,
+      "message": "Do we need this?",
+      "range": {
+        "startLine": 327,
+        "startChar": 0,
+        "endLine": 332,
+        "endChar": 8
+      },
+      "revId": "6d1b0c5f0d9ec9a677852f211eedd89cb41bb18f",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e84892c4_22726129",
+        "filename": "dual-master/cf-dashboard.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-19T09:46:55Z",
+      "side": 1,
+      "message": "master1",
+      "range": {
+        "startLine": 5,
+        "startChar": 54,
+        "endLine": 5,
+        "endChar": 60
+      },
+      "revId": "6d1b0c5f0d9ec9a677852f211eedd89cb41bb18f",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b652493_56a60576",
+        "filename": "dual-master/cf-dashboard.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-19T09:46:55Z",
+      "side": 1,
+      "message": "master2",
+      "range": {
+        "startLine": 9,
+        "startChar": 54,
+        "endLine": 9,
+        "endChar": 60
+      },
+      "revId": "6d1b0c5f0d9ec9a677852f211eedd89cb41bb18f",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6b3b149_7a834220",
+        "filename": "dual-master/cf-dashboard.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-19T09:46:55Z",
+      "side": 1,
+      "message": "perhaps this should go and the condition on whether creating this stack should be delegated to the Makefile?",
+      "range": {
+        "startLine": 16,
+        "startChar": 1,
+        "endLine": 20,
+        "endChar": 34
+      },
+      "revId": "6d1b0c5f0d9ec9a677852f211eedd89cb41bb18f",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
     }
   ]
 }
