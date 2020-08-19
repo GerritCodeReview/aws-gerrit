@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "8b678cdb_2a9fc93c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-08-19T06:40:41Z",
+      "side": 1,
+      "message": "But is this going to solve the problem that we are deploying plugins which we do not need. For example in single master we do not need HA plugin. But because of /aws-gerrit/gerrit/Makefile we are going to download it anyway",
+      "revId": "e5abca472b26cb07637d01405a52f2d94703cc9c",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "acf54008_36f7b221",
         "filename": "gerrit/Makefile",
         "patchSetId": 2
