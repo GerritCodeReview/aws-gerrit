@@ -46,6 +46,30 @@
       "revId": "d9ccc2f6713e04f4474537f7f1858527751bf7cc",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e5cee85_913f0112",
+        "filename": "master-slave/Makefile",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-19T15:07:38Z",
+      "side": 1,
+      "message": "Do we really call \"make dashboard\" to double check if we can create it?\nI think the dashboard creation makes sense as part of the stack creation not standalone.\n\nI believe one of the two checks is redundant because they effectively do the same thing: preventing or allowing the dashboard stack being created.\n\nI suggest we either remove the conditional target addition (L19) or this one.\n\nBut again, just a suggestion 😊",
+      "parentUuid": "d7f95ea1_7fe1b72f",
+      "range": {
+        "startLine": 139,
+        "startChar": 0,
+        "endLine": 139,
+        "endChar": 41
+      },
+      "revId": "d9ccc2f6713e04f4474537f7f1858527751bf7cc",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
     }
   ]
 }
