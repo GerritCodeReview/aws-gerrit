@@ -1,0 +1,419 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Deploy a dual-master CloudWatch dashboard.
+Parameters:
+  Master1InstanceId:
+      Description: Optional identifier for the Gerrit master1 instance
+      Default: gerrit-master-slave-MASTER1
+      Type: String
+  Master2InstanceId:
+      Description: Optional identifier for the Gerrit master2 instance
+      Default: gerrit-master-slave-MASTER2
+      Type: String
+  SlaveInstanceId:
+      Description: Optional identifier for the Gerrit slave instance
+      Default: gerrit-master-slave-SLAVE
+      Type: String
+  MetricsCloudwatchNamespace:
+      Description: The CloudWatch namespace for Gerrit metrics
+      Type: String
+      Default: gerrit
+
+Resources:
+  CloudWatchDashboard:
+      Type: AWS::CloudWatch::Dashboard
+      Condition: CreateCloudwatchDashboard
+      Properties:
+          DashboardName: !Ref AWS::StackName
+          DashboardBody: !Sub |
+                {
+                    "start": "-PT6H",
+                    "periodOverride": "auto",
+                    "widgets": [
+                        {
+                            "type": "metric",
+                            "x": 0,
+                            "y": 0,
+                            "width": 24,
+                            "height": 3,
+                            "properties": {
+                                "metrics": [
+                                    [ "${MetricsCloudwatchNamespace}", "sshd/sessions/connected", "InstanceId", "${Master1InstanceId}", "Type", "gauge" ],
+                                    [ "${MetricsCloudwatchNamespace}", "sshd/sessions/connected", "InstanceId", "${Master2InstanceId}", "Type", "gauge" ],
+                                    [ "${MetricsCloudwatchNamespace}", "sshd/sessions/connected", "InstanceId", "${SlaveInstanceId}", "Type", "gauge" ]
+                                ],
+                                "view": "singleValue",
+                                "region": "${AWS::Region}",
+                                "stat": "Maximum",
+                                "period": 60,
+                                "title": "SSH Connection",
+                                "stacked": false
+                            }
+                        },
+                        {
+                            "type": "metric",
+                            "x": 6,
+                            "y": 3,
+                            "width": 6,
+                            "height": 6,
+                            "properties": {
+                                "metrics": [
+                                    [ { "expression": "RATE(METRICS())", "label": "Expression1", "id": "e1", "region": "${AWS::Region}" } ],
+                                    [ "${MetricsCloudwatchNamespace}", "proc/cpu/usage", "InstanceId", "${Master1InstanceId}", "Type", "gauge", { "id": "m1", "visible": false } ],
+                                    [ "${MetricsCloudwatchNamespace}", "proc/cpu/usage", "InstanceId", "${Master2InstanceId}", "Type", "gauge", { "id": "m3", "visible": false } ],
+                                    [ "${MetricsCloudwatchNamespace}", "proc/cpu/usage", "InstanceId", "${SlaveInstanceId}", "Type", "gauge", { "id": "m2", "visible": false } ]
+                                ],
+                                "view": "timeSeries",
+                                "stacked": false,
+                                "region": "${AWS::Region}",
+                                "stat": "Average",
+                                "period": 60,
+                                "title": "Gerrit Cpu Load",
+                                "yAxis": {
+                                    "right": {
+                                        "showUnits": true
+                                    },
+                                    "left": {
+                                        "showUnits": false,
+                                        "min": 0
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "type": "metric",
+                            "x": 12,
+                            "y": 33,
+                            "width": 12,
+                            "height": 6,
+                            "properties": {
+                                "metrics": [
+                                    [ "${MetricsCloudwatchNamespace}", "jgit/block_cache/cache_used", "InstanceId", "${Master1InstanceId}", "Type", "gauge", { "id": "m1" } ],
+                                    [ "${MetricsCloudwatchNamespace}", "jgit/block_cache/cache_used", "InstanceId", "${Master2InstanceId}", "Type", "gauge", { "id": "m3" } ],
+                                    [ "${MetricsCloudwatchNamespace}", "jgit/block_cache/cache_used", "InstanceId", "${SlaveInstanceId}", "Type", "gauge", { "id": "m2" } ]
+                                ],
+                                "view": "timeSeries",
+                                "stacked": false,
+                                "region": "${AWS::Region}",
+                                "yAxis": {
+                                    "left": {
+                                        "showUnits": false,
+                                        "label": ""
+                                    }
+                                },
+                                "title": "JGit Cache",
+                                "period": 60,
+                                "stat": "Average"
+                            }
+                        },
+                        {
+                            "type": "metric",
+                            "x": 18,
+                            "y": 3,
+                            "width": 6,
+                            "height": 6,
+                            "properties": {
+                                "metrics": [
+                                    [ "${MetricsCloudwatchNamespace}", "jvm.memory.total.used", "InstanceId", "${Master1InstanceId}", "Type", "gauge" ],
+                                    [ "${MetricsCloudwatchNamespace}", "jvm.memory.total.used", "InstanceId", "${Master2InstanceId}", "Type", "gauge" ],
+                                    [ "${MetricsCloudwatchNamespace}", "jvm.memory.total.used", "InstanceId", "${SlaveInstanceId}", "Type", "gauge" ]
+                                ],
+                                "view": "timeSeries",
+                                "stacked": false,
+                                "region": "${AWS::Region}",
+                                "yAxis": {
+                                    "left": {
+                                        "showUnits": false
+                                    }
+                                },
+                                "stat": "Average",
+                                "period": 60,
+                                "title": "Gerrit Used memory"
+                            }
+                        },
+                        {
+                            "type": "metric",
+                            "x": 12,
+                            "y": 3,
+                            "width": 6,
+                            "height": 6,
+                            "properties": {
+                                "metrics": [
+                                    [ "${MetricsCloudwatchNamespace}", "proc/cpu/system_load", "InstanceId", "${Master1InstanceId}", "Type", "gauge" ],
+                                    [ "${MetricsCloudwatchNamespace}", "proc/cpu/system_load", "InstanceId", "${Master2InstanceId}", "Type", "gauge" ],
+                                    [ "${MetricsCloudwatchNamespace}", "proc/cpu/system_load", "InstanceId", "${SlaveInstanceId}", "Type", "gauge" ]
+                                ],
+                                "view": "timeSeries",
+                                "stacked": false,
+                                "title": "Gerrit System Load",
+                                "region": "${AWS::Region}",
+                                "yAxis": {
+                                    "left": {
+                                        "showUnits": false
+                                    }
+                                },
+                                "stat": "Average",
+                                "period": 60
+                            }
+                        },
+                        {
+                            "type": "metric",
+                            "x": 0,
+                            "y": 9,
+                            "width": 6,
+                            "height": 6,
+                            "properties": {
+                                "metrics": [
+                                    [ "${MetricsCloudwatchNamespace}", "jvm.gc.G1-Old-Generation.time",  "InstanceId", "${Master1InstanceId}", "Type", "gauge" ],
+                                    [ "${MetricsCloudwatchNamespace}", "jvm.gc.G1-Old-Generation.time",  "InstanceId", "${Master2InstanceId}", "Type", "gauge" ],
+                                    [ "${MetricsCloudwatchNamespace}", "jvm.gc.G1-Old-Generation.time",  "InstanceId", "${SlaveInstanceId}", "Type", "gauge" ]
+                                ],
+                                "view": "timeSeries",
+                                "stacked": false,
+                                "title": "GC Time",
+                                "region": "${AWS::Region}",
+                                "stat": "Average",
+                                "period": 60,
+                                "yAxis": {
+                                    "left": {
+                                        "showUnits": false
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "type": "metric",
+                            "x": 6,
+                            "y": 9,
+                            "width": 6,
+                            "height": 6,
+                            "properties": {
+                                "metrics": [
+                                    [ "${MetricsCloudwatchNamespace}", "proc/jvm/thread/num_live",  "InstanceId", "${Master1InstanceId}", "Type", "gauge" ],
+                                    [ "${MetricsCloudwatchNamespace}", "proc/jvm/thread/num_live",  "InstanceId", "${Master2InstanceId}", "Type", "gauge" ],
+                                    [ "${MetricsCloudwatchNamespace}", "proc/jvm/thread/num_live",  "InstanceId", "${SlaveInstanceId}", "Type", "gauge" ]
+                                ],
+                                "view": "timeSeries",
+                                "stacked": false,
+                                "title": "Active Threads",
+                                "region": "${AWS::Region}",
+                                "period": 60,
+                                "stat": "Average",
+                                "yAxis": {
+                                    "left": {
+                                        "showUnits": false
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "type": "metric",
+                            "x": 0,
+                            "y": 15,
+                            "width": 6,
+                            "height": 6,
+                            "properties": {
+                                "metrics": [
+                                    [ "${MetricsCloudwatchNamespace}", "http/server/rest_api/server_latency_total", "InstanceId", "${Master1InstanceId}", "Type", "99.9%", { "id": "m2" } ],
+                                    [ "${MetricsCloudwatchNamespace}", "http/server/rest_api/server_latency_total", "InstanceId", "${Master2InstanceId}", "Type", "99.9%", { "id": "m3" } ]
+                                ],
+                                "view": "timeSeries",
+                                "stacked": false,
+                                "region": "${AWS::Region}",
+                                "stat": "Average",
+                                "period": 60,
+                                "title": "HTTP requests latency",
+                                "yAxis": {
+                                    "left": {
+                                        "showUnits": false,
+                                        "label": "ms"
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "type": "metric",
+                            "x": 6,
+                            "y": 15,
+                            "width": 6,
+                            "height": 6,
+                            "properties": {
+                                "metrics": [
+                                    [ { "expression": "m1+m2", "label": "Master 1 HTTP hits per second", "id": "e2", "region": "${AWS::Region}" } ],
+                                    [ { "expression": "m3+m4", "label": "Master 2 HTTP hits per second", "id": "e1", "region": "${AWS::Region}" } ],
+                                    [ "${MetricsCloudwatchNamespace}", "http/server/success_count_total", "InstanceId", "${Master1InstanceId}", "Type", "count", { "id": "m2", "visible": false } ],
+                                    [ "${MetricsCloudwatchNamespace}", "http/server/error_count_total", "InstanceId", "${Master1InstanceId}", "Type", "count", { "id": "m1", "visible": false } ],
+                                    [ "${MetricsCloudwatchNamespace}", "http/server/success_count_total", "InstanceId", "${Master2InstanceId}", "Type", "count", { "id": "m3", "visible": false } ],
+                                    [ "${MetricsCloudwatchNamespace}", "http/server/error_count_total", "InstanceId", "${Master2InstanceId}", "Type", "count", { "id": "m4", "visible": false } ]
+                                ],
+                                "view": "timeSeries",
+                                "stacked": false,
+                                "title": "HTTP hits per second",
+                                "region": "${AWS::Region}",
+                                "stat": "Sum",
+                                "period": 60,
+                                "yAxis": {
+                                    "left": {
+                                        "showUnits": false,
+                                        "label": "ops",
+                                        "min": 0
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "type": "metric",
+                            "x": 12,
+                            "y": 15,
+                            "width": 6,
+                            "height": 6,
+                            "properties": {
+                                "metrics": [
+                                    [ { "expression": "(m1/(m1+m2))*100", "label": "Master 1 % of HTTP Errors", "id": "e1", "region": "${AWS::Region}" } ],
+                                    [ { "expression": "(m3/(m3+m4))*100", "label": "Master 2 % of HTTP Errors", "id": "e2", "region": "${AWS::Region}" } ],
+                                    [ "${MetricsCloudwatchNamespace}", "http/server/error_count_total", "InstanceId", "${Master1InstanceId}", "Type", "count", { "id": "m1", "visible": false } ],
+                                    [ "${MetricsCloudwatchNamespace}", "http/server/success_count_total", "InstanceId", "${Master1InstanceId}", "Type", "count", { "id": "m2", "visible": false } ],
+                                    [ "${MetricsCloudwatchNamespace}", "http/server/error_count_total", "InstanceId", "${Master2InstanceId}", "Type", "count", { "id": "m3", "visible": false } ],
+                                    [ "${MetricsCloudwatchNamespace}", "http/server/success_count_total", "InstanceId", "${Master2InstanceId}", "Type", "count", { "id": "m4", "visible": false } ]
+                                ],
+                                "view": "timeSeries",
+                                "stacked": false,
+                                "region": "${AWS::Region}",
+                                "stat": "Sum",
+                                "period": 60,
+                                "title": "% of HTTP Errors",
+                                "yAxis": {
+                                    "left": {
+                                        "showUnits": false,
+                                        "max": 100,
+                                        "min": 0
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "type": "metric",
+                            "x": 12,
+                            "y": 9,
+                            "width": 6,
+                            "height": 6,
+                            "properties": {
+                                "metrics": [
+                                    [ "${MetricsCloudwatchNamespace}", "git/upload-pack/request_count_total", "InstanceId", "${Master1InstanceId}", "Type", "count", { "id": "m1" } ],
+                                    [ "${MetricsCloudwatchNamespace}", "git/upload-pack/request_count_total", "InstanceId", "${Master2InstanceId}", "Type", "count", { "id": "m2" } ],
+                                    [ "${MetricsCloudwatchNamespace}", "git/upload-pack/request_count_total", "InstanceId", "${SlaveInstanceId}", "Type", "count", { "id": "m3" } ]
+                                ],
+                                "view": "timeSeries",
+                                "stacked": false,
+                                "region": "${AWS::Region}",
+                                "title": "Git upload pack - count",
+                                "stat": "Sum",
+                                "period": 60,
+                                "yAxis": {
+                                    "left": {
+                                        "showUnits": false,
+                                        "min": 0
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "type": "metric",
+                            "x": 0,
+                            "y": 21,
+                            "width": 24,
+                            "height": 6,
+                            "properties": {
+                                "metrics": [
+                                    [ { "expression": "RATE(METRICS())*PERIOD(m1)", "label": "Expression1", "id": "e1" } ],
+                                    [ "${MetricsCloudwatchNamespace}", "queue/index_batch/total_scheduled_tasks_count", "InstanceId", "${Master1InstanceId}", "Type", "gauge", { "id": "m1", "visible": false } ],
+                                    [ "${MetricsCloudwatchNamespace}", "queue/receive_commits/total_scheduled_tasks_count", "InstanceId", "${Master1InstanceId}", "Type", "gauge", { "id": "m2", "visible": false } ],
+                                    [ "${MetricsCloudwatchNamespace}", "queue/work_queue/total_scheduled_tasks_count", "InstanceId", "${Master1InstanceId}", "Type", "gauge", { "id": "m3", "visible": false } ],
+                                    [ "${MetricsCloudwatchNamespace}", "queue/ssh_command_start/total_scheduled_tasks_count", "InstanceId", "${Master1InstanceId}", "Type", "gauge", { "id": "m4", "visible": false } ],
+                                    [ "${MetricsCloudwatchNamespace}", "queue/index_batch/total_scheduled_tasks_count", "InstanceId", "${Master2InstanceId}", "Type", "gauge", { "id": "m5", "visible": false } ],
+                                    [ "${MetricsCloudwatchNamespace}", "queue/receive_commits/total_scheduled_tasks_count", "InstanceId", "${Master2InstanceId}", "Type", "gauge", { "id": "m6", "visible": false } ],
+                                    [ "${MetricsCloudwatchNamespace}", "queue/work_queue/total_scheduled_tasks_count", "InstanceId", "${Master2InstanceId}", "Type", "gauge", { "id": "m7", "visible": false } ],
+                                    [ "${MetricsCloudwatchNamespace}", "queue/ssh_command_start/total_scheduled_tasks_count",  "InstanceId", "${Master2InstanceId}", "Type", "gauge", { "id": "m8", "visible": false } ]
+                                ],
+                                "view": "timeSeries",
+                                "stacked": false,
+                                "title": "Scheduled Tasks Queues",
+                                "region": "${AWS::Region}",
+                                "stat": "Sum",
+                                "period": 60,
+                                "yAxis": {
+                                    "left": {
+                                        "showUnits": false,
+                                        "min": 0
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "type": "metric",
+                            "x": 0,
+                            "y": 27,
+                            "width": 24,
+                            "height": 6,
+                            "properties": {
+                                "metrics": [
+                                    [ "${MetricsCloudwatchNamespace}", "queue/send_email/scheduled_tasks", "InstanceId", "${Master1InstanceId}", "Type", "gauge" ],
+                                    [ "${MetricsCloudwatchNamespace}", "queue/send_email/scheduled_tasks", "InstanceId", "${Master2InstanceId}", "Type", "gauge" ]
+                                ],
+                                "view": "timeSeries",
+                                "stacked": false,
+                                "region": "${AWS::Region}",
+                                "title": "Scheduled email tasks in the queue",
+                                "stat": "Sum",
+                                "period": 300,
+                                "yAxis": {
+                                    "left": {
+                                        "showUnits": false
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "type": "metric",
+                            "x": 0,
+                            "y": 33,
+                            "width": 12,
+                            "height": 6,
+                            "properties": {
+                                "metrics": [
+                                    [ "${MetricsCloudwatchNamespace}", "jgit/block_cache/open_files", "InstanceId", "${Master1InstanceId}", "Type", "gauge" ],
+                                    [ "${MetricsCloudwatchNamespace}", "jgit/block_cache/open_files", "InstanceId", "${Master2InstanceId}", "Type", "gauge" ],
+                                    [ "${MetricsCloudwatchNamespace}", "jgit/block_cache/open_files", "InstanceId", "${SlaveInstanceId}", "Type", "gauge" ]
+                                ],
+                                "view": "timeSeries",
+                                "stacked": false,
+                                "title": "Pack files cached",
+                                "region": "${AWS::Region}",
+                                "stat": "Sum",
+                                "period": 60,
+                                "yAxis": {
+                                    "left": {
+                                        "showUnits": false
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "type": "metric",
+                            "x": 0,
+                            "y": 3,
+                            "width": 6,
+                            "height": 6,
+                            "properties": {
+                                "metrics": [
+                                    [ "AWS/EC2", "CPUUtilization" ]
+                                ],
+                                "view": "timeSeries",
+                                "stacked": false,
+                                "region": "${AWS::Region}",
+                                "title": "Cluster CPU Load",
+                                "period": 60,
+                                "stat": "Average"
+                            }
+                        }
+                    ]
+                }
