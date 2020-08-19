@@ -22,6 +22,30 @@
       "revId": "e5abca472b26cb07637d01405a52f2d94703cc9c",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85432499_7c9d61c1",
+        "filename": "dual-master/cf-service-master.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-19T14:26:21Z",
+      "side": 0,
+      "message": "well spotted, I already moved this in the mappings, but I then forgot to remove it from the params. I\u0027ll fix it.",
+      "parentUuid": "0e2efa41_8b97be22",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 21
+      },
+      "revId": "e5abca472b26cb07637d01405a52f2d94703cc9c",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
     }
   ]
 }
