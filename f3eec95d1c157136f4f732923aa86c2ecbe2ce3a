@@ -284,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "5487ba14_817c7367",
+        "filename": "dual-master/cf-service-master.yml",
+        "patchSetId": 5
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-19T14:38:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f62d2f8_7c7fbe9f",
+      "range": {
+        "startLine": 232,
+        "startChar": 0,
+        "endLine": 235,
+        "endChar": 15
+      },
+      "revId": "f3eec95d1c157136f4f732923aa86c2ecbe2ce3a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ea9a692_ae78de2c",
         "filename": "dual-master/setup.env.template",
         "patchSetId": 5
