@@ -6,20 +6,25 @@ CLUSTER_TEMPLATE:=cf-cluster.yml
 SERVICE_MASTER_TEMPLATE:=cf-service-master.yml
 SERVICE_SLAVE_TEMPLATE:=cf-service-slave.yml
 DNS_ROUTING_TEMPLATE:=cf-dns-route.yml
+CLOUDWATCH_DASHBOARD_TEMPLATE:=cf-dashboard.yml
 LOAD_BALANCER_TEMPLATE:=cf-service-lb.yml
 SERVICE_REPLICATION_TEMPLATE:=cf-service-replication.yml
 AWS_FC_COMMAND=export AWS_PAGER=;aws cloudformation
 
 .PHONY: create-all delete-all \
 				wait-for-replication-creation wait-for-service-replication-deletion service-replication delete-service-replication \
-				cluster cluster-keys service-master-1 service-master-2 service-slave dns-routing \
-				wait-for-cluster-creation wait-for-service-master-1-creation wait-for-service-master-2-creation wait-for-service-slave-creation wait-for-dns-routing-creation \
-				wait-for-cluster-deletion wait-for-service-master-1-deletion wait-for-service-master-2-deletion wait-for-service-slave-deletion wait-for-dns-routing-deletion \
+				cluster cluster-keys service-master-1 service-master-2 service-slave dns-routing dashboard delete-dashboard\
+				wait-for-cluster-creation wait-for-service-master-1-creation wait-for-service-master-2-creation wait-for-service-slave-creation wait-for-dns-routing-creation wait-for-dashboard-creation \
+				wait-for-cluster-deletion wait-for-service-master-1-deletion wait-for-service-master-2-deletion wait-for-service-slave-deletion wait-for-dns-routing-deletion wait-for-dashboard-deletion \
 				service-lb wait-for-service-lb-deletion wait-for-service-lb-creation \
 				gerrit-build gerrit-publish haproxy-publish syslog-sidecar-publish
 
 ifeq ($(REPLICATION_SERVICE_ENABLED),true)
 optional_replication_targets=service-replication wait-for-service-replication-creation
+endif
+
+ifeq ($(METRICS_CLOUDWATCH_ENABLED),true)
+optional_dashboard_targets=dashboard wait-for-dashboard-creation
 endif
 
 create-all: upload-common-templates \
@@ -30,6 +35,7 @@ create-all: upload-common-templates \
 						service-slave service-master-1 \
 						wait-for-service-master-1-creation wait-for-service-slave-creation \
 						service-master-2 wait-for-service-master-2-creation \
+						$(optional_dashboard_targets) \
 						service-lb wait-for-service-lb-creation \
 						dns-routing wait-for-dns-routing-creation
 
@@ -247,6 +253,33 @@ dns-routing:
 		ParameterKey=Master2ServiceStackName,ParameterValue=$(SERVICE_MASTER2_STACK_NAME) \
 		ParameterKey=LBServiceStackName,ParameterValue=$(LOAD_BALANCER_STACK_NAME)
 
+dashboard:
+ifeq ($(METRICS_CLOUDWATCH_ENABLED),true)
+ifdef GERRIT_MASTER1_INSTANCE_ID
+		$(eval DASHBOARD_OPTIONAL_PARAMS := $(DASHBOARD_OPTIONAL_PARAMS) ParameterKey=Master1InstanceId,ParameterValue=$(GERRIT_MASTER1_INSTANCE_ID))
+endif
+ifdef GERRIT_MASTER2_INSTANCE_ID
+		$(eval DASHBOARD_OPTIONAL_PARAMS := $(DASHBOARD_OPTIONAL_PARAMS) ParameterKey=Master2InstanceId,ParameterValue=$(GERRIT_MASTER2_INSTANCE_ID))
+endif
+ifdef GERRIT_SLAVE_INSTANCE_ID
+		$(eval DASHBOARD_OPTIONAL_PARAMS := $(DASHBOARD_OPTIONAL_PARAMS) ParameterKey=SlaveInstanceId,ParameterValue=$(GERRIT_SLAVE_INSTANCE_ID))
+endif
+ifdef METRICS_CLOUDWATCH_NAMESPACE
+		$(eval DASHBOARD_OPTIONAL_PARAMS := $(DASHBOARD_OPTIONAL_PARAMS) ParameterKey=MetricsCloudwatchNamespace,ParameterValue=$(METRICS_CLOUDWATCH_NAMESPACE))
+endif
+
+
+	$(AWS_FC_COMMAND) create-stack \
+		--stack-name $(DASHBOARD_STACK_NAME) \
+		--capabilities CAPABILITY_IAM  \
+		--template-body file://`pwd`/$(CLOUDWATCH_DASHBOARD_TEMPLATE) \
+		--region $(AWS_REGION) \
+		--parameters \
+		$(DASHBOARD_OPTIONAL_PARAMS)
+else
+		@echo "METRICS_CLOUDWATCH_ENABLED is set to false. Dashboard creation skipped".
+endif
+
 wait-for-cluster-creation:
 	@echo "*** Wait for cluster stack '$(CLUSTER_STACK_NAME)' creation"
 	$(AWS_FC_COMMAND) wait stack-create-complete \
@@ -295,6 +328,13 @@ wait-for-dns-routing-creation:
 	--stack-name $(DNS_ROUTING_STACK_NAME) \
 	--region $(AWS_REGION)
 	@echo "*** DNS Routing stack '$(DNS_ROUTING_STACK_NAME)' created"
+
+wait-for-dashboard-creation:
+	@echo "*** Wait for dashboard stack '$(DASHBOARD_STACK_NAME)' creation"
+	$(AWS_FC_COMMAND) wait stack-create-complete \
+	--stack-name $(DASHBOARD_STACK_NAME) \
+	--region $(AWS_REGION)
+	@echo "*** Dashboard stack '$(DASHBOARD_STACK_NAME)' created"
 
 wait-for-cluster-deletion:
 	@echo "*** Wait for cluster stack '$(CLUSTER_STACK_NAME)' deletion"
@@ -345,6 +385,13 @@ wait-for-service-replication-deletion:
 	--region $(AWS_REGION)
 	@echo "*** Service stack '$(SERVICE_REPLICATION_STACK_NAME)' deleted"
 
+wait-for-dashboard-deletion:
+	@echo "*** Wait for dashboard stack '$(DASHBOARD_STACK_NAME)' deletion"
+	$(AWS_FC_COMMAND) wait stack-delete-complete \
+	--stack-name $(DASHBOARD_STACK_NAME) \
+	--region $(AWS_REGION)
+	@echo "*** Dashboard stack '$(DASHBOARD_STACK_NAME)' deleted"
+
 delete-cluster:
 	$(AWS_FC_COMMAND) delete-stack \
 	--stack-name $(CLUSTER_STACK_NAME) \
@@ -380,10 +427,15 @@ delete-dns-routing:
 	--stack-name $(DNS_ROUTING_STACK_NAME) \
 	--region $(AWS_REGION)
 
+delete-dashboard:
+	$(AWS_FC_COMMAND) delete-stack \
+	--stack-name $(DASHBOARD_STACK_NAME) \
+	--region $(AWS_REGION)
+
 delete-all: delete-dns-routing wait-for-dns-routing-deletion \
 						delete-service-lb wait-for-service-lb-deletion \
-						delete-service-master-1 delete-service-master-2 delete-service-slave \
-						wait-for-service-master-1-deletion wait-for-service-master-2-deletion wait-for-service-slave-deletion \
+						delete-service-master-1 delete-service-master-2 delete-service-slave delete-dashboard \
+						wait-for-service-master-1-deletion wait-for-service-master-2-deletion wait-for-service-slave-deletion wait-for-dashboard-deletion \
 						delete-service-replication wait-for-service-replication-deletion \
 						delete-cluster wait-for-cluster-deletion
 

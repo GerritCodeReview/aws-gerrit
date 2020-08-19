@@ -11,6 +11,7 @@ The following templates are provided in this example:
 * `cf-dns-route`: define the DNS routing for the service
 * `cf-service-slave`: define the service stack running the gerrit replica
 * `cf-service-lb`: define the LBs in front of gerrit masters (this includes haproxy as well as NLB)
+* `cf-dashboard`: define the CloudWatch dashboard for the services
 
 When the recipe enables the replication_service (see [docs](#replication-service))
 then these additional templates will be executed:
@@ -85,6 +86,7 @@ Configuration values affecting deployment environment and cluster properties
 
 * `SERVICE_MASTER1_STACK_NAME`: Optional. Name of the master 1 service stack. `gerrit-service-master-1` by default.
 * `SERVICE_MASTER2_STACK_NAME`: Optional. Name of the master 2 service stack. `gerrit-service-master-2` by default.
+* `DASHBOARD_STACK_NAME` : Optional. Name of the dashboard stack. `gerrit-dashboard` by default.
 * `MASTER1_SUBDOMAIN`: Optional. Name of the master 1 sub domain. `gerrit-master-1-demo` by default.
 * `MASTER2_SUBDOMAIN`: Optional. Name of the master 2 sub domain. `gerrit-master-2-demo` by default.
 * `CLUSTER_DESIRED_CAPACITY`: Optional. Number of EC2 instances composing the cluster. `1` by default.
