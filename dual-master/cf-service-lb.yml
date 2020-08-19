@@ -31,6 +31,10 @@ Parameters:
         Description: Gerrit HTTP port
         Type: Number
         Default: 8080
+  SSHContainerPort:
+        Description: Gerrit SSH port
+        Type: Number
+        Default: 29418
   SSHGerritPort:
         Description: Gerrit SSH port
         Type: Number
@@ -83,6 +87,7 @@ Resources:
         Type: AWS::ECS::Service
         DependsOn:
           - HTTPListener
+          - SSHListener
         Properties:
             Cluster:
               Fn::ImportValue:
@@ -93,6 +98,9 @@ Resources:
                 - ContainerName: !Ref LBServiceName
                   ContainerPort: !Ref HTTPContainerPort
                   TargetGroupArn: !Ref HTTPTargetGroup
+                - ContainerName: !Ref LBServiceName
+                  ContainerPort: !Ref SSHContainerPort
+                  TargetGroupArn: !Ref SSHTargetGroup
 
     TaskDefinition:
         Type: AWS::ECS::TaskDefinition
@@ -119,6 +127,9 @@ Resources:
                   PortMappings:
                     - ContainerPort: !Ref HTTPContainerPort
                       HostPort: !Ref HTTPHostPort
+                      Protocol: tcp
+                    - ContainerPort: !Ref SSHContainerPort
+                      HostPort: !Ref SSHGerritPort
                       Protocol: tcp
                   Links:
                     - !Ref SyslogSidecarServiceName
@@ -180,6 +191,27 @@ Resources:
             LoadBalancerArn: !Ref LoadBalancer
             Port: !Ref HTTPSHostPort
             Protocol: TLS
+
+    SSHTargetGroup:
+        Type: AWS::ElasticLoadBalancingV2::TargetGroup
+        DependsOn: LoadBalancer
+        Properties:
+            VpcId:
+              Fn::ImportValue:
+                  !Join [':', [!Ref 'ClusterStackName', 'VPCId']]
+            Port: !Ref SSHGerritPort
+            Protocol: TCP
+
+    SSHListener:
+        Type: AWS::ElasticLoadBalancingV2::Listener
+        DependsOn: LoadBalancer
+        Properties:
+            DefaultActions:
+            - Type: forward
+              TargetGroupArn: !Ref SSHTargetGroup
+            LoadBalancerArn: !Ref LoadBalancer
+            Port: !Ref SSHGerritPort
+            Protocol: TCP
 
 Outputs:
   PublicLoadBalancerDNSName:
