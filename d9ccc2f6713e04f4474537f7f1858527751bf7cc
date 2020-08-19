@@ -94,6 +94,30 @@
       "revId": "d9ccc2f6713e04f4474537f7f1858527751bf7cc",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66f5a7c4_b0d333c7",
+        "filename": "master-slave/Makefile",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-19T15:28:17Z",
+      "side": 1,
+      "message": "\u003e We should never allow to create stack if metrics are disabled but without this check it\u0027s totally possible. And we are not calling \"make dashboard\" to check if we can create but to setup it.\n\nYes, if you call dashboard as a standalone target then it would be possible. I was under the impression that create-all was going to be the only \"target\" that users would call (for sure it is the only one publicly documented and we should document the others if this is not the case).\n\n\u003e  And yes it makes sense to create it without stack for example if you want to see dashboard for old metrics\n\nSince the dashboard is based on the METRICS_CLOUDWATCH_ENABLED\u003dtrue they will both exist or both don\u0027t (if the cluster has been created with create-all).\n\nI appreciate we might have some deployments that happened already before this change (which I think is our case, that\u0027s why you were planning to call dashboard separately).\n\nAnyway, not a big deal, fine if you need it by tomorrow 👍",
+      "parentUuid": "7d44f427_69580240",
+      "range": {
+        "startLine": 139,
+        "startChar": 0,
+        "endLine": 139,
+        "endChar": 41
+      },
+      "revId": "d9ccc2f6713e04f4474537f7f1858527751bf7cc",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     }
   ]
 }
