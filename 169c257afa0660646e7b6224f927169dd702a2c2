@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d249341_99ca0fc5",
+        "filename": "master-slave/setup.env.template",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-20T12:29:07Z",
+      "side": 1,
+      "message": "master-slave does not need this, AFAICT",
+      "revId": "169c257afa0660646e7b6224f927169dd702a2c2",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
