@@ -172,6 +172,7 @@ if ((not containerSlave) and setupReplication):
         f.write(template.render(
                 SLAVE_1_URL="git://" + SLAVE_FQDN + ":" + os.getenv('GIT_PORT') + "/${name}.git",
                 SLAVE_1_AMDIN_URL="ssh://gerrit@" + SLAVE_FQDN + ":" + os.getenv('GIT_SSH_PORT') + "/var/gerrit/git/${name}.git",
+                REMOTE_TARGET=REMOTE_TARGET,
                 REMOTE_TARGET_URL="git://" + REMOTE_TARGET + ":" + os.getenv('GIT_PORT') + "/${name}.git",
                 REMOTE_ADMIN_TARGET_URL="ssh://gerrit@" + REMOTE_TARGET + ":" + os.getenv('GIT_SSH_PORT') + "/var/gerrit/git/${name}.git",
                 ))
