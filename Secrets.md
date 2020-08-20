@@ -87,7 +87,7 @@ You will also need to create private and public SSH keys used by the replication
 from masters to replicas, for example:
 
 ```bash
-ssh-keygen -b 2048 -t rsa -f /tmp/secrets/replication_user_id_rsa -q -N ""
+ssh-keygen -b 2048 -m PEM -t rsa -f /tmp/secrets/replication_user_id_rsa -q -N ""
 ```
 
 * replication_user_id_rsa
