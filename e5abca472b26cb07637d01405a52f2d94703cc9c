@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "73076b91_06ccd18d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-21T18:17:00Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5219e85b_b6ddc5a6",
+      "revId": "e5abca472b26cb07637d01405a52f2d94703cc9c",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "acf54008_36f7b221",
         "filename": "gerrit/Makefile",
         "patchSetId": 2
