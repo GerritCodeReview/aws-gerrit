@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "21c8c196_3eb49e30",
+        "filename": "gerrit/Makefile",
+        "patchSetId": 17
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-08-25T21:50:17Z",
+      "side": 1,
+      "message": "The link is now available and is stable:\nhttps://gerrit-ci.gerritforge.com/job/plugin-zookeeper-refdb-bazel-stable-3.2/lastSuccessfulBuild/artifact/bazel-bin/plugins/zookeeper-refdb/zookeeper-refdb-zk-3.5.jar",
+      "parentUuid": "dd62c2c5_45bcb902",
+      "revId": "9a2abf160ea1328bc29b1e5eff4fdd9e633d1e40",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "86208b1f_f4ca4676",
         "filename": "gerrit/etc/multi-site.config.template",
         "patchSetId": 17
