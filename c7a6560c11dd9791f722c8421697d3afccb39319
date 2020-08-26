@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73b140e6_011028a2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-26T08:55:38Z",
+      "side": 1,
+      "message": "This is only for master and slave, rather than *all* loadbalancers in this recipe.\nShall we specify that?",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 36
+      },
+      "revId": "c7a6560c11dd9791f722c8421697d3afccb39319",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02d3e89b_55c52259",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-26T08:55:38Z",
+      "side": 1,
+      "message": "nit: scheme, not schema",
+      "range": {
+        "startLine": 7,
+        "startChar": 30,
+        "endLine": 7,
+        "endChar": 36
+      },
+      "revId": "c7a6560c11dd9791f722c8421697d3afccb39319",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "435531c0_7c5953b4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-26T08:55:38Z",
+      "side": 1,
+      "message": "This i",
+      "revId": "c7a6560c11dd9791f722c8421697d3afccb39319",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4ad1e3f3_7eb0731a",
+        "filename": "dual-master/cf-service-master.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-26T08:55:38Z",
+      "side": 1,
+      "message": "nit: lowercase",
+      "range": {
+        "startLine": 51,
+        "startChar": 59,
+        "endLine": 51,
+        "endChar": 67
+      },
+      "revId": "c7a6560c11dd9791f722c8421697d3afccb39319",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ba3b074_ffe7d020",
+        "filename": "dual-master/cf-service-master.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-26T08:55:38Z",
+      "side": 1,
+      "message": "nit: lowercase",
+      "range": {
+        "startLine": 51,
+        "startChar": 43,
+        "endLine": 51,
+        "endChar": 46
+      },
+      "revId": "c7a6560c11dd9791f722c8421697d3afccb39319",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "113e8e66_fd4374c4",
+        "filename": "dual-master/cf-service-master.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-26T08:55:38Z",
+      "side": 1,
+      "message": "nit: scheme, rather than schema",
+      "range": {
+        "startLine": 51,
+        "startChar": 35,
+        "endLine": 51,
+        "endChar": 41
+      },
+      "revId": "c7a6560c11dd9791f722c8421697d3afccb39319",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
