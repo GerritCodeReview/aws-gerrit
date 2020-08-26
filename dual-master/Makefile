@@ -49,6 +49,12 @@ endif
 ifdef FILESYSTEM_PROVISIONED_THROUGHPUT_IN_MIBPS
 		$(eval CLUSTER_OPTIONAL_PARAMS := $(CLUSTER_OPTIONAL_PARAMS) ParameterKey=ProvisionedThroughputInMibps,ParameterValue=$(FILESYSTEM_PROVISIONED_THROUGHPUT_IN_MIBPS))
 endif
+ifdef SUBNET_CIDR
+		$(eval CLUSTER_OPTIONAL_PARAMS := $(CLUSTER_OPTIONAL_PARAMS) ParameterKey=SubnetCIDR,ParameterValue=$(SUBNET_CIDR))
+endif
+ifdef VPC_CIDR
+		$(eval CLUSTER_OPTIONAL_PARAMS := $(CLUSTER_OPTIONAL_PARAMS) ParameterKey=VPCCIDR,ParameterValue=$(VPC_CIDR))
+endif
 
 	$(AWS_FC_COMMAND) create-stack \
 		--stack-name $(CLUSTER_STACK_NAME) \

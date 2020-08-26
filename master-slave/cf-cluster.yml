@@ -40,6 +40,14 @@ Parameters:
     Type: String
     Default: ""
     Description: Subnet id. If empty Network Stack will be created
+  SubnetCIDR:
+    Type: String
+    Default: 10.0.0.0/24
+    Description: Subnet CIDR.
+  VPCCIDR:
+    Type: String
+    Default: 10.0.0.0/16
+    Description: VPC CIDR.
   ECSKeyName:
     Type: String
     Default: gerrit-cluster-keys
@@ -212,7 +220,10 @@ Resources:
       Parameters:
         InternetGatewayIdProp: !Ref 'InternetGatewayIdProp'
         VPCIdProp: !Ref 'VPCIdProp'
+        VPCCIDR: !Ref 'VPCCIDR'
         SubnetIdProp: !Ref 'SubnetIdProp'
+        SubnetCIDR: !Ref 'SubnetCIDR'
+
 
 Outputs:
   ClusterName:
