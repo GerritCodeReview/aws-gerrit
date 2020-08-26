@@ -14,18 +14,14 @@ Parameters:
     Type: String
     Default: ""
     Description: Subnet id. If empty Network Stack will be created
-Mappings:
-  # Hard values for the subnet masks. These masks define
-  # the range of internal IP addresses that can be assigned.
-  # The VPC can have all IP's from 10.0.0.0 to 10.0.255.255
-  # There is the subnet which cover the ranges:
-  #
-  # 10.0.0.0 - 10.0.0.255
-  SubnetConfig:
-    VPC:
-      CIDR: '10.0.0.0/16'
-    PublicOne:
-      CIDR: '10.0.0.0/24'
+  SubnetCIDR:
+    Type: String
+    Default: 10.0.0.0/24
+    Description: Subnet CIDR.
+  VPCCIDR:
+    Type: String
+    Default: 10.0.0.0/16
+    Description: VPC CIDR.
 
 Conditions:
   CreateVPC: !Equals [!Ref VPCIdProp, ""]
@@ -40,7 +36,7 @@ Resources:
     Properties:
       EnableDnsSupport: true
       EnableDnsHostnames: true
-      CidrBlock: !FindInMap ['SubnetConfig', 'VPC', 'CIDR']
+      CidrBlock: !Ref VPCCIDR
 
   # Public subnets, where containers can have public IP addresses
   PublicSubnetOne:
@@ -52,7 +48,7 @@ Resources:
          - 0
          - Fn::GetAZs: {Ref: 'AWS::Region'}
       VpcId: !If [CreateVPC, !Ref 'VPC', !Ref 'VPCIdProp' ]
-      CidrBlock: !FindInMap ['SubnetConfig', 'PublicOne', 'CIDR']
+      CidrBlock: !Ref 'SubnetCIDR'
       MapPublicIpOnLaunch: true
 
   # Setup networking resources for the public subnets. Containers
@@ -92,4 +88,4 @@ Outputs:
   PublicSubnetOneRef:
     Value: !If [CreateNetworkStack, !Ref 'PublicSubnetOne', !Ref 'SubnetIdProp' ]
   PublicOneCIDR:
-    Value: !FindInMap ['SubnetConfig', 'PublicOne', 'CIDR']
+    Value: !Ref 'SubnetCIDR'

@@ -47,8 +47,12 @@ is recipe-specific:
   If not set, create a new Internet Gateway
 * `VPC_ID`: Optional. Id of the existing VPC.
   If not set, create a new VPC.
+* `VPC_CIDR`: Optional. CIDR mask for the VPC.
+  `10.0.0.0/16` by default.
 * `SUBNET_ID`: Optional. Id of the existing Subnet.
   If not set, create a new Network Stack.
+* `SUBNET_CIDR`: Optional. CIDR mask of the Subnet.
+  `10.0.0.0/24` by default.
 * LOAD_BALANCER_SCHEME: Optional. The Load Balancer scheme type. `internet-facing` by default.
   Allowed values: internal, internet-facing
 
