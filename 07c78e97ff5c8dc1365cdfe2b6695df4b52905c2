@@ -113,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "699e5ee3_64dd639e",
+        "filename": "gerrit/etc/multi-site.config.template",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-28T16:16:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "652cf85b_805d210d",
+      "revId": "07c78e97ff5c8dc1365cdfe2b6695df4b52905c2",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fbc158f2_46edff67",
         "filename": "gerrit/setup_gerrit.py",
         "patchSetId": 13
@@ -133,6 +151,30 @@
       "revId": "07c78e97ff5c8dc1365cdfe2b6695df4b52905c2",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c42fd099_217690b4",
+        "filename": "gerrit/setup_gerrit.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-28T16:16:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbc158f2_46edff67",
+      "range": {
+        "startLine": 198,
+        "startChar": 0,
+        "endLine": 207,
+        "endChar": 10
+      },
+      "revId": "07c78e97ff5c8dc1365cdfe2b6695df4b52905c2",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     }
   ]
 }

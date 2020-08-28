@@ -75,6 +75,30 @@
       "revId": "9a2abf160ea1328bc29b1e5eff4fdd9e633d1e40",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3d3b0d0_b529c27a",
+        "filename": "gerrit/etc/multi-site.config.template",
+        "patchSetId": 17
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-08-28T16:16:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86208b1f_f4ca4676",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 37
+      },
+      "revId": "9a2abf160ea1328bc29b1e5eff4fdd9e633d1e40",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     }
   ]
 }
