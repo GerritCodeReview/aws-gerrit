@@ -161,7 +161,6 @@ Mappings:
   Gerrit:
     Volume:
       Git: gerrit-git-master
-      Events: gerrit-events-master
       Websessions: gerrit-ha-websessions-master
       Data: gerrit-data-master
       Index: gerrit-index-master
@@ -300,8 +299,6 @@ Resources:
                       ContainerPath: /var/gerrit/db
                     - SourceVolume: !Join ['-', [!FindInMap ['Gerrit', 'Volume', 'Logs'], !Ref 'GerritInstanceNumber']]
                       ContainerPath: /var/gerrit/logs
-                    - SourceVolume: !Join ['-', [!FindInMap ['Gerrit', 'Volume', 'Events'], !Ref 'GerritInstanceNumber']]
-                      ContainerPath: /var/gerrit/events
                   Cpu: !Ref GerritCPU
                   Memory: !Ref GerritRAM
                   PortMappings:
@@ -321,9 +318,6 @@ Resources:
               - Name: !FindInMap ['Gerrit', 'Volume', 'Git']
                 Host:
                   SourcePath: "/mnt/efs/gerrit-shared/git"
-              - Name: !Join ['-', [!FindInMap ['Gerrit', 'Volume', 'Events'], !Ref 'GerritInstanceNumber']]
-                Host:
-                  SourcePath: "/mnt/efs/gerrit-shared/events"
               - Name: !FindInMap ['Gerrit', 'Volume', 'Websessions']
                 Host:
                   SourcePath: "/mnt/efs/gerrit-shared/high-availability"
