@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3b219e1_d8a146ff",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-09-01T13:44:13Z",
+      "side": 1,
+      "message": "It would be nice to have a (short) sample of the duplicates, so that the people working on the replication clustering could reproduce the issue.",
+      "range": {
+        "startLine": 10,
+        "startChar": 11,
+        "endLine": 10,
+        "endChar": 58
+      },
+      "revId": "ae84eee63bf3e6657863a99251ca69ac1f9e21d8",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9875bf40_62d80b72",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-09-01T13:44:13Z",
+      "side": 1,
+      "message": "Nit: wrap long line",
+      "range": {
+        "startLine": 13,
+        "startChar": 67,
+        "endLine": 13,
+        "endChar": 76
+      },
+      "revId": "ae84eee63bf3e6657863a99251ca69ac1f9e21d8",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
