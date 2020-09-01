@@ -1,8 +1,6 @@
 [replication]
   lockErrorMaxRetries = 30
   maxRetries = 30
-  eventsDirectory = events
-  distributionInterval = 1
 
 [gerrit]
   autoReload = true
