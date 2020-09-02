@@ -11,6 +11,12 @@ LOAD_BALANCER_TEMPLATE:=cf-service-lb.yml
 SERVICE_REPLICATION_TEMPLATE:=cf-service-replication.yml
 AWS_FC_COMMAND=export AWS_PAGER=;aws cloudformation
 
+SINGLE_SITE_PLUGINS=javamelody high-availability healthcheck metrics-reporter-cloudwatch
+
+MULTI_SITE_PLUGINS=$(SINGLE_SITE_PLUGINS) multi-site kafka-events websession-broker zookeeper-refdb~zk-3.5
+MULTI_SITE_PLUGINS_LIBS_LINKS=multi-site replication
+MULTI_SITE_MAVEN_LIBS=events-broker~$(EVENTSBROKER_LIB_VER)
+
 .PHONY: create-all delete-all \
 				wait-for-replication-creation wait-for-service-replication-deletion service-replication delete-service-replication \
 				cluster cluster-keys service-master-1 service-master-2 service-slave dns-routing dashboard delete-dashboard\
@@ -447,7 +453,11 @@ delete-all: delete-dns-routing wait-for-dns-routing-deletion \
 						delete-cluster wait-for-cluster-deletion
 
 gerrit-publish:
-	$(MAKE) -C ../gerrit gerrit-publish RECIPE=dual-master
+ifeq ($(MULTISITE_ENABLED),true)
+	$(MAKE) -C ../gerrit gerrit-publish RECIPE=dual-master PLUGINS="$(MULTI_SITE_PLUGINS)" PLUGINS_LIBS_LINKS="$(MULTI_SITE_PLUGINS_LIBS_LINKS)" MAVEN_LIBS="$(MULTI_SITE_MAVEN_LIBS)"
+else
+	$(MAKE) -C ../gerrit gerrit-publish RECIPE=dual-master PLUGINS="$(SINGLE_SITE_PLUGINS)"
+endif
 
 haproxy-publish:
 	$(MAKE) -C haproxy haproxy-publish

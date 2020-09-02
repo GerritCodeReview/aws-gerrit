@@ -1,6 +1,8 @@
 include ../$(RECIPE)/setup.env
 include ../Makefile.common
 
+PLUGINS=javamelody healthcheck metrics-reporter-cloudwatch
+
 docker-registry-login:
 	aws ecr get-login-password --region $(AWS_REGION) \
 		| docker login --username AWS --password-stdin $(DOCKER_REGISTRY_URI)/aws-gerrit/gerrit
@@ -12,63 +14,34 @@ gerrit-get-plugins:
 	@echo "Ensure no plugins or libraries are left from previous deployments"
 	rm -f $(@D)/{plugins,lib}/*.jar
 
-	@echo "Downloading metrics-reporter-prometheus plugin $(GERRIT_BRANCH)"
-	wget $(GERRIT_CI)/plugin-metrics-reporter-prometheus-bazel-master-$(GERRIT_BRANCH)/$(LAST_BUILD)/metrics-reporter-prometheus/metrics-reporter-prometheus.jar \
-	-O ./plugins/metrics-reporter-prometheus.jar \
-	|| { echo >&2 "Cannot download metrics-reporter-prometheus plugin: Check internet connection. Aborting"; exit 1; }
+	for plugin in $(PLUGINS); \
+	do \
+		export pluginname=`echo $$plugin | cut -d '~' -f 1`; \
+		export pluginjar=`echo $$plugin | tr '~' '-'`; \
+		echo "Downloading $$plugin plugin $(GERRIT_BRANCH)"; \
+		wget $(GERRIT_CI)/plugin-$$pluginname-bazel-$(GERRIT_BRANCH)/$(LAST_BUILD)/$$pluginname/$$pluginjar.jar \
+		-O ./plugins/$$pluginname.jar || \
+		wget $(GERRIT_CI)/plugin-$$pluginname-bazel-master-$(GERRIT_BRANCH)/$(LAST_BUILD)/$$pluginname/$$pluginjar.jar \
+		-O ./plugins/$$pluginname.jar || \
+		{ echo >&2 "Cannot download $$plugin plugin: Check internet connection. Aborting"; exit 1; }; \
+	done
 
-	@echo "Downloading javamelody plugin $(GERRIT_BRANCH)"
-	wget $(GERRIT_CI)/plugin-javamelody-bazel-master-$(GERRIT_BRANCH)/$(LAST_BUILD)/javamelody/javamelody.jar \
-	-O ./plugins/javamelody.jar \
-	|| { echo >&2 "Cannot download javamelody plugin: Check internet connection. Aborting"; exit 1; }
+	for pluginlib in $(PLUGINS_LIBS_LINKS); \
+	do \
+		echo "Symlink $$pluginlib plugin into lib"; \
+		ln -sf ../plugins/$$pluginlib.jar ./lib/$$pluginlib.jar; \
+	done
 
-	@echo "Downloading HA plugin $(GERRIT_BRANCH)"
-	wget $(GERRIT_CI)/plugin-high-availability-bazel-$(GERRIT_BRANCH)/$(LAST_BUILD)/high-availability/high-availability.jar \
-	-O ./plugins/high-availability.jar \
-	|| { echo >&2 "Cannot download high-availability plugin: Check internet connection. Aborting"; exit 1; }
-
-	@echo "Downloading Health Check plugin $(GERRIT_BRANCH)"
-	wget $(GERRIT_CI)/plugin-healthcheck-bazel-$(GERRIT_BRANCH)/$(LAST_BUILD)/healthcheck/healthcheck.jar \
-	-O ./plugins/healthcheck.jar \
-	|| { echo >&2 "Cannot download healthcheck plugin: Check internet connection. Aborting"; exit 1; }
-
-	@echo "Downloading Metrics Reporter Cloudwatch plugin $(GERRIT_BRANCH)"
-	wget $(GERRIT_CI)/plugin-metrics-reporter-cloudwatch-bazel-$(GERRIT_BRANCH)/$(LAST_BUILD)/metrics-reporter-cloudwatch/metrics-reporter-cloudwatch.jar \
-	-O ./plugins/metrics-reporter-cloudwatch.jar \
-	|| { echo >&2 "Cannot download metrics-reporter-cloudwatch plugin: Check internet connection. Aborting"; exit 1; }
-
-ifeq ($(MULTISITE_ENABLED),true)
-	@echo "Downloading multi-site plugin $(GERRIT_BRANCH)"
-	wget $(GERRIT_CI)/plugin-multi-site-bazel-$(GERRIT_BRANCH)/$(LAST_BUILD)/multi-site/multi-site.jar \
-	-O ./plugins/multi-site.jar \
-	|| { echo >&2 "Cannot download multi-site plugin: Check internet connection. Aborting"; exit 1; }
-
-	@echo "Symlink multi-site plugin into lib"
-	ln -sf ../plugins/multi-site.jar ./lib/multi-site.jar
-
-	@echo "Symlink replication plugin into lib"
-	ln -sf ../plugins/replication.jar lib/replication.jar
-
-	@echo "Downloading events-broker library"
-	wget $(MAVEN_ARCHIVE)/events-broker/$(EVENTSBROKER_LIB_VER)/events-broker-$(EVENTSBROKER_LIB_VER).jar \
-	-O lib/events-broker.jar \
-	|| { echo >&2 "Cannot download events-broker-library: Check internet connection. Aborting"; exit 1; }
-
-	@echo "Downloading kafka-events plugin $(GERRIT_BRANCH)"
-	wget $(GERRIT_CI)/plugin-kafka-events-bazel-$(GERRIT_BRANCH)/$(LAST_BUILD)/kafka-events/kafka-events.jar \
-	-O ./plugins/kafka-events.jar \
-	|| { echo >&2 "Cannot download kafka-events plugin: Check internet connection. Aborting"; exit 1; }
-
-	@echo "Downloading zookeper-refdb-3.5 plugin $(GERRIT_BRANCH)"
-	wget $(GERRIT_CI)/plugin-zookeeper-refdb-bazel-$(GERRIT_BRANCH)/$(LAST_BUILD)/zookeeper-refdb/zookeeper-refdb-zk-3.5.jar \
-	-O ./plugins/zookeeper-refdb.jar \
-	|| { echo >&2 "Cannot download zookeeper-refdb plugin: Check internet connection. Aborting"; exit 1; }
-
-	@echo "Downloading websession-broker plugin $(GERRIT_BRANCH)"
-	wget $(GERRIT_CI)/plugin-websession-broker-bazel-master-$(GERRIT_BRANCH)/$(LAST_BUILD)/websession-broker/websession-broker.jar \
-	-O ./plugins/websession-broker.jar \
-	|| { echo >&2 "Cannot download websession-broker plugin: Check internet connection. Aborting"; exit 1; }
-endif
+	for mavenlib in $(MAVEN_LIBS); \
+	do \
+		echo "Downloading $$mavenlib library"; \
+		export libname=`echo $$mavenlib | cut -d '~' -f 1`; \
+		export libver=`echo $$mavenlib | cut -d '~' -f 2`; \
+		export libjar=`echo $$mavenlib | tr '~' '-'`; \
+		wget $(MAVEN_ARCHIVE)/$$libname/$$libver/$$libjar.jar \
+			-O ./lib/$$libname.jar \
+		|| { echo >&2 "Cannot download $$mavenlib: Check internet connection. Aborting"; exit 1; } \
+	done
 
 gerrit-build:
 	cat Dockerfile | \
