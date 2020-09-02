@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "70812376_7ad8dac4",
+        "filename": "dual-master/README.md",
+        "patchSetId": 23
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-09-02T13:56:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "97bc5553_89d06657",
+      "range": {
+        "startLine": 135,
+        "startChar": 81,
+        "endLine": 135,
+        "endChar": 96
+      },
+      "revId": "4ce00b72ccc30af70af300fd27f4da65dcc8b08b",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3afca2c5_39f5bd91",
         "filename": "dual-master/README.md",
         "patchSetId": 23
@@ -45,6 +69,30 @@
       "revId": "4ce00b72ccc30af70af300fd27f4da65dcc8b08b",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6f53da4_d1c0de28",
+        "filename": "dual-master/README.md",
+        "patchSetId": 23
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-09-02T13:56:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3afca2c5_39f5bd91",
+      "range": {
+        "startLine": 137,
+        "startChar": 7,
+        "endLine": 137,
+        "endChar": 15
+      },
+      "revId": "4ce00b72ccc30af70af300fd27f4da65dcc8b08b",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "9f361f37_ab229000",
+        "filename": "dual-master/README.md",
+        "patchSetId": 23
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-09-02T13:56:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3b9f3248_5790cbb2",
+      "range": {
+        "startLine": 140,
+        "startChar": 13,
+        "endLine": 140,
+        "endChar": 14
+      },
+      "revId": "4ce00b72ccc30af70af300fd27f4da65dcc8b08b",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2861dc9_aaa6c999",
         "filename": "dual-master/README.md",
         "patchSetId": 23
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "341106df_6f53ecf3",
+        "filename": "dual-master/README.md",
+        "patchSetId": 23
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-09-02T13:56:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e2861dc9_aaa6c999",
+      "range": {
+        "startLine": 146,
+        "startChar": 34,
+        "endLine": 146,
+        "endChar": 45
+      },
+      "revId": "4ce00b72ccc30af70af300fd27f4da65dcc8b08b",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2579830_3f67558f",
         "filename": "gerrit/etc/high-availability.config.template",
         "patchSetId": 23
@@ -114,6 +210,30 @@
       "revId": "4ce00b72ccc30af70af300fd27f4da65dcc8b08b",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdc79e1d_caa6db24",
+        "filename": "gerrit/etc/high-availability.config.template",
+        "patchSetId": 23
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-09-02T13:56:17Z",
+      "side": 1,
+      "message": "Not really, I will remove this.",
+      "parentUuid": "b2579830_3f67558f",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 27
+      },
+      "revId": "4ce00b72ccc30af70af300fd27f4da65dcc8b08b",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     }
   ]
 }
