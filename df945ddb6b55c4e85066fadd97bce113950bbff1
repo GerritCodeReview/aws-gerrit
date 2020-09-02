@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "802114b0_867d8e2a",
+        "filename": "gerrit/entrypoint.sh",
+        "patchSetId": 26
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-09-02T20:33:28Z",
+      "side": 1,
+      "message": "This looks like a patch to the problem, and it is working.\nHave you investigated IF the problem can be resolved at its source?\n(NOT installing those plugins on the slaves)",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 6
+      },
+      "revId": "df945ddb6b55c4e85066fadd97bce113950bbff1",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
