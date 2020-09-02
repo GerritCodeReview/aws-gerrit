@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97bc5553_89d06657",
+        "filename": "dual-master/README.md",
+        "patchSetId": 23
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-09-02T07:58:55Z",
+      "side": 1,
+      "message": "nit: here and below, wrap long lines.",
+      "range": {
+        "startLine": 135,
+        "startChar": 81,
+        "endLine": 135,
+        "endChar": 96
+      },
+      "revId": "4ce00b72ccc30af70af300fd27f4da65dcc8b08b",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3afca2c5_39f5bd91",
+        "filename": "dual-master/README.md",
+        "patchSetId": 23
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-09-02T07:58:55Z",
+      "side": 1,
+      "message": "sites",
+      "range": {
+        "startLine": 137,
+        "startChar": 7,
+        "endLine": 137,
+        "endChar": 15
+      },
+      "revId": "4ce00b72ccc30af70af300fd27f4da65dcc8b08b",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b9f3248_5790cbb2",
+        "filename": "dual-master/README.md",
+        "patchSetId": 23
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-09-02T07:58:55Z",
+      "side": 1,
+      "message": "nit: lowercase",
+      "range": {
+        "startLine": 140,
+        "startChar": 13,
+        "endLine": 140,
+        "endChar": 14
+      },
+      "revId": "4ce00b72ccc30af70af300fd27f4da65dcc8b08b",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2861dc9_aaa6c999",
+        "filename": "dual-master/README.md",
+        "patchSetId": 23
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-09-02T07:58:55Z",
+      "side": 1,
+      "message": "required",
+      "range": {
+        "startLine": 146,
+        "startChar": 34,
+        "endLine": 146,
+        "endChar": 45
+      },
+      "revId": "4ce00b72ccc30af70af300fd27f4da65dcc8b08b",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2579830_3f67558f",
+        "filename": "gerrit/etc/high-availability.config.template",
+        "patchSetId": 23
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-09-02T07:58:55Z",
+      "side": 1,
+      "message": "Is this related to the multi-site deployment?",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 27
+      },
+      "revId": "4ce00b72ccc30af70af300fd27f4da65dcc8b08b",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
