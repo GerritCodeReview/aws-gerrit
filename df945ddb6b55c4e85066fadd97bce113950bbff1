@@ -22,6 +22,30 @@
       "revId": "df945ddb6b55c4e85066fadd97bce113950bbff1",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c93bc115_1e0f2fe5",
+        "filename": "gerrit/entrypoint.sh",
+        "patchSetId": 26
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-09-02T20:46:56Z",
+      "side": 1,
+      "message": "I believe the \"original sin\" is that when developing the dual-master recipe we have \"polluted\" the others.\n\nI am building the image for single-master and it downloads the high-availability plugin :-(\n\nWe can merge this one as-is for now, but the problem needs fixing.\nI will give it a go as a follow-up of this change.",
+      "parentUuid": "802114b0_867d8e2a",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 6
+      },
+      "revId": "df945ddb6b55c4e85066fadd97bce113950bbff1",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     }
   ]
 }
