@@ -70,6 +70,30 @@
       "revId": "df945ddb6b55c4e85066fadd97bce113950bbff1",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc83a41d_d7f2fef4",
+        "filename": "gerrit/entrypoint.sh",
+        "patchSetId": 26
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-09-02T20:50:00Z",
+      "side": 1,
+      "message": "Yes, let\u0027s fix it in a follow-up change.\nThe problem isn\u0027t just the slaves, the HA and multi-site plugins are installed also for the other simpler recipes (e.g. single-master) which is bad :-(",
+      "parentUuid": "7f6721c5_145e9cb0",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 6
+      },
+      "revId": "df945ddb6b55c4e85066fadd97bce113950bbff1",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
     }
   ]
 }
