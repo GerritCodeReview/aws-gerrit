@@ -46,6 +46,30 @@
       "revId": "df945ddb6b55c4e85066fadd97bce113950bbff1",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7f6721c5_145e9cb0",
+        "filename": "gerrit/entrypoint.sh",
+        "patchSetId": 26
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-09-02T20:48:12Z",
+      "side": 1,
+      "message": "The plugins at the moment are baked into the docker image itself into /var/gerrit/{lib,plugins}, so they are already there before knowing whether that image will be used for master or for slave.\n\nAlternative solutions I can think of:\n1 - Copy them to the /tmp directory and only moving to /var/gerrit/{lib,plugins} the ones needed\n2 - Bake different docker images for master or slaves\n\nI choose this solution because it was the \"path of least resistance\".\nWe could refactor how plugins are installed in a follow up change perhaps?",
+      "parentUuid": "c93bc115_1e0f2fe5",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 6
+      },
+      "revId": "df945ddb6b55c4e85066fadd97bce113950bbff1",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
     }
   ]
 }
