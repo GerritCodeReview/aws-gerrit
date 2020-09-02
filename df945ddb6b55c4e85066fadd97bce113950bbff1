@@ -94,6 +94,30 @@
       "revId": "df945ddb6b55c4e85066fadd97bce113950bbff1",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "125d2743_71426e71",
+        "filename": "gerrit/entrypoint.sh",
+        "patchSetId": 26
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-09-02T20:56:52Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cc83a41d_d7f2fef4",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 6
+      },
+      "revId": "df945ddb6b55c4e85066fadd97bce113950bbff1",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     }
   ]
 }
