@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f9c2b0c9_9d428b0b",
+        "filename": "dual-master/README.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-09-02T20:49:03Z",
+      "side": 1,
+      "message": "\u003e This is the exact wording used in the multi-site README to describe what plugin does [1].\n\u003e Do you think is confusing?\n\u003e \n\u003e [1] https://gerrit.googlesource.com/plugins/multi-site/+/refs/heads/stable-3.2/README.md\n\nThe [1] specifies that it means, but here we omitted that part.",
+      "parentUuid": "efe86410_51d590d4",
+      "range": {
+        "startLine": 134,
+        "startChar": 14,
+        "endLine": 134,
+        "endChar": 33
+      },
+      "revId": "f3eec95d1c157136f4f732923aa86c2ecbe2ce3a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8fa4a8ed_79a57bab",
         "filename": "dual-master/README.md",
         "patchSetId": 5
