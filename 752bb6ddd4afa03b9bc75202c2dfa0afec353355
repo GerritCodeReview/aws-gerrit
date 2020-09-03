@@ -16,6 +16,24 @@
       "revId": "752bb6ddd4afa03b9bc75202c2dfa0afec353355",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fb0f599e_83fb69a5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-09-03T10:56:07Z",
+      "side": 1,
+      "message": "\u003e change looks good but we forgot about master-slave recipe where we should have replication plugin as well\n\nReplication plugin is core, so it is already included in the base image.",
+      "parentUuid": "99c0e17d_f57fb413",
+      "revId": "752bb6ddd4afa03b9bc75202c2dfa0afec353355",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     }
   ]
 }
