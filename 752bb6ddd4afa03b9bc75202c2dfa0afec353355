@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99c0e17d_f57fb413",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-09-03T05:03:37Z",
+      "side": 1,
+      "message": "change looks good but we forgot about master-slave recipe where we should have replication plugin as well",
+      "revId": "752bb6ddd4afa03b9bc75202c2dfa0afec353355",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    }
+  ]
+}
