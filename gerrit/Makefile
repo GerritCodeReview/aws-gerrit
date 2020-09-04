@@ -9,10 +9,10 @@ docker-registry-login:
 
 gerrit-get-plugins:
 	# Make sure Prometheus Metrics exporter plugin is installed
-	mkdir -p $(@D)/{plugins,lib}
+	mkdir -p $(@D)/plugins $(@D)/lib
 
 	@echo "Ensure no plugins or libraries are left from previous deployments"
-	rm -f $(@D)/{plugins,lib}/*.jar
+	rm -f $(@D)/plugins/*.jar $(@D)/lib/*.jar
 
 	for plugin in $(PLUGINS); \
 	do \
