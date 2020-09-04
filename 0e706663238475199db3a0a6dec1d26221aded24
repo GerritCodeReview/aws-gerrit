@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "319b3c61_cd22f2b0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-09-04T12:42:26Z",
+      "side": 1,
+      "message": "You should specify where the issue happens:\n- Ubuntu Linux",
+      "revId": "0e706663238475199db3a0a6dec1d26221aded24",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
