@@ -16,6 +16,24 @@
       "revId": "0e706663238475199db3a0a6dec1d26221aded24",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e207602_7b30b3a3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-09-04T12:47:46Z",
+      "side": 1,
+      "message": "Well we know that it works on MacOS but we haven\u0027t tested on any other linux. Explanation why it fails:\n`By default, all versions of make use /bin/sh, not bash, for shell commands, while in most situations bash is the interactive shell you use from the command line. This explains why brace expansion, a bash feature absent in sh, works in the latter case but not in the former.`\n\nAnother solution is to add SHELL   \u003d /bin/bash but then we have to test it more deeply.\n\nhttps://stackoverflow.com/questions/49099682/cannot-create-multiple-directories-with-makefile",
+      "parentUuid": "319b3c61_cd22f2b0",
+      "revId": "0e706663238475199db3a0a6dec1d26221aded24",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
     }
   ]
 }
