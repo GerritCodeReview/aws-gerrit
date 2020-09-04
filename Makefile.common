@@ -1,6 +1,7 @@
+SHELL := /bin/bash
+
 ROOT_DIR=$(dir $(realpath $(filter %Makefile.common,$(MAKEFILE_LIST))))
 include $(ROOT_DIR)common.env
-
 
 cluster-keys:
 	aws ec2 describe-key-pairs --region $(AWS_REGION) --key-names $(CLUSTER_KEYS) > /dev/null 2>&1 || \
