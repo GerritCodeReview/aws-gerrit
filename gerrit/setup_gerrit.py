@@ -182,7 +182,8 @@ if ((not containerSlave) and setupReplication):
                 REMOTE_TARGET=REMOTE_TARGET,
                 REMOTE_TARGET_URL="git://" + REMOTE_TARGET + ":" + os.getenv('GIT_PORT') + "/${name}.git",
                 REMOTE_ADMIN_TARGET_URL="ssh://gerrit@" + REMOTE_TARGET + ":" + os.getenv('GIT_SSH_PORT') + "/var/gerrit/git/${name}.git",
-                REPLICATE_ON_STARTUP=REPLICATE_ON_STARTUP
+                REPLICATE_ON_STARTUP=REPLICATE_ON_STARTUP,
+                GLOBAL_PROJECTS=os.getenv('GLOBAL_PROJECTS', '')
                 ))
 
 if (setupHA):
@@ -206,4 +207,13 @@ if setupMultiSite:
         f.write(template.render(
             MULTISITE_ZOOKEEPER_CONNECT_STRING=os.getenv('MULTISITE_ZOOKEEPER_CONNECT_STRING'),
             MULTISITE_ZOOKEEPER_ROOT_NODE=os.getenv('MULTISITE_ZOOKEEPER_ROOT_NODE')
+        ))
+
+    CONFIGURATION_TARGET = GERRIT_CONFIG_DIRECTORY + "multi-site.config"
+
+    print("*** "+ CONFIGURATION_TARGET)
+    template = env.get_template("multi-site.config.template")
+    with open(CONFIGURATION_TARGET, 'w', encoding='utf-8') as f:
+        f.write(template.render(
+            GLOBAL_PROJECTS=os.getenv('GLOBAL_PROJECTS', '')
         ))

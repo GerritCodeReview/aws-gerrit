@@ -22,6 +22,12 @@
 [remote "{{REMOTE_TARGET_URL}}"]
   url = {{ REMOTE_TARGET_URL }}
   adminUrl = {{ REMOTE_ADMIN_TARGET_URL }}
+{%- if GLOBAL_PROJECTS is defined and GLOBAL_PROJECTS|length -%}
+ {%- set globalProjectsList = GLOBAL_PROJECTS.split(',') %}
+ {%- for pattern in globalProjectsList %}
+  projects = {{ pattern }}
+ {%- endfor -%}
+{% endif %}
   mirror = true
   push = +refs/*:refs/*
   threads = 10
