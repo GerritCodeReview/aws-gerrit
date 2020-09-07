@@ -1,0 +1,12 @@
+[index]
+  maxTries = 6
+  retryInterval = 30000
+  numStripedLocks = 100
+
+{% if GLOBAL_PROJECTS is defined and GLOBAL_PROJECTS|length %}
+{% set globalProjectsList = GLOBAL_PROJECTS.split(',') %}
+	[projects]
+	{% for pattern in globalProjectsList %}
+      pattern = {{ pattern }}
+    {% endfor %}
+{% endif %}

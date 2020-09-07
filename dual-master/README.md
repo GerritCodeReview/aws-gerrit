@@ -163,6 +163,9 @@ to use for publishing events to the message broker.
 store/retrieve information.
 Constraint: a slash-separated ('/') string not starting with a slash ('/')
 "gerrit/multi-site" by default.
+* `GLOBAL_PROJECTS`: Optional. Comma separated list of patterns(see [projects.pattern](https://gerrit.googlesource.com/plugins/multi-site/+/refs/heads/stable-3.2/src/main/resources/Documentation/config.md))
+to specify which projects are available across all multi-site regions.
+Empty by default which means that all projects are available across all regions.
 
 ### 2 - Deploy
 

@@ -172,6 +172,7 @@ if ((not containerSlave) and setupReplication):
     with open(GERRIT_CONFIG_DIRECTORY + "replication.config", 'w', encoding='utf-8') as f:
         SLAVE_FQDN = os.getenv('SLAVE_SUBDOMAIN') + "." + os.getenv('HOSTED_ZONE_NAME')
         REMOTE_TARGET = os.getenv('REMOTE_REPLICATION_TARGET_HOST', '')
+        GLOBAL_PROJECTS = os.getenv('GLOBAL_PROJECTS', '')
         # In a multi-site setup, the very first replication needs to be
         # triggered manually from site-A to site-B, once the latter is ready,
         # thus "REPLICATE_ON_STARTUP" needs to be disabled
@@ -182,7 +183,8 @@ if ((not containerSlave) and setupReplication):
                 REMOTE_TARGET=REMOTE_TARGET,
                 REMOTE_TARGET_URL="git://" + REMOTE_TARGET + ":" + os.getenv('GIT_PORT') + "/${name}.git",
                 REMOTE_ADMIN_TARGET_URL="ssh://gerrit@" + REMOTE_TARGET + ":" + os.getenv('GIT_SSH_PORT') + "/var/gerrit/git/${name}.git",
-                REPLICATE_ON_STARTUP=REPLICATE_ON_STARTUP
+                REPLICATE_ON_STARTUP=REPLICATE_ON_STARTUP,
+                GLOBAL_PROJECTS=GLOBAL_PROJECTS
                 ))
 
 if (setupHA):
@@ -206,4 +208,16 @@ if setupMultiSite:
         f.write(template.render(
             MULTISITE_ZOOKEEPER_CONNECT_STRING=os.getenv('MULTISITE_ZOOKEEPER_CONNECT_STRING'),
             MULTISITE_ZOOKEEPER_ROOT_NODE=os.getenv('MULTISITE_ZOOKEEPER_ROOT_NODE')
+        ))
+
+    MULTI_SITE_CONFIGURATION_FILE = "multi-site.config"
+    CONFIGURATION_TARGET = GERRIT_CONFIG_DIRECTORY + MULTI_SITE_CONFIGURATION_FILE
+    TEMPLATE_FILE = CONFIGURATION_FILE + ".template"
+    GLOBAL_PROJECTS = os.getenv('GLOBAL_PROJECTS', '')
+
+    print("*** "+ CONFIGURATION_TARGET)
+    template = env.get_template("multi-site.config.template")
+    with open(CONFIGURATION_TARGET, 'w', encoding='utf-8') as f:
+        f.write(template.render(
+            GLOBAL_PROJECTS=GLOBAL_PROJECTS
         ))
