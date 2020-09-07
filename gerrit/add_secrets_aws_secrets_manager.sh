@@ -16,18 +16,24 @@ AWS_REGION=${3:-"us-east-1"}
 function set-secret-string {
   SECRET_ID=$1
 
+  # Remove potential trailing newlines from EOF.
+  TEMP_SECRETS="awsGerritTmpSecret"
+  trap 'rm $TEMP_SECRETS*' EXIT
+  NORMALIZED_SECRET_FILE=$(mktemp $TEMP_SECRETS.XXXXXX)
+  printf %s "$(< $SECRETS_DIRECTORY/$SECRET_ID)" > $NORMALIZED_SECRET_FILE
+
   if aws secretsmanager describe-secret --region ${AWS_REGION} --secret-id ${KEY_PREFIX}_${SECRET_ID} > /dev/null 2>&1
   then
     echo "Updating secret ${KEY_PREFIX}_${SECRET_ID} ..."
     aws secretsmanager put-secret-value --region ${AWS_REGION} \
       --secret-id ${KEY_PREFIX}_${SECRET_ID} \
-      --secret-string file://$SECRETS_DIRECTORY/${SECRET_ID}
+      --secret-string file://$NORMALIZED_SECRET_FILE
   else
     echo "Creating secret ${KEY_PREFIX}_${SECRET_ID} ..."
     aws secretsmanager create-secret --region ${AWS_REGION} \
       --name ${KEY_PREFIX}_${SECRET_ID} \
       --description "Gerrit ${SECRET_ID}" \
-      --secret-string file://$SECRETS_DIRECTORY/${SECRET_ID}
+      --secret-string file://$NORMALIZED_SECRET_FILE
   fi
 }
 
