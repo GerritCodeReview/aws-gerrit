@@ -156,6 +156,10 @@ Parameters:
     Description: The fully qualified domain name of a remote replication target
     Type: String
     Default: ''
+  MultiSiteGlobalProjects:
+    Description: The list of global project patterns
+    Type: CommaDelimitedList
+    Default: ''
   MultiSiteEnabled:
     Description: Whether this gerrit is part of a multi-site cluster deployment
     Type: String
@@ -302,6 +306,8 @@ Resources:
                       Value: !Join [',', !Ref MetricsCloudwatchExcludeMetrics]
                     - Name: REMOTE_REPLICATION_TARGET_HOST
                       Value: !Ref RemoteReplicationTargetHost
+                    - Name: MULTISITE_GLOBAL_PROJECTS
+                      Value: !Join [',', !Ref MultiSiteGlobalProjects]
                     - Name: MULTISITE_ENABLED
                       Value: !Ref MultiSiteEnabled
                     - Name: MULTISITE_KAFKA_BROKERS
