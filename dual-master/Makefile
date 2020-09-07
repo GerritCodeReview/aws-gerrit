@@ -89,6 +89,9 @@ endif
 ifdef REMOTE_REPLICATION_TARGET_HOST
 		$(eval REMOTE_OPTIONAL_PARAMS := $(REMOTE_OPTIONAL_PARAMS) ParameterKey=RemoteReplicationTargetHost,ParameterValue=$(REMOTE_REPLICATION_TARGET_HOST))
 endif
+ifdef GLOBAL_PROJECTS
+		$(eval REMOTE_OPTIONAL_PARAMS := $(REMOTE_OPTIONAL_PARAMS) ParameterKey=GlobalProjects,ParameterValue=\"$(GLOBAL_PROJECTS)\")
+endif
 
 	$(AWS_FC_COMMAND) create-stack \
 		--stack-name $(SERVICE_MASTER1_STACK_NAME) \
@@ -139,6 +142,9 @@ ifdef LOAD_BALANCER_SCHEME
 endif
 ifdef REMOTE_REPLICATION_TARGET_HOST
 		$(eval REMOTE_OPTIONAL_PARAMS := $(REMOTE_OPTIONAL_PARAMS) ParameterKey=RemoteReplicationTargetHost,ParameterValue=$(REMOTE_REPLICATION_TARGET_HOST))
+endif
+ifdef GLOBAL_PROJECTS
+		$(eval REMOTE_OPTIONAL_PARAMS := $(REMOTE_OPTIONAL_PARAMS) ParameterKey=GlobalProjects,ParameterValue=\"$(GLOBAL_PROJECTS)\")
 endif
 
 	$(AWS_FC_COMMAND) create-stack \
