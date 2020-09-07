@@ -22,6 +22,47 @@
       "revId": "6af0bc68dc484f4c9ba90aab06340c75e8064000",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a688253b_1e7ef2dc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-09-07T12:30:09Z",
+      "side": 1,
+      "message": "I am actually wrong :-)\n\nThe source secret file *had* indeed a newline:\nhexdump -c ldapPassword\n0000000   s   e   c   r   e   t  \\n\n0000007",
+      "parentUuid": "bd1d9e5d_093c7acf",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 47
+      },
+      "revId": "6af0bc68dc484f4c9ba90aab06340c75e8064000",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d34b6f10_07786739",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-09-07T12:30:09Z",
+      "side": 1,
+      "message": "That works, thanks Tony",
+      "revId": "6af0bc68dc484f4c9ba90aab06340c75e8064000",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     }
   ]
 }
