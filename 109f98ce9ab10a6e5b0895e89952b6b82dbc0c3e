@@ -686,6 +686,30 @@
     },
     {
       "key": {
+        "uuid": "f2f4388e_b0d82319",
+        "filename": "gerrit/etc/multi-site.config.template",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-09-08T17:14:27Z",
+      "side": 1,
+      "message": "Btw it will work we have similar indentation in many places for example in: high-availability.config.template",
+      "parentUuid": "7fffdab0_a3f80b65",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 11
+      },
+      "revId": "109f98ce9ab10a6e5b0895e89952b6b82dbc0c3e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6260ba57_1f97bb66",
         "filename": "gerrit/etc/replication.config.template",
         "patchSetId": 2
