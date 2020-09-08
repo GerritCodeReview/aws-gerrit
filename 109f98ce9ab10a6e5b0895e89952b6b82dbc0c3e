@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1abdb5f2_13e59117",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-09-08T14:46:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a40cab8e_f58efc29",
+      "range": {
+        "startLine": 9,
+        "startChar": 35,
+        "endLine": 9,
+        "endChar": 42
+      },
+      "revId": "109f98ce9ab10a6e5b0895e89952b6b82dbc0c3e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29a140a5_7e1190d0",
         "filename": "/COMMIT_MSG",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "7b819917_8f87c5f5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-09-08T14:46:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29a140a5_7e1190d0",
+      "range": {
+        "startLine": 12,
+        "startChar": 33,
+        "endLine": 12,
+        "endChar": 39
+      },
+      "revId": "109f98ce9ab10a6e5b0895e89952b6b82dbc0c3e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a64ce654_22718a84",
         "filename": "/COMMIT_MSG",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "109f98ce9ab10a6e5b0895e89952b6b82dbc0c3e",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "553bb114_cedfc8f4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-09-08T14:46:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a64ce654_22718a84",
+      "range": {
+        "startLine": 14,
+        "startChar": 39,
+        "endLine": 14,
+        "endChar": 43
+      },
+      "revId": "109f98ce9ab10a6e5b0895e89952b6b82dbc0c3e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     },
     {
       "key": {
@@ -306,6 +378,30 @@
     },
     {
       "key": {
+        "uuid": "89159fb7_a9b8f94a",
+        "filename": "dual-master/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-09-08T14:46:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f93193e_05d81918",
+      "range": {
+        "startLine": 166,
+        "startChar": 62,
+        "endLine": 166,
+        "endChar": 64
+      },
+      "revId": "109f98ce9ab10a6e5b0895e89952b6b82dbc0c3e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "558a9c8d_374383a3",
         "filename": "dual-master/README.md",
         "patchSetId": 2
@@ -329,6 +425,30 @@
     },
     {
       "key": {
+        "uuid": "b1cb7ad9_c13614be",
+        "filename": "dual-master/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-09-08T14:46:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "558a9c8d_374383a3",
+      "range": {
+        "startLine": 167,
+        "startChar": 51,
+        "endLine": 167,
+        "endChar": 69
+      },
+      "revId": "109f98ce9ab10a6e5b0895e89952b6b82dbc0c3e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "554ced27_96c5ed41",
         "filename": "dual-master/README.md",
         "patchSetId": 2
@@ -349,6 +469,30 @@
       "revId": "109f98ce9ab10a6e5b0895e89952b6b82dbc0c3e",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a5af462_ef7a27af",
+        "filename": "dual-master/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-09-08T14:46:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "554ced27_96c5ed41",
+      "range": {
+        "startLine": 168,
+        "startChar": 68,
+        "endLine": 168,
+        "endChar": 79
+      },
+      "revId": "109f98ce9ab10a6e5b0895e89952b6b82dbc0c3e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     },
     {
       "key": {
@@ -447,6 +591,30 @@
     },
     {
       "key": {
+        "uuid": "44589388_e213a8da",
+        "filename": "dual-master/cf-service-master.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-09-08T14:46:54Z",
+      "side": 1,
+      "message": "Hmmm so we can tell that about the whole replication service. If we are not on multi-site what\u0027s the point of setting up replication service. If there is a point on setting it up without multi-site there is a valid reason to include/exclude some projects from replication",
+      "parentUuid": "f716b4f1_7b3802b3",
+      "range": {
+        "startLine": 159,
+        "startChar": 2,
+        "endLine": 159,
+        "endChar": 16
+      },
+      "revId": "109f98ce9ab10a6e5b0895e89952b6b82dbc0c3e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ed73f31c_36c32922",
         "filename": "gerrit/etc/multi-site.config.template",
         "patchSetId": 2
@@ -491,6 +659,30 @@
       "revId": "109f98ce9ab10a6e5b0895e89952b6b82dbc0c3e",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fffdab0_a3f80b65",
+        "filename": "gerrit/etc/multi-site.config.template",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-09-08T14:46:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c720beb_a8f89b5c",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 11
+      },
+      "revId": "109f98ce9ab10a6e5b0895e89952b6b82dbc0c3e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     },
     {
       "key": {
@@ -540,6 +732,30 @@
     },
     {
       "key": {
+        "uuid": "6b102038_9191f787",
+        "filename": "gerrit/setup_gerrit.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-09-08T14:46:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ed5a199_b48a8c59",
+      "range": {
+        "startLine": 187,
+        "startChar": 0,
+        "endLine": 187,
+        "endChar": 47
+      },
+      "revId": "109f98ce9ab10a6e5b0895e89952b6b82dbc0c3e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4536ef14_d2100e98",
         "filename": "gerrit/setup_gerrit.py",
         "patchSetId": 2
@@ -554,6 +770,24 @@
       "revId": "109f98ce9ab10a6e5b0895e89952b6b82dbc0c3e",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f93217ef_1d2ded22",
+        "filename": "gerrit/setup_gerrit.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-09-08T14:46:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4536ef14_d2100e98",
+      "revId": "109f98ce9ab10a6e5b0895e89952b6b82dbc0c3e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     }
   ]
 }
