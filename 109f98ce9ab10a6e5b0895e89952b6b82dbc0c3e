@@ -94,6 +94,30 @@
     },
     {
       "key": {
+        "uuid": "3514d953_8c533199",
+        "filename": "dual-master/Makefile",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-09-08T14:31:29Z",
+      "side": 1,
+      "message": "Nope, we have to do filtering ob both replication and multi-site plugin. So this functionality can be used with plain replication service as well",
+      "parentUuid": "68762d9b_0bbeeb4a",
+      "range": {
+        "startLine": 92,
+        "startChar": 0,
+        "endLine": 94,
+        "endChar": 5
+      },
+      "revId": "109f98ce9ab10a6e5b0895e89952b6b82dbc0c3e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dab19aec_f10a2de1",
         "filename": "dual-master/Makefile",
         "patchSetId": 2
@@ -105,6 +129,30 @@
       "writtenOn": "2020-09-08T08:26:47Z",
       "side": 1,
       "message": "If this is related to multi-site only, should it not go in the MULTISITE_OPTIONAL_PARAMS and be set by \"set-optional-params-multisite\"?",
+      "range": {
+        "startLine": 146,
+        "startChar": 0,
+        "endLine": 148,
+        "endChar": 5
+      },
+      "revId": "109f98ce9ab10a6e5b0895e89952b6b82dbc0c3e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9a8ef74_c5cad12f",
+        "filename": "dual-master/Makefile",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-09-08T14:31:29Z",
+      "side": 1,
+      "message": "same as above can be used without multi-site just with replication service",
+      "parentUuid": "dab19aec_f10a2de1",
       "range": {
         "startLine": 146,
         "startChar": 0,
@@ -210,6 +258,54 @@
     },
     {
       "key": {
+        "uuid": "56fe08d6_77000a00",
+        "filename": "dual-master/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-09-08T14:31:29Z",
+      "side": 1,
+      "message": "Same as above, can be used without multi-site just with the replication service",
+      "parentUuid": "a917da78_9aeff895",
+      "range": {
+        "startLine": 166,
+        "startChar": 3,
+        "endLine": 166,
+        "endChar": 18
+      },
+      "revId": "109f98ce9ab10a6e5b0895e89952b6b82dbc0c3e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5be704b5_54caa877",
+        "filename": "dual-master/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-09-08T14:31:29Z",
+      "side": 1,
+      "message": "When rendered it\u0027s not going to be long line, url will not be rendered",
+      "parentUuid": "ef3e4758_4afbf69f",
+      "range": {
+        "startLine": 166,
+        "startChar": 63,
+        "endLine": 166,
+        "endChar": 206
+      },
+      "revId": "109f98ce9ab10a6e5b0895e89952b6b82dbc0c3e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "558a9c8d_374383a3",
         "filename": "dual-master/README.md",
         "patchSetId": 2
@@ -303,6 +399,30 @@
     },
     {
       "key": {
+        "uuid": "fc94d2d4_b09cc802",
+        "filename": "dual-master/cf-service-master.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-09-08T14:31:29Z",
+      "side": 1,
+      "message": "Not sure you can use it with replication service as well, so it can be use with both multi-site setup or plain replication service, check replication.config.template",
+      "parentUuid": "f72cbd87_d04a3dbe",
+      "range": {
+        "startLine": 159,
+        "startChar": 2,
+        "endLine": 159,
+        "endChar": 16
+      },
+      "revId": "109f98ce9ab10a6e5b0895e89952b6b82dbc0c3e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ed73f31c_36c32922",
         "filename": "gerrit/etc/multi-site.config.template",
         "patchSetId": 2
@@ -314,6 +434,30 @@
       "writtenOn": "2020-09-08T08:26:47Z",
       "side": 1,
       "message": "nit: the [projects] stanza shouldn\u0027t be indented when created.\n\nWould this work?\n```\n{% if GLOBAL_PROJECTS is defined and GLOBAL_PROJECTS|length %}\n{% set globalProjectsList \u003d GLOBAL_PROJECTS.split(\u0027,\u0027) %}\n[projects]\n  {% for pattern in globalProjectsList %}\n     pattern \u003d {{ pattern }}\n  {% endfor %}\n{% endif %}\n```",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 11
+      },
+      "revId": "109f98ce9ab10a6e5b0895e89952b6b82dbc0c3e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c720beb_a8f89b5c",
+        "filename": "gerrit/etc/multi-site.config.template",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-09-08T14:31:29Z",
+      "side": 1,
+      "message": "It works and it is indented, it\u0027s just how Gerrit renders it. But there is a nit: this line uses tab instead of spaces I will fix it",
+      "parentUuid": "ed73f31c_36c32922",
       "range": {
         "startLine": 6,
         "startChar": 0,
