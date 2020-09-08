@@ -75,11 +75,11 @@
    initialDelay = {{ METRICS_CLOUDWATCH_INITIAL_DELAY }}
    dryRun = {{ METRICS_CLOUDWATCH_DRY_RUN }}
 
-{% if METRICS_CLOUDWATCH_EXCLUDE_METRICS_LIST is defined and METRICS_CLOUDWATCH_EXCLUDE_METRICS_LIST|length %}
- {% set excludedMetricsList = METRICS_CLOUDWATCH_EXCLUDE_METRICS_LIST.split(',') %}
- {% for excluded in excludedMetricsList %}
+{%- if METRICS_CLOUDWATCH_EXCLUDE_METRICS_LIST is defined and METRICS_CLOUDWATCH_EXCLUDE_METRICS_LIST|length %}
+ {%- set excludedMetricsList = METRICS_CLOUDWATCH_EXCLUDE_METRICS_LIST.split(',') %}
+ {%- for excluded in excludedMetricsList %}
    excludeMetrics = {{ excluded }}
- {% endfor %}
+ {%- endfor %}
 {% endif %}
 {% endif %}
 
