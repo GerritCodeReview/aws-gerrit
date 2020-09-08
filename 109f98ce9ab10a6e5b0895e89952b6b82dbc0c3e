@@ -709,6 +709,30 @@
     },
     {
       "key": {
+        "uuid": "8eb00a7a_9a0561d7",
+        "filename": "gerrit/etc/replication.config.template",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-09-08T16:06:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6260ba57_1f97bb66",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 13
+      },
+      "revId": "109f98ce9ab10a6e5b0895e89952b6b82dbc0c3e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ed5a199_b48a8c59",
         "filename": "gerrit/setup_gerrit.py",
         "patchSetId": 2
