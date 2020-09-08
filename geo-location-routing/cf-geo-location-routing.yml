@@ -1,0 +1,109 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "Routing policies to route traffic based on users location"
+Parameters:
+  HostedZoneName:
+    Description: The hosted zone name for the Geo Location entries
+    Type: String
+  HostedZoneId:
+    Description: The hosted zone Id for the Geo Location entries
+    Type: String
+  DefaultAliasTarget:
+    Description: The default alias target to route requests from
+    Type: String
+    AllowedValues: ['SITE_A', 'SITE_B']
+  GlobalSubdomainName:
+    Description: The subdomain for the globally available DNS record
+    Type: String
+  SiteAAliasTarget:
+    Description: The alias target for site A
+    Type: String
+  SiteAContinentCode:
+    Description: The continent from which requests should be routed to site A
+    Type: String
+    AllowedValues: ['AF','AN','AS','EU','OC','NA','SA']
+  SiteBAliasTarget:
+    Description: The alias target for site B
+    Type: String
+  SiteBContinentCode:
+    Description: The continent from which requests should be routed to site B
+    Type: String
+    AllowedValues: ['AF','AN','AS','EU','OC','NA','SA']
+Conditions:
+  IsDefaultSiteA: !Equals [!Ref DefaultAliasTarget, "SITE_A"]
+Resources:
+    HealthCheckSiteA:
+      Type: AWS::Route53::HealthCheck
+      Properties:
+        HealthCheckConfig:
+          FailureThreshold: 3
+          FullyQualifiedDomainName: !Ref SiteAAliasTarget
+          Port: 443
+          RequestInterval: 30
+          ResourcePath: /config/server/healthcheck~status
+          Type: HTTPS
+
+    HealthCheckSiteB:
+      Type: AWS::Route53::HealthCheck
+      Properties:
+        HealthCheckConfig:
+          FailureThreshold: 3
+          FullyQualifiedDomainName: !Ref SiteAAliasTarget
+          Port: 443
+          RequestInterval: 30
+          ResourcePath: /config/server/healthcheck~status
+          Type: HTTPS
+
+    DefaultRecord:
+      Type: AWS::Route53::RecordSetGroup
+      DependsOn:
+        - HealthCheckSiteA
+        - HealthCheckSiteB
+      Properties:
+        HostedZoneName: !Sub '${HostedZoneName}.'
+        RecordSets:
+          - Name: !Sub '${GlobalSubdomainName}.${HostedZoneName}.'
+            SetIdentifier: "Default Record"
+            Type: "A"
+            HealthCheckId: !If [IsDefaultSiteA, !Ref HealthCheckSiteA , !Ref HealthCheckSiteB]
+            GeoLocation:
+              CountryCode: "*"
+            AliasTarget:
+              HostedZoneId: !Ref HostedZoneId
+              DNSName: !If [IsDefaultSiteA, !Ref SiteAAliasTarget , !Ref SiteBAliasTarget]
+              EvaluateTargetHealth: true
+
+    SiteARecord:
+      Type: AWS::Route53::RecordSetGroup
+      DependsOn:
+        - HealthCheckSiteA
+      Properties:
+        HostedZoneName: !Sub '${HostedZoneName}.'
+        RecordSets:
+          - Name: !Sub '${GlobalSubdomainName}.${HostedZoneName}.'
+            SetIdentifier: !Sub 'Route requests from ${SiteAContinentCode} to site A'
+            Type: "A"
+            HealthCheckId: !Ref HealthCheckSiteA
+            GeoLocation:
+              ContinentCode: !Ref SiteAContinentCode
+            AliasTarget:
+              HostedZoneId: !Ref HostedZoneId
+              DNSName: !Ref SiteAAliasTarget
+              EvaluateTargetHealth: true
+
+    SiteBRecord:
+      Type: AWS::Route53::RecordSetGroup
+      DependsOn:
+        - HealthCheckSiteA
+      Properties:
+        HostedZoneName: !Sub '${HostedZoneName}.'
+        RecordSets:
+          - Name: !Sub '${GlobalSubdomainName}.${HostedZoneName}.'
+            SetIdentifier: !Sub 'Route requests from ${SiteBContinentCode} to site B'
+            Type: "A"
+            HealthCheckId: !Ref HealthCheckSiteB
+            GeoLocation:
+              ContinentCode: !Ref SiteBContinentCode
+            AliasTarget:
+              HostedZoneId: !Ref HostedZoneId
+              DNSName: !Ref SiteBAliasTarget
+              EvaluateTargetHealth: true
