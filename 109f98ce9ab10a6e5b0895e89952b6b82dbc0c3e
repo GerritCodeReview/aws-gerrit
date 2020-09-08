@@ -423,6 +423,30 @@
     },
     {
       "key": {
+        "uuid": "f716b4f1_7b3802b3",
+        "filename": "dual-master/cf-service-master.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-09-08T14:36:32Z",
+      "side": 1,
+      "message": "\u003e Not sure you can use it with replication service as well, so it can be use with both multi-site setup or plain replication service, check replication.config.template\n\nSure, but if you are not on multi-site, it doesn\u0027t make sense to filter out project with replication, right?",
+      "parentUuid": "fc94d2d4_b09cc802",
+      "range": {
+        "startLine": 159,
+        "startChar": 2,
+        "endLine": 159,
+        "endChar": 16
+      },
+      "revId": "109f98ce9ab10a6e5b0895e89952b6b82dbc0c3e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ed73f31c_36c32922",
         "filename": "gerrit/etc/multi-site.config.template",
         "patchSetId": 2
