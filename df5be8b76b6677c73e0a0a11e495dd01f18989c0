@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "48ab207e_5b3fff26",
+        "filename": "geo-location-routing/cf-geo-location-routing.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-09-09T08:24:38Z",
+      "side": 1,
+      "message": "I don\u0027t think having a default makes much sense: it depends on where the majority of users will be, which might equally be in SITE_A or SITE_B.\n\nI think whoever is deploying the recipe should explicitly choose depending on their specific users distribution.",
+      "parentUuid": "2a57402a_d21b37d6",
+      "range": {
+        "startLine": 10,
+        "startChar": 2,
+        "endLine": 10,
+        "endChar": 20
+      },
+      "revId": "df5be8b76b6677c73e0a0a11e495dd01f18989c0",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4d2402fd_ed1046d7",
         "filename": "geo-location-routing/cf-geo-location-routing.yml",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2020-09-08T16:36:47Z",
       "side": 1,
       "message": "nit: why we need all those dots?",
+      "range": {
+        "startLine": 62,
+        "startChar": 47,
+        "endLine": 62,
+        "endChar": 48
+      },
+      "revId": "df5be8b76b6677c73e0a0a11e495dd01f18989c0",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98ee8a14_5eeed76a",
+        "filename": "geo-location-routing/cf-geo-location-routing.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-09-09T08:24:38Z",
+      "side": 1,
+      "message": "The hosted zone name wants a fully qualified domain name, which *does* have a trailing dot (more info here[1])\nUsing a fully qualified name (with a dot at the end) is the RFC-documented way to register the DNS record (in fact it is what you get if you do it via the route53 UI console).\n\nHaving said that, route53 is smart enough to make this optional [2], but I think is still best practice to do it.\n\nHope it makes sense\n\n[1]http://www.dns-sd.org/trailingdotsindomainnames.html\n[2]https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/ResourceRecordTypes.html",
+      "parentUuid": "4d2402fd_ed1046d7",
       "range": {
         "startLine": 62,
         "startChar": 47,
