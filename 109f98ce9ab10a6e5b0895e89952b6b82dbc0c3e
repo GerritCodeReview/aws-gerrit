@@ -687,6 +687,30 @@
     },
     {
       "key": {
+        "uuid": "3a42f424_d213d259",
+        "filename": "dual-master/cf-service-master.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-09-09T16:23:16Z",
+      "side": 1,
+      "message": "I do not believe there is any reason for NOT replicating ALL repositories in a master-replica scenario (not multi-site). The \"global\" vs. \"local\" project is just a multi-site thing.",
+      "parentUuid": "501eea48_e6e18120",
+      "range": {
+        "startLine": 159,
+        "startChar": 2,
+        "endLine": 159,
+        "endChar": 16
+      },
+      "revId": "109f98ce9ab10a6e5b0895e89952b6b82dbc0c3e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ed73f31c_36c32922",
         "filename": "gerrit/etc/multi-site.config.template",
         "patchSetId": 2
