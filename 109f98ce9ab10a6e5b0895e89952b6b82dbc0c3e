@@ -663,6 +663,30 @@
     },
     {
       "key": {
+        "uuid": "501eea48_e6e18120",
+        "filename": "dual-master/cf-service-master.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-09-09T14:40:32Z",
+      "side": 1,
+      "message": "I\u0027ve added your suggestions from:\n\n\u003e It should be made clear in the documentation that it applies to both replication *and* multi-site\n\u003e If it applies to replication, should it also not applied to slaves? If not we should highlight that this is only for \"remote\" destinations, other than slaves.",
+      "parentUuid": "1ec0ce23_b77d0952",
+      "range": {
+        "startLine": 159,
+        "startChar": 2,
+        "endLine": 159,
+        "endChar": 16
+      },
+      "revId": "109f98ce9ab10a6e5b0895e89952b6b82dbc0c3e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ed73f31c_36c32922",
         "filename": "gerrit/etc/multi-site.config.template",
         "patchSetId": 2
