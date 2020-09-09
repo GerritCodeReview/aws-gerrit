@@ -402,6 +402,30 @@
     },
     {
       "key": {
+        "uuid": "47317469_3173d47b",
+        "filename": "dual-master/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-09-09T09:46:43Z",
+      "side": 1,
+      "message": "Yep, when rendered will be fine, but it could still be wrapped in the source, imho.\nThis is the longest line of the file and I think the parenthesis could be placed on its own line.\n\nThis is a nit, so up to you 😊",
+      "parentUuid": "5be704b5_54caa877",
+      "range": {
+        "startLine": 166,
+        "startChar": 63,
+        "endLine": 166,
+        "endChar": 206
+      },
+      "revId": "109f98ce9ab10a6e5b0895e89952b6b82dbc0c3e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "558a9c8d_374383a3",
         "filename": "dual-master/README.md",
         "patchSetId": 2
@@ -615,6 +639,30 @@
     },
     {
       "key": {
+        "uuid": "1ec0ce23_b77d0952",
+        "filename": "dual-master/cf-service-master.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-09-09T09:46:43Z",
+      "side": 1,
+      "message": "I think Marcin made a good point here. We modelled replication and multi-site totally separately, so that they could be enabled independently, but not every configuration is valid.\n\n1 - Both of them disabled: fine\n2 - Both of them enabled: fine\n3 - Replication enabled and multi-site disabled: fine. You might want to replicate to an additional target, other than to the slave.\n4 - Replication disabled and multi-site enabled: Not fine. Processing of indexes event requires successful replication too. We documented that multi-site requires replication [1] but we haven\u0027t enforced it.\n\nRegarding project filtering:\n\n- It should be accepted only in case 2) and 3)\n- It should be made clear in the documentation that it applies to both replication *and* multi-site\n- If it applies to replication, should it also not applied to slaves? If not we should highlight that this is only for \"remote\" destinations, other than slaves.\n\nThoughts?\n\n[1]https://gerrit.googlesource.com/aws-gerrit/+/refs/heads/master/dual-master/README.md#requirements",
+      "parentUuid": "44589388_e213a8da",
+      "range": {
+        "startLine": 159,
+        "startChar": 2,
+        "endLine": 159,
+        "endChar": 16
+      },
+      "revId": "109f98ce9ab10a6e5b0895e89952b6b82dbc0c3e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ed73f31c_36c32922",
         "filename": "gerrit/etc/multi-site.config.template",
         "patchSetId": 2
@@ -698,6 +746,30 @@
       "side": 1,
       "message": "Btw it will work we have similar indentation in many places for example in: high-availability.config.template",
       "parentUuid": "7fffdab0_a3f80b65",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 11
+      },
+      "revId": "109f98ce9ab10a6e5b0895e89952b6b82dbc0c3e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0ccb67ac_8cf20bfd",
+        "filename": "gerrit/etc/multi-site.config.template",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-09-09T09:46:43Z",
+      "side": 1,
+      "message": "Yep it will work (it was the same with the exclusion metrics for CW), it was just a comment to generate a properly formatted file.",
+      "parentUuid": "f2f4388e_b0d82319",
       "range": {
         "startLine": 6,
         "startChar": 0,
