@@ -56,6 +56,15 @@ Parameters:
       Description: An environment name that will be prefixed to resource names
       Type: String
       Default: test
+  GerritVolumeId:
+      Description: Existing Gerrit volume id
+      Type: String
+      Default: ""
+  GerritVolumeSnapshotId:
+      Description: Id of the EBS snapshot for Gerrit volume
+      Type: String
+      Default: ""
+
 Resources:
   # ECS Resources
   ECSCluster:
@@ -108,7 +117,39 @@ Resources:
           echo ECS_CLUSTER=${ECSCluster} >> /etc/ecs/ecs.config
           # Make sure latest version of the helper scripts are installed as per recommendation:
           # https://github.com/awsdocs/aws-cloudformation-user-guide/blob/master/doc_source/cfn-helper-scripts-reference.md#using-the-latest-version
-          yum install -y aws-cfn-bootstrap
+          yum install -y aws-cfn-bootstrap aws-cli xfsprogs
+          EC2_INSTANCE_ID=`curl -s http://169.254.169.254/latest/meta-data/instance-id`
+          VOLUME_ID=${GerritVolumeStack.Outputs.GerritVolumeRef}
+          echo "Volume Id: $VOLUME_ID"
+
+          aws ec2 attach-volume --region ${AWS::Region} --volume-id $VOLUME_ID --instance-id $EC2_INSTANCE_ID --device /dev/xvdg
+
+          attaching=true
+          while $attaching; do
+            echo "Waiting for volume $VOLUME_ID to be attached to the instace $EC2_INSTANCE_ID"
+            volumeStatus=`aws ec2 describe-volumes --region ${AWS::Region} --volume-ids $VOLUME_ID`
+            if [[ $volumeStatus =~ "\"State\": \"attached\"" ]]; then
+              echo "Volume $VOLUME_ID attached to the instace $EC2_INSTANCE_ID"
+              attaching=false
+            fi
+            sleep 5
+          done
+
+          if [[ "${GerritVolumeId}" = "" && "${GerritVolumeSnapshotId}" = "" ]]; then
+            echo "Create file system for Gerrit volume"
+            mkfs -t xfs /dev/xvdg
+          fi
+
+          mkdir /gerrit-data
+          mount /dev/xvdg /gerrit-data
+
+          if [[ "${GerritVolumeId}" = "" && "${GerritVolumeSnapshotId}" = "" ]]; then
+            echo "Create Gerrit directories"
+            mkdir -p /gerrit-data/gerrit-logs /gerrit-data/gerrit-cache /gerrit-data/gerrit-data /gerrit-data/gerrit-git /gerrit-data/gerrit-index /gerrit-data/gerrit-db
+          fi
+
+          chown 1000:1000 -R /gerrit-data
+
           # Get the CloudWatch Logs agent
           echo -e "
             {\"logs\":
@@ -116,22 +157,22 @@ Resources:
                 {\"files\":
                   {\"collect_list\":
                     [
-                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs/_data/httpd_log\",
+                      {\"file_path\": \"/gerrit-data/gerrit-logs/httpd_log\",
                       \"log_group_name\": \"${AWS::StackName}\",
                       \"log_stream_name\": \"${EnvironmentName}/{instance_id}/httpd_log\",
                       \"timezone\": \"UTC\"
                       },
-                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs/_data/sshd_log\",
+                      {\"file_path\": \"/gerrit-data/gerrit-logs/sshd_log\",
                       \"log_group_name\": \"${AWS::StackName}\",
                       \"log_stream_name\": \"${EnvironmentName}/{instance_id}/sshd_log\",
                       \"timezone\": \"UTC\"
                       },
-                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs/_data/gc_log\",
+                      {\"file_path\": \"/gerrit-data/gerrit-logs/gc_log\",
                       \"log_group_name\": \"${AWS::StackName}\",
                       \"log_stream_name\": \"${EnvironmentName}/{instance_id}/gc_log\",
                       \"timezone\": \"UTC\"
                       },
-                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs/_data/audit_log\",
+                      {\"file_path\": \"/gerrit-data/gerrit-logs/audit_log\",
                       \"log_group_name\": \"${AWS::StackName}\",
                       \"log_stream_name\": \"${EnvironmentName}/{instance_id}/audit_log\",
                       \"timezone\": \"UTC\"
@@ -186,6 +227,8 @@ Resources:
               - 'ecr:GetAuthorizationToken'
               - 'ecr:BatchGetImage'
               - 'ecr:GetDownloadUrlForLayer'
+              - 'ec2:AttachVolume'
+              - 'ec2:DescribeVolumes'
             Resource: '*'
 
   ECSTaskNetworkStack:
@@ -199,6 +242,15 @@ Resources:
         VPCCIDR: !Ref 'VPCCIDR'
         SubnetIdProp: !Ref 'SubnetIdProp'
         SubnetCIDR: !Ref 'SubnetCIDR'
+
+  GerritVolumeStack:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: !Join [ '', ['https://', !Ref TemplateBucketName, '.s3.amazonaws.com/cf-gerrit-volume.yml'] ]
+      TimeoutInMinutes: '25'
+      Parameters:
+        GerritVolumeId: !Ref 'GerritVolumeId'
+        GerritVolumeSnapshotId: !Ref 'GerritVolumeSnapshotId'
 
 Outputs:
   ClusterName:
