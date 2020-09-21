@@ -285,47 +285,23 @@ Resources:
                         awslogs-stream-prefix: !Ref EnvironmentName
             Volumes:
               - Name: !Ref 'GerritDbVolume'
-                DockerVolumeConfiguration:
-                  Scope: shared
-                  Autoprovision: true
-                  Driver: local
-                  Labels:
-                    gerrit-db: !Join ['-', [!Ref EnvironmentName, !Ref GerritDbVolume]]
+                Host:
+                  SourcePath: !Join ['/', ["/gerrit-data", !Ref GerritGitVolume]]
               - Name: !Ref 'GerritGitVolume'
-                DockerVolumeConfiguration:
-                  Scope: shared
-                  Autoprovision: true
-                  Driver: local
-                  Labels:
-                    gerrit-git: !Join ['-', [!Ref EnvironmentName, !Ref GerritGitVolume]]
+                Host:
+                  SourcePath: !Join ['/', ["/gerrit-data", !Ref GerritGitVolume]]
               - Name: !Ref 'GerritDataVolume'
-                DockerVolumeConfiguration:
-                  Scope: shared
-                  Autoprovision: true
-                  Driver: local
-                  Labels:
-                    gerrit-data: !Join ['-', [!Ref EnvironmentName, !Ref GerritDataVolume]]
+                Host:
+                  SourcePath: !Join ['/', ["/gerrit-data", !Ref GerritDataVolume]]
               - Name: !Ref 'GerritCacheVolume'
-                DockerVolumeConfiguration:
-                  Scope: shared
-                  Autoprovision: true
-                  Driver: local
-                  Labels:
-                    gerrit-cache: !Join ['-', [!Ref EnvironmentName, !Ref GerritCacheVolume]]
+                Host:
+                  SourcePath: !Join ['/', ["/gerrit-data", !Ref GerritCacheVolume]]
               - Name: !Ref 'GerritIndexVolume'
-                DockerVolumeConfiguration:
-                  Scope: shared
-                  Autoprovision: true
-                  Driver: local
-                  Labels:
-                    gerrit-index: !Join ['-', [!Ref EnvironmentName, !Ref GerritIndexVolume]]
+                Host:
+                  SourcePath: !Join ['/', ["/gerrit-data", !Ref GerritIndexVolume]]
               - Name: !Ref 'GerritLogsVolume'
-                DockerVolumeConfiguration:
-                  Scope: shared
-                  Autoprovision: true
-                  Driver: local
-                  Labels:
-                    gerrit-logs: !Join ['-', [!Ref EnvironmentName, !Ref GerritLogsVolume]]
+                Host:
+                  SourcePath: !Join ['/', ["/gerrit-data", !Ref GerritLogsVolume]]
 
     LoadBalancer:
         Type: AWS::ElasticLoadBalancingV2::LoadBalancer
