@@ -55,6 +55,10 @@ is recipe-specific:
   `10.0.0.0/24` by default.
 * LOAD_BALANCER_SCHEME: Optional. The Load Balancer scheme type. `internet-facing` by default.
   Allowed values: internal, internet-facing
+* `GERRIT_VOLUME_ID` : Optional. Id of an extisting EBS volume. If empty new volume for Gerrit data will
+be created
+* `GERRIT_VOLUME_SNAPSHOT_ID` : Optional. Ignored if GERRIT_VOLUME_ID is not empty. Id of the EBS volume
+snapshot used to create new EBS volume for Gerrit data.
 
 #### CloudWatch Monitoring
 

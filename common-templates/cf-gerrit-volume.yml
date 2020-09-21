@@ -1,0 +1,36 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Deploy an EBS Volume for Gerrit service data.
+Parameters:
+  GerritVolumeId:
+      Description: Existing Gerrit volume id
+      Type: String
+      Default: ""
+  GerritVolumeSnapshotId:
+      Description: Id of the EBS snapshot for Gerrit volume
+      Type: String
+      Default: ""
+  GerritVolumeSize:
+      Description: Gerrit volume size
+      Type: Number
+      Default: 10
+
+Conditions:
+  CreateEBSVolume: !Equals [!Ref GerritVolumeId, ""]
+  CreateEBSVolumeBasedOnSnapshot: !Not
+      - !Equals [!Ref GerritVolumeSnapshotId, ""]
+
+Resources:
+  GerritVolume:
+    Condition: CreateEBSVolume
+    Type: AWS::EC2::Volume
+    Properties:
+      AvailabilityZone: !Select
+        - 0
+        - !GetAZs
+           Ref: 'AWS::Region'
+      SnapshotId: !If [CreateEBSVolumeBasedOnSnapshot, !Ref GerritVolumeSnapshotId, !Ref "AWS::NoValue"]
+      Size: !If [CreateEBSVolumeBasedOnSnapshot,  !Ref "AWS::NoValue", !Ref GerritVolumeSize]
+
+Outputs:
+  GerritVolumeRef:
+    Value: !If [CreateEBSVolume, !Ref "GerritVolume", !Ref "GerritVolumeId"]
