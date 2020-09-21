@@ -29,6 +29,15 @@ endif
 ifdef VPC_CIDR
 		$(eval CLUSTER_OPTIONAL_PARAMS := $(CLUSTER_OPTIONAL_PARAMS) ParameterKey=VPCCIDR,ParameterValue=$(VPC_CIDR))
 endif
+ifdef GERRIT_VOLUME_ID
+		$(eval CLUSTER_OPTIONAL_PARAMS := $(CLUSTER_OPTIONAL_PARAMS) ParameterKey=GerritVolumeId,ParameterValue=$(GERRIT_VOLUME_ID))
+endif
+ifdef GERRIT_VOLUME_SNAPSHOT_ID
+		$(eval CLUSTER_OPTIONAL_PARAMS := $(CLUSTER_OPTIONAL_PARAMS) ParameterKey=GerritVolumeSnapshotId,ParameterValue=$(GERRIT_VOLUME_SNAPSHOT_ID))
+endif
+ifdef GERRIT_VOLUME_SIZE_IN_GIB
+		$(eval CLUSTER_OPTIONAL_PARAMS := $(CLUSTER_OPTIONAL_PARAMS) ParameterKey=GerritVolumeSizeInGiB,ParameterValue=$(GERRIT_VOLUME_SIZE_IN_GIB))
+endif
 
 	$(AWS_FC_COMMAND) create-stack \
 		--stack-name $(CLUSTER_STACK_NAME) \
