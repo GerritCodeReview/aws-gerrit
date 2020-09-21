@@ -73,6 +73,11 @@ Configuration values affecting deployment environment and cluster properties
 
 * `SERVICE_STACK_NAME`: Optional. Name of the service stack. `gerrit-service` by default.
 * `GERRIT_INSTANCE_ID`: Optional. Identifier for the Gerrit instance. "gerrit-single-master" by default.
+* `GERRIT_VOLUME_ID` : Optional. Id of an extisting EBS volume. If empty, a new volume for Gerrit data will
+be created
+* `GERRIT_VOLUME_SNAPSHOT_ID` : Optional. Ignored if GERRIT_VOLUME_ID is not empty. Id of the EBS volume
+snapshot used to create new EBS volume for Gerrit data.
+* `GERRIT_VOLUME_SIZE_IN_GIB`: Optional. The size of the Gerrit data volume, in GiBs. `10` by default.
 
 ### 2 - Deploy
 
