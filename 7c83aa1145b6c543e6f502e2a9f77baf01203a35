@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5178b514_ddafb12c",
+        "filename": "single-master/README.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-09-22T20:59:28Z",
+      "side": 1,
+      "message": "nit: wrap long line",
+      "range": {
+        "startLine": 76,
+        "startChar": 80,
+        "endLine": 76,
+        "endChar": 107
+      },
+      "revId": "7c83aa1145b6c543e6f502e2a9f77baf01203a35",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9a1aad9_dcf2b160",
+        "filename": "single-master/README.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-09-22T20:59:28Z",
+      "side": 1,
+      "message": "nit: wrap long line",
+      "range": {
+        "startLine": 78,
+        "startChar": 80,
+        "endLine": 78,
+        "endChar": 104
+      },
+      "revId": "7c83aa1145b6c543e6f502e2a9f77baf01203a35",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0248c661_11e3ad3a",
+        "filename": "single-master/cf-service.yml",
+        "patchSetId": 5
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-09-22T20:59:28Z",
+      "side": 1,
+      "message": "Why did we change the path name?",
+      "range": {
+        "startLine": 289,
+        "startChar": 52,
+        "endLine": 289,
+        "endChar": 63
+      },
+      "revId": "7c83aa1145b6c543e6f502e2a9f77baf01203a35",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
