@@ -1,0 +1,233 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "059ad159_8b87a001",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-09-22T09:23:08Z",
+      "side": 1,
+      "message": "a new one",
+      "range": {
+        "startLine": 7,
+        "startChar": 39,
+        "endLine": 7,
+        "endChar": 44
+      },
+      "revId": "2c85b768dad784c35b90c2c0a6e88ca8cad518f0",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08f28308_c3069091",
+        "filename": "Configuration.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-09-22T09:23:08Z",
+      "side": 1,
+      "message": "nit: ...If empty, a new volume...",
+      "range": {
+        "startLine": 58,
+        "startChar": 64,
+        "endLine": 58,
+        "endChar": 83
+      },
+      "revId": "2c85b768dad784c35b90c2c0a6e88ca8cad518f0",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "395ffe8e_cf2c5c0a",
+        "filename": "Configuration.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-09-22T09:23:08Z",
+      "side": 1,
+      "message": "Suggestion: Only considered when creating a new volume (i.e. GERRIT_VOLUME_ID was not specified)",
+      "range": {
+        "startLine": 60,
+        "startChar": 42,
+        "endLine": 60,
+        "endChar": 82
+      },
+      "revId": "2c85b768dad784c35b90c2c0a6e88ca8cad518f0",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0736234b_e06e26e8",
+        "filename": "Configuration.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-09-22T09:23:08Z",
+      "side": 1,
+      "message": "Configuration.md should be used for configuration common to all templates, but this change only introduces EBS volume to the single-master recipe.",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 55
+      },
+      "revId": "2c85b768dad784c35b90c2c0a6e88ca8cad518f0",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f10fe7e_4a157ec9",
+        "filename": "Configuration.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-09-22T09:23:08Z",
+      "side": 1,
+      "message": "Are we missing the documentation for GerritVolumeSize?",
+      "revId": "2c85b768dad784c35b90c2c0a6e88ca8cad518f0",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ad8b2bb_a7cdd8e9",
+        "filename": "Makefile.common",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-09-22T09:23:08Z",
+      "side": 1,
+      "message": "nit: this is not a common template (yet), it is only used by single-master.",
+      "revId": "2c85b768dad784c35b90c2c0a6e88ca8cad518f0",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7364331f_ba07031f",
+        "filename": "common-templates/cf-gerrit-volume.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-09-22T09:23:08Z",
+      "side": 1,
+      "message": "What\u0027s the unit of this size? Mb? Gb? Shall we make it obvious in the name of the parameter?",
+      "range": {
+        "startLine": 12,
+        "startChar": 2,
+        "endLine": 15,
+        "endChar": 17
+      },
+      "revId": "2c85b768dad784c35b90c2c0a6e88ca8cad518f0",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b8b2520_74a2095f",
+        "filename": "single-master/Makefile",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-09-22T09:23:08Z",
+      "side": 1,
+      "message": "GerritVolumeSize is never passed in?",
+      "revId": "2c85b768dad784c35b90c2c0a6e88ca8cad518f0",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38a11b66_b507615c",
+        "filename": "single-master/cf-cluster.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-09-22T09:23:08Z",
+      "side": 1,
+      "message": "Can we not attach the volume using a \"AWS::EC2::VolumeAttachment\"[1]?\n\n[1]https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-ec2-ebs-volumeattachment.html",
+      "revId": "2c85b768dad784c35b90c2c0a6e88ca8cad518f0",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f2dfa82_8d197381",
+        "filename": "single-master/cf-cluster.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-09-22T09:23:08Z",
+      "side": 1,
+      "message": "Shall we fail with a meaningful error message if this fails 5 times?\n\n\"Abort\" Could not mount EBS volume\", or such?",
+      "range": {
+        "startLine": 135,
+        "startChar": 0,
+        "endLine": 136,
+        "endChar": 14
+      },
+      "revId": "2c85b768dad784c35b90c2c0a6e88ca8cad518f0",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb4e301a_3e8322a3",
+        "filename": "single-master/cf-cluster.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-09-22T09:23:08Z",
+      "side": 1,
+      "message": "I think gerrit-data might be confused with the gerrit data directory.\nHow about making it obvious this is the ebs mount point by naming it \"mountPoint\", or \"ebsMountPoint\", or \"gerritMountPoint\" etc.",
+      "range": {
+        "startLine": 148,
+        "startChar": 72,
+        "endLine": 148,
+        "endChar": 96
+      },
+      "revId": "2c85b768dad784c35b90c2c0a6e88ca8cad518f0",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
