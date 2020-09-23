@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9c4c8ee8_609b659b",
+        "filename": "single-master/README.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-09-23T14:52:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5178b514_ddafb12c",
+      "range": {
+        "startLine": 76,
+        "startChar": 80,
+        "endLine": 76,
+        "endChar": 107
+      },
+      "revId": "7c83aa1145b6c543e6f502e2a9f77baf01203a35",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9a1aad9_dcf2b160",
         "filename": "single-master/README.md",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f9769476_9ec70d0a",
+        "filename": "single-master/README.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-09-23T14:52:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9a1aad9_dcf2b160",
+      "range": {
+        "startLine": 78,
+        "startChar": 80,
+        "endLine": 78,
+        "endChar": 104
+      },
+      "revId": "7c83aa1145b6c543e6f502e2a9f77baf01203a35",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0248c661_11e3ad3a",
         "filename": "single-master/cf-service.yml",
         "patchSetId": 5
@@ -59,6 +107,30 @@
       "writtenOn": "2020-09-22T20:59:28Z",
       "side": 1,
       "message": "Why did we change the path name?",
+      "range": {
+        "startLine": 289,
+        "startChar": 52,
+        "endLine": 289,
+        "endChar": 63
+      },
+      "revId": "7c83aa1145b6c543e6f502e2a9f77baf01203a35",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "127e8390_8126e588",
+        "filename": "single-master/cf-service.yml",
+        "patchSetId": 5
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-09-23T14:52:36Z",
+      "side": 1,
+      "message": "Previously we use docker volumes which were under paths like: /var/lib/docker/volumes/gerrit-logs/_data/httpd_log\\\nSo hard to mount because we would have to mount EBS to /var/lib/docker/volumes which is under docker control. Plus it\u0027s difficult to find it. Alternation is to use `Host` which allows to create volume under specific path",
+      "parentUuid": "0248c661_11e3ad3a",
       "range": {
         "startLine": 289,
         "startChar": 52,
