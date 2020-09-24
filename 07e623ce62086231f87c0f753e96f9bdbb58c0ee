@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e791ef46_304acbc3",
+        "filename": "single-master/cf-cluster.yml",
+        "patchSetId": 7
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-09-24T22:46:10Z",
+      "side": 1,
+      "message": "Why 5 hardcoded?",
+      "range": {
+        "startLine": 130,
+        "startChar": 22,
+        "endLine": 130,
+        "endChar": 23
+      },
+      "revId": "07e623ce62086231f87c0f753e96f9bdbb58c0ee",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b94c501b_6cc65164",
+        "filename": "single-master/cf-cluster.yml",
+        "patchSetId": 7
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-09-24T22:46:10Z",
+      "side": 1,
+      "message": "Why 5 hardcoded?",
+      "range": {
+        "startLine": 141,
+        "startChar": 18,
+        "endLine": 141,
+        "endChar": 19
+      },
+      "revId": "07e623ce62086231f87c0f753e96f9bdbb58c0ee",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
