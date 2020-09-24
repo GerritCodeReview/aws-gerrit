@@ -43,15 +43,12 @@ endif
 		ParameterKey=SubnetIdProp,ParameterValue=$(SUBNET_ID) \
 		$(CLUSTER_OPTIONAL_PARAMS)
 
-service: set-optional-params-metrics-cloudwatch set-optional-params-smtp
+service: set-optional-params-metrics-cloudwatch set-optional-params-smtp set-ldap-account-pattern
 ifdef LOAD_BALANCER_SCHEME
 		$(eval SERVICE_OPTIONAL_PARAMS := $(SERVICE_OPTIONAL_PARAMS) ParameterKey=LoadBalancerScheme,ParameterValue=$(LOAD_BALANCER_SCHEME))
 endif
 ifdef GERRIT_INSTANCE_ID
 		$(eval SERVICE_OPTIONAL_PARAMS := $(SERVICE_OPTIONAL_PARAMS) ParameterKey=InstanceId,ParameterValue=$(GERRIT_INSTANCE_ID))
-endif
-ifdef LDAP_ACCOUNT_PATTERN
-		$(eval SERVICE_OPTIONAL_PARAMS := $(SERVICE_OPTIONAL_PARAMS) ParameterKey=LDAPAccountPattern,ParameterValue=\"$(LDAP_ACCOUNT_PATTERN)\")
 endif
 
 	$(AWS_FC_COMMAND) create-stack \
@@ -79,6 +76,7 @@ endif
 		ParameterKey=GerritCPU,ParameterValue=$(GERRIT_CPU) \
 		ParameterKey=GerritHeapLimit,ParameterValue=$(GERRIT_HEAP_LIMIT) \
 		ParameterKey=JgitCacheSize,ParameterValue=$(JGIT_CACHE_SIZE) \
+		$(LDAP_ACCOUNT_PATTERN_PARAM) \
 		$(SERVICE_OPTIONAL_PARAMS) \
 		$(METRICS_CW_OPTIONAL_PARAMS) \
 		$(SMTP_OPTIONAL_PARAMS)
