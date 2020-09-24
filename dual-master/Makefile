@@ -26,22 +26,24 @@ MULTI_SITE_MAVEN_LIBS=events-broker~$(EVENTSBROKER_LIB_VER)
 				gerrit-build gerrit-publish haproxy-publish syslog-sidecar-publish
 
 ifeq ($(REPLICATION_SERVICE_ENABLED),true)
-optional_replication_targets=service-replication wait-for-service-replication-creation
+optional_replication_targets_creation=service-replication wait-for-service-replication-creation
+optional_replication_targets_deletion=delete-service-replication wait-for-service-replication-deletion
 endif
 
 ifeq ($(METRICS_CLOUDWATCH_ENABLED),true)
-optional_dashboard_targets=dashboard wait-for-dashboard-creation
+optional_dashboard_targets_creation=dashboard wait-for-dashboard-creation
+optional_dashboard_targets_deletion=delete-dashboard wait-for-dashboard-deletion
 endif
 
 create-all: upload-common-templates \
 						git-daemon-publish git-ssh-publish \
 						gerrit-publish haproxy-publish syslog-sidecar-publish \
 						cluster wait-for-cluster-creation \
-						$(optional_replication_targets) \
+						$(optional_replication_targets_creation) \
 						service-slave service-master-1 \
 						wait-for-service-master-1-creation wait-for-service-slave-creation \
 						service-master-2 wait-for-service-master-2-creation \
-						$(optional_dashboard_targets) \
+						$(optional_dashboard_targets_creation) \
 						service-lb wait-for-service-lb-creation \
 						dns-routing wait-for-dns-routing-creation
 
@@ -454,9 +456,10 @@ delete-dashboard:
 
 delete-all: delete-dns-routing wait-for-dns-routing-deletion \
 						delete-service-lb wait-for-service-lb-deletion \
-						delete-service-master-1 delete-service-master-2 delete-service-slave delete-dashboard \
-						wait-for-service-master-1-deletion wait-for-service-master-2-deletion wait-for-service-slave-deletion wait-for-dashboard-deletion \
-						delete-service-replication wait-for-service-replication-deletion \
+						delete-service-master-1 delete-service-master-2 delete-service-slave \
+						wait-for-service-master-1-deletion wait-for-service-master-2-deletion wait-for-service-slave-deletion \
+						$(optional_dashboard_targets_deletion) \
+						$(optional_replication_targets_deletion) \
 						delete-cluster wait-for-cluster-deletion
 
 gerrit-publish:
