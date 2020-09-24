@@ -61,3 +61,8 @@ endif
 ifdef MULTISITE_ZOOKEEPER_ROOT_NODE
 		$(eval MULTISITE_OPTIONAL_PARAMS := $(MULTISITE_OPTIONAL_PARAMS) ParameterKey=MultiSiteZookeeperRootNode,ParameterValue=$(MULTISITE_ZOOKEEPER_ROOT_NODE))
 endif
+
+set-ldap-account-pattern:
+ifdef LDAP_ACCOUNT_PATTERN
+		$(eval LDAP_ACCOUNT_PATTERN_PARAM := ParameterKey=LDAPAccountPattern,ParameterValue=\"$(LDAP_ACCOUNT_PATTERN)\")
+endif

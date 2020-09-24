@@ -53,15 +53,12 @@ endif
 		ParameterKey=SubnetIdProp,ParameterValue=$(SUBNET_ID) \
 		$(CLUSTER_OPTIONAL_PARAMS)
 
-service-master: set-optional-params-metrics-cloudwatch set-optional-params-smtp
+service-master: set-optional-params-metrics-cloudwatch set-optional-params-smtp set-ldap-account-pattern
 ifdef LOAD_BALANCER_SCHEME
 		$(eval MASTER_SERVICE_OPTIONAL_PARAMS := $(MASTER_SERVICE_OPTIONAL_PARAMS) ParameterKey=LoadBalancerScheme,ParameterValue=$(LOAD_BALANCER_SCHEME))
 endif
 ifdef GERRIT_MASTER_INSTANCE_ID
 		$(eval MASTER_SERVICE_OPTIONAL_PARAMS := $(MASTER_SERVICE_OPTIONAL_PARAMS) ParameterKey=InstanceId,ParameterValue=$(GERRIT_MASTER_INSTANCE_ID))
-endif
-ifdef LDAP_ACCOUNT_PATTERN
-		$(eval MASTER_SERVICE_OPTIONAL_PARAMS := $(MASTER_SERVICE_OPTIONAL_PARAMS) ParameterKey=LDAPAccountPattern,ParameterValue=\"$(LDAP_ACCOUNT_PATTERN)\")
 endif
 
 	$(AWS_FC_COMMAND) create-stack \
@@ -91,19 +88,17 @@ endif
 		ParameterKey=GerritCPU,ParameterValue=$(GERRIT_CPU) \
 		ParameterKey=GerritHeapLimit,ParameterValue=$(GERRIT_HEAP_LIMIT) \
 		ParameterKey=JgitCacheSize,ParameterValue=$(JGIT_CACHE_SIZE) \
+		$(LDAP_ACCOUNT_PATTERN_PARAM) \
 		$(MASTER_SERVICE_OPTIONAL_PARAMS) \
 		$(METRICS_CW_OPTIONAL_PARAMS) \
 		$(SMTP_OPTIONAL_PARAMS)
 
-service-slave: set-optional-params-metrics-cloudwatch
+service-slave: set-optional-params-metrics-cloudwatch set-ldap-account-pattern
 ifdef LOAD_BALANCER_SCHEME
 		$(eval SLAVE_SERVICE_OPTIONAL_PARAMS := $(SLAVE_SERVICE_OPTIONAL_PARAMS) ParameterKey=LoadBalancerScheme,ParameterValue=$(LOAD_BALANCER_SCHEME))
 endif
 ifdef GERRIT_SLAVE_INSTANCE_ID
 		$(eval SLAVE_SERVICE_OPTIONAL_PARAMS := $(SLAVE_SERVICE_OPTIONAL_PARAMS) ParameterKey=InstanceId,ParameterValue=$(GERRIT_SLAVE_INSTANCE_ID))
-endif
-ifdef LDAP_ACCOUNT_PATTERN
-		$(eval SLAVE_SERVICE_OPTIONAL_PARAMS := $(SLAVE_SERVICE_OPTIONAL_PARAMS) ParameterKey=LDAPAccountPattern,ParameterValue=\"$(LDAP_ACCOUNT_PATTERN)\")
 endif
 
 	$(AWS_FC_COMMAND) create-stack \
@@ -128,6 +123,7 @@ endif
 		ParameterKey=GerritCPU,ParameterValue=$(GERRIT_CPU) \
 		ParameterKey=GerritHeapLimit,ParameterValue=$(GERRIT_HEAP_LIMIT) \
 		ParameterKey=JgitCacheSize,ParameterValue=$(JGIT_CACHE_SIZE) \
+		$(LDAP_ACCOUNT_PATTERN_PARAM) \
 		$(SLAVE_SERVICE_OPTIONAL_PARAMS) \
 		$(METRICS_CW_OPTIONAL_PARAMS)
 
