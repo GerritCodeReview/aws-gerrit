@@ -406,6 +406,30 @@
     },
     {
       "key": {
+        "uuid": "f7f2e525_e09c1673",
+        "filename": "single-master/cf-cluster.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-09-25T14:23:46Z",
+      "side": 1,
+      "message": "It\u0027s in line 138 echo \"Could not attach the volume $VOLUME_ID to the instace $EC2_INSTANCE_ID\"",
+      "parentUuid": "86a56976_5fbd281d",
+      "range": {
+        "startLine": 135,
+        "startChar": 0,
+        "endLine": 136,
+        "endChar": 14
+      },
+      "revId": "2c85b768dad784c35b90c2c0a6e88ca8cad518f0",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eb4e301a_3e8322a3",
         "filename": "single-master/cf-cluster.yml",
         "patchSetId": 3
