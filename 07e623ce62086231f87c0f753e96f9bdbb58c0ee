@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6451632c_342b0407",
+        "filename": "single-master/cf-cluster.yml",
+        "patchSetId": 7
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-09-25T14:23:46Z",
+      "side": 1,
+      "message": "It\u0027s exactly as we have in dual-master/cf-cluster.yml and I thought that we want to limit the number of parameters. I will move it to the parameters",
+      "parentUuid": "e791ef46_304acbc3",
+      "range": {
+        "startLine": 130,
+        "startChar": 22,
+        "endLine": 130,
+        "endChar": 23
+      },
+      "revId": "07e623ce62086231f87c0f753e96f9bdbb58c0ee",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b94c501b_6cc65164",
         "filename": "single-master/cf-cluster.yml",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "07e623ce62086231f87c0f753e96f9bdbb58c0ee",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7c30b03_137b7b93",
+        "filename": "single-master/cf-cluster.yml",
+        "patchSetId": 7
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-09-25T14:23:46Z",
+      "side": 1,
+      "message": "same as above",
+      "parentUuid": "b94c501b_6cc65164",
+      "range": {
+        "startLine": 141,
+        "startChar": 18,
+        "endLine": 141,
+        "endChar": 19
+      },
+      "revId": "07e623ce62086231f87c0f753e96f9bdbb58c0ee",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     }
   ]
 }
