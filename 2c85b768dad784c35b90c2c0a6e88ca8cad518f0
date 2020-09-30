@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "62fc30b7_afb13f87",
+        "filename": "Configuration.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-09-30T22:08:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "395ffe8e_cf2c5c0a",
+      "range": {
+        "startLine": 60,
+        "startChar": 42,
+        "endLine": 60,
+        "endChar": 82
+      },
+      "revId": "2c85b768dad784c35b90c2c0a6e88ca8cad518f0",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0736234b_e06e26e8",
         "filename": "Configuration.md",
         "patchSetId": 3
@@ -215,6 +239,24 @@
       "revId": "2c85b768dad784c35b90c2c0a6e88ca8cad518f0",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eddce050_ad9394ee",
+        "filename": "Makefile.common",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-09-30T22:08:33Z",
+      "side": 1,
+      "message": "Yeah, but it is going to be global right afterwards. Because it isn\u0027t single-master specific anyway, it makes sense to keep it here IMHO.",
+      "parentUuid": "4ad8b2bb_a7cdd8e9",
+      "revId": "2c85b768dad784c35b90c2c0a6e88ca8cad518f0",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     },
     {
       "key": {
@@ -335,6 +377,24 @@
     },
     {
       "key": {
+        "uuid": "f1da5432_8e1d7e55",
+        "filename": "single-master/cf-cluster.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-09-30T22:08:33Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f824ab45_39b33192",
+      "revId": "2c85b768dad784c35b90c2c0a6e88ca8cad518f0",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f2dfa82_8d197381",
         "filename": "single-master/cf-cluster.yml",
         "patchSetId": 3
@@ -427,6 +487,30 @@
       "revId": "2c85b768dad784c35b90c2c0a6e88ca8cad518f0",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "318f56a2_8ccb3440",
+        "filename": "single-master/cf-cluster.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-09-30T22:08:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7f2e525_e09c1673",
+      "range": {
+        "startLine": 135,
+        "startChar": 0,
+        "endLine": 136,
+        "endChar": 14
+      },
+      "revId": "2c85b768dad784c35b90c2c0a6e88ca8cad518f0",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     },
     {
       "key": {
