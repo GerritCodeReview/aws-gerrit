@@ -186,6 +186,17 @@ if ((not containerSlave) and setupReplication):
                 MULTISITE_GLOBAL_PROJECTS=os.getenv('MULTISITE_GLOBAL_PROJECTS', '')
                 ))
 
+CONFIGURATION_FILE = "healthcheck.config"
+CONFIGURATION_TARGET = GERRIT_CONFIG_DIRECTORY + CONFIGURATION_FILE
+TEMPLATE_FILE = CONFIGURATION_FILE + ".template"
+
+print("*** "+ CONFIGURATION_TARGET)
+template = env.get_template(TEMPLATE_FILE)
+with open(CONFIGURATION_TARGET, 'w', encoding='utf-8') as f:
+    f.write(template.render(
+        HEALTH_CHECK_QUERYCHANGES_ENABLED="false" if containerSlave else "true"
+    ))
+
 if (setupHA):
     print("Setting HA config in '" +
           GERRIT_CONFIG_DIRECTORY + "high-availability.config'")

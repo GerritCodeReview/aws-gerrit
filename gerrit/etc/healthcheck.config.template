@@ -4,6 +4,7 @@
 [healthcheck "querychanges"]
   query = status:open OR status:merged OR status:abandoned
   limit = 0
+  enabled = {{ HEALTH_CHECK_QUERYCHANGES_ENABLED }}
 
 [healthcheck "auth"]
   enabled =  false
