@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c9a8b06d_298d836b",
+        "filename": "gerrit/setup_gerrit.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-10-20T18:38:31Z",
+      "side": 1,
+      "message": "why not strip() ?",
+      "range": {
+        "startLine": 62,
+        "startChar": 70,
+        "endLine": 62,
+        "endChar": 76
+      },
+      "revId": "20d4d689799e83f02bf12179ae197ebc83ed5d65",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
