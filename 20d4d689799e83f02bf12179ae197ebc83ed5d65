@@ -3,6 +3,69 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "57a3b63f_e8ea9a25",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-10-20T23:45:30Z",
+      "side": 1,
+      "message": "nit: wrap long line.",
+      "range": {
+        "startLine": 10,
+        "startChar": 69,
+        "endLine": 10,
+        "endChar": 73
+      },
+      "revId": "20d4d689799e83f02bf12179ae197ebc83ed5d65",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4265c315_6132cfdb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-10-20T23:45:30Z",
+      "side": 1,
+      "message": "nit: wrap long line.",
+      "range": {
+        "startLine": 13,
+        "startChar": 67,
+        "endLine": 13,
+        "endChar": 73
+      },
+      "revId": "20d4d689799e83f02bf12179ae197ebc83ed5d65",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "46224f2f_7827ba40",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-10-20T23:45:30Z",
+      "side": 1,
+      "message": "Good job.",
+      "revId": "20d4d689799e83f02bf12179ae197ebc83ed5d65",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c9a8b06d_298d836b",
         "filename": "gerrit/setup_gerrit.py",
         "patchSetId": 2
