@@ -56,6 +56,13 @@ def get_secret(secret_name):
             return base64.b64decode(get_secret_value_response['SecretBinary'])
 
 
+def set_secure_password(stanza, password):
+    secure_config = GERRIT_CONFIG_DIRECTORY + "secure.config"
+    os.system(
+        "git config -f %s %s '%s'" % (secure_config, stanza, password.rstrip())
+    )
+
+
 """
 This script setup Gerrit configuration and its plugins when the container spins up.
 
@@ -106,17 +113,18 @@ if setupReplication:
 file_loader = FileSystemLoader(GERRIT_CONFIG_DIRECTORY)
 env = Environment(loader=file_loader)
 
-print("Setting Register Email Private Key in '" +
-      GERRIT_CONFIG_DIRECTORY + "secure.config'")
-template = env.get_template("secure.config.template")
-with open(GERRIT_CONFIG_DIRECTORY + "secure.config", 'w',
-          encoding='utf-8') as f:
-    f.write(template.render(
-        REGISTER_EMAIL_PRIVATE_KEY=get_secret(
-            GERRIT_KEY_PREFIX + "_registerEmailPrivateKey"),
-        LDAP_PASSWORD=get_secret(GERRIT_KEY_PREFIX + "_ldapPassword"),
-        SMTP_PASSWORD=get_secret(GERRIT_KEY_PREFIX + "_smtpPassword"))
-    )
+set_secure_password(
+    "auth.registerEmailPrivateKey",
+    get_secret(GERRIT_KEY_PREFIX + "_registerEmailPrivateKey")
+)
+set_secure_password(
+    "ldap.password",
+    get_secret(GERRIT_KEY_PREFIX + "_ldapPassword")
+)
+set_secure_password(
+    "sendemail.smtpPass",
+    get_secret(GERRIT_KEY_PREFIX + "_smtpPassword")
+)
 
 BASE_CONFIG_DIR = "/tmp"
 print("Setting Gerrit config in '" + GERRIT_CONFIG_DIRECTORY + "gerrit.config'")

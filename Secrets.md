@@ -65,8 +65,7 @@ in the same directory of the SSH keys (e.g. `/tmp/secrets`).
 ### LDAP Password
 
 You will need to put the admin LDAP password in a file called `ldapPassword`
-in the same directory of the SSH keys (e.g. `/tmp/secrets`). Password should be put in the
-plain text without quotes. If password contains quotes, they should be escaped (e.g aa\"bb)
+in the same directory of the SSH keys (e.g. `/tmp/secrets`).
 
 ### SMTP Password
 
