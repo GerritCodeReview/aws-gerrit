@@ -18,6 +18,24 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "455b380c_ecb050d9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-10-21T13:58:48Z",
+      "side": 1,
+      "message": "Good point luca: I have done so in https://gerrit-review.googlesource.com/c/plugins/healthcheck/+/285448/1",
+      "parentUuid": "6ac43abb_31c3ea8a",
+      "revId": "d0204cd7db08215f569d8eb5b76bf1eea80612e0",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "57174d58_50811c2e",
