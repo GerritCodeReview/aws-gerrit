@@ -1,0 +1,2 @@
+[core]
+  trustFolderStat = {{ TRUST_FOLDER_STAT }}
