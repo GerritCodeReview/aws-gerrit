@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2946b9f0_6b152221",
+        "filename": "gerrit/etc/jgit.config.template",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-10-22T17:37:45Z",
+      "side": 1,
+      "message": "Is this related to the change? If yes should be mentioned in the commit message",
+      "range": {
+        "startLine": 2,
+        "startChar": 2,
+        "endLine": 2,
+        "endChar": 16
+      },
+      "revId": "8e2a8b2538a9cac9587ef007adf79b3cd5b10076",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
