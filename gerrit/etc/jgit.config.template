@@ -1,0 +1,4 @@
+[receive]
+  autogc = false
+[core]
+  trustFolderStats = {{ TRUST_FOLDER_STATS }}
