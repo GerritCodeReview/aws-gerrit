@@ -108,6 +108,9 @@ Resources:
             TaskRoleArn: !GetAtt ECSTaskExecutionRoleStack.Outputs.TaskExecutionRoleRef
             ExecutionRoleArn: !GetAtt ECSTaskExecutionRoleStack.Outputs.TaskExecutionRoleRef
             NetworkMode: bridge
+            PlacementConstraints:
+                - Expression: !Sub 'attribute:target_group == master'
+                  Type: "memberOf"
             ContainerDefinitions:
                 - Name: !Ref LBServiceName
                   Essential: true

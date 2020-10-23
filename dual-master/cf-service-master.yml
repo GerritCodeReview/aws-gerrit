@@ -230,6 +230,9 @@ Resources:
             TaskRoleArn: !GetAtt ECSTaskExecutionRoleStack.Outputs.TaskExecutionRoleRef
             ExecutionRoleArn: !GetAtt ECSTaskExecutionRoleStack.Outputs.TaskExecutionRoleRef
             NetworkMode: bridge
+            PlacementConstraints:
+                - Expression: !Sub 'attribute:target_group == master'
+                  Type: "memberOf"
             ContainerDefinitions:
                 - Name: !FindInMap ['Gerrit', 'Service', 'Name']
                   Essential: true
