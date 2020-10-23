@@ -22,6 +22,30 @@
       },
       "revId": "8e2a8b2538a9cac9587ef007adf79b3cd5b10076",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fb96367e_92f99d89",
+        "filename": "gerrit/etc/jgit.config.template",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-10-23T13:50:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2946b9f0_6b152221",
+      "range": {
+        "startLine": 2,
+        "startChar": 2,
+        "endLine": 2,
+        "endChar": 16
+      },
+      "revId": "8e2a8b2538a9cac9587ef007adf79b3cd5b10076",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
