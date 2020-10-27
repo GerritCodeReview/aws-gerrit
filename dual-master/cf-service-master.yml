@@ -193,6 +193,7 @@ Mappings:
       Name: gerrit-master
     LoadBalancer:
       HTTPPort: 8080
+      SSHPort: 29418
     Container:
       HTTPPort: 8080
       SSHPort: 29418
@@ -410,7 +411,7 @@ Resources:
             VpcId:
               Fn::ImportValue:
                   !Join [':', [!Ref 'ClusterStackName', 'VPCId']]
-            Port: !FindInMap ['Gerrit', 'LoadBalancer', 'HTTPPort']
+            Port: !Ref HTTPHostPort
             Protocol: TCP
 
     HTTPListener:
@@ -442,7 +443,7 @@ Resources:
             - Type: forward
               TargetGroupArn: !Ref SSHTargetGroup
             LoadBalancerArn: !Ref LoadBalancer
-            Port: !Ref SSHHostPort
+            Port: !FindInMap ['Gerrit', 'LoadBalancer', 'SSHPort']
             Protocol: TCP
 
     ECSTaskExecutionRoleStack:
