@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "007026c6_0f5ec78e",
+        "filename": "dual-master/cf-cluster.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-10-27T20:04:15Z",
+      "side": 1,
+      "message": "Why do we need NFS on the HAProxy layer?",
+      "range": {
+        "startLine": 166,
+        "startChar": 43,
+        "endLine": 166,
+        "endChar": 52
+      },
+      "revId": "b3f35a01affe85c72dc8bf03ef2c43aad677ca21",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
