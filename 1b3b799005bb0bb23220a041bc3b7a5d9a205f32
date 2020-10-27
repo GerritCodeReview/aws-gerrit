@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "707231c8_bc8634db",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-10-27T20:09:42Z",
+      "side": 1,
+      "message": "empty line to be added after L19",
+      "revId": "1b3b799005bb0bb23220a041bc3b7a5d9a205f32",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f4519233_b149b853",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-10-27T20:09:42Z",
+      "side": 1,
+      "message": "empty line to remove",
+      "revId": "1b3b799005bb0bb23220a041bc3b7a5d9a205f32",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8640dd7b_9a91d73f",
+        "filename": "dual-master/cf-service-master.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-10-27T20:09:42Z",
+      "side": 1,
+      "message": "It is a bit obscure to me how this achieves the fact that master1 and master2 would end up into different EC2 instances. Can you explain it?",
+      "range": {
+        "startLine": 237,
+        "startChar": 30,
+        "endLine": 237,
+        "endChar": 146
+      },
+      "revId": "1b3b799005bb0bb23220a041bc3b7a5d9a205f32",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
