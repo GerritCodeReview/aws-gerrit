@@ -8,7 +8,7 @@ Parameters:
     Type: String
   DesiredCapacity:
     Type: Number
-    Default: '1'
+    Default: '2'
     Description: Number of EC2 instances to launch in your ECS cluster.
   MaxSize:
     Type: Number
@@ -180,7 +180,7 @@ Resources:
       VPCZoneIdentifier:
         - !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneRef
       LaunchConfigurationName: !Ref 'ContainerInstances'
-      MinSize: '1'
+      MinSize: '2'
       MaxSize: !Ref 'MaxSize'
       DesiredCapacity: !Ref 'DesiredCapacity'
     CreationPolicy:

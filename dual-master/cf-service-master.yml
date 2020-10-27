@@ -203,6 +203,9 @@ Mappings:
     SSH:
       Port: 1022
 
+Conditions:
+  IsMaster2: !Equals [!Ref GerritInstanceNumber, "2"]
+
 Resources:
     Service:
         Type: AWS::ECS::Service
@@ -231,7 +234,7 @@ Resources:
             ExecutionRoleArn: !GetAtt ECSTaskExecutionRoleStack.Outputs.TaskExecutionRoleRef
             NetworkMode: bridge
             PlacementConstraints:
-                - Expression: !Sub 'attribute:target_group == master'
+                - Expression: !If [IsMaster2, "attribute:target_group == master and runningTasksCount == 0" , "attribute:target_group == master" ]
                   Type: "memberOf"
             ContainerDefinitions:
                 - Name: !FindInMap ['Gerrit', 'Service', 'Name']
