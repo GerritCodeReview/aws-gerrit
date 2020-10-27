@@ -131,6 +131,46 @@ Resources:
 
           /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource ReplicaECSAutoScalingGroup --region ${AWS::Region}
 
+  HAProxyECSAutoScalingGroup:
+    Type: AWS::AutoScaling::AutoScalingGroup
+    Properties:
+      VPCZoneIdentifier:
+        - !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneRef
+      LaunchConfigurationName: !Ref 'HAProxyLaunchConfiguration'
+      MinSize: '1'
+      MaxSize: '1'
+      DesiredCapacity: '1'
+    CreationPolicy:
+      ResourceSignal:
+        Timeout: PT15M
+    UpdatePolicy:
+      AutoScalingReplacingUpdate:
+        WillReplace: 'true'
+
+  HAProxyLaunchConfiguration:
+    Type: AWS::AutoScaling::LaunchConfiguration
+    Properties:
+      ImageId: !Ref 'ECSAMI'
+      SecurityGroups: [!Ref 'EcsHostSecurityGroup']
+      InstanceType: !Ref 'InstanceType'
+      IamInstanceProfile: !Ref 'EC2InstanceProfile'
+      KeyName: !Ref ECSKeyName
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash -xe
+          echo ECS_CLUSTER=${ECSCluster} >> /etc/ecs/ecs.config
+          echo ECS_INSTANCE_ATTRIBUTES={\"target_group\":\"haproxy\"} >> /etc/ecs/ecs.config
+
+          # Make sure latest version of the helper scripts are installed as per recommendation:
+          # https://github.com/awsdocs/aws-cloudformation-user-guide/blob/master/doc_source/cfn-helper-scripts-reference.md#using-the-latest-version
+          yum install -y aws-cfn-bootstrap nfs-utils wget
+
+          # Install the CloudWatch Logs agent
+          wget https://s3.amazonaws.com/amazoncloudwatch-agent/centos/amd64/latest/amazon-cloudwatch-agent.rpm
+          rpm -U ./amazon-cloudwatch-agent.rpm
+          /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -s
+
+          /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource HAProxyECSAutoScalingGroup --region ${AWS::Region}
 
   # Autoscaling group. This launches the actual EC2 instances that will register
   # themselves as members of the cluster, and run the docker containers.
