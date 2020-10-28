@@ -140,6 +140,30 @@
       },
       "revId": "1b3b799005bb0bb23220a041bc3b7a5d9a205f32",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d63531de_2f8c0fe6",
+        "filename": "dual-master/cf-service-master.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-10-28T14:35:15Z",
+      "side": 1,
+      "message": "It\u0027s a good point @marcin,\nI have also tried to find such an attribute, but unfortunately that\u0027s not available:\n- This is the query expression language we can use[1]\n- these are the defaults attribute we can leverage[2]\n\nCan you think of a way to distinguish master-1 and master-2 without having to create two ASG?\n\n[1]https://docs.aws.amazon.com/AmazonECS/latest/developerguide/cluster-query-language.html\n\n[2]https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-placement-constraints.html#attributes",
+      "parentUuid": "01c869b6_fd628ca1",
+      "range": {
+        "startLine": 237,
+        "startChar": 30,
+        "endLine": 237,
+        "endChar": 146
+      },
+      "revId": "1b3b799005bb0bb23220a041bc3b7a5d9a205f32",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
