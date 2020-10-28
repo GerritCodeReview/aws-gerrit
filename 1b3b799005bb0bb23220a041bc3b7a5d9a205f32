@@ -92,6 +92,30 @@
       },
       "revId": "1b3b799005bb0bb23220a041bc3b7a5d9a205f32",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20c9aa05_9319b9a3",
+        "filename": "dual-master/cf-service-master.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-10-28T13:50:20Z",
+      "side": 1,
+      "message": "There are only 2 instances where master1 and master2 can be placed: the ones tagged with \"master\".\n\nmaster1 is deployed first and it can be paced anywhere on an ec2-instance tagged as \"master\".\n\nmaster2 then, should be placed whenever master1 is not running, hence this check.\n\nattribute:target_group \u003d\u003d master and runningTasksCount \u003d\u003d 0\n\nThis works, but it is a bit weak, because if in the future something else will be running on instances tagged as \u0027master\u0027s, it might prevent master2 from finding a suitable instance to run.\n\nThe alternative (but slightly more involved approach) is to have 2 separate ASG for master: one for master-1 and one for master-2, so that they can be tagged with a different label.\n\nThen we can place master1 where\n\n `taget_group \u003d\u003d master1`\n\nand master2 where\n\n target_group \u003d\u003d master2.\n\nWDYT?",
+      "parentUuid": "8640dd7b_9a91d73f",
+      "range": {
+        "startLine": 237,
+        "startChar": 30,
+        "endLine": 237,
+        "endChar": 146
+      },
+      "revId": "1b3b799005bb0bb23220a041bc3b7a5d9a205f32",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
