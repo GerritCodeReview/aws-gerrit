@@ -116,6 +116,30 @@
       },
       "revId": "1b3b799005bb0bb23220a041bc3b7a5d9a205f32",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "01c869b6_fd628ca1",
+        "filename": "dual-master/cf-service-master.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2020-10-28T14:06:44Z",
+      "side": 1,
+      "message": "Sorry maybe a bit naive approach but if we can check runningTasksCount maybe we can check what kind of tasks we are running to make sure that master is not already placed on that instance",
+      "parentUuid": "20c9aa05_9319b9a3",
+      "range": {
+        "startLine": 237,
+        "startChar": 30,
+        "endLine": 237,
+        "endChar": 146
+      },
+      "revId": "1b3b799005bb0bb23220a041bc3b7a5d9a205f32",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
