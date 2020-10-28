@@ -164,6 +164,30 @@
       },
       "revId": "1b3b799005bb0bb23220a041bc3b7a5d9a205f32",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "36a7a8ae_594ffd61",
+        "filename": "dual-master/cf-service-master.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-10-28T14:37:06Z",
+      "side": 1,
+      "message": "For customers that are across AZs this separation is much easier because we can just put master-1 in eu-east-1a and master-b in eu-east-1b for example",
+      "parentUuid": "d63531de_2f8c0fe6",
+      "range": {
+        "startLine": 237,
+        "startChar": 30,
+        "endLine": 237,
+        "endChar": 146
+      },
+      "revId": "1b3b799005bb0bb23220a041bc3b7a5d9a205f32",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
