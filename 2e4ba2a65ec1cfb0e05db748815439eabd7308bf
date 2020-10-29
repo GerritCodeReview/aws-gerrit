@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cb11083f_cf54e8ea",
+        "filename": "dual-master/Makefile",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-10-29T15:59:21Z",
+      "side": 0,
+      "message": "This doesn\u0027t sound right to me: we should still allow a desired capacity, and pass that over to the template.",
+      "range": {
+        "startLine": 73,
+        "startChar": 2,
+        "endLine": 73,
+        "endChar": 73
+      },
+      "revId": "2e4ba2a65ec1cfb0e05db748815439eabd7308bf",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
