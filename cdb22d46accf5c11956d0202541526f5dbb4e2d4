@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4a391ecd_866ec026",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-10-29T17:16:35Z",
+      "side": 1,
+      "message": "Also in a single AZ, having both masters on the same EC2 instance isn\u0027t assuring any HA. It is more for \"assuring\" rather than increasing or maximising.",
+      "parentUuid": "47fa8b24_65eae785",
+      "range": {
+        "startLine": 10,
+        "startChar": 9,
+        "endLine": 10,
+        "endChar": 17
+      },
+      "revId": "cdb22d46accf5c11956d0202541526f5dbb4e2d4",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7756bed4_8f0c53ba",
         "filename": "/COMMIT_MSG",
         "patchSetId": 6
@@ -95,6 +119,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c552d04_19698d80",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-10-29T17:16:35Z",
+      "side": 1,
+      "message": "Gotcha, but your phrase is again about the L4 networking issue. I agree more with your two gains, because the L4 networking issue has been already resolved by  Change-Id: I38ad5d2.\n\nCan you align the commit message with your explanation? Which makes a lot of sense to me :-)",
+      "parentUuid": "8489d864_cea2c6f1",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 68
+      },
+      "revId": "cdb22d46accf5c11956d0202541526f5dbb4e2d4",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "d1059a2d_af2dfe61",
@@ -126,6 +174,24 @@
       "side": 1,
       "message": "I think the \"desired number of instances\" made sense before because we had to accommodate multiple instances in one ASG only.\n\nBut this is not the case anymore, we have different ASGs for different components and master1 and master2 will always take one and exactly one ec2 instance.\nMasters cannot elastically scale out, that\u0027s why we explicitly configure master1 and master2 from the setup.env down to the cf templates.\n\nWhat would mean to have a desired cluster of 3 for the master1 ASG?",
       "parentUuid": "d1059a2d_af2dfe61",
+      "revId": "cdb22d46accf5c11956d0202541526f5dbb4e2d4",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a3878f5e_12bdd773",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-10-29T17:16:35Z",
+      "side": 1,
+      "message": "If that was the case, why we didn\u0027t have a fixed number of EC2 instances before?\nAlso, the ASG is for the EC2 instances of the ECS cluster, and not for *exclusively* the master node.\n\nI don\u0027t believe that removing a parameter that we have now for then introducing it again in the next change is a good thing, but rather a regression IMHO.",
+      "parentUuid": "dcf4c395_3d9899be",
       "revId": "cdb22d46accf5c11956d0202541526f5dbb4e2d4",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
@@ -167,6 +233,30 @@
       "side": 1,
       "message": "See my reply above.",
       "parentUuid": "349b6ca9_de21b145",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 26
+      },
+      "revId": "cdb22d46accf5c11956d0202541526f5dbb4e2d4",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "12db68ce_39cc55b4",
+        "filename": "common-templates/cf-master-asg.yml",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-10-29T17:16:35Z",
+      "side": 1,
+      "message": "Answered.",
+      "parentUuid": "f956ee3e_49aca5cb",
       "range": {
         "startLine": 52,
         "startChar": 0,
