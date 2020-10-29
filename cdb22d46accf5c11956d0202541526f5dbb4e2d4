@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7c762249_c0684019",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-10-29T15:59:21Z",
+      "side": 1,
+      "message": "It isn\u0027t really a \"maximising\" thing but rather a requirement. If you have the two containers in HA being placed into the same EC2 instance on the same AZ, then it is clearly not HA at all, because the failure of the node OR the AZ would cause an outage.",
+      "range": {
+        "startLine": 10,
+        "startChar": 9,
+        "endLine": 10,
+        "endChar": 17
+      },
+      "revId": "cdb22d46accf5c11956d0202541526f5dbb4e2d4",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7756bed4_8f0c53ba",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-10-29T15:59:21Z",
+      "side": 1,
+      "message": "Isn\u0027t that more for the LB vs. master node problem rather than having true HA with the separation of the two EC2 instances?",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 68
+      },
+      "revId": "cdb22d46accf5c11956d0202541526f5dbb4e2d4",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d1059a2d_af2dfe61",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-10-29T15:59:21Z",
+      "side": 1,
+      "message": "It looks like we are forcing the cluster to be fixed at 1x EC2 instance, instead of having a parametrised capacity.",
+      "revId": "cdb22d46accf5c11956d0202541526f5dbb4e2d4",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "349b6ca9_de21b145",
+        "filename": "common-templates/cf-master-asg.yml",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-10-29T15:59:21Z",
+      "side": 1,
+      "message": "Should this be a parameter of the template?\n\nP.S. It was before a 1 to 6 ASG, whilst now it is just 1 instance.",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 26
+      },
+      "revId": "cdb22d46accf5c11956d0202541526f5dbb4e2d4",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
