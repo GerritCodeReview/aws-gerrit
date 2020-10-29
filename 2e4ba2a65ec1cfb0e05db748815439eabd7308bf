@@ -87,6 +87,30 @@
       },
       "revId": "2e4ba2a65ec1cfb0e05db748815439eabd7308bf",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "02aaa6c2_6fbf4253",
+        "filename": "dual-master/cf-cluster.yml",
+        "patchSetId": 4
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-10-29T16:29:32Z",
+      "side": 1,
+      "message": "I agree, but this change is not about increasing the number of instances of ha-proxy: before this change we had one instance only.\n\nIf we increase the number of instances of ha-proxy this change will both separate them into their own ASG *and* increase their number.\n\nWDYT?",
+      "parentUuid": "72f19d11_b78fa73d",
+      "range": {
+        "startLine": 140,
+        "startChar": 0,
+        "endLine": 142,
+        "endChar": 26
+      },
+      "revId": "2e4ba2a65ec1cfb0e05db748815439eabd7308bf",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
