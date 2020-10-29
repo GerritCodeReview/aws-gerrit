@@ -1,0 +1,177 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Gerrit master launch configuration and autoscaling group
+Parameters:
+  EC2AMI:
+    Description: AMI ID for the EC2 instance hosting gerrit masters
+    Type: String
+  InstanceType:
+    Description: EC2 instance type
+    Type: String
+    AllowedValues: [t2.micro, t2.small, t2.medium, t2.large, m3.medium, m3.large,
+                    m3.xlarge, m3.2xlarge, m4.large, m4.xlarge, m4.2xlarge, m4.4xlarge, m4.10xlarge,
+                    c4.large, c4.xlarge, c4.2xlarge, c4.4xlarge, c4.8xlarge, c3.large, c3.xlarge,
+                    c3.2xlarge, c3.4xlarge, c3.8xlarge, r3.large, r3.xlarge, r3.2xlarge, r3.4xlarge,
+                    r3.8xlarge, i2.xlarge, i2.2xlarge, i2.4xlarge, i2.8xlarge]
+    ConstraintDescription: Please choose a valid instance type.
+  ECSKeyName:
+    Type: String
+    Description: EC2 key pair name the cluter's instances
+  EnvironmentName:
+    Description: An environment name used to build the log stream names
+    Type: String
+  ECSCluster:
+    Description: The ECSCluster reference name to register gerrit masters to
+    Type: String
+  EC2SecurityGroup:
+    Description: security groups to assign to the instances in the Auto Scaling group hosting gerrit masters
+    Type: String
+  EC2InstanceProfile:
+    Description: The Amazon Resource Name (ARN) of the instance profile associated with the IAM role for the EC2 instances running gerrit masters
+    Type: String
+  GerritInstanceNumber:
+    Description: Whether this is master1 or master2
+    Type: Number
+    AllowedValues: [1,2]
+  FileSystem:
+    Description: The ID of the filesystem to share git data between gerrit master instances
+    Type: String
+  SubnetId:
+    Description: The subnet ID where gerrit master in the Auto Scaling group can be created
+    Type: String
+  LogGroupName:
+    Description: The log group name
+    Type: String
+
+Resources:
+  MasterECSAutoScalingGroup:
+    Type: AWS::AutoScaling::AutoScalingGroup
+    Properties:
+      VPCZoneIdentifier:
+        - !Ref SubnetId
+      LaunchConfigurationName: !Ref 'MasterLaunchConfiguration'
+      MinSize: '1'
+      MaxSize: '1'
+      DesiredCapacity: '1'
+    CreationPolicy:
+      ResourceSignal:
+        Timeout: PT15M
+    UpdatePolicy:
+      AutoScalingReplacingUpdate:
+        WillReplace: 'true'
+
+  MasterLaunchConfiguration:
+    Type: AWS::AutoScaling::LaunchConfiguration
+    Properties:
+      ImageId: !Ref 'EC2AMI'
+      SecurityGroups: [!Ref 'EC2SecurityGroup']
+      InstanceType: !Ref 'InstanceType'
+      IamInstanceProfile: !Ref 'EC2InstanceProfile'
+      KeyName: !Ref ECSKeyName
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash -xe
+          export MASTER_ID=master-${GerritInstanceNumber}
+          echo ECS_CLUSTER=${ECSCluster} >> /etc/ecs/ecs.config
+          echo ECS_INSTANCE_ATTRIBUTES={\"target_group\":\"$MASTER_ID\"} >> /etc/ecs/ecs.config
+
+          yum install -y aws-cfn-bootstrap nfs-utils wget
+
+          # EFS setting
+          DIR_TGT=/mnt/efs/gerrit-shared
+          mkdir -p $DIR_TGT
+          EC2_REGION=${AWS::Region}
+          # 169.254.169.254 link-local address, valid only from the instance, to retrieve meta-data information.
+          EC2_AVAIL_ZONE=`curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone`
+          EFS_FILE_SYSTEM_ID=${FileSystem}
+          DIR_SRC=$EC2_AVAIL_ZONE.$EFS_FILE_SYSTEM_ID.efs.$EC2_REGION.amazonaws.com
+
+          touch /home/ec2-user/echo.res
+          echo $MASTER_ID >> /home/ec2-user/echo.res
+          echo $EFS_FILE_SYSTEM_ID >> /home/ec2-user/echo.res
+          echo $EC2_AVAIL_ZONE >> /home/ec2-user/echo.res
+          echo $EC2_REGION >> /home/ec2-user/echo.res
+          echo $DIR_SRC >> /home/ec2-user/echo.res
+          echo $DIR_TGT >> /home/ec2-user/echo.res
+          MAX_RETRIES=20
+          for i in $(seq 1 $MAX_RETRIES); do
+            echo "Mounting EFS volume ($i/$MAX_RETRIES)..."
+            `mount -t nfs4 -o nfsvers=4.1,hard,timeo=600,retrans=2 $DIR_SRC:/ $DIR_TGT >> /home/ec2-user/echo.res` \
+              && s=0 && break || s=$? && sleep 5;
+          done; (exit $s)
+          mkdir -p $DIR_TGT/git
+          mkdir -p $DIR_TGT/high-availability
+          chown -R 1000:1000 $DIR_TGT
+          cp -p /etc/fstab /etc/fstab.back-$(date +%F)
+          echo -e \"$DIR_SRC:/ \t\t $DIR_TGT \t\t nfs \t\t defaults \t\t 0 \t\t 0\" | tee -a /etc/fstab
+          # Get the CloudWatch Logs agent
+          echo -e "
+            {\"logs\":
+              {\"logs_collected\":
+                {\"files\":
+                  {\"collect_list\":
+                    [
+                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-$MASTER_ID/_data/replication_log\",
+                      \"log_group_name\": \"${LogGroupName}\",
+                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/$MASTER_ID/replication_log\",
+                      \"timezone\": \"UTC\"
+                      },
+                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-$MASTER_ID/_data/httpd_log\",
+                      \"log_group_name\": \"${LogGroupName}\",
+                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/$MASTER_ID/httpd_log\",
+                      \"timezone\": \"UTC\"
+                      },
+                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-$MASTER_ID/_data/sshd_log\",
+                      \"log_group_name\": \"${LogGroupName}\",
+                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/$MASTER_ID/sshd_log\",
+                      \"timezone\": \"UTC\"
+                      },
+                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-$MASTER_ID/_data/gc_log\",
+                      \"log_group_name\": \"${LogGroupName}\",
+                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/$MASTER_ID/gc_log\",
+                      \"timezone\": \"UTC\"
+                      },
+                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-$MASTER_ID/_data/sharedref_log\",
+                      \"log_group_name\": \"${LogGroupName}\",
+                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/$MASTER_ID/sharedref_log\",
+                      \"timezone\": \"UTC\"
+                      },
+                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-$MASTER_ID/_data/message_log\",
+                      \"log_group_name\": \"${LogGroupName}\",
+                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/$MASTER_ID/message_log\",
+                      \"timezone\": \"UTC\"
+                      },
+                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-$MASTER_ID/_data/websession_log\",
+                      \"log_group_name\": \"${LogGroupName}\",
+                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/$MASTER_ID/websession_log\",
+                      \"timezone\": \"UTC\"
+                      },
+                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-$MASTER_ID/_data/audit_log\",
+                      \"log_group_name\": \"${LogGroupName}\",
+                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/$MASTER_ID/audit_log\",
+                      \"timezone\": \"UTC\"
+                      }
+                    ]
+                  }
+                }
+              }
+            }" >> /home/ec2-user/gerritlogsaccess.json
+
+          # Install the CloudWatch Logs agent
+          wget https://s3.amazonaws.com/amazoncloudwatch-agent/centos/amd64/latest/amazon-cloudwatch-agent.rpm
+          rpm -U ./amazon-cloudwatch-agent.rpm
+          /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -c file:/home/ec2-user/gerritlogsaccess.json -s
+
+          # Signal to CloudFormation aws-cfn-bootstrap has been correctly updated
+          /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource MasterECSAutoScalingGroup --region ${AWS::Region}
+
+Outputs:
+  MasterLaunchConfiguration:
+    Value: !Ref MasterLaunchConfiguration
+    Export:
+      Name: !Join [ '-', [ !Ref 'AWS::StackName', 'MasterLaunchConfiguration', !Ref GerritInstanceNumber ] ]
+
+  MasterECSAutoScalingGroup:
+    Value: !Ref MasterECSAutoScalingGroup
+    Export:
+      Name: !Join [ '-', [ !Ref 'AWS::StackName', 'MasterECSAutoScalingGroup', !Ref GerritInstanceNumber ] ]
+
