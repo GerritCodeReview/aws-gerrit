@@ -16,6 +16,29 @@
       "message": "Code looks good to me but I remember some architecture discussion around this topic, so it will be good to have a second pair of eyes",
       "revId": "2e4ba2a65ec1cfb0e05db748815439eabd7308bf",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "434b37c9_1049c2ff",
+        "filename": "dual-master/cf-cluster.yml",
+        "patchSetId": 4
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-10-29T15:42:24Z",
+      "side": 1,
+      "message": "HAProxy should have at least 2 instances, otherwise it becomes a SPoF",
+      "range": {
+        "startLine": 140,
+        "startChar": 0,
+        "endLine": 142,
+        "endChar": 26
+      },
+      "revId": "2e4ba2a65ec1cfb0e05db748815439eabd7308bf",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
