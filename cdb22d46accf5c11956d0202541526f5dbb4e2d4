@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "47fa8b24_65eae785",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-10-29T16:48:09Z",
+      "side": 1,
+      "message": "you\u0027re right.\nThe thing is that at the moment the entire deployment of aws-gerrit happens on one *AZ* only, and it is not possible to configure otherwise, unless we start introducing the concept of subnet*s* into it.\n\nI think it should be done and perhaps we need additional issues to capture this need.\n\nAs far as this change is concerned, perhaps I can phrase it as \"...in order to increase Gerrit reliability...\"\n\nWDYT?",
+      "parentUuid": "7c762249_c0684019",
+      "range": {
+        "startLine": 10,
+        "startChar": 9,
+        "endLine": 10,
+        "endChar": 17
+      },
+      "revId": "cdb22d46accf5c11956d0202541526f5dbb4e2d4",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7756bed4_8f0c53ba",
         "filename": "/COMMIT_MSG",
         "patchSetId": 6
@@ -37,6 +61,30 @@
       "writtenOn": "2020-10-29T15:59:21Z",
       "side": 1,
       "message": "Isn\u0027t that more for the LB vs. master node problem rather than having true HA with the separation of the two EC2 instances?",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 68
+      },
+      "revId": "cdb22d46accf5c11956d0202541526f5dbb4e2d4",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8489d864_cea2c6f1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-10-29T16:48:09Z",
+      "side": 1,
+      "message": "I think it is both: separating ha-proxies from masters obtains two gains\n- Increasing HA\n- Allowing ha-proxies to always talk to both masters rather than just the one deployed on a different instance.",
+      "parentUuid": "7756bed4_8f0c53ba",
       "range": {
         "startLine": 12,
         "startChar": 0,
@@ -64,6 +112,24 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dcf4c395_3d9899be",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-10-29T16:48:09Z",
+      "side": 1,
+      "message": "I think the \"desired number of instances\" made sense before because we had to accommodate multiple instances in one ASG only.\n\nBut this is not the case anymore, we have different ASGs for different components and master1 and master2 will always take one and exactly one ec2 instance.\nMasters cannot elastically scale out, that\u0027s why we explicitly configure master1 and master2 from the setup.env down to the cf templates.\n\nWhat would mean to have a desired cluster of 3 for the master1 ASG?",
+      "parentUuid": "d1059a2d_af2dfe61",
+      "revId": "cdb22d46accf5c11956d0202541526f5dbb4e2d4",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "349b6ca9_de21b145",
@@ -77,6 +143,30 @@
       "writtenOn": "2020-10-29T15:59:21Z",
       "side": 1,
       "message": "Should this be a parameter of the template?\n\nP.S. It was before a 1 to 6 ASG, whilst now it is just 1 instance.",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 26
+      },
+      "revId": "cdb22d46accf5c11956d0202541526f5dbb4e2d4",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f956ee3e_49aca5cb",
+        "filename": "common-templates/cf-master-asg.yml",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-10-29T16:48:09Z",
+      "side": 1,
+      "message": "See my reply above.",
+      "parentUuid": "349b6ca9_de21b145",
       "range": {
         "startLine": 52,
         "startChar": 0,
