@@ -69,6 +69,9 @@ endif
 ifdef HA_PROXY_DESIRED_COUNT
 		$(eval CLUSTER_OPTIONAL_PARAMS := $(CLUSTER_OPTIONAL_PARAMS) ParameterKey=HAProxyDesiredCount,ParameterValue=$(HA_PROXY_DESIRED_COUNT))
 endif
+ifdef MASTER_MAX_COUNT
+		$(eval CLUSTER_OPTIONAL_PARAMS := $(CLUSTER_OPTIONAL_PARAMS) ParameterKey=MasterMaxCount,ParameterValue=$(MASTER_MAX_COUNT))
+endif
 
 	$(AWS_FC_COMMAND) create-stack \
 		--stack-name $(CLUSTER_STACK_NAME) \
@@ -76,7 +79,6 @@ endif
 		--template-body file://`pwd`/$(CLUSTER_TEMPLATE) \
 		--region $(AWS_REGION) \
 		--parameters \
-		ParameterKey=DesiredCapacity,ParameterValue=$(CLUSTER_DESIRED_CAPACITY) \
 		ParameterKey=ECSKeyName,ParameterValue=$(CLUSTER_KEYS) \
 		ParameterKey=TemplateBucketName,ParameterValue=$(TEMPLATE_BUCKET_NAME) \
 		ParameterKey=InternetGatewayIdProp,ParameterValue=$(INTERNET_GATEWAY_ID) \

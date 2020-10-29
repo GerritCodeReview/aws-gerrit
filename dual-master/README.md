@@ -89,7 +89,6 @@ Configuration values affecting deployment environment and cluster properties
 * `DASHBOARD_STACK_NAME` : Optional. Name of the dashboard stack. `gerrit-dashboard` by default.
 * `MASTER1_SUBDOMAIN`: Optional. Name of the master 1 sub domain. `gerrit-master-1-demo` by default.
 * `MASTER2_SUBDOMAIN`: Optional. Name of the master 2 sub domain. `gerrit-master-2-demo` by default.
-* `CLUSTER_DESIRED_CAPACITY`: Optional. Number of EC2 instances composing the cluster. `1` by default.
 * `HTTP_HOST_PORT_MASTER1`: Optional. Gerrit Host HTTP port for master1 (must be different from master2). `9080` by default.
 * `SSH_HOST_PORT_MASTER1:`: Optional. Gerrit Host SSH port for master1 (must be different from master2). `29418` by default.
 * `HTTP_HOST_PORT_MASTER2`: Optional. Gerrit Host HTTP port for master2 (must be different from master1). `9080` by default.
@@ -117,6 +116,9 @@ ha-proxies then, the size of the autoscaling group hosting them also increases
 accordingly.
 
 * `HA_PROXY_MAX_COUNT`: Optional. Maximum number of EC2 instances in the haproxy autoscaling group.
+"2" by default. Minimum: "2".
+
+* `MASTER_MAX_COUNT`: Optional. Maximum number of EC2 instances in the master autoscaling group.
 "2" by default. Minimum: "2".
 
 #### REPLICATION SERVICE
