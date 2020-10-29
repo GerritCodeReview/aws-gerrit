@@ -6,14 +6,6 @@ Parameters:
   TemplateBucketName:
     Description: S3 bucket containing cloudformation templates
     Type: String
-  DesiredCapacity:
-    Type: Number
-    Default: '1'
-    Description: Number of EC2 instances to launch in your ECS cluster.
-  MaxSize:
-    Type: Number
-    Default: '6'
-    Description: Maximum number of EC2 instances that can be launched in your ECS cluster.
   ECSAMI:
     Description: AMI ID
     Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
@@ -182,163 +174,41 @@ Resources:
 
           /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource HAProxyECSAutoScalingGroup --region ${AWS::Region}
 
-  # Autoscaling group. This launches the actual EC2 instances that will register
-  # themselves as members of the cluster, and run the docker containers.
-  MasterECSAutoScalingGroup:
-    Type: AWS::AutoScaling::AutoScalingGroup
+  Master1ASG:
+    Type: AWS::CloudFormation::Stack
     Properties:
-      VPCZoneIdentifier:
-        - !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneRef
-      LaunchConfigurationName: !Ref 'ContainerInstances'
-      MinSize: '1'
-      MaxSize: !Ref 'MaxSize'
-      DesiredCapacity: !Ref 'DesiredCapacity'
-    CreationPolicy:
-      ResourceSignal:
-        Timeout: PT15M
-    UpdatePolicy:
-      AutoScalingReplacingUpdate:
-        WillReplace: 'true'
-  ContainerInstances:
-    Type: AWS::AutoScaling::LaunchConfiguration
-    Properties:
-      ImageId: !Ref 'ECSAMI'
-      SecurityGroups: [!Ref 'EcsHostSecurityGroup']
-      InstanceType: !Ref 'InstanceType'
-      IamInstanceProfile: !Ref 'EC2InstanceProfile'
-      KeyName: !Ref ECSKeyName
-      UserData:
-        Fn::Base64: !Sub |
-          #!/bin/bash -xe
-          echo ECS_CLUSTER=${ECSCluster} >> /etc/ecs/ecs.config
-          echo ECS_INSTANCE_ATTRIBUTES={\"target_group\":\"master\"} >> /etc/ecs/ecs.config
-          # Make sure latest version of the helper scripts are installed as per recommendation:
-          # https://github.com/awsdocs/aws-cloudformation-user-guide/blob/master/doc_source/cfn-helper-scripts-reference.md#using-the-latest-version
-          yum install -y aws-cfn-bootstrap nfs-utils wget
-          # EFS setting
-          DIR_TGT=/mnt/efs/gerrit-shared
-          mkdir -p $DIR_TGT
-          EC2_REGION=${AWS::Region}
-          # 169.254.169.254 link-local address, valid only from the instance, to retrieve meta-data information.
-          EC2_AVAIL_ZONE=`curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone`
-          EFS_FILE_SYSTEM_ID=${FileSystem}
-          DIR_SRC=$EC2_AVAIL_ZONE.$EFS_FILE_SYSTEM_ID.efs.$EC2_REGION.amazonaws.com
+      TemplateURL: !Join [ '', ['https://', !Ref TemplateBucketName, '.s3.amazonaws.com/cf-master-asg.yml'] ]
+      TimeoutInMinutes: '25'
+      Parameters:
+        GerritInstanceNumber: 1
+        EC2AMI: !Ref ECSAMI
+        InstanceType: !Ref InstanceType
+        ECSKeyName: !Ref ECSKeyName
+        EnvironmentName: !Ref EnvironmentName
+        ECSCluster: !Ref ECSCluster
+        EC2SecurityGroup: !Ref EcsHostSecurityGroup
+        EC2InstanceProfile: !Ref EC2InstanceProfile
+        FileSystem: !Ref FileSystem
+        SubnetId: !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneRef
+        LogGroupName: !Ref AWS::StackName
 
-          touch /home/ec2-user/echo.res
-          echo $EFS_FILE_SYSTEM_ID >> /home/ec2-user/echo.res
-          echo $EC2_AVAIL_ZONE >> /home/ec2-user/echo.res
-          echo $EC2_REGION >> /home/ec2-user/echo.res
-          echo $DIR_SRC >> /home/ec2-user/echo.res
-          echo $DIR_TGT >> /home/ec2-user/echo.res
-          MAX_RETRIES=20
-          for i in $(seq 1 $MAX_RETRIES); do
-            echo "Mounting EFS volume ($i/$MAX_RETRIES)..."
-            `mount -t nfs4 -o nfsvers=4.1,hard,timeo=600,retrans=2 $DIR_SRC:/ $DIR_TGT >> /home/ec2-user/echo.res` \
-              && s=0 && break || s=$? && sleep 5;
-          done; (exit $s)
-          mkdir -p $DIR_TGT/git
-          mkdir -p $DIR_TGT/high-availability
-          chown -R 1000:1000 $DIR_TGT
-          cp -p /etc/fstab /etc/fstab.back-$(date +%F)
-          echo -e \"$DIR_SRC:/ \t\t $DIR_TGT \t\t nfs \t\t defaults \t\t 0 \t\t 0\" | tee -a /etc/fstab
-          # Get the CloudWatch Logs agent
-          echo -e "
-            {\"logs\":
-              {\"logs_collected\":
-                {\"files\":
-                  {\"collect_list\":
-                    [
-                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-master-2/_data/replication_log\",
-                      \"log_group_name\": \"${AWS::StackName}\",
-                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/master-2/replication_log\",
-                      \"timezone\": \"UTC\"
-                      },
-                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-master-2/_data/httpd_log\",
-                      \"log_group_name\": \"${AWS::StackName}\",
-                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/master-2/httpd_log\",
-                      \"timezone\": \"UTC\"
-                      },
-                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-master-2/_data/sshd_log\",
-                      \"log_group_name\": \"${AWS::StackName}\",
-                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/master-2/sshd_log\",
-                      \"timezone\": \"UTC\"
-                      },
-                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-master-2/_data/gc_log\",
-                      \"log_group_name\": \"${AWS::StackName}\",
-                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/master-2/gc_log\",
-                      \"timezone\": \"UTC\"
-                      },
-                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-master-2/_data/sharedref_log\",
-                      \"log_group_name\": \"${AWS::StackName}\",
-                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/master-2/sharedref_log\",
-                      \"timezone\": \"UTC\"
-                      },
-                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-master-2/_data/message_log\",
-                      \"log_group_name\": \"${AWS::StackName}\",
-                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/master-2/message_log\",
-                      \"timezone\": \"UTC\"
-                      },
-                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-master-2/_data/websession_log\",
-                      \"log_group_name\": \"${AWS::StackName}\",
-                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/master-2/websession_log\",
-                      \"timezone\": \"UTC\"
-                      },
-                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-master-2/_data/audit_log\",
-                      \"log_group_name\": \"${AWS::StackName}\",
-                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/master-2/audit_log\",
-                      \"timezone\": \"UTC\"
-                      },
-                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-master-1/_data/replication_log\",
-                      \"log_group_name\": \"${AWS::StackName}\",
-                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/master-1/replication_log\",
-                      \"timezone\": \"UTC\"
-                      },
-                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-master-1/_data/httpd_log\",
-                      \"log_group_name\": \"${AWS::StackName}\",
-                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/master-1/httpd_log\",
-                      \"timezone\": \"UTC\"
-                      },
-                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-master-1/_data/sshd_log\",
-                      \"log_group_name\": \"${AWS::StackName}\",
-                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/master-1/sshd_log\",
-                      \"timezone\": \"UTC\"
-                      },
-                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-master-1/_data/gc_log\",
-                      \"log_group_name\": \"${AWS::StackName}\",
-                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/master-1/gc_log\",
-                      \"timezone\": \"UTC\"
-                      },
-                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-master-1/_data/sharedref_log\",
-                      \"log_group_name\": \"${AWS::StackName}\",
-                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/master-1/sharedref_log\",
-                      \"timezone\": \"UTC\"
-                      },
-                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-master-1/_data/message_log\",
-                      \"log_group_name\": \"${AWS::StackName}\",
-                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/master-1/message_log\",
-                      \"timezone\": \"UTC\"
-                      },
-                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-master-1/_data/websession_log\",
-                      \"log_group_name\": \"${AWS::StackName}\",
-                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/master-1/websession_log\",
-                      \"timezone\": \"UTC\"
-                      },
-                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-master-1/_data/audit_log\",
-                      \"log_group_name\": \"${AWS::StackName}\",
-                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/master-1/audit_log\",
-                      \"timezone\": \"UTC\"
-                      }
-                    ]
-                  }
-                }
-              }
-            }" >> /home/ec2-user/gerritlogsaccess.json
-          # Install the CloudWatch Logs agent
-          wget https://s3.amazonaws.com/amazoncloudwatch-agent/centos/amd64/latest/amazon-cloudwatch-agent.rpm
-          rpm -U ./amazon-cloudwatch-agent.rpm
-          /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -c file:/home/ec2-user/gerritlogsaccess.json -s
-          # Signal to CloudFormation aws-cfn-bootstrap has been correctly updated
-          /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource MasterECSAutoScalingGroup --region ${AWS::Region}
+  Master2ASG:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: !Join [ '', ['https://', !Ref TemplateBucketName, '.s3.amazonaws.com/cf-master-asg.yml'] ]
+      TimeoutInMinutes: '25'
+      Parameters:
+        GerritInstanceNumber: 2
+        EC2AMI: !Ref ECSAMI
+        InstanceType: !Ref InstanceType
+        ECSKeyName: !Ref ECSKeyName
+        EnvironmentName: !Ref EnvironmentName
+        ECSCluster: !Ref ECSCluster
+        EC2SecurityGroup: !Ref EcsHostSecurityGroup
+        EC2InstanceProfile: !Ref EC2InstanceProfile
+        FileSystem: !Ref FileSystem
+        SubnetId: !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneRef
+        LogGroupName: !Ref AWS::StackName
 
   EC2InstanceProfile:
     Type: AWS::IAM::InstanceProfile
