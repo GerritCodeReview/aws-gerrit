@@ -39,6 +39,30 @@
       },
       "revId": "2e4ba2a65ec1cfb0e05db748815439eabd7308bf",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "60c422f7_3e81e0d6",
+        "filename": "dual-master/cf-cluster.yml",
+        "patchSetId": 4
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-10-29T15:49:25Z",
+      "side": 1,
+      "message": "Yep but I think that\u0027s a follow up change?\nI can create an Issue for it.\n\nWDYT?",
+      "parentUuid": "434b37c9_1049c2ff",
+      "range": {
+        "startLine": 140,
+        "startChar": 0,
+        "endLine": 142,
+        "endChar": 26
+      },
+      "revId": "2e4ba2a65ec1cfb0e05db748815439eabd7308bf",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
