@@ -72,6 +72,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d347ad67_b3c0315e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-10-29T17:57:33Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4a391ecd_866ec026",
+      "range": {
+        "startLine": 10,
+        "startChar": 9,
+        "endLine": 10,
+        "endChar": 17
+      },
+      "revId": "cdb22d46accf5c11956d0202541526f5dbb4e2d4",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7756bed4_8f0c53ba",
@@ -145,6 +169,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "e0df1d6d_112a62f4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-10-29T17:57:33Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0c552d04_19698d80",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 68
+      },
+      "revId": "cdb22d46accf5c11956d0202541526f5dbb4e2d4",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "d1059a2d_af2dfe61",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 6
@@ -192,6 +240,24 @@
       "side": 1,
       "message": "If that was the case, why we didn\u0027t have a fixed number of EC2 instances before?\nAlso, the ASG is for the EC2 instances of the ECS cluster, and not for *exclusively* the master node.\n\nI don\u0027t believe that removing a parameter that we have now for then introducing it again in the next change is a good thing, but rather a regression IMHO.",
       "parentUuid": "dcf4c395_3d9899be",
+      "revId": "cdb22d46accf5c11956d0202541526f5dbb4e2d4",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ab51059f_284bceeb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-10-29T17:57:33Z",
+      "side": 1,
+      "message": "\u003e If that was the case, why we didn\u0027t have a fixed number of EC2 instances before?\n\nBecause depending on the spec of Gerrit you might have wanted/needed more EC2 instances to host them:\n- If you deployed masters with very low ram/cpu needs, for example, then perhaps 2 instances would have been enough (to host masters,haproxy,slaves), whilst if you needed more resources for Gerrit, you might have wanted more ec2 instances to allow them to be allocated.\n\n\u003e Also, the ASG is for the EC2 instances of the ECS cluster, and not for *exclusively* the master node.\n\nNot anymore, we have 3 ASGs in the cluster at the moment (master, replica, haproxy) and the \"desired number of instances\" is not a property of the ECS cluster, but rather a property of the ASG.\n\nThere are 3 different ASG that could potentially be tuned with [min-desired-max], one for each ASG.\n\n* haproxy -\u003e this should go to a 2-2-n (as per your point in the previous CR, I will raise the relevant change)\n* master -\u003e this should be 1-1-1, always, because masters cannot scale.\n* replica -\u003e this should be 1-1-1 until we introduce EFS that allow them to scale.\n\nWDYT?",
+      "parentUuid": "a3878f5e_12bdd773",
       "revId": "cdb22d46accf5c11956d0202541526f5dbb4e2d4",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
@@ -257,6 +323,54 @@
       "side": 1,
       "message": "Answered.",
       "parentUuid": "f956ee3e_49aca5cb",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 26
+      },
+      "revId": "cdb22d46accf5c11956d0202541526f5dbb4e2d4",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9712b62e_7512880f",
+        "filename": "common-templates/cf-master-asg.yml",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-10-29T17:57:33Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "12db68ce_39cc55b4",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 26
+      },
+      "revId": "cdb22d46accf5c11956d0202541526f5dbb4e2d4",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5dd8aae3_d6213aaa",
+        "filename": "common-templates/cf-master-asg.yml",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-10-29T17:57:33Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "12db68ce_39cc55b4",
       "range": {
         "startLine": 52,
         "startChar": 0,
