@@ -63,6 +63,12 @@ endif
 ifdef VPC_CIDR
 		$(eval CLUSTER_OPTIONAL_PARAMS := $(CLUSTER_OPTIONAL_PARAMS) ParameterKey=VPCCIDR,ParameterValue=$(VPC_CIDR))
 endif
+ifdef HA_PROXY_MAX_COUNT
+		$(eval CLUSTER_OPTIONAL_PARAMS := $(CLUSTER_OPTIONAL_PARAMS) ParameterKey=HAProxyMaxCount,ParameterValue=$(HA_PROXY_MAX_COUNT))
+endif
+ifdef HA_PROXY_DESIRED_COUNT
+		$(eval CLUSTER_OPTIONAL_PARAMS := $(CLUSTER_OPTIONAL_PARAMS) ParameterKey=HAProxyDesiredCount,ParameterValue=$(HA_PROXY_DESIRED_COUNT))
+endif
 
 	$(AWS_FC_COMMAND) create-stack \
 		--stack-name $(CLUSTER_STACK_NAME) \
@@ -236,6 +242,9 @@ endif
 service-lb:
 ifdef LOAD_BALANCER_SCHEME
 		$(eval SERVICE_OPTIONAL_PARAMS := $(SERVICE_OPTIONAL_PARAMS) ParameterKey=LoadBalancerScheme,ParameterValue=$(LOAD_BALANCER_SCHEME))
+endif
+ifdef HA_PROXY_DESIRED_COUNT
+		$(eval SERVICE_OPTIONAL_PARAMS := $(SERVICE_OPTIONAL_PARAMS) ParameterKey=DesiredCount,ParameterValue=$(HA_PROXY_DESIRED_COUNT))
 endif
 
 	$(AWS_FC_COMMAND) create-stack \
