@@ -65,6 +65,16 @@ Parameters:
     Description:  The fs throughput, measured in MiB/s. Valid values are 1-1024.
     Type: Number
     Default: 256
+  HAProxyMaxSize:
+    Description: The maximum number of EC2 instances in the haproxy autoscaling group
+    Type: Number
+    Default: 6
+  HAProxyDesiredCount:
+    Description: The desired number of haproxy instances
+    ConstraintDescription: number of haproxy must be at least 2
+    Type: Number
+    MinValue: 2
+    Default: 2
 
 Conditions:
   isProvisionedThroughput: !Equals [!Ref FileSystemThroughputMode, "provisioned"]
@@ -137,9 +147,9 @@ Resources:
       VPCZoneIdentifier:
         - !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneRef
       LaunchConfigurationName: !Ref 'HAProxyLaunchConfiguration'
-      MinSize: '1'
-      MaxSize: '1'
-      DesiredCapacity: '1'
+      MinSize: '2'
+      MaxSize: !Ref HAProxyMaxSize
+      DesiredCapacity: !Ref HAProxyDesiredCount
     CreationPolicy:
       ResourceSignal:
         Timeout: PT15M

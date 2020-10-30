@@ -29,7 +29,9 @@ Parameters:
   DesiredCount:
         Description: How many instances of this task should we run across our cluster?
         Type: Number
-        Default: 1
+        MinValue: 2
+        Default: 2
+        ConstraintDescription: number of haproxy must be at least 2
   HTTPGerritPort:
         Description: Gerrit HTTP port
         Type: Number

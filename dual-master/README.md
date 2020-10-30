@@ -108,6 +108,17 @@ default: `256`.
 * `GERRIT_MASTER2_INSTANCE_ID`: Optional. Identifier for the Gerrit master2 instance.
 "gerrit-dual-master-MASTER2" by default.
 
+* `HA_PROXY_DESIRED_COUNT`: Optional. Desired number of haproxy services.
+"2" by default. Minimum: "2".
+
+*Note* ha-proxies are running on ec2 instances with a ratio of 1 to 1: each
+ec2 node hosts one and only one ha-proxy. By increasing the number of desired
+ha-proxies then, the size of the autoscaling group hosting them also increase
+accordingly.
+
+* `HA_PROXY_MAX_SIZE`: Optional. Maximum number of EC2 instances in the haproxy autoscaling group.
+"6" by default. Minimum: "2".
+
 #### REPLICATION SERVICE
 
 * `REPLICATION_SERVICE_ENABLED`: Optional. Whether to expose a replication endpoint.
