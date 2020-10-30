@@ -255,7 +255,6 @@ endif
 		ParameterKey=TemplateBucketName,ParameterValue=$(TEMPLATE_BUCKET_NAME) \
 		ParameterKey=HAProxyDockerImage,ParameterValue=aws-gerrit/haproxy:$(HAPROXY_HEAD_SHA1) \
 		ParameterKey=SidecarDockerImage,ParameterValue=aws-gerrit/syslog-sidecar:$(SYSLOG_HEAD_SHA1) \
-		$(REPLICATION_SERVICE_OPTIONAL_PARAMS) \
 		$(SERVICE_OPTIONAL_PARAMS)
 
 dns-routing:
