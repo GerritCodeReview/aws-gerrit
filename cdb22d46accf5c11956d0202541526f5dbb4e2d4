@@ -98,6 +98,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1b614d56_7b915ce5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-10-30T23:37:03Z",
+      "side": 1,
+      "message": "Did you forget to apply the changes?",
+      "parentUuid": "d347ad67_b3c0315e",
+      "range": {
+        "startLine": 10,
+        "startChar": 9,
+        "endLine": 10,
+        "endChar": 17
+      },
+      "revId": "cdb22d46accf5c11956d0202541526f5dbb4e2d4",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7756bed4_8f0c53ba",
         "filename": "/COMMIT_MSG",
         "patchSetId": 6
@@ -407,6 +431,30 @@
       "side": 1,
       "message": "Ack",
       "parentUuid": "12db68ce_39cc55b4",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 26
+      },
+      "revId": "cdb22d46accf5c11956d0202541526f5dbb4e2d4",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "65cdbb2f_a9ee244e",
+        "filename": "common-templates/cf-master-asg.yml",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-10-30T23:37:03Z",
+      "side": 1,
+      "message": "Forgot to push your changes?",
+      "parentUuid": "9712b62e_7512880f",
       "range": {
         "startLine": 52,
         "startChar": 0,
