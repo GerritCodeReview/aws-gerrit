@@ -487,6 +487,30 @@
       },
       "revId": "cdb22d46accf5c11956d0202541526f5dbb4e2d4",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c11b44d8_c38ba9e2",
+        "filename": "common-templates/cf-master-asg.yml",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-11-02T10:06:23Z",
+      "side": 1,
+      "message": "oh yes, I had forgotten to push the commit message change, please refer to my reply for the discussion about scaling master nodes.",
+      "parentUuid": "65cdbb2f_a9ee244e",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 26
+      },
+      "revId": "cdb22d46accf5c11956d0202541526f5dbb4e2d4",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
