@@ -24,6 +24,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "15041648_682f5751",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-11-02T12:44:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57a3b63f_e8ea9a25",
+      "range": {
+        "startLine": 10,
+        "startChar": 69,
+        "endLine": 10,
+        "endChar": 73
+      },
+      "revId": "20d4d689799e83f02bf12179ae197ebc83ed5d65",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4265c315_6132cfdb",
@@ -37,6 +61,30 @@
       "writtenOn": "2020-10-20T23:45:30Z",
       "side": 1,
       "message": "nit: wrap long line.",
+      "range": {
+        "startLine": 13,
+        "startChar": 67,
+        "endLine": 13,
+        "endChar": 73
+      },
+      "revId": "20d4d689799e83f02bf12179ae197ebc83ed5d65",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a624e882_dfb5a2ef",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-11-02T12:44:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4265c315_6132cfdb",
       "range": {
         "startLine": 13,
         "startChar": 67,
@@ -101,6 +149,30 @@
       "side": 1,
       "message": "Yes I guess I could have, but this is just to make sure any newline at the end of the secret is stripped.\nIt is very easy to press enter by mistake when entering the secret through the AWS console, or to echo it to a file then uploaded to AWS.\n\nnewlines at the beginning of the string are more rare and difficult to generate, it would need to be done on purpose.",
       "parentUuid": "c9a8b06d_298d836b",
+      "range": {
+        "startLine": 62,
+        "startChar": 70,
+        "endLine": 62,
+        "endChar": 76
+      },
+      "revId": "20d4d689799e83f02bf12179ae197ebc83ed5d65",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1a862aeb_92a1abb7",
+        "filename": "gerrit/setup_gerrit.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-11-02T12:44:28Z",
+      "side": 1,
+      "message": "Would using .strip() have any side effect?",
+      "parentUuid": "d7710f77_643d997c",
       "range": {
         "startLine": 62,
         "startChar": 70,
