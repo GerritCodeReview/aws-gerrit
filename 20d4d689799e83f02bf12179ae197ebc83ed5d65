@@ -181,6 +181,30 @@
       },
       "revId": "20d4d689799e83f02bf12179ae197ebc83ed5d65",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "91b9db99_35e1ba62",
+        "filename": "gerrit/setup_gerrit.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-11-02T12:51:35Z",
+      "side": 1,
+      "message": "Not that I can think of, I\u0027ll use strip() instead.",
+      "parentUuid": "1a862aeb_92a1abb7",
+      "range": {
+        "startLine": 62,
+        "startChar": 70,
+        "endLine": 62,
+        "endChar": 76
+      },
+      "revId": "20d4d689799e83f02bf12179ae197ebc83ed5d65",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
