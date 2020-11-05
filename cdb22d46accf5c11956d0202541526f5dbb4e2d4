@@ -522,6 +522,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9f2dd4a2_926754d4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-11-05T21:56:51Z",
+      "side": 1,
+      "message": "I checked the ECS service update:\nhttps://docs.aws.amazon.com/AmazonECS/latest/developerguide/update-service.html\n\nIt looks like it is possible to update a service, I am not sure why it didn\u0027t work for you.\n\nIf we hardcode the number of instances to 1, we force the admin with the choice of the update type to \"minimum healthy percent \u003d 0\", which is a regression to what he could have done before.\n\nFrom that perspective, this change represent a regression IMHO, because before he could have chosen \"minimum healthy percent \u003d 100\" and ECS would have done a blue/green deployment, making sure to drain the incoming connections.",
+      "parentUuid": "782467f1_cca69423",
+      "revId": "cdb22d46accf5c11956d0202541526f5dbb4e2d4",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "349b6ca9_de21b145",
         "filename": "common-templates/cf-master-asg.yml",
         "patchSetId": 6
