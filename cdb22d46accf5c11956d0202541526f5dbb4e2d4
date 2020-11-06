@@ -558,6 +558,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d3345d98_3b85ec6d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-11-06T08:56:32Z",
+      "side": 1,
+      "message": "\u003e \u003e I checked the ECS service update:\n\u003e \u003e https://docs.aws.amazon.com/AmazonECS/latest/developerguide/update-service.html\n\u003e \u003e \n\u003e \u003e It looks like it is possible to update a service, I am not sure why it didn\u0027t work for you.\n\u003e \n\u003e What do you mean? It actually did work.\n\u003e \n\u003e \"eventually the new master becomes healthy 😊\"\n\u003e \n\u003e To perform upgrades from aws-gerrit however some changes are needed (see below).\n\nCool, how did ECS managed to start the second master if there was no capacity?\nWe could have a 30\u0027 joint session today so that you can show me :-)\n\nBut if the upgrade works and we have a plan for the JGit GC, I\u0027m fine with it.\n\n\u003e \u003e \n\u003e \u003e If we hardcode the number of instances to 1, we force the admin with the choice of the update type to \"minimum healthy percent \u003d 0\", which is a regression to what he could have done before.\n\u003e \n\u003e Agreed, that was one of my points above.\n\nOK, let\u0027s try to do the task update with the current master and then with this change. If the behaviour is consistent, I\u0027m good :-)\n\n\u003e \u003e From that perspective, this change represent a regression IMHO, because before he could have chosen \"minimum healthy percent \u003d 100\" and ECS would have done a blue/green deployment, making sure to drain the incoming connections.\n\u003e \n\u003e Let me recompact my update above.\n\u003e Updating gerrit instances does work, but there are some changes that are required to achieve so:\n\u003e \n\u003e 1. We cannot do any updates, just creations or deletions. The Makefiles need to expose update-\u003cservice\u003e commands to issue updates, via update-stack.\n\nI believe you can also update with the ECS web console, isn\u0027t it?\n\n\u003e 2. I will raise the max ASG for master1 and master2 to N, as part of this CR, to allow upgrades in the future.\n\u003e \n\u003e 3. ECS does not scale automatically the EC2 instances when needed[1], so having an increased maxSize for the ASG is not going to help much. To do that, Amazon ECS cluster auto scaling[3] needs to be used and Capacity providers[2].\n\nGood catch. We definitely need a ticket to address that.\nSounds we have a plan :-)\n\nLuca.\n\n\u003e \n\u003e \n\u003e [1]https://aws.amazon.com/blogs/containers/deep-dive-on-amazon-ecs-cluster-auto-scaling/\n\u003e [2]https://docs.aws.amazon.com/AmazonECS/latest/developerguide/cluster-capacity-providers.html",
+      "parentUuid": "d792f516_f48b7086",
+      "revId": "cdb22d46accf5c11956d0202541526f5dbb4e2d4",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "349b6ca9_de21b145",
         "filename": "common-templates/cf-master-asg.yml",
         "patchSetId": 6
