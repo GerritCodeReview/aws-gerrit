@@ -540,6 +540,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d792f516_f48b7086",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-11-06T08:35:26Z",
+      "side": 1,
+      "message": "\u003e I checked the ECS service update:\n\u003e https://docs.aws.amazon.com/AmazonECS/latest/developerguide/update-service.html\n\u003e \n\u003e It looks like it is possible to update a service, I am not sure why it didn\u0027t work for you.\n\nWhat do you mean? It actually did work.\n\n\"eventually the new master becomes healthy 😊\"\n\nTo perform upgrades from aws-gerrit however some changes are needed (see below).\n\n\u003e \n\u003e If we hardcode the number of instances to 1, we force the admin with the choice of the update type to \"minimum healthy percent \u003d 0\", which is a regression to what he could have done before.\n\nAgreed, that was one of my points above.\n\n\u003e \n\u003e From that perspective, this change represent a regression IMHO, because before he could have chosen \"minimum healthy percent \u003d 100\" and ECS would have done a blue/green deployment, making sure to drain the incoming connections.\n\nLet me recompact my update above.\nUpdating gerrit instances does work, but there are some changes that are required to achieve so:\n\n1. We cannot do any updates, just creations or deletions. The Makefiles need to expose update-\u003cservice\u003e commands to issue updates, via update-stack.\n\n2. I will raise the max ASG for master1 and master2 to N, as part of this CR, to allow upgrades in the future.\n\n3. ECS does not scale automatically the EC2 instances when needed[1], so having an increased maxSize for the ASG is not going to help much. To do that, Amazon ECS cluster auto scaling[3] needs to be used and Capacity providers[2].\n\nI will address 2 as part of this CR, in preparation for updates, but to _acutally_ do updates I think we need at least 1 and 3.\n\nWDYT?\n\n\n[1]https://aws.amazon.com/blogs/containers/deep-dive-on-amazon-ecs-cluster-auto-scaling/\n[2]https://docs.aws.amazon.com/AmazonECS/latest/developerguide/cluster-capacity-providers.html",
+      "parentUuid": "9f2dd4a2_926754d4",
+      "revId": "cdb22d46accf5c11956d0202541526f5dbb4e2d4",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "349b6ca9_de21b145",
         "filename": "common-templates/cf-master-asg.yml",
         "patchSetId": 6
