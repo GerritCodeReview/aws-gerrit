@@ -22,6 +22,30 @@
       },
       "revId": "ed9a83a96c8fad5678fe31cf714bceb44874edf1",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a9e36008_a5931b53",
+        "filename": "monitoring/grafana/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-11-11T14:59:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07040bfc_ea820503",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 40
+      },
+      "revId": "ed9a83a96c8fad5678fe31cf714bceb44874edf1",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
