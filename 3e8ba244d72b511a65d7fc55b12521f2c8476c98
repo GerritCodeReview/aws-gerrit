@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4b80fcb5_10bbd32f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-11-11T15:33:40Z",
+      "side": 1,
+      "message": "```\n2020-11-11T16:04:20.920+01:00\tInstalling SSH Keys from Secret Manager in directory: /var/gerrit/etc/\n2020-11-11T16:04:20.920+01:00\t* Installing SSH Key: ssh_host_ecdsa_384_key\n2020-11-11T16:04:20.920+01:00\tTraceback (most recent call last):\n2020-11-11T16:04:20.920+01:00\tFile \"/tmp/setup_gerrit.py\", line 95, in \u003cmodule\u003e\n2020-11-11T16:04:20.920+01:00\twith open(GERRIT_CONFIG_DIRECTORY + secretId, \u0027w\u0027, encoding\u003d\u0027utf-8\u0027) as f:\n\n2020-11-11T16:04:20.920+01:00\n\nCopy\nPermissionError: [Errno 13] Permission denied: \u0027/var/gerrit/etc/ssh_host_ecdsa_384_key\u0027\nPermissionError: [Errno 13] Permission denied: \u0027/var/gerrit/etc/ssh_host_ecdsa_384_key\u0027\n```",
+      "revId": "3e8ba244d72b511a65d7fc55b12521f2c8476c98",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
