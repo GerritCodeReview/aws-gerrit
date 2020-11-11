@@ -19,8 +19,12 @@ RUN echo "**** install Python ****" && \
 RUN adduser --h /home/gerrit -D gerrit && \
     mkdir -p /home/gerrit/.ssh && \
     chown -R gerrit:gerrit /home/gerrit/.ssh
-COPY --chown=gerrit:gerrit requirements.txt /tmp
-COPY --chown=gerrit:gerrit setup_ssh.py /tmp
+COPY requirements.txt /tmp
+RUN chown gerrit:gerrit /tmp/requirements.txt
+
+COPY setup_ssh.py /tmp
+RUN chown gerrit:gerrit /tmp/setup_ssh.py
+
 RUN chmod +x /tmp/setup_ssh.py \
     && pip3 install -r /tmp/requirements.txt
 

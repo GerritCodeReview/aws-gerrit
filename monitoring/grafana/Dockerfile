@@ -4,9 +4,11 @@ USER root
 ADD ./provisioning /etc/grafana/provisioning
 ADD ./config.ini /etc/grafana/config.ini
 ADD ./dashboards /var/lib/grafana/dashboards
-COPY --chown=grafana:grafana entrypoint.sh /entrypoint.sh
+COPY entrypoint.sh /entrypoint.sh
+
 RUN chown -R grafana:grafana /etc/grafana && \
     chown -R grafana:grafana /var/lib/grafana && \
+    chown grafana:grafana /entrypoint.sh && \
     chmod +x /entrypoint.sh
 
 USER grafana
