@@ -4,19 +4,29 @@ USER root
 
 RUN  yum install -y python36 python3-libs python36-devel python3-pip
 
-COPY --chown=gerrit:gerrit ssh-config /var/gerrit/.ssh/config
+COPY ssh-config /var/gerrit/.ssh/config
+RUN chown -R gerrit:gerrit /var/gerrit/.ssh
 
 # Installing scripts to get SSH Keys from Secret Manager
-COPY --chown=gerrit:gerrit requirements.txt /tmp
-COPY --chown=gerrit:gerrit setup_gerrit.py /tmp
+COPY requirements.txt /tmp
+RUN chown gerrit:gerrit /tmp/requirements.txt
+
+COPY setup_gerrit.py /tmp
+RUN chown gerrit:gerrit /tmp/setup_gerrit.py
+
 RUN chmod +x /tmp/setup_gerrit.py \
     && pip3 install -r /tmp/requirements.txt
 
-USER gerrit
+COPY plugins /var/gerrit/plugins
+COPY lib /var/gerrit/lib
+COPY etc /var/gerrit/etc
 
-COPY --chown=gerrit:gerrit plugins /var/gerrit/plugins
-COPY --chown=gerrit:gerrit lib /var/gerrit/lib
-COPY --chown=gerrit:gerrit etc /var/gerrit/etc
+RUN chown -R gerrit:gerrit \
+    /var/gerrit/plugins \
+    /var/gerrit/lib \
+    /var/gerrit/etc
+
+USER gerrit
 
 # Install AWS cli
 RUN pip3 install awscli --upgrade --user
