@@ -59,7 +59,11 @@ However, keep reading this guide for a more exhaustive explanation.
 
 ### 0 - Prerequisites
 
-Follow the steps described in the [Prerequisites](../Prerequisites.md) section
+Follow the steps described in the [Prerequisites](../Prerequisites.md) section.
+
+Additionally, whilst it is possible to do so by using an admin user, consider
+limiting access only to what is required by using a dedicated role or user to do
+so.
 
 ### 1 - Configuration
 
@@ -124,3 +128,17 @@ you can follow the instructions [here](../README.md#external-services)
 ### Docker
 
 Refer to the [Docker](../Docker.md) section for information on how to setup docker or how to publish images
+
+### Permissions
+
+In order to deploy and destroy a single-master recipe the invoking user needs to
+have the relevant permissions to perform actions on AWS resources.
+
+Whilst it is possible to do so by using an admin user, consider limiting access
+only to what is required.
+
+The list of actions can be found [here](resources/permission.policy.json).
+The document can be used to create a permission policy directly in AWS.
+
+The policy then needs to be attached to the invoking user group or alternatively
+to the invoking user directly.
