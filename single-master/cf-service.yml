@@ -213,6 +213,8 @@ Resources:
                       Value: !Ref AWS::Region
                     - Name: GERRIT_KEY_PREFIX
                       Value: !Ref GerritKeyPrefix
+                    - Name: REINDEX_AT_STARTUP
+                      Value: false
                     - Name: GERRIT_HEAP_LIMIT
                       Value: !Ref GerritHeapLimit
                     - Name: JGIT_CACHE_SIZE

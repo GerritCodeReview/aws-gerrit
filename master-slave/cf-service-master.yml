@@ -267,6 +267,8 @@ Resources:
                       Value: !Ref SlaveSubdomain
                     - Name: HOSTED_ZONE_NAME
                       Value: !Ref HostedZoneName
+                    - Name: REINDEX_AT_STARTUP
+                      Value: false
                     - Name: METRICS_CLOUDWATCH_ENABLED
                       Value: !Ref MetricsCloudwatchEnabled
                     - Name: METRICS_CLOUDWATCH_NAMESPACE
