@@ -86,7 +86,7 @@ endif
 		ParameterKey=SubnetIdProp,ParameterValue=$(SUBNET_ID) \
 		$(CLUSTER_OPTIONAL_PARAMS)
 
-service-master-1: set-optional-params-metrics-cloudwatch set-optional-params-smtp set-optional-params-multisite set-ldap-account-pattern
+service-master-1: set-optional-params-metrics-cloudwatch set-optional-params-smtp set-optional-params-multisite set-ldap-account-pattern set-optional-gerrit-ulimits
 ifdef GERRIT_MASTER1_INSTANCE_ID
 		$(eval MASTER1_SERVICE_OPTIONAL_PARAMS := $(MASTER1_SERVICE_OPTIONAL_PARAMS) ParameterKey=InstanceId,ParameterValue=$(GERRIT_MASTER1_INSTANCE_ID))
 endif
@@ -136,9 +136,10 @@ endif
 		$(MASTER1_SERVICE_OPTIONAL_PARAMS) \
 		$(LDAP_ACCOUNT_PATTERN_PARAM) \
 		$(METRICS_CW_OPTIONAL_PARAMS) \
-		$(SMTP_OPTIONAL_PARAMS)
+		$(SMTP_OPTIONAL_PARAMS) \
+		$(GERRIT_ULIMITS)
 
-service-master-2: set-optional-params-metrics-cloudwatch set-optional-params-smtp set-optional-params-multisite set-ldap-account-pattern
+service-master-2: set-optional-params-metrics-cloudwatch set-optional-params-smtp set-optional-params-multisite set-ldap-account-pattern set-optional-gerrit-ulimits
 ifdef GERRIT_MASTER2_INSTANCE_ID
 		$(eval MASTER2_SERVICE_OPTIONAL_PARAMS := $(MASTER2_SERVICE_OPTIONAL_PARAMS) ParameterKey=InstanceId,ParameterValue=$(GERRIT_MASTER2_INSTANCE_ID))
 endif
@@ -189,7 +190,8 @@ endif
 		$(MASTER2_SERVICE_OPTIONAL_PARAMS) \
 		$(LDAP_ACCOUNT_PATTERN_PARAM) \
 		$(METRICS_CW_OPTIONAL_PARAMS) \
-		$(SMTP_OPTIONAL_PARAMS)
+		$(SMTP_OPTIONAL_PARAMS) \
+		$(GERRIT_ULIMITS)
 
 service-replication:
 	$(AWS_FC_COMMAND) create-stack \
@@ -207,7 +209,7 @@ service-replication:
 		ParameterKey=HostedZoneName,ParameterValue=$(HOSTED_ZONE_NAME) \
 		ParameterKey=GitReplicationSubdomain,ParameterValue=$(GIT_REPLICATION_SUBDOMAIN)
 
-service-slave: set-optional-params-metrics-cloudwatch set-ldap-account-pattern
+service-slave: set-optional-params-metrics-cloudwatch set-ldap-account-pattern set-optional-gerrit-ulimits
 ifdef GERRIT_SLAVE_INSTANCE_ID
 		$(eval SLAVE_SERVICE_OPTIONAL_PARAMS := $(SLAVE_SERVICE_OPTIONAL_PARAMS) ParameterKey=InstanceId,ParameterValue=$(GERRIT_SLAVE_INSTANCE_ID))
 endif
@@ -239,7 +241,8 @@ endif
 		ParameterKey=JgitCacheSize,ParameterValue=$(JGIT_CACHE_SIZE) \
 		$(LDAP_ACCOUNT_PATTERN_PARAM) \
 		$(SLAVE_SERVICE_OPTIONAL_PARAMS) \
-		$(METRICS_CW_OPTIONAL_PARAMS)
+		$(METRICS_CW_OPTIONAL_PARAMS) \
+		$(GERRIT_ULIMITS)
 
 service-lb:
 ifdef LOAD_BALANCER_SCHEME
