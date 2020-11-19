@@ -53,7 +53,7 @@ endif
 		ParameterKey=SubnetIdProp,ParameterValue=$(SUBNET_ID) \
 		$(CLUSTER_OPTIONAL_PARAMS)
 
-service-master: set-optional-params-metrics-cloudwatch set-optional-params-smtp set-ldap-account-pattern
+service-master: set-optional-params-metrics-cloudwatch set-optional-params-smtp set-ldap-account-pattern set-optional-gerrit-ulimits
 ifdef LOAD_BALANCER_SCHEME
 		$(eval MASTER_SERVICE_OPTIONAL_PARAMS := $(MASTER_SERVICE_OPTIONAL_PARAMS) ParameterKey=LoadBalancerScheme,ParameterValue=$(LOAD_BALANCER_SCHEME))
 endif
@@ -91,9 +91,11 @@ endif
 		$(LDAP_ACCOUNT_PATTERN_PARAM) \
 		$(MASTER_SERVICE_OPTIONAL_PARAMS) \
 		$(METRICS_CW_OPTIONAL_PARAMS) \
-		$(SMTP_OPTIONAL_PARAMS)
+		$(SMTP_OPTIONAL_PARAMS) \
+		$(GERRIT_ULIMITS)
 
-service-slave: set-optional-params-metrics-cloudwatch set-ldap-account-pattern
+
+service-slave: set-optional-params-metrics-cloudwatch set-ldap-account-pattern set-optional-gerrit-ulimits
 ifdef LOAD_BALANCER_SCHEME
 		$(eval SLAVE_SERVICE_OPTIONAL_PARAMS := $(SLAVE_SERVICE_OPTIONAL_PARAMS) ParameterKey=LoadBalancerScheme,ParameterValue=$(LOAD_BALANCER_SCHEME))
 endif
@@ -125,7 +127,8 @@ endif
 		ParameterKey=JgitCacheSize,ParameterValue=$(JGIT_CACHE_SIZE) \
 		$(LDAP_ACCOUNT_PATTERN_PARAM) \
 		$(SLAVE_SERVICE_OPTIONAL_PARAMS) \
-		$(METRICS_CW_OPTIONAL_PARAMS)
+		$(METRICS_CW_OPTIONAL_PARAMS) \
+		$(GERRIT_ULIMITS)
 
 dns-routing:
 	$(AWS_FC_COMMAND) create-stack \

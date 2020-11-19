@@ -43,6 +43,10 @@ is recipe-specific:
 * `JGIT_CACHE_SIZE`: Maximum number of bytes to load and cache in memory from pack files.
   See [Gerrit documentation](https://gerrit-review.googlesource.com/Documentation/config-gerrit.html#core.packedGitLimit)
   for more details. `3g` by default.
+* `GERRIT_FDS_SOFT_LIMIT`: The soft limit for file descriptors allowed in the Gerrit container.
+`1024` by default.
+* `GERRIT_FDS_HARD_LIMIT`: The hard limit for file descriptors allowed in the Gerrit container
+`1024` by default.
 * `INTERNET_GATEWAY_ID`: Optional. Id of the existing Internet Gateway.
   If not set, create a new Internet Gateway
 * `VPC_ID`: Optional. Id of the existing VPC.

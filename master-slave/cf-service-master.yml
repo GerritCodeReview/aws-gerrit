@@ -110,6 +110,14 @@ Parameters:
       Description: Gerrit Heap limit
       Type: String
       Default: 6g
+  FileDescriptorsSoftLimit:
+      Description: The soft limit for file descriptors allowed in the Gerrit container
+      Type: Number
+      Default: 1024
+  FileDescriptorsHardLimit:
+      Description: The hard limit for file descriptors allowed in the Gerrit container
+      Type: Number
+      Default: 1024
   JgitCacheSize:
       Description: JGit cache size
       Type: String
@@ -283,6 +291,10 @@ Resources:
                       Value: !Ref MetricsCloudwatchDryRun
                     - Name: METRICS_CLOUDWATCH_EXCLUDE_METRICS_LIST
                       Value: !Join [',', !Ref MetricsCloudwatchExcludeMetrics]
+                  Ulimits:
+                    - Name: nofile
+                      HardLimit: !Ref FileDescriptorsHardLimit
+                      SoftLimit: !Ref FileDescriptorsSoftLimit
                   MountPoints:
                     - SourceVolume: !Ref GerritGitVolume
                       ContainerPath: /var/gerrit/git
