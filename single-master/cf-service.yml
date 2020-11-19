@@ -88,6 +88,14 @@ Parameters:
       Description: vCPU to allocate to the Gerrit container
       Type: Number
       Default: 1024
+  FileDescriptorsSoftLimit:
+    Description: The soft limit for file descriptors allowed in the Gerrit container
+    Type: Number
+    Default: 1024
+  FileDescriptorsHardLimit:
+    Description: The hard limit for file descriptors allowed in the Gerrit container
+    Type: Number
+    Default: 1024
   GerritHeapLimit:
       Description: Gerrit Heap limit
       Type: String
@@ -270,6 +278,10 @@ Resources:
                       ContainerPath: /var/gerrit/db
                     - SourceVolume: !Ref GerritLogsVolume
                       ContainerPath: /var/gerrit/logs
+                  Ulimits:
+                    - Name: nofile
+                      HardLimit: !Ref FileDescriptorsHardLimit
+                      SoftLimit: !Ref FileDescriptorsSoftLimit
                   Cpu: !Ref GerritCPU
                   Memory: !Ref GerritRAM
                   PortMappings:
