@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "65083efb_5332365c",
+        "filename": "single-master/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-11-20T17:49:40Z",
+      "side": 1,
+      "message": "Is this relevant for the single-master recipe only?",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 66,
+        "endChar": 3
+      },
+      "revId": "9adbebfcd3d1f91c3d38e8ab24a2d789a2926e95",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "81aba948_69642b8a",
+        "filename": "single-master/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-11-20T17:49:40Z",
+      "side": 1,
+      "message": "Isn\u0027t that repeated at L64?",
+      "range": {
+        "startLine": 136,
+        "startChar": 0,
+        "endLine": 138,
+        "endChar": 25
+      },
+      "revId": "9adbebfcd3d1f91c3d38e8ab24a2d789a2926e95",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
