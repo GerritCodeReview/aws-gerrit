@@ -48,6 +48,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e3700aba_47c7a190",
+        "filename": "single-master/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-11-23T09:35:57Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8b60a18d_68ef6bc6",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 66,
+        "endChar": 3
+      },
+      "revId": "9adbebfcd3d1f91c3d38e8ab24a2d789a2926e95",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "81aba948_69642b8a",
