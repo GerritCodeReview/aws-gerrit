@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8b60a18d_68ef6bc6",
+        "filename": "single-master/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-11-23T08:17:06Z",
+      "side": 1,
+      "message": "Yep I believe so, master-slave and dual-master require additional resources/permissions (think EFS, for example) and should be documented separately.",
+      "parentUuid": "65083efb_5332365c",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 66,
+        "endChar": 3
+      },
+      "revId": "9adbebfcd3d1f91c3d38e8ab24a2d789a2926e95",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "81aba948_69642b8a",
         "filename": "single-master/README.md",
         "patchSetId": 3
@@ -37,6 +61,30 @@
       "writtenOn": "2020-11-20T17:49:40Z",
       "side": 1,
       "message": "Isn\u0027t that repeated at L64?",
+      "range": {
+        "startLine": 136,
+        "startChar": 0,
+        "endLine": 138,
+        "endChar": 25
+      },
+      "revId": "9adbebfcd3d1f91c3d38e8ab24a2d789a2926e95",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6fab77e_7d2bbee2",
+        "filename": "single-master/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-11-23T08:17:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81aba948_69642b8a",
       "range": {
         "startLine": 136,
         "startChar": 0,
