@@ -11,6 +11,7 @@
 {% endif %}
 [core]
 	packedGitLimit = {{ JGIT_CACHE_SIZE }}
+	packedGitOpenFiles = {{ JGIT_OPEN_FILES }}
 [database]
 	type = h2
 	database = db/ReviewDB

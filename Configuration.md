@@ -43,6 +43,9 @@ is recipe-specific:
 * `JGIT_CACHE_SIZE`: Maximum number of bytes to load and cache in memory from pack files.
   See [Gerrit documentation](https://gerrit-review.googlesource.com/Documentation/config-gerrit.html#core.packedGitLimit)
   for more details. `3g` by default.
+* `JGIT_OPEN_FILES`: Maximum number of pack files to have open at once.
+  See [Gerrit documentation](https://gerrit-review.googlesource.com/Documentation/config-gerrit.html#core.packedGitOpenFiles)
+  for more details. `128` by default.
 * `GERRIT_CONTAINER_FDS_SOFT_LIMIT`: The soft limit for file descriptors allowed in the Gerrit container.
 `1024` by default.
 * `GERRIT_CONTAINER_FDS_HARD_LIMIT`: The hard limit for file descriptors allowed in the Gerrit container

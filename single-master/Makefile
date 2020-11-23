@@ -52,7 +52,7 @@ endif
 		ParameterKey=SubnetIdProp,ParameterValue=$(SUBNET_ID) \
 		$(CLUSTER_OPTIONAL_PARAMS)
 
-service: set-optional-params-metrics-cloudwatch set-optional-params-smtp set-ldap-account-pattern set-optional-gerrit-ulimits
+service: set-optional-params-metrics-cloudwatch set-optional-params-smtp set-ldap-account-pattern set-optional-gerrit-ulimits set-optional-jgit-conf
 ifdef LOAD_BALANCER_SCHEME
 		$(eval SERVICE_OPTIONAL_PARAMS := $(SERVICE_OPTIONAL_PARAMS) ParameterKey=LoadBalancerScheme,ParameterValue=$(LOAD_BALANCER_SCHEME))
 endif
@@ -85,6 +85,7 @@ endif
 		ParameterKey=GerritCPU,ParameterValue=$(GERRIT_CPU) \
 		ParameterKey=GerritHeapLimit,ParameterValue=$(GERRIT_HEAP_LIMIT) \
 		ParameterKey=JgitCacheSize,ParameterValue=$(JGIT_CACHE_SIZE) \
+		$(JGIT_OPTIONAL_PARAMS) \
 		$(LDAP_ACCOUNT_PATTERN_PARAM) \
 		$(SERVICE_OPTIONAL_PARAMS) \
 		$(METRICS_CW_OPTIONAL_PARAMS) \
