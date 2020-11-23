@@ -52,7 +52,7 @@ endif
 		ParameterKey=SubnetIdProp,ParameterValue=$(SUBNET_ID) \
 		$(CLUSTER_OPTIONAL_PARAMS)
 
-service: set-optional-params-metrics-cloudwatch set-optional-params-smtp set-ldap-account-pattern
+service: set-optional-params-metrics-cloudwatch set-optional-params-smtp set-ldap-account-pattern set-optional-gerrit-ulimits
 ifdef LOAD_BALANCER_SCHEME
 		$(eval SERVICE_OPTIONAL_PARAMS := $(SERVICE_OPTIONAL_PARAMS) ParameterKey=LoadBalancerScheme,ParameterValue=$(LOAD_BALANCER_SCHEME))
 endif
@@ -88,7 +88,8 @@ endif
 		$(LDAP_ACCOUNT_PATTERN_PARAM) \
 		$(SERVICE_OPTIONAL_PARAMS) \
 		$(METRICS_CW_OPTIONAL_PARAMS) \
-		$(SMTP_OPTIONAL_PARAMS)
+		$(SMTP_OPTIONAL_PARAMS) \
+		$(GERRIT_ULIMITS)
 
 dns-routing:
 	$(AWS_FC_COMMAND) create-stack \

@@ -68,3 +68,11 @@ set-ldap-account-pattern:
 ifdef LDAP_ACCOUNT_PATTERN
 		$(eval LDAP_ACCOUNT_PATTERN_PARAM := ParameterKey=LDAPAccountPattern,ParameterValue=\"$(LDAP_ACCOUNT_PATTERN)\")
 endif
+
+set-optional-gerrit-ulimits:
+ifdef GERRIT_CONTAINER_FDS_SOFT_LIMIT
+		$(eval GERRIT_ULIMITS := ParameterKey=FileDescriptorsSoftLimit,ParameterValue=$(GERRIT_CONTAINER_FDS_SOFT_LIMIT))
+endif
+ifdef GERRIT_CONTAINER_FDS_HARD_LIMIT
+		$(eval GERRIT_ULIMITS := $(GERRIT_ULIMITS) ParameterKey=FileDescriptorsHardLimit,ParameterValue=$(GERRIT_CONTAINER_FDS_HARD_LIMIT))
+endif
