@@ -104,6 +104,10 @@ Parameters:
       Description: JGit cache size
       Type: String
       Default: 3g
+  JgitOpenFiles:
+      Description: Maximum number of pack files to have open at once
+      Type: Number
+      Default: 128
   LDAPServer:
       Description: LDAP server URL
       Type: String
@@ -227,6 +231,8 @@ Resources:
                       Value: !Ref GerritHeapLimit
                     - Name: JGIT_CACHE_SIZE
                       Value: !Ref JgitCacheSize
+                    - Name: JGIT_OPEN_FILES
+                      Value: !Ref JgitOpenFiles
                     - Name: LDAP_SERVER
                       Value: !Ref LDAPServer
                     - Name: LDAP_USERNAME

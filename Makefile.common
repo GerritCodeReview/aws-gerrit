@@ -76,3 +76,8 @@ endif
 ifdef GERRIT_CONTAINER_FDS_HARD_LIMIT
 		$(eval GERRIT_ULIMITS := $(GERRIT_ULIMITS) ParameterKey=FileDescriptorsHardLimit,ParameterValue=$(GERRIT_CONTAINER_FDS_HARD_LIMIT))
 endif
+
+set-optional-jgit-conf:
+ifdef JGIT_OPEN_FILES
+		$(eval JGIT_OPTIONAL_PARAMS := ParameterKey=JgitOpenFiles,ParameterValue=$(JGIT_OPEN_FILES))
+endif
