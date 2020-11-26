@@ -39,7 +39,7 @@ backend master
     balance roundrobin
     option forwardfor
     default-server inter 10s fall 3 rise 2
-    option httpchk GET /config/server/healthcheck~status HTTP/1.0
+    option httpchk GET /config/server/healthcheck~status HTTP/1.0\r\nHost:\ $GERRIT_MASTER_1_URL
     http-check expect status 200
     server gerrit-1 $GERRIT_MASTER_1_URL:8080 check inter 10s
     server gerrit-2 $GERRIT_MASTER_2_URL:8080 check inter 10s backup
@@ -57,7 +57,7 @@ backend gerrit-2
 backend ssh
     mode tcp
     option redispatch
-    option httpchk GET /config/server/healthcheck~status HTTP/1.0
+    option httpchk GET /config/server/healthcheck~status HTTP/1.0\r\nHost:\ $GERRIT_MASTER_1_URL
     http-check expect status 200
     balance source
     timeout connect 10s
