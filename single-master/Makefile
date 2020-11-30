@@ -19,7 +19,7 @@ create-all: upload-common-templates \
 						service wait-for-service-creation \
 						dns-routing wait-for-dns-routing-creation
 
-cluster: cluster-keys
+cluster: cluster-keys set-optional-gerrit-master-volume
 ifdef CLUSTER_INSTANCE_TYPE
 		$(eval CLUSTER_OPTIONAL_PARAMS := $(CLUSTER_OPTIONAL_PARAMS) ParameterKey=InstanceType,ParameterValue=$(CLUSTER_INSTANCE_TYPE))
 endif
@@ -28,15 +28,6 @@ ifdef SUBNET_CIDR
 endif
 ifdef VPC_CIDR
 		$(eval CLUSTER_OPTIONAL_PARAMS := $(CLUSTER_OPTIONAL_PARAMS) ParameterKey=VPCCIDR,ParameterValue=$(VPC_CIDR))
-endif
-ifdef GERRIT_VOLUME_ID
-		$(eval CLUSTER_OPTIONAL_PARAMS := $(CLUSTER_OPTIONAL_PARAMS) ParameterKey=GerritVolumeId,ParameterValue=$(GERRIT_VOLUME_ID))
-endif
-ifdef GERRIT_VOLUME_SNAPSHOT_ID
-		$(eval CLUSTER_OPTIONAL_PARAMS := $(CLUSTER_OPTIONAL_PARAMS) ParameterKey=GerritVolumeSnapshotId,ParameterValue=$(GERRIT_VOLUME_SNAPSHOT_ID))
-endif
-ifdef GERRIT_VOLUME_SIZE_IN_GIB
-		$(eval CLUSTER_OPTIONAL_PARAMS := $(CLUSTER_OPTIONAL_PARAMS) ParameterKey=GerritVolumeSizeInGiB,ParameterValue=$(GERRIT_VOLUME_SIZE_IN_GIB))
 endif
 
 	$(AWS_FC_COMMAND) create-stack \
@@ -50,7 +41,8 @@ endif
 		ParameterKey=InternetGatewayIdProp,ParameterValue=$(INTERNET_GATEWAY_ID) \
 		ParameterKey=VPCIdProp,ParameterValue=$(VPC_ID) \
 		ParameterKey=SubnetIdProp,ParameterValue=$(SUBNET_ID) \
-		$(CLUSTER_OPTIONAL_PARAMS)
+		$(CLUSTER_OPTIONAL_PARAMS) \
+		$(GERRIT_OPTIONAL_MASTER_VOLUME)
 
 service: set-optional-params-metrics-cloudwatch set-optional-params-smtp set-ldap-account-pattern set-optional-gerrit-ulimits set-optional-jgit-conf
 ifdef LOAD_BALANCER_SCHEME

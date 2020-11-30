@@ -81,3 +81,15 @@ set-optional-jgit-conf:
 ifdef JGIT_OPEN_FILES
 		$(eval JGIT_OPTIONAL_PARAMS := ParameterKey=JgitOpenFiles,ParameterValue=$(JGIT_OPEN_FILES))
 endif
+
+set-optional-gerrit-master-volume:
+	$(eval GERRIT_OPTIONAL_MASTER_VOLUME=)
+ifdef GERRIT_VOLUME_ID
+		$(eval GERRIT_OPTIONAL_MASTER_VOLUME := $(GERRIT_OPTIONAL_MASTER_VOLUME) ParameterKey=GerritVolumeId,ParameterValue=$(GERRIT_VOLUME_ID))
+endif
+ifdef GERRIT_VOLUME_SNAPSHOT_ID
+		$(eval GERRIT_OPTIONAL_MASTER_VOLUME := $(GERRIT_OPTIONAL_MASTER_VOLUME) ParameterKey=GerritVolumeSnapshotId,ParameterValue=$(GERRIT_VOLUME_SNAPSHOT_ID))
+endif
+ifdef GERRIT_VOLUME_SIZE_IN_GIB
+		$(eval GERRIT_OPTIONAL_MASTER_VOLUME := $(GERRIT_OPTIONAL_MASTER_VOLUME) ParameterKey=GerritVolumeSizeInGiB,ParameterValue=$(GERRIT_VOLUME_SIZE_IN_GIB))
+endif

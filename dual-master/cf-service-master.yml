@@ -194,13 +194,13 @@ Parameters:
 Mappings:
   Gerrit:
     Volume:
-      Git: gerrit-git-master
-      Websessions: gerrit-ha-websessions-master
-      Data: gerrit-data-master
-      Index: gerrit-index-master
-      Cache: gerrit-cache-master
-      Db: gerrit-db-master
-      Logs: gerrit-logs-master
+      Git: gerrit-git
+      Websessions: gerrit-ha-websessions
+      Data: gerrit-data
+      Index: gerrit-index
+      Cache: gerrit-cache
+      Db: gerrit-db
+      Logs: gerrit-logs
     Service:
       Name: gerrit-master
     LoadBalancer:
@@ -343,15 +343,15 @@ Resources:
                       ContainerPath: /var/gerrit/git
                     - SourceVolume: !FindInMap ['Gerrit', 'Volume', 'Websessions']
                       ContainerPath: /var/gerrit/high-availability
-                    - SourceVolume: !Join ['-', [!FindInMap ['Gerrit', 'Volume', 'Data'], !Ref 'GerritInstanceNumber']]
+                    - SourceVolume: !FindInMap ['Gerrit', 'Volume', 'Data']
                       ContainerPath: /var/gerrit/data
-                    - SourceVolume: !Join ['-', [!FindInMap ['Gerrit', 'Volume', 'Index'], !Ref 'GerritInstanceNumber']]
+                    - SourceVolume: !FindInMap ['Gerrit', 'Volume', 'Index']
                       ContainerPath: /var/gerrit/index
-                    - SourceVolume: !Join ['-', [!FindInMap ['Gerrit', 'Volume', 'Cache'], !Ref 'GerritInstanceNumber']]
+                    - SourceVolume: !FindInMap ['Gerrit', 'Volume', 'Cache']
                       ContainerPath: /var/gerrit/cache
-                    - SourceVolume: !Join ['-', [!FindInMap ['Gerrit', 'Volume', 'Db'], !Ref 'GerritInstanceNumber']]
+                    - SourceVolume: !FindInMap ['Gerrit', 'Volume', 'Db']
                       ContainerPath: /var/gerrit/db
-                    - SourceVolume: !Join ['-', [!FindInMap ['Gerrit', 'Volume', 'Logs'], !Ref 'GerritInstanceNumber']]
+                    - SourceVolume: !FindInMap ['Gerrit', 'Volume', 'Logs']
                       ContainerPath: /var/gerrit/logs
                   Cpu: !Ref GerritCPU
                   Memory: !Ref GerritRAM
@@ -375,42 +375,21 @@ Resources:
               - Name: !FindInMap ['Gerrit', 'Volume', 'Websessions']
                 Host:
                   SourcePath: "/mnt/efs/gerrit-shared/high-availability"
-              - Name: !Join ['-', [!FindInMap ['Gerrit', 'Volume', 'Db'], !Ref 'GerritInstanceNumber']]
-                DockerVolumeConfiguration:
-                  Scope: shared
-                  Autoprovision: true
-                  Driver: local
-                  Labels:
-                    gerrit-db: !Join ['-', [!Ref EnvironmentName, !FindInMap ['Gerrit', 'Volume', 'Db'], !Ref 'GerritInstanceNumber']]
-              - Name: !Join ['-', [!FindInMap ['Gerrit', 'Volume', 'Data'], !Ref 'GerritInstanceNumber']]
-                DockerVolumeConfiguration:
-                  Scope: shared
-                  Autoprovision: true
-                  Driver: local
-                  Labels:
-                    gerrit-data: !Join ['-', [!Ref EnvironmentName, !FindInMap ['Gerrit', 'Volume', 'Data'], !Ref 'GerritInstanceNumber']]
-              - Name: !Join ['-', [!FindInMap ['Gerrit', 'Volume', 'Cache'], !Ref 'GerritInstanceNumber']]
-                DockerVolumeConfiguration:
-                  Scope: shared
-                  Autoprovision: true
-                  Driver: local
-                  Labels:
-                    gerrit-cache: !Join ['-', [!Ref EnvironmentName, !FindInMap ['Gerrit', 'Volume', 'Cache'], !Ref 'GerritInstanceNumber']]
-              - Name: !Join ['-', [!FindInMap ['Gerrit', 'Volume', 'Index'], !Ref 'GerritInstanceNumber']]
-                DockerVolumeConfiguration:
-                  Scope: shared
-                  Autoprovision: true
-                  Driver: local
-                  Labels:
-                    gerrit-index: !Join ['-', [!Ref EnvironmentName, !FindInMap ['Gerrit', 'Volume', 'Index'], !Ref 'GerritInstanceNumber']]
-              - Name: !Join ['-', [!FindInMap ['Gerrit', 'Volume', 'Logs'], !Ref 'GerritInstanceNumber']]
-                DockerVolumeConfiguration:
-                  Scope: shared
-                  Autoprovision: true
-                  Driver: local
-                  Labels:
-                    gerrit-logs: !Join ['-', [!Ref EnvironmentName, !FindInMap ['Gerrit', 'Volume', 'Logs'], !Ref 'GerritInstanceNumber']]
-
+              - Name: !FindInMap ['Gerrit', 'Volume', 'Db']
+                Host:
+                  SourcePath: !Join ['/', ["/gerrit-mount-point", !FindInMap ['Gerrit', 'Volume', 'Db']]]
+              - Name: !FindInMap ['Gerrit', 'Volume', 'Data']
+                Host:
+                  SourcePath: !Join ['/', ["/gerrit-mount-point", !FindInMap ['Gerrit', 'Volume', 'Data']]]
+              - Name: !FindInMap ['Gerrit', 'Volume', 'Cache']
+                Host:
+                  SourcePath: !Join ['/', ["/gerrit-mount-point", !FindInMap ['Gerrit', 'Volume', 'Cache']]]
+              - Name: !FindInMap ['Gerrit', 'Volume', 'Index']
+                Host:
+                  SourcePath: !Join ['/', ["/gerrit-mount-point", !FindInMap ['Gerrit', 'Volume', 'Index']]]
+              - Name: !FindInMap ['Gerrit', 'Volume', 'Logs']
+                Host:
+                  SourcePath: !Join ['/', ["/gerrit-mount-point", !FindInMap ['Gerrit', 'Volume', 'Logs']]]
 
     LoadBalancer:
         Type: AWS::ElasticLoadBalancingV2::LoadBalancer
