@@ -47,7 +47,7 @@ create-all: upload-common-templates \
 						service-lb wait-for-service-lb-creation \
 						dns-routing wait-for-dns-routing-creation
 
-cluster: cluster-keys
+cluster: cluster-keys set-optional-gerrit-master-volume
 ifdef CLUSTER_INSTANCE_TYPE
 		$(eval CLUSTER_OPTIONAL_PARAMS := $(CLUSTER_OPTIONAL_PARAMS) ParameterKey=InstanceType,ParameterValue=$(CLUSTER_INSTANCE_TYPE))
 endif
@@ -84,7 +84,8 @@ endif
 		ParameterKey=InternetGatewayIdProp,ParameterValue=$(INTERNET_GATEWAY_ID) \
 		ParameterKey=VPCIdProp,ParameterValue=$(VPC_ID) \
 		ParameterKey=SubnetIdProp,ParameterValue=$(SUBNET_ID) \
-		$(CLUSTER_OPTIONAL_PARAMS)
+		$(CLUSTER_OPTIONAL_PARAMS) \
+		$(GERRIT_OPTIONAL_MASTER_VOLUME)
 
 service-master-1: set-optional-params-metrics-cloudwatch set-optional-params-smtp set-optional-params-multisite set-ldap-account-pattern set-optional-gerrit-ulimits set-optional-jgit-conf
 ifdef GERRIT_MASTER1_INSTANCE_ID

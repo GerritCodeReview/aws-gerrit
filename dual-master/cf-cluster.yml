@@ -73,6 +73,26 @@ Parameters:
     Type: Number
     Default: 2
     MinValue: 2
+  GerritVolumeId:
+    Description: Existing Gerrit volume id
+    Type: String
+    Default: ""
+  GerritVolumeSnapshotId:
+    Description: Id of the EBS snapshot for Gerrit volume
+    Type: String
+    Default: ""
+  GerritVolumeAttachMaxRetries:
+    Description: Maximum number of retries when attaching Gerrit Volume
+    Type: Number
+    Default: 5
+  GerritVolumeAttachRetryDelay:
+    Description: The delay in seconds between Gerrit Volume attach attempts
+    Type: Number
+    Default: 5
+  GerritVolumeSizeInGiB:
+    Description: Gerrit volume size in GiB
+    Type: Number
+    Default: 10
 
 Conditions:
   isProvisionedThroughput: !Equals [!Ref FileSystemThroughputMode, "provisioned"]
@@ -198,6 +218,12 @@ Resources:
         SubnetId: !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneRef
         LogGroupName: !Ref AWS::StackName
         MasterMaxCount: !Ref MasterMaxCount
+        GerritVolumeAttachMaxRetries: !Ref GerritVolumeAttachMaxRetries
+        GerritVolumeAttachRetryDelay: !Ref GerritVolumeAttachRetryDelay
+        GerritVolumeId: !Ref GerritVolumeId
+        GerritVolumeSnapshotId: !Ref GerritVolumeSnapshotId
+        GerritVolumeSizeInGiB: !Ref GerritVolumeSizeInGiB
+        TemplateBucketName: !Ref TemplateBucketName
 
   Master2ASG:
     Type: AWS::CloudFormation::Stack
@@ -217,6 +243,12 @@ Resources:
         SubnetId: !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneRef
         LogGroupName: !Ref AWS::StackName
         MasterMaxCount: !Ref MasterMaxCount
+        GerritVolumeAttachMaxRetries: !Ref GerritVolumeAttachMaxRetries
+        GerritVolumeAttachRetryDelay: !Ref GerritVolumeAttachRetryDelay
+        GerritVolumeId: !Ref GerritVolumeId
+        GerritVolumeSnapshotId: !Ref GerritVolumeSnapshotId
+        GerritVolumeSizeInGiB: !Ref GerritVolumeSizeInGiB
+        TemplateBucketName: !Ref TemplateBucketName
 
   EC2InstanceProfile:
     Type: AWS::IAM::InstanceProfile
@@ -255,6 +287,8 @@ Resources:
               - 'ecr:GetAuthorizationToken'
               - 'ecr:BatchGetImage'
               - 'ecr:GetDownloadUrlForLayer'
+              - 'ec2:AttachVolume'
+              - 'ec2:DescribeVolumes'
             Resource: '*'
   FileSystem:
     Type: AWS::EFS::FileSystem
