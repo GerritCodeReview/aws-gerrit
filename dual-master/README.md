@@ -110,6 +110,12 @@ default: `256`.
 * `HA_PROXY_DESIRED_COUNT`: Optional. Desired number of haproxy services.
 "2" by default. Minimum: "2".
 
+* `GERRIT_VOLUME_ID` : Optional. Id of an extisting EBS volume. If empty, a new volume
+for Gerrit data will be created
+* `GERRIT_VOLUME_SNAPSHOT_ID` : Optional. Ignored if GERRIT_VOLUME_ID is not empty. Id of
+the EBS volume snapshot used to create new EBS volume for Gerrit data.
+* `GERRIT_VOLUME_SIZE_IN_GIB`: Optional. The size of the Gerrit data volume, in GiBs. `10` by default.
+
 *Note* ha-proxies are running on ec2 instances with a ratio of 1 to 1: each
 ec2 node hosts one and only one ha-proxy. By increasing the number of desired
 ha-proxies then, the size of the autoscaling group hosting them also increases
