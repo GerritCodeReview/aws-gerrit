@@ -57,6 +57,9 @@ endif
 ifdef FILESYSTEM_PROVISIONED_THROUGHPUT_IN_MIBPS
 		$(eval CLUSTER_OPTIONAL_PARAMS := $(CLUSTER_OPTIONAL_PARAMS) ParameterKey=ProvisionedThroughputInMibps,ParameterValue=$(FILESYSTEM_PROVISIONED_THROUGHPUT_IN_MIBPS))
 endif
+ifdef FILESYSTEM_ID
+		$(eval CLUSTER_OPTIONAL_PARAMS := $(CLUSTER_OPTIONAL_PARAMS) ParameterKey=FileSystemID,ParameterValue=$(FILESYSTEM_ID))
+endif
 ifdef SUBNET_CIDR
 		$(eval CLUSTER_OPTIONAL_PARAMS := $(CLUSTER_OPTIONAL_PARAMS) ParameterKey=SubnetCIDR,ParameterValue=$(SUBNET_CIDR))
 endif
@@ -100,6 +103,9 @@ endif
 ifdef MULTISITE_GLOBAL_PROJECTS
 		$(eval REMOTE_OPTIONAL_PARAMS := $(REMOTE_OPTIONAL_PARAMS) ParameterKey=MultiSiteGlobalProjects,ParameterValue=\"$(MULTISITE_GLOBAL_PROJECTS)\")
 endif
+ifdef GERRIT_VOLUME_SNAPSHOT_ID
+		$(eval MASTER1_OPTIONAL_REINDEX_AT_STARTUP := ParameterKey=ReindexAtSartup,ParameterValue=true)
+endif
 
 	$(AWS_FC_COMMAND) create-stack \
 		--stack-name $(SERVICE_MASTER1_STACK_NAME) \
@@ -132,6 +138,7 @@ endif
 		ParameterKey=GerritCPU,ParameterValue=$(GERRIT_CPU) \
 		ParameterKey=GerritHeapLimit,ParameterValue=$(GERRIT_HEAP_LIMIT) \
 		ParameterKey=JgitCacheSize,ParameterValue=$(JGIT_CACHE_SIZE) \
+		$(MASTER1_OPTIONAL_REINDEX_AT_STARTUP) \
 		$(JGIT_OPTIONAL_PARAMS) \
 		$(MULTISITE_OPTIONAL_PARAMS) \
 		$(REMOTE_OPTIONAL_PARAMS) \

@@ -53,6 +53,10 @@ Parameters:
     Type: String
     Default: bursting
     AllowedValues: [bursting, provisioned]
+  FileSystemID:
+    Description: the id of the EFS filesystem to mount
+    Type: String
+    Default: ""
   ProvisionedThroughputInMibps:
     Description:  The fs throughput, measured in MiB/s. Valid values are 1-1024.
     Type: Number
@@ -93,9 +97,15 @@ Parameters:
     Description: Gerrit volume size in GiB
     Type: Number
     Default: 10
+  RetainFileSystem:
+    Description: Whether to retain the Git FileSystem
+    Type: String
+    Default: false
+    AllowedValues: [true, false]
 
 Conditions:
   isProvisionedThroughput: !Equals [!Ref FileSystemThroughputMode, "provisioned"]
+  CreateEFS: !Equals [!Ref FileSystemID, ""]
 
 Resources:
   # ECS Resources
@@ -214,7 +224,7 @@ Resources:
         ECSCluster: !Ref ECSCluster
         EC2SecurityGroup: !Ref EcsHostSecurityGroup
         EC2InstanceProfile: !Ref EC2InstanceProfile
-        FileSystem: !Ref FileSystem
+        FileSystem: !If [CreateEFS, !Ref FileSystem, !Ref FileSystemID ]
         SubnetId: !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneRef
         LogGroupName: !Ref AWS::StackName
         MasterMaxCount: !Ref MasterMaxCount
@@ -239,7 +249,7 @@ Resources:
         ECSCluster: !Ref ECSCluster
         EC2SecurityGroup: !Ref EcsHostSecurityGroup
         EC2InstanceProfile: !Ref EC2InstanceProfile
-        FileSystem: !Ref FileSystem
+        FileSystem: !If [CreateEFS, !Ref FileSystem, !Ref FileSystemID ]
         SubnetId: !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneRef
         LogGroupName: !Ref AWS::StackName
         MasterMaxCount: !Ref MasterMaxCount
@@ -290,23 +300,32 @@ Resources:
               - 'ec2:AttachVolume'
               - 'ec2:DescribeVolumes'
             Resource: '*'
+
   FileSystem:
     Type: AWS::EFS::FileSystem
+    Condition: CreateEFS
+    DeletionPolicy: Retain
     Properties:
       ThroughputMode: !Ref FileSystemThroughputMode
       ProvisionedThroughputInMibps: !If [isProvisionedThroughput, !Ref ProvisionedThroughputInMibps, !Ref "AWS::NoValue"]
       FileSystemTags:
         - Key: Name
           Value: "multi-master-git-repo"
+
   GitMountTarget:
     Type: AWS::EFS::MountTarget
+    Condition: CreateEFS
+    DeletionPolicy: Retain
     Properties:
       FileSystemId: !Ref FileSystem
       SubnetId: !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneRef
       SecurityGroups:
         - !Ref MountTargetSecurityGroup
+
   MountTargetSecurityGroup:
     Type: AWS::EC2::SecurityGroup
+    Condition: CreateEFS
+    DeletionPolicy: Retain
     Properties:
       VpcId: !GetAtt ECSTaskNetworkStack.Outputs.VPCRef
       GroupDescription: "Security group for mount target"
@@ -315,6 +334,7 @@ Resources:
           FromPort: 2049
           ToPort: 2049
           CidrIp: !GetAtt ECSTaskNetworkStack.Outputs.PublicOneCIDR
+
   ECSTaskNetworkStack:
     Type: AWS::CloudFormation::Stack
     Properties:
