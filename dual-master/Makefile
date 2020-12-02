@@ -60,6 +60,9 @@ endif
 ifdef FILESYSTEM_ID
 		$(eval CLUSTER_OPTIONAL_PARAMS := $(CLUSTER_OPTIONAL_PARAMS) ParameterKey=FileSystemID,ParameterValue=$(FILESYSTEM_ID))
 endif
+ifdef RETAIN_FILESYSTEM
+		$(eval CLUSTER_OPTIONAL_PARAMS := $(CLUSTER_OPTIONAL_PARAMS) ParameterKey=RetailFileSystem,ParameterValue=$(RETAIN_FILESYSTEM))
+endif
 ifdef SUBNET_CIDR
 		$(eval CLUSTER_OPTIONAL_PARAMS := $(CLUSTER_OPTIONAL_PARAMS) ParameterKey=SubnetCIDR,ParameterValue=$(SUBNET_CIDR))
 endif
