@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a7ac3f07_b9bc8d0e",
+        "filename": "gerrit/etc/high-availability.config.template",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-12-02T13:07:31Z",
+      "side": 1,
+      "message": "You should also set autoReindex.pollInterval, otherwise the autoReindex isn\u0027t effective:\nhttps://gerrit.googlesource.com/plugins/high-availability/+/refs/heads/master/src/main/resources/Documentation/config.md",
+      "revId": "71c5124e7f8ce65b5b0bad1fe5084c1e3f2551dd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
