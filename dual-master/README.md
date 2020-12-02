@@ -117,10 +117,12 @@ the EBS volume snapshot used to create new EBS volume for Gerrit data.
 * `GERRIT_VOLUME_SIZE_IN_GIB`: Optional. The size of the Gerrit data volume, in GiBs. `10` by default.
 * `FILESYSTEM_ID`: Optional. An existing EFS filesystem id.
 
-    If empty, a new EFS will be created to store git data.
-    Setting this value is required when deploying a dual-master cluster using
-    existing data as well as performing blue/green deployments.
-    When set, this will force a reindex of gerrit at startup, so that the Gerrit
+    If empty, a new EFS to store git data and related mount target and security
+    group will be created as a nested stack.
+    The nested stack will be *retained* when the cluster is deleted, so that
+    existing data can be used to perform blue/green deployments.
+
+    When set, this will force a reindex of Gerrit at startup, so that the Gerrit
     index is kept in sync with the git data provided over EFS.
 
 *Note* ha-proxies are running on ec2 instances with a ratio of 1 to 1: each
