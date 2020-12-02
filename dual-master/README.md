@@ -131,6 +131,8 @@ the EBS volume snapshot used to create new EBS volume for Gerrit data.
     If empty, a new EFS will be created to store git data.
     Setting this value is required when deploying a dual-master cluster using
     existing data as well as performing blue/green deployments.
+    The nested stack will be *retained* when the cluster is deleted, so that
+    existing data can be used to perform blue/green deployments.
 
 #### REPLICATION SERVICE
 
@@ -243,6 +245,7 @@ Note that this will *not* delete:
 * Secrets stored in Secret Manager
 * SSL certificates
 * ECR repositories
+* EFS stack
 
 ### Access your Gerrit instances
 

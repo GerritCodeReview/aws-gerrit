@@ -19,6 +19,7 @@ endif
 	aws s3 cp ../common-templates/cf-gerrit-network-stack.yml s3://$(TEMPLATE_BUCKET_NAME)/
 	aws s3 cp ../common-templates/cf-gerrit-volume.yml s3://$(TEMPLATE_BUCKET_NAME)/
 	aws s3 cp ../common-templates/cf-master-asg.yml s3://$(TEMPLATE_BUCKET_NAME)/
+	aws s3 cp ../common-templates/cf-efs-stack.yml s3://$(TEMPLATE_BUCKET_NAME)/
 
 set-optional-params-metrics-cloudwatch:
 ifdef METRICS_CLOUDWATCH_ENABLED
