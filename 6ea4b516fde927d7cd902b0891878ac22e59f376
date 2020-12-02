@@ -48,6 +48,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0cc19321_ae8c7474",
+        "filename": "common-templates/cf-master-asg.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-12-02T12:46:32Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3258b40d_98978e18",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 16
+      },
+      "revId": "6ea4b516fde927d7cd902b0891878ac22e59f376",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "897f173b_fe38828d",
@@ -203,6 +227,30 @@
       "side": 1,
       "message": "line #106 needs to be executed regardless we are using an existing volume, or one that has just been created: in both cases we need to attach it and mount it.\n\nThe if(injectVolume) thing, is only going to affect whether to format it or not.\n\nThis code is grabbed from the single-master recipe (I would have factored it out if it was possible, but I couldn\u0027t find any way in CF do so so :/)\n\nWDTY?",
       "parentUuid": "2eef0dc2_da18633d",
+      "range": {
+        "startLine": 119,
+        "startChar": 0,
+        "endLine": 135,
+        "endChar": 12
+      },
+      "revId": "6ea4b516fde927d7cd902b0891878ac22e59f376",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fdb76632_6a33f1f8",
+        "filename": "common-templates/cf-master-asg.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-12-02T12:46:32Z",
+      "side": 1,
+      "message": "\u003e line #106 needs to be executed regardless we are using an existing volume, or one that has just been created: in both cases we need to attach it and mount it.\n\u003e \n\nYep, I didn\u0027t read it properly.\n\nLet\u0027s leave it as it is",
+      "parentUuid": "d4f6b860_17caf1a4",
       "range": {
         "startLine": 119,
         "startChar": 0,
