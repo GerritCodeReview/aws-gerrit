@@ -51,10 +51,86 @@ over the EFS volume, which is mounted by the master instances.
 However, it has some [costs associated](https://aws.amazon.com/efs/pricing/).
 If you are dealing with small repos, you can switch to burst mode.
 
+#### Deploying using pre-existing data.
+
+Gerrit stores information in two volumes: git data (and possibly websessions,
+when not using multi-site) are shared across Gerrit nodes and therefore
+persisted in the EFS volume, whilst cache, logs, plugins data and indexes are
+local to each specific Gerrit node and thus stored in the EBS volume.
+
+In order to deploy a Gerrit instance that runs on pre-existing data, the EFS
+volume and an EBS snapshot need to be specified in the `setup.env` file (see
+[configuration](#environment)) for more information on how to do this.
+
+Referring to persistent volumes allows to perform [blue-green deployments](#bluegreen-deployment).
+
 ### Deployment type
 
 * Latest Gerrit version deployed using the official [Docker image](https://hub.docker.com/r/gerritcodereview/gerrit)
 * Application deployed in ECS on a single EC2 instance
+
+#### Blue/Green deployment
+
+When a dual-master stack is created, unless otherwise specified, a new EFS is
+created and a two new empty EBSs are attached to master1 and master2,
+respectively.
+
+In a [blue/green deployment](https://en.wikipedia.org/wiki/Blue-green_deployment)
+scenario, this initial stack is called the *blue* stack.
+
+```bash
+make AWS_REGION=us-east-1 AWS_PREFIX=gerrit-blue create-all
+```
+
+Later on (days, weeks, months), the need of a change arises, for which a new
+version of the cluster needs to be deployed: this will be the _green_ stack and
+it will need to be deployed as such:
+
+1. Take master1 EBS snapshot of volume attached to /dev/xvdg (note, this needs
+to be done in a read only window). Ideally this step is already performed
+regularly by a backup script.
+
+2. Update the `setup.env` to point to existing volumes, for example:
+
+```bash
+FILESYSTEM_ID=fs-c621b733
+GERRIT_VOLUME_SNAPSHOT_ID=snap-0afa165bdf4881915
+```
+
+If the network stack was created as part of this deployment (i.e. a new VPC was
+created as part of this deployment), then you need to set network resources so
+that the green stack can be deployed in the same VPC, for example:
+
+```bash
+VPC_ID=vpc-08d2159c53f7a1ff5
+INTERNET_GATEWAY_ID=igw-0c0577829910ce7f3
+SUBNET_ID=subnet-05efd67802b1cbd5b
+```
+
+3. Deploy the *green* stack:
+
+```bash
+make AWS_REGION=us-east-1 AWS_PREFIX=gerrit-green create-all
+```
+
+4. Once the green stack comes up, Gerrit will start reindexing the changes
+that have been created between the time the EBS snapshot was taken and now.
+This will happen in background and might take some time depending on how old
+the snapshot was.
+
+Once you are happy the green stack is aligned and healthy you can switch to the
+Route53 DNS to the new green stack.
+
+5. You can leave the blue stack running as long as you want, so that you can
+always rollback to it. Once ready you can delete the blue stack as follows:
+
+ ```bash
+ make AWS_REGION=us-east-1 AWS_PREFIX=gerrit-blue create-all
+ ```
+
+Note that, even if the EFS resources were created as part of the blue stack,
+they will be retained during the stack deletion, so that they can still be used
+by the green stack.
 
 ### Logging
 
