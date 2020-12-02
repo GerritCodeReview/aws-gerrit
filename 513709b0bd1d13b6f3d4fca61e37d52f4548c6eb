@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "956dce6f_9ca41cfd",
+        "filename": "common-templates/cf-efs-stack.yml",
+        "patchSetId": 8
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-12-02T16:34:20Z",
+      "side": 1,
+      "message": "Wrong description.",
+      "range": {
+        "startLine": 2,
+        "startChar": 13,
+        "endLine": 4,
+        "endChar": 40
+      },
+      "revId": "513709b0bd1d13b6f3d4fca61e37d52f4548c6eb",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "18cb9bdd_50018d5d",
+        "filename": "common-templates/cf-efs-stack.yml",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-12-02T16:34:20Z",
+      "side": 1,
+      "message": "The",
+      "range": {
+        "startLine": 16,
+        "startChar": 17,
+        "endLine": 16,
+        "endChar": 19
+      },
+      "revId": "513709b0bd1d13b6f3d4fca61e37d52f4548c6eb",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2609ba42_491a8256",
+        "filename": "dual-master/README.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-12-02T16:34:20Z",
+      "side": 1,
+      "message": "Shall we add instruction on how to delete it if needed?",
+      "range": {
+        "startLine": 134,
+        "startChar": 3,
+        "endLine": 136,
+        "endChar": 0
+      },
+      "revId": "513709b0bd1d13b6f3d4fca61e37d52f4548c6eb",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
