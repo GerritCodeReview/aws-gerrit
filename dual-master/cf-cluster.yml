@@ -53,6 +53,10 @@ Parameters:
     Type: String
     Default: bursting
     AllowedValues: [bursting, provisioned]
+  FileSystemID:
+    Description: the id of the EFS filesystem to mount
+    Type: String
+    Default: ""
   ProvisionedThroughputInMibps:
     Description:  The fs throughput, measured in MiB/s. Valid values are 1-1024.
     Type: Number
@@ -96,6 +100,7 @@ Parameters:
 
 Conditions:
   isProvisionedThroughput: !Equals [!Ref FileSystemThroughputMode, "provisioned"]
+  CreateEFS: !Equals [!Ref FileSystemID, ""]
 
 Resources:
   # ECS Resources
@@ -214,7 +219,7 @@ Resources:
         ECSCluster: !Ref ECSCluster
         EC2SecurityGroup: !Ref EcsHostSecurityGroup
         EC2InstanceProfile: !Ref EC2InstanceProfile
-        FileSystem: !Ref FileSystem
+        FileSystem: !If [CreateEFS, !Ref FileSystem, !Ref FileSystemID ]
         SubnetId: !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneRef
         LogGroupName: !Ref AWS::StackName
         MasterMaxCount: !Ref MasterMaxCount
@@ -239,7 +244,7 @@ Resources:
         ECSCluster: !Ref ECSCluster
         EC2SecurityGroup: !Ref EcsHostSecurityGroup
         EC2InstanceProfile: !Ref EC2InstanceProfile
-        FileSystem: !Ref FileSystem
+        FileSystem: !If [CreateEFS, !Ref FileSystem, !Ref FileSystemID ]
         SubnetId: !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneRef
         LogGroupName: !Ref AWS::StackName
         MasterMaxCount: !Ref MasterMaxCount
@@ -292,6 +297,7 @@ Resources:
             Resource: '*'
   FileSystem:
     Type: AWS::EFS::FileSystem
+    Condition: CreateEFS
     Properties:
       ThroughputMode: !Ref FileSystemThroughputMode
       ProvisionedThroughputInMibps: !If [isProvisionedThroughput, !Ref ProvisionedThroughputInMibps, !Ref "AWS::NoValue"]
@@ -300,6 +306,7 @@ Resources:
           Value: "multi-master-git-repo"
   GitMountTarget:
     Type: AWS::EFS::MountTarget
+    Condition: CreateEFS
     Properties:
       FileSystemId: !Ref FileSystem
       SubnetId: !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneRef
@@ -307,6 +314,7 @@ Resources:
         - !Ref MountTargetSecurityGroup
   MountTargetSecurityGroup:
     Type: AWS::EC2::SecurityGroup
+    Condition: CreateEFS
     Properties:
       VpcId: !GetAtt ECSTaskNetworkStack.Outputs.VPCRef
       GroupDescription: "Security group for mount target"
