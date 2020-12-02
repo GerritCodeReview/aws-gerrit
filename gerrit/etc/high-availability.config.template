@@ -7,6 +7,9 @@
 [peerInfo "static"]
   url = {{ HA_PEER_URL }}
 
+[autoReindex]
+  enabled = true
+
 {% if MULTISITE_ENABLED is defined and MULTISITE_ENABLED == "true" %}
 [websession]
   synchronize = false
