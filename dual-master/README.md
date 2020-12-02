@@ -132,6 +132,9 @@ Note that, even if the EFS resources were created as part of the blue stack,
 they will be retained during the stack deletion, so that they can still be used
 by the green stack.
 
+This includes EFS as well as VPC resources (if they were created as part of the
+blue stack).
+
 ### Logging
 
 * All the logs are forwarded to AWS CloudWatch in the LogGroup with the cluster
