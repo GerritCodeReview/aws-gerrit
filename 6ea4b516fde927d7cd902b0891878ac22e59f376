@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "208d2f8e_2e8be749",
+        "filename": "common-templates/cf-master-asg.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-12-02T09:45:21Z",
+      "side": 1,
+      "message": "shall we default those values in here?",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 16
+      },
+      "revId": "6ea4b516fde927d7cd902b0891878ac22e59f376",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "897f173b_fe38828d",
+        "filename": "common-templates/cf-master-asg.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-12-02T09:45:21Z",
+      "side": 1,
+      "message": "might be useful to add the number of retry \"bla bla bla ($retryNumber/$maxRetry)\"",
+      "range": {
+        "startLine": 107,
+        "startChar": 12,
+        "endLine": 107,
+        "endChar": 95
+      },
+      "revId": "6ea4b516fde927d7cd902b0891878ac22e59f376",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7cdc8fca_6e51b383",
+        "filename": "common-templates/cf-master-asg.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-12-02T09:45:21Z",
+      "side": 1,
+      "message": "maybe add number of retries? \"Could not attach the volume $VOLUME_ID to the instace $EC2_INSTANCE_ID after $GerritVolumeAttachMaxRetries attempts\"",
+      "range": {
+        "startLine": 113,
+        "startChar": 14,
+        "endLine": 113,
+        "endChar": 91
+      },
+      "revId": "6ea4b516fde927d7cd902b0891878ac22e59f376",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2eef0dc2_da18633d",
+        "filename": "common-templates/cf-master-asg.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-12-02T09:45:21Z",
+      "side": 1,
+      "message": "If I understand well this logic this condition tells me if we want to mount volumes from outside or not:  [\"${GerritVolumeId}\" \u003d \"\" \u0026\u0026 \"${GerritVolumeSnapshotId}\" \u003d \"\"]\n\nIf that if the case what about changing assigning the logic in this way (pseudocode below):\n\ninjectVolume \u003d \"${GerritVolumeId}\" \u003d \"\" \u0026\u0026 \"${GerritVolumeSnapshotId}\" \u003d \"\" ]\n\nif (injectVolume) {\n   ...loop to inject volume (line #106)\n\n} else {\n\n   ...create and mount volume... \n}",
+      "range": {
+        "startLine": 119,
+        "startChar": 0,
+        "endLine": 135,
+        "endChar": 12
+      },
+      "revId": "6ea4b516fde927d7cd902b0891878ac22e59f376",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
