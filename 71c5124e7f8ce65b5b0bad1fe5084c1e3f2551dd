@@ -16,6 +16,24 @@
       "message": "You should also set autoReindex.pollInterval, otherwise the autoReindex isn\u0027t effective:\nhttps://gerrit.googlesource.com/plugins/high-availability/+/refs/heads/master/src/main/resources/Documentation/config.md",
       "revId": "71c5124e7f8ce65b5b0bad1fe5084c1e3f2551dd",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a9fb8b4d_d549cd51",
+        "filename": "gerrit/etc/high-availability.config.template",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-12-02T13:17:39Z",
+      "side": 1,
+      "message": "This is still going to happen at Gerrit startup, even without pollInterval, right?\n\nFrom the docs, autoReindex.enabled:\n\"...At startup scans all the changes, ...\"\n\nAs I understand, pollInterval allows reindexing to happen _during_ gerrit lifespan, at regular intervals.\n\nIf that\u0027s the case, then setting autoReindex.enable should be enough to allow installing from a snapshot and allowing blue/green deployment.\n\nI don\u0027t mind setting pollInterval (perhaps as a followup change), but what would it be a good default? and should it be configurable?",
+      "parentUuid": "a7ac3f07_b9bc8d0e",
+      "revId": "71c5124e7f8ce65b5b0bad1fe5084c1e3f2551dd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
