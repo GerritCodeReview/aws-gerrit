@@ -97,10 +97,16 @@ Parameters:
     Description: Gerrit volume size in GiB
     Type: Number
     Default: 10
+  RetainFileSystem:
+    Description: Whether to retain the EFS FileSystem when deleting the stack
+    Type: String
+    Default: false
+    AllowedValues: [true, false]
 
 Conditions:
   isProvisionedThroughput: !Equals [!Ref FileSystemThroughputMode, "provisioned"]
   CreateEFS: !Equals [!Ref FileSystemID, ""]
+  RetainFileSystem: !Equals [!Ref RetainFileSystem, "true"]
 
 Resources:
   # ECS Resources
@@ -298,6 +304,7 @@ Resources:
   FileSystem:
     Type: AWS::EFS::FileSystem
     Condition: CreateEFS
+    DeletionPolicy: !If [RetainFileSystem, "Retain", !Ref "AWS::NoValue"]
     Properties:
       ThroughputMode: !Ref FileSystemThroughputMode
       ProvisionedThroughputInMibps: !If [isProvisionedThroughput, !Ref ProvisionedThroughputInMibps, !Ref "AWS::NoValue"]
@@ -307,6 +314,7 @@ Resources:
   GitMountTarget:
     Type: AWS::EFS::MountTarget
     Condition: CreateEFS
+    DeletionPolicy: !If [RetainFileSystem, "Retain", !Ref "AWS::NoValue"]
     Properties:
       FileSystemId: !Ref FileSystem
       SubnetId: !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneRef
@@ -315,6 +323,7 @@ Resources:
   MountTargetSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Condition: CreateEFS
+    DeletionPolicy: !If [RetainFileSystem, "Retain", !Ref "AWS::NoValue"]
     Properties:
       VpcId: !GetAtt ECSTaskNetworkStack.Outputs.VPCRef
       GroupDescription: "Security group for mount target"

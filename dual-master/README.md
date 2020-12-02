@@ -123,6 +123,16 @@ the EBS volume snapshot used to create new EBS volume for Gerrit data.
     When set, this will force a reindex of gerrit at startup, so that the Gerrit
     index is kept in sync with the git data provided over EFS.
 
+* `RETAIN_FILESYSTEM`: Optional. Whether to retain the EFS filesystem upon stack
+deletion. Default: `false`
+
+    This only applies if `FILESYSTEM_ID` is not provided and thus a new EFS
+    is created as part of the stack.
+    Note that also filesystem related resources will be retained, including
+    mount target and mount security group.
+    This is useful when deploying a dual-master cluster using existing data as
+    well as performing blue/green deployments.
+
 *Note* ha-proxies are running on ec2 instances with a ratio of 1 to 1: each
 ec2 node hosts one and only one ha-proxy. By increasing the number of desired
 ha-proxies then, the size of the autoscaling group hosting them also increases
