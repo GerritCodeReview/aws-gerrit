@@ -115,6 +115,11 @@ for Gerrit data will be created
 * `GERRIT_VOLUME_SNAPSHOT_ID` : Optional. Ignored if GERRIT_VOLUME_ID is not empty. Id of
 the EBS volume snapshot used to create new EBS volume for Gerrit data.
 * `GERRIT_VOLUME_SIZE_IN_GIB`: Optional. The size of the Gerrit data volume, in GiBs. `10` by default.
+* `FILESYSTEM_ID`: Optional. An existing EFS filesystem id.
+
+    If empty, a new EFS will be created to store git data.
+    Setting this value is required when deploying a dual-master cluster using
+    existing data as well as performing blue/green deployments.
 
 *Note* ha-proxies are running on ec2 instances with a ratio of 1 to 1: each
 ec2 node hosts one and only one ha-proxy. By increasing the number of desired
