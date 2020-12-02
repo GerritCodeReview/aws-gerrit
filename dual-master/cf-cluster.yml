@@ -219,7 +219,7 @@ Resources:
         ECSCluster: !Ref ECSCluster
         EC2SecurityGroup: !Ref EcsHostSecurityGroup
         EC2InstanceProfile: !Ref EC2InstanceProfile
-        FileSystem: !If [CreateEFS, !Ref FileSystem, !Ref FileSystemID ]
+        FileSystem: !If [CreateEFS, !GetAtt GitFileSystemPermanentStack.Outputs.FileSystemID, !Ref FileSystemID ]
         SubnetId: !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneRef
         LogGroupName: !Ref AWS::StackName
         MasterMaxCount: !Ref MasterMaxCount
@@ -244,7 +244,7 @@ Resources:
         ECSCluster: !Ref ECSCluster
         EC2SecurityGroup: !Ref EcsHostSecurityGroup
         EC2InstanceProfile: !Ref EC2InstanceProfile
-        FileSystem: !If [CreateEFS, !Ref FileSystem, !Ref FileSystemID ]
+        FileSystem: !If [CreateEFS, !GetAtt GitFileSystemPermanentStack.Outputs.FileSystemID, !Ref FileSystemID ]
         SubnetId: !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneRef
         LogGroupName: !Ref AWS::StackName
         MasterMaxCount: !Ref MasterMaxCount
@@ -295,34 +295,21 @@ Resources:
               - 'ec2:AttachVolume'
               - 'ec2:DescribeVolumes'
             Resource: '*'
-  FileSystem:
-    Type: AWS::EFS::FileSystem
+
+  GitFileSystemPermanentStack:
+    Type: AWS::CloudFormation::Stack
+    DeletionPolicy: Retain
     Condition: CreateEFS
     Properties:
-      ThroughputMode: !Ref FileSystemThroughputMode
-      ProvisionedThroughputInMibps: !If [isProvisionedThroughput, !Ref ProvisionedThroughputInMibps, !Ref "AWS::NoValue"]
-      FileSystemTags:
-        - Key: Name
-          Value: "multi-master-git-repo"
-  GitMountTarget:
-    Type: AWS::EFS::MountTarget
-    Condition: CreateEFS
-    Properties:
-      FileSystemId: !Ref FileSystem
-      SubnetId: !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneRef
-      SecurityGroups:
-        - !Ref MountTargetSecurityGroup
-  MountTargetSecurityGroup:
-    Type: AWS::EC2::SecurityGroup
-    Condition: CreateEFS
-    Properties:
-      VpcId: !GetAtt ECSTaskNetworkStack.Outputs.VPCRef
-      GroupDescription: "Security group for mount target"
-      SecurityGroupIngress:
-        - IpProtocol: TCP
-          FromPort: 2049
-          ToPort: 2049
-          CidrIp: !GetAtt ECSTaskNetworkStack.Outputs.PublicOneCIDR
+      TemplateURL: !Join [ '', ['https://', !Ref TemplateBucketName, '.s3.amazonaws.com/cf-efs-stack.yml'] ]
+      TimeoutInMinutes: '25'
+      Parameters:
+        FileSystemThroughputMode: !Ref FileSystemThroughputMode
+        ProvisionedThroughputInMibps: !Ref ProvisionedThroughputInMibps
+        PublicSubnet: !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneRef
+        SecurityGroupVPCID: !GetAtt ECSTaskNetworkStack.Outputs.VPCRef
+        SecurityGroupCidrIp: !GetAtt ECSTaskNetworkStack.Outputs.PublicOneCIDR
+
   ECSTaskNetworkStack:
     Type: AWS::CloudFormation::Stack
     Properties:

@@ -1,0 +1,59 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: A stack for deploying containerized applications onto a cluster of EC2
+  hosts using Elastic Container Service. This stack runs containers on
+  hosts that are in a public VPC subnet.
+Parameters:
+  FileSystemThroughputMode:
+    Description:  Gerrit shared filesystem throughput mode
+    Type: String
+  ProvisionedThroughputInMibps:
+    Description:  The fs throughput, measured in MiB/s. Valid values are 1-1024.
+    Type: Number
+  PublicSubnet:
+    Description: The public subnet into whith allowing this EFS to be mounted on
+    Type: String
+  SecurityGroupVPCID:
+    Description: he ID of the VPC for the security group
+    Type: String
+  SecurityGroupCidrIp:
+    Description: The IPv4 address range for the security group, in CIDR format
+    Type: String
+
+Conditions:
+  isProvisionedThroughput: !Equals [!Ref FileSystemThroughputMode, "provisioned"]
+
+Resources:
+  FileSystem:
+    Type: AWS::EFS::FileSystem
+    Properties:
+      ThroughputMode: !Ref FileSystemThroughputMode
+      ProvisionedThroughputInMibps: !If [isProvisionedThroughput, !Ref ProvisionedThroughputInMibps, !Ref "AWS::NoValue"]
+      FileSystemTags:
+        - Key: Name
+          Value: "multi-master-git-repo"
+
+  GitMountTarget:
+    Type: AWS::EFS::MountTarget
+    Properties:
+      FileSystemId: !Ref FileSystem
+      SubnetId: !Ref PublicSubnet
+      SecurityGroups:
+        - !Ref MountTargetSecurityGroup
+
+  MountTargetSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      VpcId: !Ref SecurityGroupVPCID
+      GroupDescription: "Security group for mount target"
+      SecurityGroupIngress:
+        - IpProtocol: TCP
+          FromPort: 2049
+          ToPort: 2049
+          CidrIp: !Ref SecurityGroupCidrIp
+
+Outputs:
+  FileSystemID:
+    Description: The ID of the permanent EFS filesystem
+    Value: !Ref FileSystem
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'FileSystem' ] ]
