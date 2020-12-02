@@ -34,6 +34,24 @@
       "parentUuid": "a7ac3f07_b9bc8d0e",
       "revId": "71c5124e7f8ce65b5b0bad1fe5084c1e3f2551dd",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a9e9d954_81c3aa84",
+        "filename": "gerrit/etc/high-availability.config.template",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-12-02T13:39:18Z",
+      "side": 1,
+      "message": "I would double-check the code, I can\u0027t remember on the top of my head 😞",
+      "parentUuid": "a9fb8b4d_d549cd51",
+      "revId": "71c5124e7f8ce65b5b0bad1fe5084c1e3f2551dd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
