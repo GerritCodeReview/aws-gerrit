@@ -90,7 +90,10 @@ endif
 		$(CLUSTER_OPTIONAL_PARAMS) \
 		$(GERRIT_OPTIONAL_MASTER_VOLUME)
 
-service-master-1: set-optional-params-metrics-cloudwatch set-optional-params-smtp set-optional-params-multisite set-ldap-account-pattern set-optional-gerrit-ulimits set-optional-jgit-conf
+service-master-1: set-optional-params-metrics-cloudwatch set-optional-params-smtp \
+					set-optional-params-multisite set-ldap-account-pattern \
+					set-optional-gerrit-ulimits set-optional-jgit-conf \
+					set-high-availability-optional-params
 ifdef GERRIT_MASTER1_INSTANCE_ID
 		$(eval MASTER1_SERVICE_OPTIONAL_PARAMS := $(MASTER1_SERVICE_OPTIONAL_PARAMS) ParameterKey=InstanceId,ParameterValue=$(GERRIT_MASTER1_INSTANCE_ID))
 endif
@@ -135,6 +138,7 @@ endif
 		ParameterKey=GerritCPU,ParameterValue=$(GERRIT_CPU) \
 		ParameterKey=GerritHeapLimit,ParameterValue=$(GERRIT_HEAP_LIMIT) \
 		ParameterKey=JgitCacheSize,ParameterValue=$(JGIT_CACHE_SIZE) \
+		$(HA_OPTIONAL_PARAMS) \
 		$(JGIT_OPTIONAL_PARAMS) \
 		$(MULTISITE_OPTIONAL_PARAMS) \
 		$(REMOTE_OPTIONAL_PARAMS) \
@@ -144,7 +148,10 @@ endif
 		$(SMTP_OPTIONAL_PARAMS) \
 		$(GERRIT_ULIMITS)
 
-service-master-2: set-optional-params-metrics-cloudwatch set-optional-params-smtp set-optional-params-multisite set-ldap-account-pattern set-optional-gerrit-ulimits set-optional-jgit-conf
+service-master-2: set-optional-params-metrics-cloudwatch set-optional-params-smtp \
+					set-optional-params-multisite set-ldap-account-pattern \
+					set-optional-gerrit-ulimits set-optional-jgit-conf \
+					set-high-availability-optional-params
 ifdef GERRIT_MASTER2_INSTANCE_ID
 		$(eval MASTER2_SERVICE_OPTIONAL_PARAMS := $(MASTER2_SERVICE_OPTIONAL_PARAMS) ParameterKey=InstanceId,ParameterValue=$(GERRIT_MASTER2_INSTANCE_ID))
 endif
@@ -190,6 +197,7 @@ endif
 		ParameterKey=GerritCPU,ParameterValue=$(GERRIT_CPU) \
 		ParameterKey=GerritHeapLimit,ParameterValue=$(GERRIT_HEAP_LIMIT) \
 		ParameterKey=JgitCacheSize,ParameterValue=$(JGIT_CACHE_SIZE) \
+		$(HA_OPTIONAL_PARAMS) \
 		$(JGIT_OPTIONAL_PARAMS) \
 		$(MULTISITE_OPTIONAL_PARAMS) \
 		$(REMOTE_OPTIONAL_PARAMS) \
@@ -494,3 +502,9 @@ git-daemon-publish:
 
 git-ssh-publish:
 	$(MAKE) -C ../master-slave/git-ssh git-ssh-publish
+
+set-high-availability-optional-params:
+	$(eval HA_OPTIONAL_PARAMS=)
+ifdef AUTOREINDEX_POLL_INTERVAL
+		$(eval HA_OPTIONAL_PARAMS := ParameterKey=AutoReindexPollInterval,ParameterValue=$(AUTOREINDEX_POLL_INTERVAL))
+endif

@@ -190,6 +190,10 @@ Parameters:
     ConstraintDescription: Choose a slash-separated ('/') string not starting with a slash ('/')
     AllowedPattern: '^[^\/].*'
     Default: 'gerrit/multi-site'
+  AutoReindexPollInterval:
+    Description: Interval between reindexing of all changes, accounts and groups.
+    Type: String
+    Default: '10m'
 
 Mappings:
   Gerrit:
@@ -264,6 +268,8 @@ Resources:
                       Value: !Ref GerritKeyPrefix
                     - Name: SETUP_HA
                       Value: true
+                    - Name: HA_AUTOREINDEX_POLL_INTERVAL
+                      Value: !Ref AutoReindexPollInterval
                     - Name: HA_PEER_URL
                       Value: !Sub
                         - 'http://${PeerSubdomain}.${HostedZoneName}:${HTTPGerritLBPort}'
