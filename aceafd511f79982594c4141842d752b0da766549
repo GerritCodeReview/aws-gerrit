@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d92ce062_f289ecc5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-12-02T18:57:07Z",
+      "side": 1,
+      "message": "I have tested this, and without the pollInterval I had missing changes from the green cluster.\nI have tested it by setting pollInterval and it works as expected.\n\nI have also moved this as part of the blue/green deployment chain because it is relevant for the functioning of the deployment.\n\nThanks for pointing this out luca.",
+      "revId": "aceafd511f79982594c4141842d752b0da766549",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
