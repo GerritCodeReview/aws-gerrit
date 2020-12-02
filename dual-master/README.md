@@ -120,6 +120,8 @@ the EBS volume snapshot used to create new EBS volume for Gerrit data.
     If empty, a new EFS will be created to store git data.
     Setting this value is required when deploying a dual-master cluster using
     existing data as well as performing blue/green deployments.
+    The nested stack will be *retained* when the cluster is deleted, so that
+    existing data can be used to perform blue/green deployments.
 
 *Note* ha-proxies are running on ec2 instances with a ratio of 1 to 1: each
 ec2 node hosts one and only one ha-proxy. By increasing the number of desired
