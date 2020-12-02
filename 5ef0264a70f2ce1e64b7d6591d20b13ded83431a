@@ -24,6 +24,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f89374e9_eac00166",
+        "filename": "dual-master/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-12-02T18:34:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9c5ab85_2a2d8dcf",
+      "range": {
+        "startLine": 63,
+        "startChar": 29,
+        "endLine": 63,
+        "endChar": 30
+      },
+      "revId": "5ef0264a70f2ce1e64b7d6591d20b13ded83431a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ba884d4f_8b401ed0",
@@ -47,6 +71,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c3042e0_94523398",
+        "filename": "dual-master/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-12-02T18:34:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba884d4f_8b401ed0",
+      "range": {
+        "startLine": 121,
+        "startChar": 73,
+        "endLine": 121,
+        "endChar": 75
+      },
+      "revId": "5ef0264a70f2ce1e64b7d6591d20b13ded83431a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7af702ab_bddfee00",
@@ -60,6 +108,30 @@
       "writtenOn": "2020-12-02T16:39:26Z",
       "side": 1,
       "message": "delete",
+      "range": {
+        "startLine": 128,
+        "startChar": 50,
+        "endLine": 128,
+        "endChar": 56
+      },
+      "revId": "5ef0264a70f2ce1e64b7d6591d20b13ded83431a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "af63188e_1711ffff",
+        "filename": "dual-master/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-12-02T18:34:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7af702ab_bddfee00",
       "range": {
         "startLine": 128,
         "startChar": 50,
