@@ -140,6 +140,30 @@
       },
       "revId": "513709b0bd1d13b6f3d4fca61e37d52f4548c6eb",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "81eab718_b53230ad",
+        "filename": "dual-master/README.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-12-02T19:59:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7bf39a66_5c7e1201",
+      "range": {
+        "startLine": 134,
+        "startChar": 3,
+        "endLine": 136,
+        "endChar": 0
+      },
+      "revId": "513709b0bd1d13b6f3d4fca61e37d52f4548c6eb",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
