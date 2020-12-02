@@ -71,6 +71,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4b064101_07fac999",
+        "filename": "common-templates/cf-master-asg.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-12-02T11:51:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "897f173b_fe38828d",
+      "range": {
+        "startLine": 107,
+        "startChar": 12,
+        "endLine": 107,
+        "endChar": 95
+      },
+      "revId": "6ea4b516fde927d7cd902b0891878ac22e59f376",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7cdc8fca_6e51b383",
@@ -108,6 +132,30 @@
       "side": 1,
       "message": "Sure, good idea, I will do this",
       "parentUuid": "7cdc8fca_6e51b383",
+      "range": {
+        "startLine": 113,
+        "startChar": 14,
+        "endLine": 113,
+        "endChar": 91
+      },
+      "revId": "6ea4b516fde927d7cd902b0891878ac22e59f376",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "94c06934_ef1b9ec5",
+        "filename": "common-templates/cf-master-asg.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-12-02T11:51:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c27d33eb_c505105e",
       "range": {
         "startLine": 113,
         "startChar": 14,
