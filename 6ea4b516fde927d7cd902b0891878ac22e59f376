@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3258b40d_98978e18",
+        "filename": "common-templates/cf-master-asg.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-12-02T10:48:57Z",
+      "side": 1,
+      "message": "This is a nested stack so it can only be instantiated by the root stacks, which already have defaults.\n\nI have explicitly removed the defaults, because those are handled in the root stacks.",
+      "parentUuid": "208d2f8e_2e8be749",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 16
+      },
+      "revId": "6ea4b516fde927d7cd902b0891878ac22e59f376",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "897f173b_fe38828d",
         "filename": "common-templates/cf-master-asg.yml",
         "patchSetId": 1
@@ -72,6 +96,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c27d33eb_c505105e",
+        "filename": "common-templates/cf-master-asg.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-12-02T10:48:57Z",
+      "side": 1,
+      "message": "Sure, good idea, I will do this",
+      "parentUuid": "7cdc8fca_6e51b383",
+      "range": {
+        "startLine": 113,
+        "startChar": 14,
+        "endLine": 113,
+        "endChar": 91
+      },
+      "revId": "6ea4b516fde927d7cd902b0891878ac22e59f376",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2eef0dc2_da18633d",
         "filename": "common-templates/cf-master-asg.yml",
         "patchSetId": 1
@@ -83,6 +131,30 @@
       "writtenOn": "2020-12-02T09:45:21Z",
       "side": 1,
       "message": "If I understand well this logic this condition tells me if we want to mount volumes from outside or not:  [\"${GerritVolumeId}\" \u003d \"\" \u0026\u0026 \"${GerritVolumeSnapshotId}\" \u003d \"\"]\n\nIf that if the case what about changing assigning the logic in this way (pseudocode below):\n\ninjectVolume \u003d \"${GerritVolumeId}\" \u003d \"\" \u0026\u0026 \"${GerritVolumeSnapshotId}\" \u003d \"\" ]\n\nif (injectVolume) {\n   ...loop to inject volume (line #106)\n\n} else {\n\n   ...create and mount volume... \n}",
+      "range": {
+        "startLine": 119,
+        "startChar": 0,
+        "endLine": 135,
+        "endChar": 12
+      },
+      "revId": "6ea4b516fde927d7cd902b0891878ac22e59f376",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d4f6b860_17caf1a4",
+        "filename": "common-templates/cf-master-asg.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-12-02T10:48:57Z",
+      "side": 1,
+      "message": "line #106 needs to be executed regardless we are using an existing volume, or one that has just been created: in both cases we need to attach it and mount it.\n\nThe if(injectVolume) thing, is only going to affect whether to format it or not.\n\nThis code is grabbed from the single-master recipe (I would have factored it out if it was possible, but I couldn\u0027t find any way in CF do so so :/)\n\nWDTY?",
+      "parentUuid": "2eef0dc2_da18633d",
       "range": {
         "startLine": 119,
         "startChar": 0,
