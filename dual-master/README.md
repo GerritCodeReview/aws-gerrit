@@ -213,6 +213,9 @@ the EBS volume snapshot used to create new EBS volume for Gerrit data.
     The nested stack will be *retained* when the cluster is deleted, so that
     existing data can be used to perform blue/green deployments.
 
+* `AUTOREINDEX_POLL_INTERVAL`. Optional. Interval between reindexing of all changes, accounts and groups.
+Default: `10m`
+
 #### REPLICATION SERVICE
 
 * `REPLICATION_SERVICE_ENABLED`: Optional. Whether to expose a replication endpoint.

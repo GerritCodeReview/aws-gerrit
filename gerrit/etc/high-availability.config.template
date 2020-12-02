@@ -7,6 +7,10 @@
 [peerInfo "static"]
   url = {{ HA_PEER_URL }}
 
+[autoReindex]
+  enabled = true
+  pollInterval = {{ HA_AUTOREINDEX_POLL_INTERVAL }}
+
 {% if MULTISITE_ENABLED is defined and MULTISITE_ENABLED == "true" %}
 [websession]
   synchronize = false
