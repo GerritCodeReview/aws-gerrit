@@ -213,6 +213,7 @@ if (setupHA):
     with open(GERRIT_CONFIG_DIRECTORY + "high-availability.config", 'w', encoding='utf-8') as f:
         f.write(template.render(
             HA_PEER_URL=os.getenv('HA_PEER_URL'),
+            HA_AUTOREINDEX_POLL_INTERVAL=os.getenv('HA_AUTOREINDEX_POLL_INTERVAL'),
             MULTISITE_ENABLED=os.getenv('MULTISITE_ENABLED')
         ))
 
