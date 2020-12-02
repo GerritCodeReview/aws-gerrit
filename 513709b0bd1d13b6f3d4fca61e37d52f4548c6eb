@@ -68,6 +68,30 @@
       },
       "revId": "513709b0bd1d13b6f3d4fca61e37d52f4548c6eb",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7bf39a66_5c7e1201",
+        "filename": "dual-master/README.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-12-02T17:45:22Z",
+      "side": 1,
+      "message": "I wanted to add an additional make target called:\nmake delete-all-including-persisted-data\n\nor\n\nmake complete-delete\n\nor\n\nmake ground-zero\n\nBecause we will also need to delete potentially the VPC I was thinking to do this as a follow up change.\n\n\nWDYT?",
+      "parentUuid": "2609ba42_491a8256",
+      "range": {
+        "startLine": 134,
+        "startChar": 3,
+        "endLine": 136,
+        "endChar": 0
+      },
+      "revId": "513709b0bd1d13b6f3d4fca61e37d52f4548c6eb",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
