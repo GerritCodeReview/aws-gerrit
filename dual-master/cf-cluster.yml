@@ -101,6 +101,11 @@ Parameters:
 Conditions:
   isProvisionedThroughput: !Equals [!Ref FileSystemThroughputMode, "provisioned"]
   CreateEFS: !Equals [!Ref FileSystemID, ""]
+  NetworkStackNeeded: !Or
+    - !Equals [!Ref VPCIdProp, ""]
+    - !And
+      - !Equals [!Ref InternetGatewayIdProp, ""]
+      - !Equals [!Ref SubnetIdProp, ""]
 
 Resources:
   # ECS Resources
@@ -111,7 +116,7 @@ Resources:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupDescription: Access to the ECS hosts that run containers
-      VpcId: !GetAtt ECSTaskNetworkStack.Outputs.VPCRef
+      VpcId: !If [NetworkStackNeeded, !GetAtt ECSTaskNetworkStack.Outputs.VPCRef, !Ref VPCIdProp]
       SecurityGroupIngress:
           # Allow access to NLB from anywhere on the internet
           - CidrIp: 0.0.0.0/0
@@ -127,7 +132,7 @@ Resources:
     Type: AWS::AutoScaling::AutoScalingGroup
     Properties:
       VPCZoneIdentifier:
-        - !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneRef
+        - !If [NetworkStackNeeded, !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneRef, !Ref SubnetIdProp]
       LaunchConfigurationName: !Ref 'ReplicaLaunchConfiguration'
       MinSize: '1'
       MaxSize: '1'
@@ -168,7 +173,7 @@ Resources:
     Type: AWS::AutoScaling::AutoScalingGroup
     Properties:
       VPCZoneIdentifier:
-        - !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneRef
+        - !If [NetworkStackNeeded, !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneRef, !Ref SubnetIdProp]
       LaunchConfigurationName: !Ref 'HAProxyLaunchConfiguration'
       MinSize: '2'
       MaxSize: !Ref HAProxyMaxCount
@@ -220,7 +225,7 @@ Resources:
         EC2SecurityGroup: !Ref EcsHostSecurityGroup
         EC2InstanceProfile: !Ref EC2InstanceProfile
         FileSystem: !If [CreateEFS, !GetAtt GitFileSystemPermanentStack.Outputs.FileSystemID, !Ref FileSystemID ]
-        SubnetId: !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneRef
+        SubnetId: !If [NetworkStackNeeded, !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneRef, !Ref SubnetIdProp]
         LogGroupName: !Ref AWS::StackName
         MasterMaxCount: !Ref MasterMaxCount
         GerritVolumeAttachMaxRetries: !Ref GerritVolumeAttachMaxRetries
@@ -245,7 +250,7 @@ Resources:
         EC2SecurityGroup: !Ref EcsHostSecurityGroup
         EC2InstanceProfile: !Ref EC2InstanceProfile
         FileSystem: !If [CreateEFS, !GetAtt GitFileSystemPermanentStack.Outputs.FileSystemID, !Ref FileSystemID ]
-        SubnetId: !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneRef
+        SubnetId: !If [NetworkStackNeeded, !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneRef, !Ref SubnetIdProp]
         LogGroupName: !Ref AWS::StackName
         MasterMaxCount: !Ref MasterMaxCount
         GerritVolumeAttachMaxRetries: !Ref GerritVolumeAttachMaxRetries
@@ -306,13 +311,14 @@ Resources:
       Parameters:
         FileSystemThroughputMode: !Ref FileSystemThroughputMode
         ProvisionedThroughputInMibps: !Ref ProvisionedThroughputInMibps
-        PublicSubnet: !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneRef
-        SecurityGroupVPCID: !GetAtt ECSTaskNetworkStack.Outputs.VPCRef
-        SecurityGroupCidrIp: !GetAtt ECSTaskNetworkStack.Outputs.PublicOneCIDR
+        PublicSubnet: !If [NetworkStackNeeded, !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneRef, !Ref SubnetIdProp]
+        SecurityGroupVPCID: !If [NetworkStackNeeded, !GetAtt ECSTaskNetworkStack.Outputs.VPCRef, !Ref VPCIdProp]
+        SecurityGroupCidrIp: !Ref SubnetCIDR
 
   ECSTaskNetworkStack:
     Type: AWS::CloudFormation::Stack
     DeletionPolicy: Retain
+    Condition: NetworkStackNeeded
     Properties:
       TemplateURL: !Join [ '', ['https://', !Ref TemplateBucketName, '.s3.amazonaws.com/cf-gerrit-network-stack.yml'] ]
       TimeoutInMinutes: '25'
@@ -331,12 +337,12 @@ Outputs:
       Name: !Join [ ':', [ !Ref 'AWS::StackName', 'ClusterName' ] ]
   VPCId:
     Description: The ID of the VPC that this stack is deployed in
-    Value: !GetAtt ECSTaskNetworkStack.Outputs.VPCRef
+    Value: !If [NetworkStackNeeded, !GetAtt ECSTaskNetworkStack.Outputs.VPCRef, !Ref VPCIdProp]
     Export:
       Name: !Join [ ':', [ !Ref 'AWS::StackName', 'VPCId' ] ]
   PublicSubnetOne:
     Description: Public subnet one
-    Value: !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneRef
+    Value: !If [NetworkStackNeeded, !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneRef, !Ref SubnetIdProp]
     Export:
       Name: !Join [ ':', [ !Ref 'AWS::StackName', 'PublicSubnetOne' ] ]
 
