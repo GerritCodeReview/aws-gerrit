@@ -1,9 +1,11 @@
 include ../common.env # Must be included before setup.env because the latter depends on it
 include setup.env
 include ../Makefile.common
+include ../maintenance/git-gc/Makefile
 
 CLUSTER_TEMPLATE:=cf-cluster.yml
 SERVICE_MASTER_TEMPLATE:=cf-service-master.yml
+SERVICE_GIT_GC_TEMPLATE:=cf-task-git-gc.yml
 SERVICE_SLAVE_TEMPLATE:=cf-service-slave.yml
 DNS_ROUTING_TEMPLATE:=cf-dns-route.yml
 CLOUDWATCH_DASHBOARD_TEMPLATE:=cf-dashboard.yml
@@ -35,6 +37,12 @@ optional_dashboard_targets_creation=dashboard wait-for-dashboard-creation
 optional_dashboard_targets_deletion=delete-dashboard wait-for-dashboard-deletion
 endif
 
+ifeq ($(GIT_GC_ENABLED),true)
+optional_git_gc_targets_creation=create-scheduled-gc-task
+optional_git_gc_targets_deletion=delete-scheduled-gc-task
+endif
+
+
 create-all: upload-common-templates \
 						git-daemon-publish git-ssh-publish \
 						gerrit-publish haproxy-publish syslog-sidecar-publish \
@@ -45,6 +53,7 @@ create-all: upload-common-templates \
 						service-master-2 wait-for-service-master-2-creation \
 						$(optional_dashboard_targets_creation) \
 						service-lb wait-for-service-lb-creation \
+						$(optional_git_gc_targets_creation) \
 						dns-routing wait-for-dns-routing-creation
 
 cluster: cluster-keys set-optional-gerrit-master-volume
@@ -324,6 +333,24 @@ else
 		@echo "METRICS_CLOUDWATCH_ENABLED is set to false. Dashboard creation skipped".
 endif
 
+create-scheduled-gc-task: service-git-gc wait-for-service-git-gc-creation
+delete-scheduled-gc-task: delete-service-git-gc wait-for-service-git-gc-deletion
+
+service-git-gc: git-gc-publish
+
+	$(AWS_FC_COMMAND) create-stack \
+		--stack-name $(SERVICE_GIT_GC_STACK_NAME) \
+		--capabilities CAPABILITY_IAM  \
+		--template-body file://`pwd`/$(SERVICE_GIT_GC_TEMPLATE) \
+		--region $(AWS_REGION) \
+		--parameters \
+		ParameterKey=ClusterStackName,ParameterValue=$(CLUSTER_STACK_NAME) \
+		ParameterKey=TemplateBucketName,ParameterValue=$(TEMPLATE_BUCKET_NAME) \
+		ParameterKey=DockerImageFQN,ParameterValue="$(GIT_GC_IMAGE_FQDN)" \
+		ParameterKey=ProjectList,ParameterValue=\"$(GIT_GC_PROJECT_LIST)\" \
+		ParameterKey=ScheduleCronExpression,ParameterValue=$(GIT_GC_CRON_EXPRESSION) \
+		ParameterKey=ScheduleCronExpression,ParameterValue="/mnt/efs/gerrit-shared/git"
+
 wait-for-cluster-creation:
 	@echo "*** Wait for cluster stack '$(CLUSTER_STACK_NAME)' creation"
 	$(AWS_FC_COMMAND) wait stack-create-complete \
@@ -436,6 +463,20 @@ wait-for-dashboard-deletion:
 	--region $(AWS_REGION)
 	@echo "*** Dashboard stack '$(DASHBOARD_STACK_NAME)' deleted"
 
+wait-for-service-git-gc-creation:
+	@echo "*** Wait for service-git-gc stack '$(SERVICE_GIT_GC_STACK_NAME)' creation"
+	$(AWS_FC_COMMAND) wait stack-create-complete \
+	--stack-name $(SERVICE_GIT_GC_STACK_NAME) \
+	--region $(AWS_REGION)
+	@echo "*** Cluster stack '$(SERVICE_GIT_GC_STACK_NAME)' created"
+
+wait-for-service-git-gc-deletion:
+	@echo "*** Wait for service-git-gc stack '$(SERVICE_GIT_GC_STACK_NAME)' deletion"
+	$(AWS_FC_COMMAND) wait stack-delete-complete \
+	--stack-name $(SERVICE_GIT_GC_STACK_NAME) \
+	--region $(AWS_REGION)
+	@echo "*** service-git-gc stack '$(SERVICE_GIT_GC_STACK_NAME)' deleted"
+
 delete-cluster:
 	$(AWS_FC_COMMAND) delete-stack \
 	--stack-name $(CLUSTER_STACK_NAME) \
@@ -476,12 +517,18 @@ delete-dashboard:
 	--stack-name $(DASHBOARD_STACK_NAME) \
 	--region $(AWS_REGION)
 
+delete-service-git-gc:
+	$(AWS_FC_COMMAND) delete-stack \
+	--stack-name $(SERVICE_GIT_GC_STACK_NAME) \
+	--region $(AWS_REGION)
+
 delete-all: delete-dns-routing wait-for-dns-routing-deletion \
 						delete-service-lb wait-for-service-lb-deletion \
 						delete-service-master-1 delete-service-master-2 delete-service-slave \
 						wait-for-service-master-1-deletion wait-for-service-master-2-deletion wait-for-service-slave-deletion \
 						$(optional_dashboard_targets_deletion) \
 						$(optional_replication_targets_deletion) \
+						$(optional_git_gc_targets_deletion) \
 						delete-cluster wait-for-cluster-deletion
 
 confirm-persistent-stack-deletion:
