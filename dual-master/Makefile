@@ -1,6 +1,7 @@
 include ../common.env # Must be included before setup.env because the latter depends on it
 include setup.env
 include ../Makefile.common
+include ../maintenance/git-gc/Makefile
 
 CLUSTER_TEMPLATE:=cf-cluster.yml
 SERVICE_MASTER_TEMPLATE:=cf-service-master.yml
@@ -10,6 +11,7 @@ CLOUDWATCH_DASHBOARD_TEMPLATE:=cf-dashboard.yml
 LOAD_BALANCER_TEMPLATE:=cf-service-lb.yml
 SERVICE_REPLICATION_TEMPLATE:=cf-service-replication.yml
 AWS_FC_COMMAND=export AWS_PAGER=;aws cloudformation
+GIT_GC_SOURCE_PATH=/mnt/efs/gerrit-shared/git
 
 SINGLE_SITE_PLUGINS=javamelody high-availability healthcheck metrics-reporter-cloudwatch
 
@@ -45,6 +47,7 @@ create-all: upload-common-templates \
 						service-master-2 wait-for-service-master-2-creation \
 						$(optional_dashboard_targets_creation) \
 						service-lb wait-for-service-lb-creation \
+						$(optional_git_gc_targets_creation) \
 						dns-routing wait-for-dns-routing-creation
 
 cluster: cluster-keys set-optional-gerrit-master-volume
@@ -482,6 +485,7 @@ delete-all: delete-dns-routing wait-for-dns-routing-deletion \
 						wait-for-service-master-1-deletion wait-for-service-master-2-deletion wait-for-service-slave-deletion \
 						$(optional_dashboard_targets_deletion) \
 						$(optional_replication_targets_deletion) \
+						$(optional_git_gc_targets_deletion) \
 						delete-cluster wait-for-cluster-deletion
 
 confirm-persistent-stack-deletion:
