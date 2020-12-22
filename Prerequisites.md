@@ -17,6 +17,7 @@ aws ecr create-repository --repository-name aws-gerrit/haproxy
 aws ecr create-repository --repository-name aws-gerrit/syslog-sidecar
 aws ecr create-repository --repository-name aws-gerrit/prometheus
 aws ecr create-repository --repository-name aws-gerrit/grafana
+aws ecr create-repository --repository-name aws-gerrit/git-gc
 ```
 
 * to upload required credentials to AWS Secret Manager execute the [secrets configuration documentation steps](Secrets.md).

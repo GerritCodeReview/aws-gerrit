@@ -12,6 +12,7 @@ The following templates are provided in this example:
 * `cf-service-slave`: define the service stack running the gerrit replica
 * `cf-service-lb`: define the LBs in front of gerrit masters (this includes haproxy as well as NLB)
 * `cf-dashboard`: define the CloudWatch dashboard for the services
+* `cf-task-git-gc`: define a scheduled garbage collection task
 
 When the recipe enables the replication_service (see [docs](#replication-service))
 then these additional templates will be executed:
@@ -281,6 +282,17 @@ to specify which projects are available across all sites. This parametes applies
 and replication service remote destinations.
 Empty by default which means that all projects are available across all sites.
 
+#### SCHEDULED GIT GARBAGE COLLECTION TASK
+
+* `GIT_GC_ENABLED`. Optional. Whether to schedule a git garbage collection task
+as part of the cluster deployment. "false" by default.
+* `SERVICE_GIT_GC_STACK_NAME`. Required. The name of the cloudformation stack.
+* `GIT_GC_CRON_EXPRESSION`. Required. a cronjob string, expressing the scheduling
+of the garbage collection. More information
+[here](https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html#CronExpressions)
+* `GIT_GC_PROJECT_LIST`. Required. A comma separated list of projects to run GC
+against.
+
 ### 2 - Deploy
 
 * Create the cluster, services and DNS routing stacks:
@@ -319,6 +331,35 @@ master1 and gerrit master2.
 
 Note that the replication endpoint is not internet-facing, thus replication requests
 must be coming from a peered VPC.
+
+#### Git Repo Garbage Collection
+
+Optionally this recipe can be deployed so that a garbage collection task is
+scheduled to run periodically against a specified list of repositories.
+
+By setting the environment variable `GIT_GC_ENABLED=true`, a new stack will be
+deployed to provision the resources needed to run garbage collection as a
+scheduled ECS task.
+
+Please refer to the relevant [configuration section](#scheduled-git-garbage-collection-task)
+to understand which parameters need to be set for this.
+
+You can also deploy and destroy this stack separately, as such:
+
+* Add GC scheduled task to an existing deployment
+```bash
+make [AWS_REGION=a-valid-aws-region] [AWS_PREFIX=some-cluster-prefix] create-scheduled-gc-task
+```
+
+* Delete GC scheduled task from an existing deployment
+```bash
+make [AWS_REGION=a-valid-aws-region] [AWS_PREFIX=some-cluster-prefix] delete-scheduled-gc-task
+```
+
+The scheduled task will be executed on any master EC2 instance, in order to have
+access to the EFS containing git repos. You will need to account for this when
+deciding the instance type and the allocated CPU and Memory running on those EC2
+instances.
 
 ### Cleaning up
 
