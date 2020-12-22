@@ -1,0 +1,127 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: ECS service scheduling GC against specified git projects
+Parameters:
+  ClusterStackName:
+    Description: Stack name of the ECS cluster to deploy this service onto
+    Type: String
+    Default: gerrit-cluster
+  ProjectList:
+    Description: Comma separated list of projects to perform GC against
+    Type: CommaDelimitedList
+    Default: ''
+  EnvironmentName:
+    Description: An environment name used to build the log stream names
+    Type: String
+    Default: test
+  TemplateBucketName:
+    Description: S3 bucket containing cloudformation templates
+    Type: String
+  DockerImageFQN:
+    Description: Fully qualified name of the git-gc docker image
+    Type: String
+  ScheduleCronExpression:
+    Description: Cron expression string to schedule GC at
+    Type: String
+  GitSourcePath:
+    Description: The absolute path storing git data
+    Type: String
+
+Mappings:
+  Gerrit:
+    Volume:
+      Git: gerrit-git
+  GitGC:
+    Task:
+      Name: git-gc
+
+Resources:
+    TaskDefinition:
+        Type: AWS::ECS::TaskDefinition
+        Properties:
+            Family: !FindInMap ['GitGC', 'Task', 'Name']
+            TaskRoleArn: !GetAtt ECSTaskExecutionRoleStack.Outputs.TaskExecutionRoleRef
+            ExecutionRoleArn: !GetAtt ECSTaskExecutionRoleStack.Outputs.TaskExecutionRoleRef
+            NetworkMode: bridge
+            PlacementConstraints:
+                - Expression: !Sub 'attribute:target_group =~ master.*'
+                  Type: "memberOf"
+            ContainerDefinitions:
+                - Name: !FindInMap ['GitGC', 'Task', 'Name']
+                  Essential: true
+                  Image: !Ref DockerImageFQN
+                  Environment:
+                    - Name: GC_PROJECT_LIST
+                      Value: !Join [',', !Ref ProjectList]
+                  MountPoints:
+                    - SourceVolume: !FindInMap ['Gerrit', 'Volume', 'Git']
+                      ContainerPath: /git
+                  Cpu: 1024
+                  Memory: 1024
+                  LogConfiguration:
+                    LogDriver: awslogs
+                    Options:
+                        awslogs-group: !Ref ClusterStackName
+                        awslogs-region: !Ref AWS::Region
+                        awslogs-stream-prefix: !Ref EnvironmentName
+            Volumes:
+              - Name: !FindInMap ['Gerrit', 'Volume', 'Git']
+                Host:
+                  SourcePath: !Ref GitSourcePath
+
+    ECSTaskExecutionRoleStack:
+      Type: AWS::CloudFormation::Stack
+      Properties:
+        TemplateURL: !Join [ '', ['https://', !Ref TemplateBucketName, '.s3.amazonaws.com/cf-gerrit-task-execution-role.yml'] ]
+        TimeoutInMinutes: '5'
+
+    EventsInvokeTaskRole:
+      Type: AWS::IAM::Role
+      Properties:
+        AssumeRolePolicyDocument:
+          Statement:
+            - Effect: Allow
+              Principal:
+                Service: [events.amazonaws.com]
+              Action:
+                - sts:AssumeRole
+        Path: /
+        Policies:
+          - PolicyName: "AllowTaskInvoke"
+            PolicyDocument:
+              Statement:
+                - Effect: "Allow"
+                  Action:
+                    - 'ecs:RunTask'
+                  Resource: !Sub
+                    - "arn:aws:ecs:*:${AWS::AccountId}:task-definition/${TaskName}:*"
+                    - { TaskName: !FindInMap ['GitGC', 'Task', 'Name'] }
+                  Condition:
+                    ArnLike:
+                      ecs:cluster: !Sub
+                        - "arn:aws:ecs:*:${AWS::AccountId}:cluster/${ClusterName}"
+                        - { ClusterName:
+                              { Fn::ImportValue: !Join [':', [!Ref 'ClusterStackName', 'ClusterName']] }
+                        }
+                - Effect: "Allow"
+                  Action: "iam:PassRole"
+                  Resource: "*"
+                  Condition:
+                    StringLike:
+                      iam:PassedToService: "ecs-tasks.amazonaws.com"
+
+    TaskSchedule:
+      Type: AWS::Events::Rule
+      Properties:
+        Description: "Run git garbage collection on a list of specified projects"
+        Name: git-GC
+        ScheduleExpression: !Sub "cron(${ScheduleCronExpression})"
+        State: ENABLED
+        Targets:
+          - Id: git-gc-master
+            RoleArn: !GetAtt EventsInvokeTaskRole.Arn
+            EcsParameters:
+              TaskDefinitionArn: !Ref TaskDefinition
+              TaskCount: 1
+            Arn:
+              Fn::ImportValue:
+                !Join [':', [!Ref 'ClusterStackName', 'ClusterArn']]

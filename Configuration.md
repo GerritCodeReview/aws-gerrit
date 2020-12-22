@@ -26,6 +26,17 @@ Configuration values affecting deployment environment and cluster properties
 * `GERRIT_KEY_PREFIX` : Optional. Secrets prefix used during the [Import into AWS Secret Manager](#import-into-aws-secret-manager).
   `gerrit_secret` by default.
 
+#### Scheduled Git Garbage Collection
+
+* `GIT_GC_ENABLED`. Optional. Whether to schedule a git garbage collection task
+as part of the cluster deployment. "false" by default.
+* `SERVICE_GIT_GC_STACK_NAME`. Required. The name of the cloudformation stack.
+* `GIT_GC_CRON_EXPRESSION`. Required. a cronjob string, expressing the scheduling
+of the garbage collection. More information
+[here](https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html#CronExpressions)
+* `GIT_GC_PROJECT_LIST`. Required. A comma separated list of projects to run GC
+against.
+
 #### SPECS
 
 Configuration values to spec up Gerrit containers.
