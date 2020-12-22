@@ -345,4 +345,8 @@ Outputs:
     Value: !If [NetworkStackNeeded, !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneRef, !Ref SubnetIdProp]
     Export:
       Name: !Join [ ':', [ !Ref 'AWS::StackName', 'PublicSubnetOne' ] ]
-
+  ClusterArn:
+    Description: The ARN of the ECS cluster
+    Value: !GetAtt ECSCluster.Arn
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'ClusterArn' ] ]
