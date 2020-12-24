@@ -1,0 +1,245 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc33b947_2b2a4b21",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-12-24T01:36:28Z",
+      "side": 1,
+      "message": "Good job. One general question: why is this part of the dual-master? I believe the GC would make sense also in a single-master scenario, isn\u0027t it?",
+      "revId": "37bccaa9820aba2b7ef9a09d543c03d295eac5fd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "26fa29c8_149e9d60",
+        "filename": "dual-master/cf-task-git-gc.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-12-24T01:36:28Z",
+      "side": 1,
+      "message": "These should be parametric: the memory and CPU depends on the size of the repository and number of refs/objects.\n\nOne user may want to have a lot more memory if they are doing GC of a mono-repo, or giving a lot more CPUs in case they have tons of refs.",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 30
+      },
+      "revId": "37bccaa9820aba2b7ef9a09d543c03d295eac5fd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a0b2e96e_d0775924",
+        "filename": "dual-master/maintenance/git-gc/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-12-24T01:36:28Z",
+      "side": 1,
+      "message": "Why not using the official OpenJDK?",
+      "range": {
+        "startLine": 1,
+        "startChar": 5,
+        "endLine": 1,
+        "endChar": 34
+      },
+      "revId": "37bccaa9820aba2b7ef9a09d543c03d295eac5fd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "711e8fb7_04b1b990",
+        "filename": "dual-master/maintenance/git-gc/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-12-24T01:36:28Z",
+      "side": 1,
+      "message": "Do we need findutils?",
+      "range": {
+        "startLine": 9,
+        "startChar": 35,
+        "endLine": 9,
+        "endChar": 44
+      },
+      "revId": "37bccaa9820aba2b7ef9a09d543c03d295eac5fd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d3810d9f_d096a935",
+        "filename": "dual-master/maintenance/git-gc/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-12-24T01:36:28Z",
+      "side": 1,
+      "message": "We use jgit for GC, why do we want also git?",
+      "range": {
+        "startLine": 9,
+        "startChar": 31,
+        "endLine": 9,
+        "endChar": 34
+      },
+      "revId": "37bccaa9820aba2b7ef9a09d543c03d295eac5fd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b167cbd1_c630f77f",
+        "filename": "dual-master/maintenance/git-gc/Makefile",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-12-24T01:36:28Z",
+      "side": 1,
+      "message": "nit:empty line",
+      "revId": "37bccaa9820aba2b7ef9a09d543c03d295eac5fd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e89d9c42_ba88475f",
+        "filename": "dual-master/maintenance/git-gc/scripts/gc.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-12-24T01:36:28Z",
+      "side": 1,
+      "message": "If we have a typo in the projects list, we risk to miss the whole GC process.\nWhy not failing the process, so that the administrator will then investigate why the GC failed?",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 6
+      },
+      "revId": "37bccaa9820aba2b7ef9a09d543c03d295eac5fd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "511c9077_3f2ddc85",
+        "filename": "dual-master/maintenance/git-gc/scripts/gc.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-12-24T01:36:28Z",
+      "side": 1,
+      "message": "The date is already included in the log function",
+      "range": {
+        "startLine": 34,
+        "startChar": 30,
+        "endLine": 34,
+        "endChar": 58
+      },
+      "revId": "37bccaa9820aba2b7ef9a09d543c03d295eac5fd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ba2f301b_54f3f89f",
+        "filename": "dual-master/maintenance/git-gc/scripts/gc.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-12-24T01:36:28Z",
+      "side": 1,
+      "message": "Same as above",
+      "range": {
+        "startLine": 37,
+        "startChar": 31,
+        "endLine": 37,
+        "endChar": 59
+      },
+      "revId": "37bccaa9820aba2b7ef9a09d543c03d295eac5fd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "828e60f3_2e7d0a8e",
+        "filename": "dual-master/maintenance/git-gc/scripts/gc.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-12-24T01:36:28Z",
+      "side": 1,
+      "message": "Where is this compression formula coming from?",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 94
+      },
+      "revId": "37bccaa9820aba2b7ef9a09d543c03d295eac5fd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c11c2220_52305603",
+        "filename": "dual-master/maintenance/git-gc/scripts/utils.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-12-24T01:36:28Z",
+      "side": 1,
+      "message": "Best to do the opposite: year/month/day\nIt would allow a sorting to keep the chronological ordering of the events.",
+      "range": {
+        "startLine": 15,
+        "startChar": 16,
+        "endLine": 15,
+        "endChar": 25
+      },
+      "revId": "37bccaa9820aba2b7ef9a09d543c03d295eac5fd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
