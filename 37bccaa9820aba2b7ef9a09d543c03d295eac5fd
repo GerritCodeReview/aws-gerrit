@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b28fce6f_400a2926",
+        "filename": "dual-master/cf-task-git-gc.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-12-24T10:21:48Z",
+      "side": 1,
+      "message": "Good point, I will do this",
+      "parentUuid": "26fa29c8_149e9d60",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 30
+      },
+      "revId": "37bccaa9820aba2b7ef9a09d543c03d295eac5fd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a0b2e96e_d0775924",
         "filename": "dual-master/maintenance/git-gc/Dockerfile",
         "patchSetId": 2
@@ -54,6 +78,30 @@
       "writtenOn": "2020-12-24T01:36:28Z",
       "side": 1,
       "message": "Why not using the official OpenJDK?",
+      "range": {
+        "startLine": 1,
+        "startChar": 5,
+        "endLine": 1,
+        "endChar": 34
+      },
+      "revId": "37bccaa9820aba2b7ef9a09d543c03d295eac5fd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e87403e3_bddb2323",
+        "filename": "dual-master/maintenance/git-gc/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-12-24T10:21:48Z",
+      "side": 1,
+      "message": "I didn\u0027t know openjdk came built on alpine, but it actually does: openjdk:\u003cversion\u003e-alpine.\n\nI will replace this.",
+      "parentUuid": "a0b2e96e_d0775924",
       "range": {
         "startLine": 1,
         "startChar": 5,
@@ -105,6 +153,54 @@
         "startChar": 31,
         "endLine": 9,
         "endChar": 34
+      },
+      "revId": "37bccaa9820aba2b7ef9a09d543c03d295eac5fd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "923e37a6_cc16752e",
+        "filename": "dual-master/maintenance/git-gc/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-12-24T10:21:48Z",
+      "side": 1,
+      "message": "to get some stats. jgit does not allow to run count-objects, so we install git to do that.",
+      "parentUuid": "d3810d9f_d096a935",
+      "range": {
+        "startLine": 9,
+        "startChar": 31,
+        "endLine": 9,
+        "endChar": 34
+      },
+      "revId": "37bccaa9820aba2b7ef9a09d543c03d295eac5fd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c6bb187_6b9451e6",
+        "filename": "dual-master/maintenance/git-gc/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-12-24T10:21:48Z",
+      "side": 1,
+      "message": "We need this to allow utils.sh#L10 to run find using -printf",
+      "parentUuid": "711e8fb7_04b1b990",
+      "range": {
+        "startLine": 9,
+        "startChar": 35,
+        "endLine": 9,
+        "endChar": 44
       },
       "revId": "37bccaa9820aba2b7ef9a09d543c03d295eac5fd",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
@@ -175,6 +271,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "aecfc4a1_783c4bd4",
+        "filename": "dual-master/maintenance/git-gc/scripts/gc.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-12-24T10:21:48Z",
+      "side": 1,
+      "message": "Thanks, I created the log function later and I forgot to update this line.",
+      "parentUuid": "511c9077_3f2ddc85",
+      "range": {
+        "startLine": 34,
+        "startChar": 30,
+        "endLine": 34,
+        "endChar": 58
+      },
+      "revId": "37bccaa9820aba2b7ef9a09d543c03d295eac5fd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ba2f301b_54f3f89f",
         "filename": "dual-master/maintenance/git-gc/scripts/gc.sh",
         "patchSetId": 2
@@ -186,6 +306,30 @@
       "writtenOn": "2020-12-24T01:36:28Z",
       "side": 1,
       "message": "Same as above",
+      "range": {
+        "startLine": 37,
+        "startChar": 31,
+        "endLine": 37,
+        "endChar": 59
+      },
+      "revId": "37bccaa9820aba2b7ef9a09d543c03d295eac5fd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ecff65e4_6b1f478f",
+        "filename": "dual-master/maintenance/git-gc/scripts/gc.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-12-24T10:21:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ba2f301b_54f3f89f",
       "range": {
         "startLine": 37,
         "startChar": 31,
@@ -221,6 +365,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "887e2055_058d4088",
+        "filename": "dual-master/maintenance/git-gc/scripts/gc.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-12-24T10:21:48Z",
+      "side": 1,
+      "message": "It\u0027s a simple percentage calculation remaining objects*100/total objects",
+      "parentUuid": "828e60f3_2e7d0a8e",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 94
+      },
+      "revId": "37bccaa9820aba2b7ef9a09d543c03d295eac5fd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c11c2220_52305603",
         "filename": "dual-master/maintenance/git-gc/scripts/utils.sh",
         "patchSetId": 2
@@ -232,6 +400,30 @@
       "writtenOn": "2020-12-24T01:36:28Z",
       "side": 1,
       "message": "Best to do the opposite: year/month/day\nIt would allow a sorting to keep the chronological ordering of the events.",
+      "range": {
+        "startLine": 15,
+        "startChar": 16,
+        "endLine": 15,
+        "endChar": 25
+      },
+      "revId": "37bccaa9820aba2b7ef9a09d543c03d295eac5fd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a73b54c2_3a144b3e",
+        "filename": "dual-master/maintenance/git-gc/scripts/utils.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-12-24T10:21:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c11c2220_52305603",
       "range": {
         "startLine": 15,
         "startChar": 16,
