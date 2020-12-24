@@ -18,6 +18,24 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea830203_c2935534",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-12-24T10:30:22Z",
+      "side": 1,
+      "message": "Yes exactly, and also for master-slave.\n\nHowever this will be a bit different because in the dual-master recipe we have access to the git data via the EFS independently, so we can mount it in the and run GC.\n\nIn the single-master and master-slave recipes however we would need the GC task to access the master EBS first, so it will need a different approach.\n\nWe had to start from somewhere so I started from this, which brings in many common components we will be able to reuse.\n\nI am happy to bring the GC task logic to other recipes as follow up changes.\nThis will also prevent this CR from becoming massive 😊\n\nWDYT?",
+      "parentUuid": "cc33b947_2b2a4b21",
+      "revId": "37bccaa9820aba2b7ef9a09d543c03d295eac5fd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "26fa29c8_149e9d60",
