@@ -32,6 +32,9 @@ To manage your AWS services via command line you will need to install
 To build gerrit and related-components' images
 [Docker](https://www.docker.com/)
 
+To manipulate aws cloudformation outputs
+[jq](https://stedolan.github.io/jq/)
+
 ## Templates
 
 * [Standalone Gerrit master sandbox with LDAP authentication](/single-master/README.md)

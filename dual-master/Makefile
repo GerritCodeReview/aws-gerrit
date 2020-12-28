@@ -484,6 +484,47 @@ delete-all: delete-dns-routing wait-for-dns-routing-deletion \
 						$(optional_replication_targets_deletion) \
 						delete-cluster wait-for-cluster-deletion
 
+confirm-persistent-stack-deletion:
+	@echo ""
+	@echo "* * * * WARNING * * * * this is going to completely destroy the stack, including git data."
+	@echo ""
+	@echo -n "Are you sure you want to continue? [y/N] " && read ans && [ $${ans:-N} = y ]
+
+delete-all-including-retained-stack: confirm-persistent-stack-deletion delete-all delete-git-persistent-stack delete-network-persistent-stack
+
+delete-git-persistent-stack:
+
+	$(eval EFS_STACK_NAME := $(shell $(AWS_FC_COMMAND) list-stacks --stack-status-filter CREATE_COMPLETE --query "StackSummaries[*].StackName" | jq -r '.[]| select(startswith("$(CLUSTER_STACK_NAME)-GitFileSystemPermanentStack"))'))
+
+	$(if $(EFS_STACK_NAME), \
+		$(AWS_FC_COMMAND) delete-stack \
+			--stack-name $(EFS_STACK_NAME) \
+			--region $(AWS_REGION) && \
+		echo "*** Wait for Git persistent stack '$(EFS_STACK_NAME)' deletion" && \
+		$(AWS_FC_COMMAND) wait stack-delete-complete \
+			--stack-name $(EFS_STACK_NAME) \
+			--region $(AWS_REGION) && \
+		echo "*** Git persistent stack '$(EFS_STACK_NAME)' deleted" \
+		, \
+		echo "No Git persistent stack found. Nothing to do." \
+	)
+
+delete-network-persistent-stack:
+	$(eval NETWORK_STACK_NAME=$(shell $(AWS_FC_COMMAND) list-stacks --stack-status-filter CREATE_COMPLETE --query "StackSummaries[*].StackName" | jq -r '.[]| select(startswith("$(CLUSTER_STACK_NAME)-ECSTaskNetworkStack"))'))
+
+	$(if $(NETWORK_STACK_NAME), \
+		$(AWS_FC_COMMAND) delete-stack \
+			--stack-name $(NETWORK_STACK_NAME) \
+			--region $(AWS_REGION) && \
+		echo "*** Wait for Network stack '$(NETWORK_STACK_NAME)' deletion" && \
+		$(AWS_FC_COMMAND) wait stack-delete-complete \
+			--stack-name $(NETWORK_STACK_NAME) \
+			--region $(AWS_REGION) && \
+		echo "*** Network stack '$(NETWORK_STACK_NAME)' deleted" \
+		, \
+		echo "No network stack found. Nothing to do." \
+	)
+
 gerrit-publish:
 ifeq ($(MULTISITE_ENABLED),true)
 	$(MAKE) -C ../gerrit gerrit-publish RECIPE=dual-master PLUGINS="$(MULTI_SITE_PLUGINS)" PLUGINS_LIBS_LINKS="$(MULTI_SITE_PLUGINS_LIBS_LINKS)" MAVEN_LIBS="$(MULTI_SITE_MAVEN_LIBS)"
