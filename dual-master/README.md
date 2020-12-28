@@ -329,6 +329,16 @@ Note that this will *not* delete:
 * SSL certificates
 * ECR repositories
 * EFS stack
+* VPC and subnets (if created as part of this deployment, rather than externally
+provided)
+
+Note that you can completely delete the stack, including explicitly retained
+resources such as the EFS Git filesystem, VPC and subnets, by issuing the more
+aggressive command:
+
+```
+make [AWS_REGION=a-valid-aws-region] [AWS_PREFIX=some-cluster-prefix] delete-all-including-retained-stack
+```
 
 ### Access your Gerrit instances
 
