@@ -382,6 +382,24 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fa6c061c_42bd57a6",
+        "filename": "dual-master/maintenance/git-gc/Makefile",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-12-28T17:59:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b167cbd1_c630f77f",
+      "revId": "37bccaa9820aba2b7ef9a09d543c03d295eac5fd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e89d9c42_ba88475f",
