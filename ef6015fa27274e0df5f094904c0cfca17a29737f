@@ -22,6 +22,30 @@
       },
       "revId": "ef6015fa27274e0df5f094904c0cfca17a29737f",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f691cbc7_33ab232f",
+        "filename": "master-slave/cf-cluster.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-12-29T18:18:28Z",
+      "side": 0,
+      "message": "I believe it is relevant to the separation of master from slaves.\n\nHopefully my other comment explains why this is the case, but the bottom line is this:\n\nDesiredCapacity describes the size of the overall cluster: This doesn\u0027t have the right granularity as the size needs to be specific to the different ASG.\n\nWe had a similar conversation when we split master from slaves for the dual-master recipe, this is the porting of the result of that conversation to the master-slave recipe.\n\nHope it makes sense 😊",
+      "parentUuid": "9f10ff95_33c9b862",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 71
+      },
+      "revId": "ef6015fa27274e0df5f094904c0cfca17a29737f",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
