@@ -1,6 +1,7 @@
 include ../common.env # Must be included before setup.env because the latter depends on it
 include setup.env
 include ../Makefile.common
+include ../maintenance/git-gc/Makefile
 
 CLUSTER_TEMPLATE:=cf-cluster.yml
 SERVICE_MASTER_TEMPLATE:=cf-service-master.yml
@@ -8,6 +9,7 @@ SERVICE_SLAVE_TEMPLATE:=cf-service-slave.yml
 DNS_ROUTING_TEMPLATE:=cf-dns-route.yml
 CLOUDWATCH_DASHBOARD_TEMPLATE:=cf-dashboard.yml
 AWS_FC_COMMAND=export AWS_PAGER=;aws cloudformation
+GIT_GC_SOURCE_PATH=/gerrit-mount-point/gerrit-git
 
 .PHONY: create-all delete-all \
 				cluster cluster-keys service-master service-slave dns-routing dashboard \
@@ -26,6 +28,7 @@ create-all: upload-common-templates \
 						service-slave service-master \
 						wait-for-service-master-creation wait-for-service-slave-creation \
 						$(optional_dashboard_targets) \
+						$(optional_git_gc_targets_creation) \
 						dns-routing wait-for-dns-routing-creation
 
 cluster: cluster-keys set-optional-gerrit-master-volume
@@ -269,6 +272,7 @@ delete-all: delete-dns-routing wait-for-dns-routing-deletion \
 						delete-service-slave wait-for-service-slave-deletion \
 						delete-service-master wait-for-service-master-deletion \
 						delete-cluster wait-for-cluster-deletion \
+						$(optional_git_gc_targets_deletion) \
 						delete-dashboard wait-for-dashboard-deletion
 
 gerrit-publish:
