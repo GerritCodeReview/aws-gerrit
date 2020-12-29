@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "226ddb14_6dd9c68f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-12-29T18:18:28Z",
+      "side": 1,
+      "message": "Sure I will do 👍",
+      "parentUuid": "37e4cf98_90982345",
+      "revId": "216c0eefc7f22d87c035a736c4ec67a244e9cc78",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8e7cbdf9_3d6e8554",
         "filename": "master-slave/setup.env.template",
         "patchSetId": 2
@@ -31,6 +49,30 @@
       "writtenOn": "2020-12-29T17:50:18Z",
       "side": 1,
       "message": "What is the rationale of the increase from 1 to 2?",
+      "range": {
+        "startLine": 1,
+        "startChar": 17,
+        "endLine": 1,
+        "endChar": 18
+      },
+      "revId": "216c0eefc7f22d87c035a736c4ec67a244e9cc78",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "404414fa_abeeb4b6",
+        "filename": "master-slave/setup.env.template",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-12-29T18:18:28Z",
+      "side": 1,
+      "message": "MASTER_MAX_COUNT does not increase CLUSTER_DESIRED_CAPACITY, it is simply a different parameter.\n\nCLUSTER_DESIRED_CAPACITY used to express how many instances were needed across the entire cluster: this is now obsolete, as there are now different ASGs rather than one big one.\n\nthis recipe needs:\n* 1 EC2 instance for master (with the ability to scale out, should we want to do in-place deployment).\n* 1 EC2 instance for slave (scaling slaves is on the roadmap)",
+      "parentUuid": "8e7cbdf9_3d6e8554",
       "range": {
         "startLine": 1,
         "startChar": 17,
