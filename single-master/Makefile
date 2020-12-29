@@ -1,11 +1,13 @@
 include ../common.env # Must be included before setup.env because the latter depends on it
 include setup.env
 include ../Makefile.common
+include ../maintenance/git-gc/Makefile
 
 CLUSTER_TEMPLATE:=cf-cluster.yml
 SERVICE_TEMPLATE:=cf-service.yml
 DNS_ROUTING_TEMPLATE:=cf-dns-route.yml
 AWS_FC_COMMAND=export AWS_PAGER=;aws cloudformation
+GIT_GC_SOURCE_PATH=/gerrit-mount-point/gerrit-git
 
 .PHONY: create-all delete-all \
 				cluster cluster-keys service dns-routing \
@@ -17,6 +19,7 @@ create-all: upload-common-templates \
 						gerrit-publish \
 						cluster wait-for-cluster-creation \
 						service wait-for-service-creation \
+						$(optional_git_gc_targets_creation) \
 						dns-routing wait-for-dns-routing-creation
 
 cluster: cluster-keys set-optional-gerrit-master-volume
@@ -152,7 +155,8 @@ delete-dns-routing:
 
 delete-all: delete-dns-routing wait-for-dns-routing-deletion \
 						delete-service wait-for-service-deletion \
-						delete-cluster wait-for-cluster-deletion \
+						$(optional_git_gc_targets_deletion) \
+						delete-cluster wait-for-cluster-deletion
 
 gerrit-publish:
 	$(MAKE) -C ../gerrit gerrit-publish RECIPE=single-master
