@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7c5a8da4_cf4e64c9",
+        "filename": "dual-master/Makefile",
+        "patchSetId": 2
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-12-29T10:01:58Z",
+      "side": 1,
+      "message": "Top!",
+      "range": {
+        "startLine": 487,
+        "startChar": 0,
+        "endLine": 491,
+        "endChar": 87
+      },
+      "revId": "9bae2d11e25de15295d92b93a794ee2b7804b4d6",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
