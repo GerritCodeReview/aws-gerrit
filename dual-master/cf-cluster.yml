@@ -77,10 +77,6 @@ Parameters:
     Type: Number
     Default: 2
     MinValue: 2
-  GerritVolumeId:
-    Description: Existing Gerrit volume id
-    Type: String
-    Default: ""
   GerritVolumeSnapshotId:
     Description: Id of the EBS snapshot for Gerrit volume
     Type: String
@@ -230,7 +226,6 @@ Resources:
         MasterMaxCount: !Ref MasterMaxCount
         GerritVolumeAttachMaxRetries: !Ref GerritVolumeAttachMaxRetries
         GerritVolumeAttachRetryDelay: !Ref GerritVolumeAttachRetryDelay
-        GerritVolumeId: !Ref GerritVolumeId
         GerritVolumeSnapshotId: !Ref GerritVolumeSnapshotId
         GerritVolumeSizeInGiB: !Ref GerritVolumeSizeInGiB
         TemplateBucketName: !Ref TemplateBucketName
@@ -255,7 +250,6 @@ Resources:
         MasterMaxCount: !Ref MasterMaxCount
         GerritVolumeAttachMaxRetries: !Ref GerritVolumeAttachMaxRetries
         GerritVolumeAttachRetryDelay: !Ref GerritVolumeAttachRetryDelay
-        GerritVolumeId: !Ref GerritVolumeId
         GerritVolumeSnapshotId: !Ref GerritVolumeSnapshotId
         GerritVolumeSizeInGiB: !Ref GerritVolumeSizeInGiB
         TemplateBucketName: !Ref TemplateBucketName
