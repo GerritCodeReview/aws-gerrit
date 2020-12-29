@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "37e4cf98_90982345",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-12-29T17:50:18Z",
+      "side": 1,
+      "message": "There are also changes in the parametrisation and on the defaults of the clusters capacity defaults (from 1 to 2 for the master).\n\nCan you also specify them in the commit message and why they are needed?",
+      "revId": "216c0eefc7f22d87c035a736c4ec67a244e9cc78",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e7cbdf9_3d6e8554",
+        "filename": "master-slave/setup.env.template",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-12-29T17:50:18Z",
+      "side": 1,
+      "message": "What is the rationale of the increase from 1 to 2?",
+      "range": {
+        "startLine": 1,
+        "startChar": 17,
+        "endLine": 1,
+        "endChar": 18
+      },
+      "revId": "216c0eefc7f22d87c035a736c4ec67a244e9cc78",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
