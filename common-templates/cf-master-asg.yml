@@ -47,9 +47,6 @@ Parameters:
   MasterMaxCount:
     Description: The maximum number of EC2 instances in the master autoscaling group
     Type: Number
-  GerritVolumeId:
-    Description: Existing Gerrit volume id
-    Type: String
   GerritVolumeSnapshotId:
     Description: Id of the EBS snapshot for Gerrit volume
     Type: String
@@ -116,7 +113,7 @@ Resources:
             sleep ${GerritVolumeAttachRetryDelay}
           done
 
-          if [[ "${GerritVolumeId}" = "" && "${GerritVolumeSnapshotId}" = "" ]]; then
+          if [[ "${GerritVolumeSnapshotId}" = "" ]]; then
             echo "Create file system for Gerrit volume"
             mkfs -t xfs /dev/xvdg
           fi
@@ -124,7 +121,7 @@ Resources:
           mkdir /gerrit-mount-point
           mount /dev/xvdg /gerrit-mount-point
 
-          if [[ "${GerritVolumeId}" = "" && "${GerritVolumeSnapshotId}" = "" ]]; then
+          if [[ "${GerritVolumeSnapshotId}" = "" ]]; then
             echo "Create Gerrit directories"
             mkdir -p /gerrit-mount-point/gerrit-logs \
              /gerrit-mount-point/gerrit-cache \
@@ -230,7 +227,7 @@ Resources:
       TemplateURL: !Join [ '', ['https://', !Ref TemplateBucketName, '.s3.amazonaws.com/cf-gerrit-volume.yml'] ]
       TimeoutInMinutes: '25'
       Parameters:
-        GerritVolumeId: !Ref GerritVolumeId
+        GerritVolumeId: ""
         GerritVolumeSnapshotId: !Ref GerritVolumeSnapshotId
         GerritVolumeSizeInGiB: !Ref GerritVolumeSizeInGiB
 
