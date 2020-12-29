@@ -51,6 +51,27 @@ Parameters:
       Description: An environment name used to build the log stream names
       Type: String
       Default: test
+  GerritVolumeId:
+    Description: Existing Gerrit volume id
+    Type: String
+    Default: ""
+  GerritVolumeSnapshotId:
+    Description: Id of the EBS snapshot for Gerrit volume
+    Type: String
+    Default: ""
+  GerritVolumeAttachMaxRetries:
+    Description: Maximum number of retries when attaching Gerrit Volume
+    Type: Number
+    Default: 5
+  GerritVolumeAttachRetryDelay:
+    Description: The delay in seconds between Gerrit Volume attach attempts
+    Type: Number
+    Default: 5
+  GerritVolumeSizeInGiB:
+    Description: Gerrit volume size in GiB
+    Type: Number
+    Default: 10
+
 Resources:
   # ECS Resources
   ECSCluster:
@@ -103,7 +124,48 @@ Resources:
           echo ECS_INSTANCE_ATTRIBUTES={\"target_group\":\"master\"} >> /etc/ecs/ecs.config
           # Make sure latest version of the helper scripts are installed as per recommendation:
           # https://github.com/awsdocs/aws-cloudformation-user-guide/blob/master/doc_source/cfn-helper-scripts-reference.md#using-the-latest-version
-          yum install -y aws-cfn-bootstrap wget
+          yum install -y aws-cfn-bootstrap wget aws-cli xfsprogs
+
+          # ATTACH EBS VOLUME
+          EC2_INSTANCE_ID=`curl -s http://169.254.169.254/latest/meta-data/instance-id`
+          VOLUME_ID=${GerritVolumeStack.Outputs.GerritVolumeRef}
+          echo "Volume Id: $VOLUME_ID"
+
+          aws ec2 attach-volume --region ${AWS::Region} --volume-id $VOLUME_ID --instance-id $EC2_INSTANCE_ID --device /dev/xvdg
+
+          for i in $(seq 1 ${GerritVolumeAttachMaxRetries}); do
+            echo "Waiting for volume $VOLUME_ID to be attached to the instace $EC2_INSTANCE_ID ($i/${GerritVolumeAttachMaxRetries})"
+            volumeStatus=`aws ec2 describe-volumes --region ${AWS::Region} --volume-ids $VOLUME_ID`
+            if [[ $volumeStatus =~ "\"State\": \"attached\"" ]]; then
+              echo "Volume $VOLUME_ID attached to the instace $EC2_INSTANCE_ID"
+              break
+            elif [[ "$i" -eq "${GerritVolumeAttachMaxRetries}" ]]; then
+              echo "Could not attach the volume $VOLUME_ID to the instace $EC2_INSTANCE_ID after ${GerritVolumeAttachMaxRetries} attempts"
+              exit 1
+            fi
+            sleep ${GerritVolumeAttachRetryDelay}
+          done
+
+          if [[ "${GerritVolumeId}" = "" && "${GerritVolumeSnapshotId}" = "" ]]; then
+            echo "Create file system for Gerrit volume"
+            mkfs -t xfs /dev/xvdg
+          fi
+
+          mkdir /gerrit-mount-point
+          mount /dev/xvdg /gerrit-mount-point
+
+          if [[ "${GerritVolumeId}" = "" && "${GerritVolumeSnapshotId}" = "" ]]; then
+            echo "Create Gerrit directories"
+            mkdir -p /gerrit-mount-point/gerrit-logs \
+             /gerrit-mount-point/gerrit-cache \
+             /gerrit-mount-point/gerrit-data \
+             /gerrit-mount-point/gerrit-git \
+             /gerrit-mount-point/gerrit-index \
+             /gerrit-mount-point/gerrit-db
+          fi
+
+          chown 1000:1000 -R /gerrit-mount-point
+
           # Get the CloudWatch Logs agent
           echo -e "
             {\"logs\":
@@ -111,27 +173,27 @@ Resources:
                 {\"files\":
                   {\"collect_list\":
                     [
-                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-master/_data/replication_log\",
+                      {\"file_path\": \"/gerrit-mount-point/gerrit-logs/replication_log\",
                       \"log_group_name\": \"${AWS::StackName}\",
                       \"log_stream_name\": \"${EnvironmentName}/{instance_id}/master/replication_log\",
                       \"timezone\": \"UTC\"
                       },
-                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-master/_data/httpd_log\",
+                      {\"file_path\": \"/gerrit-mount-point/gerrit-logs/httpd_log\",
                       \"log_group_name\": \"${AWS::StackName}\",
                       \"log_stream_name\": \"${EnvironmentName}/{instance_id}/master/httpd_log\",
                       \"timezone\": \"UTC\"
                       },
-                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-master/_data/sshd_log\",
+                      {\"file_path\": \"/gerrit-mount-point/gerrit-logs/sshd_log\",
                       \"log_group_name\": \"${AWS::StackName}\",
                       \"log_stream_name\": \"${EnvironmentName}/{instance_id}/master/sshd_log\",
                       \"timezone\": \"UTC\"
                       },
-                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-master/_data/gc_log\",
+                      {\"file_path\": \"/gerrit-mount-point/gerrit-logs/gc_log\",
                       \"log_group_name\": \"${AWS::StackName}\",
                       \"log_stream_name\": \"${EnvironmentName}/{instance_id}/master/gc_log\",
                       \"timezone\": \"UTC\"
                       },
-                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-master/_data/audit_log\",
+                      {\"file_path\": \"/gerrit-mount-point/gerrit-logs/audit_log\",
                       \"log_group_name\": \"${AWS::StackName}\",
                       \"log_stream_name\": \"${EnvironmentName}/{instance_id}/master/audit_log\",
                       \"timezone\": \"UTC\"
@@ -263,6 +325,8 @@ Resources:
               - 'ecr:GetAuthorizationToken'
               - 'ecr:BatchGetImage'
               - 'ecr:GetDownloadUrlForLayer'
+              - 'ec2:AttachVolume'
+              - 'ec2:DescribeVolumes'
             Resource: '*'
   ECSTaskNetworkStack:
     Type: AWS::CloudFormation::Stack
@@ -276,6 +340,15 @@ Resources:
         SubnetIdProp: !Ref 'SubnetIdProp'
         SubnetCIDR: !Ref 'SubnetCIDR'
 
+  GerritVolumeStack:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: !Join [ '', ['https://', !Ref TemplateBucketName, '.s3.amazonaws.com/cf-gerrit-volume.yml'] ]
+      TimeoutInMinutes: '25'
+      Parameters:
+        GerritVolumeId: !Ref 'GerritVolumeId'
+        GerritVolumeSnapshotId: !Ref 'GerritVolumeSnapshotId'
+        GerritVolumeSizeInGiB: !Ref 'GerritVolumeSizeInGiB'
 
 Outputs:
   ClusterName:
