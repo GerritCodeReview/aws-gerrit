@@ -56,30 +56,6 @@ Parameters:
   GerritKeyPrefix:
         Description: Gerrit credentials keys prefix
         Type: String
-  GerritGitVolume:
-      Description: Gerrit git volume name
-      Type: String
-      Default: gerrit-git
-  GerritDataVolume:
-      Description: Gerrit data volume name
-      Type: String
-      Default: gerrit-data
-  GerritIndexVolume:
-      Description: Gerrit index volume name
-      Type: String
-      Default: gerrit-index
-  GerritLogsVolume:
-      Description: Gerrit logs volume name
-      Type: String
-      Default: gerrit-logs
-  GerritCacheVolume:
-      Description: Gerrit cache volume name
-      Type: String
-      Default: gerrit-cache
-  GerritDbVolume:
-      Description: Gerrit db volume name
-      Type: String
-      Default: gerrit-db
   GerritRAM:
       Description: RAM to allocate to the Gerrit container
       Type: Number
@@ -183,6 +159,16 @@ Parameters:
     Type: CommaDelimitedList
     Default: '^(?!.*(sshd\\/sessions\\/connected|proc\\/cpu\\/usage|jgit\\/block_cache\\/cache_used|jvm\\.memory\\.total.used|proc\\/cpu\\/system_load|jvm\\.gc\\.G1-Old-Generation\\.time|proc\\/jvm\\/thread\\/num_live|git\\/upload-pack\\/request_count_total|http\\/server\\/rest_api\\/server_latency_total|http\\/server\\/success_count_total|http\\/server\\/error_count_total|queue\\/index_batch\\/total_scheduled_tasks_count|queue\\/receive_commits\\/total_scheduled_tasks_count|queue\\/work_queue\\/total_scheduled_tasks_count|queue\\/ssh_command_start\\/total_scheduled_tasks_count|queue\\/send_email\\/scheduled_tasks|jgit\\/block_cache\\/open_files|jgit\\/block_cache\\/cache_used)).*'
 
+Mappings:
+  Gerrit:
+    Volume:
+      Git: gerrit-git
+      Data: gerrit-data
+      Index: gerrit-index
+      Cache: gerrit-cache
+      Db: gerrit-db
+      Logs: gerrit-logs
+
 Conditions:
   CreateCloudwatchDashboard: !Equals [!Ref MetricsCloudwatchEnabled, true]
 Resources:
@@ -275,17 +261,17 @@ Resources:
                     - Name: METRICS_CLOUDWATCH_EXCLUDE_METRICS_LIST
                       Value: !Join [',', !Ref MetricsCloudwatchExcludeMetrics]
                   MountPoints:
-                    - SourceVolume: !Ref GerritGitVolume
+                    - SourceVolume: !FindInMap ['Gerrit', 'Volume', 'Git']
                       ContainerPath: /var/gerrit/git
-                    - SourceVolume: !Ref GerritDataVolume
+                    - SourceVolume: !FindInMap ['Gerrit', 'Volume', 'Data']
                       ContainerPath: /var/gerrit/data
-                    - SourceVolume: !Ref GerritIndexVolume
+                    - SourceVolume: !FindInMap ['Gerrit', 'Volume', 'Index']
                       ContainerPath: /var/gerrit/index
-                    - SourceVolume: !Ref GerritCacheVolume
+                    - SourceVolume: !FindInMap ['Gerrit', 'Volume', 'Cache']
                       ContainerPath: /var/gerrit/cache
-                    - SourceVolume: !Ref GerritDbVolume
+                    - SourceVolume: !FindInMap ['Gerrit', 'Volume', 'Db']
                       ContainerPath: /var/gerrit/db
-                    - SourceVolume: !Ref GerritLogsVolume
+                    - SourceVolume: !FindInMap ['Gerrit', 'Volume', 'Logs']
                       ContainerPath: /var/gerrit/logs
                   Ulimits:
                     - Name: nofile
@@ -307,24 +293,24 @@ Resources:
                         awslogs-region: !Ref AWS::Region
                         awslogs-stream-prefix: !Ref EnvironmentName
             Volumes:
-              - Name: !Ref 'GerritDbVolume'
+              - Name: !FindInMap ['Gerrit', 'Volume', 'Db']
                 Host:
-                  SourcePath: !Join ['/', ["/gerrit-mount-point", !Ref GerritDbVolume]]
-              - Name: !Ref 'GerritGitVolume'
+                  SourcePath: !Join ['/', ["/gerrit-mount-point", !FindInMap ['Gerrit', 'Volume', 'Db']]]
+              - Name: !FindInMap ['Gerrit', 'Volume', 'Git']
                 Host:
-                  SourcePath: !Join ['/', ["/gerrit-mount-point", !Ref GerritGitVolume]]
-              - Name: !Ref 'GerritDataVolume'
+                  SourcePath: !Join ['/', ["/gerrit-mount-point", !FindInMap ['Gerrit', 'Volume', 'Git']]]
+              - Name: !FindInMap ['Gerrit', 'Volume', 'Data']
                 Host:
-                  SourcePath: !Join ['/', ["/gerrit-mount-point", !Ref GerritDataVolume]]
-              - Name: !Ref 'GerritCacheVolume'
+                  SourcePath: !Join ['/', ["/gerrit-mount-point", !FindInMap ['Gerrit', 'Volume', 'Data']]]
+              - Name: !FindInMap ['Gerrit', 'Volume', 'Cache']
                 Host:
-                  SourcePath: !Join ['/', ["/gerrit-mount-point", !Ref GerritCacheVolume]]
-              - Name: !Ref 'GerritIndexVolume'
+                  SourcePath: !Join ['/', ["/gerrit-mount-point", !FindInMap ['Gerrit', 'Volume', 'Cache']]]
+              - Name: !FindInMap ['Gerrit', 'Volume', 'Index']
                 Host:
-                  SourcePath: !Join ['/', ["/gerrit-mount-point", !Ref GerritIndexVolume]]
-              - Name: !Ref 'GerritLogsVolume'
+                  SourcePath: !Join ['/', ["/gerrit-mount-point", !FindInMap ['Gerrit', 'Volume', 'Index']]]
+              - Name: !FindInMap ['Gerrit', 'Volume', 'Logs']
                 Host:
-                  SourcePath: !Join ['/', ["/gerrit-mount-point", !Ref GerritLogsVolume]]
+                  SourcePath: !Join ['/', ["/gerrit-mount-point", !FindInMap ['Gerrit', 'Volume', 'Logs']]]
 
     LoadBalancer:
         Type: AWS::ElasticLoadBalancingV2::LoadBalancer
