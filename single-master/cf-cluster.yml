@@ -127,6 +127,7 @@ Resources:
         Fn::Base64: !Sub |
           #!/bin/bash -xe
           echo ECS_CLUSTER=${ECSCluster} >> /etc/ecs/ecs.config
+          echo ECS_INSTANCE_ATTRIBUTES={\"target_group\":\"master\"} >> /etc/ecs/ecs.config
           # Make sure latest version of the helper scripts are installed as per recommendation:
           # https://github.com/awsdocs/aws-cloudformation-user-guide/blob/master/doc_source/cfn-helper-scripts-reference.md#using-the-latest-version
           yum install -y aws-cfn-bootstrap aws-cli xfsprogs
