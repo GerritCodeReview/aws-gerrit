@@ -80,6 +80,11 @@ Configuration values affecting deployment environment and cluster properties
 "gerrit-master-slave-MASTER" by default.
 * `GERRIT_SLAVE_INSTANCE_ID`: Optional. Identifier for the Gerrit slave instance.
 "gerrit-master-slave-SLAVE" by default.
+* `GERRIT_VOLUME_ID` : Optional. Id of an extisting EBS volume. If empty, a new volume
+for Gerrit data will be created
+* `GERRIT_VOLUME_SNAPSHOT_ID` : Optional. Ignored if GERRIT_VOLUME_ID is not empty. Id of
+the EBS volume snapshot used to create new EBS volume for Gerrit data.
+* `GERRIT_VOLUME_SIZE_IN_GIB`: Optional. The size of the Gerrit data volume, in GiBs. `10` by default.
 
 *NOTE*: if you are planning to run the monitoring stack, set the
 `MASTER_MAX_COUNT` value to at least 2. The resources provided by
