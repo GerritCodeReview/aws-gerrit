@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "da8db89e_1e8cc466",
+        "filename": "dual-master/Makefile",
+        "patchSetId": 1
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-12-29T08:51:36Z",
+      "side": 1,
+      "message": "Since in a production environment this could be catastrophic, do you think it might be worthy displaying a warning before issuing the command or the explanation in the README is enough?",
+      "range": {
+        "startLine": 489,
+        "startChar": 0,
+        "endLine": 489,
+        "endChar": 27
+      },
+      "revId": "c002a197de0110d99a51b4e302be14d3719666fb",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c15637fb_4ba8c575",
+        "filename": "dual-master/Makefile",
+        "patchSetId": 1
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2020-12-29T08:51:36Z",
+      "side": 1,
+      "message": "nit: If we use `jq` I think we should add it as a dependency either in the README or make sure the `Makefile` check to see if it is installed.",
+      "range": {
+        "startLine": 490,
+        "startChar": 142,
+        "endLine": 490,
+        "endChar": 144
+      },
+      "revId": "c002a197de0110d99a51b4e302be14d3719666fb",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
