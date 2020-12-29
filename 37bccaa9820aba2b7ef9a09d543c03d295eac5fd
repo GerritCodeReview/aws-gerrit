@@ -96,6 +96,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "8428fe2c_dce2d185",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-12-29T19:15:11Z",
+      "side": 1,
+      "message": "I have now done some refactoring to allow the GC task to run also on single-master and master-slave recipe.\n\nI would like to do more testing, but I am happy so far: the GC task can be executed and it runs on all recipes.\n\nHopefully things look better now, thanks for your review 😊",
+      "parentUuid": "04897228_f6b45a0d",
+      "range": {
+        "startLine": 7,
+        "startChar": 32,
+        "endLine": 7,
+        "endChar": 43
+      },
+      "revId": "37bccaa9820aba2b7ef9a09d543c03d295eac5fd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "cc33b947_2b2a4b21",
