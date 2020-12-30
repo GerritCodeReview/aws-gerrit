@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ed1ff392_25421f71",
+        "filename": "master-slave/setup.env.template",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-12-30T10:00:12Z",
+      "side": 1,
+      "message": "All-Projects should never be GCed, as it isn\u0027t supposed to be used as a repository for code.",
+      "range": {
+        "startLine": 50,
+        "startChar": 30,
+        "endLine": 50,
+        "endChar": 43
+      },
+      "revId": "884753717c8d763a371a287204df051e5141fbea",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
