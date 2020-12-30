@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7cc6e9f8_8bc8cba9",
+        "filename": "single-master/setup.env.template",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-12-30T09:59:20Z",
+      "side": 1,
+      "message": "All-Projects should never be in the list of repositories to be GCed.",
+      "range": {
+        "startLine": 39,
+        "startChar": 30,
+        "endLine": 39,
+        "endChar": 43
+      },
+      "revId": "c6cc6489083f7ddff28d292a7462ef73060a5638",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
