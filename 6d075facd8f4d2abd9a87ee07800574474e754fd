@@ -22,6 +22,30 @@
       },
       "revId": "6d075facd8f4d2abd9a87ee07800574474e754fd",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8188b203_6922bb82",
+        "filename": "maintenance/git-gc/README.md",
+        "patchSetId": 16
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-12-30T16:20:25Z",
+      "side": 1,
+      "message": "it\u0027s already linked in the ticket I thought it was enough.",
+      "parentUuid": "ebab51ef_78e535fc",
+      "range": {
+        "startLine": 53,
+        "startChar": 39,
+        "endLine": 53,
+        "endChar": 51
+      },
+      "revId": "6d075facd8f4d2abd9a87ee07800574474e754fd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
