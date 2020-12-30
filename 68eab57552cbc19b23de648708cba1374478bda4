@@ -16,6 +16,23 @@
       "message": "Everything in AtOmXpLuS",
       "revId": "68eab57552cbc19b23de648708cba1374478bda4",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f607b8f2_5637ba6f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-12-30T00:20:39Z",
+      "side": 1,
+      "message": "This approach is tied to EFS: can we park this and see if a more general solution independent from EFS is possible? Have you looked at gc-conductor?",
+      "revId": "68eab57552cbc19b23de648708cba1374478bda4",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }

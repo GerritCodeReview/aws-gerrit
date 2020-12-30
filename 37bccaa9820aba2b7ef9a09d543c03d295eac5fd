@@ -371,6 +371,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "050b692c_c647e1fd",
+        "filename": "dual-master/cf-task-git-gc.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-12-30T00:20:39Z",
+      "side": 1,
+      "message": "\u003e \u003e I do not believe that the list of project should be part of the deployment.\n\u003e \u003e Projects are user data and they can change continuously: we do not want to change the deployment just because people created or deleted projects.\n\u003e \n\u003e What do you mean by \"change the deployment\"?\n\nThe deployments are immutable, and they include the parameters.\nIf you change any parameter, you need to do a new blue/green deployment.\n\n\u003e With the current implementation, if the list of repositories change, only the scheduled-GC-task stack would need to be deployed.\n\nThat\u0027s a redeployment indeed. Repositories are data, they change every single day. Having to change the deployment based on the change in repositories is a management overload.\n\nHave you looked instead at gc-conductor?\nhttps://gerrit.googlesource.com/plugins/gc-conductor/\n\nIt looks like it does what we want already. It requires a data-base, but we could use H2.\n\n\n\u003e Even better, we could avoid this alltogether if we got the list of repositories as parameter[1].\n\nYou would still have to manage that parameter and redeploy manually, which is very inconvenient.\n\n\u003e \u003e Can the list of projects be extracted from Gerrit directly?\n\u003e \n\u003e I think the Gerrit admin can benefit from allowing GC only specific repositories.\n\u003e Gerrit installation might have thousands of gerrit repositories, but only a handful are actually used and require GC.\n\nFor large-scale Gerrit installations, the number of repositories are tens of thousands. I doubt the Gerrit admin would like to monitor and manage a list of hundreds of repositories by hand.",
+      "parentUuid": "6925da68_65aac4da",
+      "range": {
+        "startLine": 51,
+        "startChar": 46,
+        "endLine": 51,
+        "endChar": 57
+      },
+      "revId": "37bccaa9820aba2b7ef9a09d543c03d295eac5fd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "26fa29c8_149e9d60",
         "filename": "dual-master/cf-task-git-gc.yml",
         "patchSetId": 2
@@ -749,6 +773,30 @@
       "side": 1,
       "message": "See my reply, I think it is useful to control which repositories to GC.",
       "parentUuid": "970ec2fc_338e3c60",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 6
+      },
+      "revId": "37bccaa9820aba2b7ef9a09d543c03d295eac5fd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2279a0f9_174fc9f2",
+        "filename": "dual-master/maintenance/git-gc/scripts/gc.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2020-12-30T00:20:39Z",
+      "side": 1,
+      "message": "For small sized setups, yes. For large setups, an automatic mechanism is more manageable.",
+      "parentUuid": "c465ade6_81f4f5c2",
       "range": {
         "startLine": 22,
         "startChar": 0,
