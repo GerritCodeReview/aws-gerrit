@@ -68,6 +68,24 @@
       "message": "Happy to +2 once the limitations of the approach are documented in the README.md",
       "revId": "68eab57552cbc19b23de648708cba1374478bda4",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3240591d_a0f8e361",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-12-30T13:51:42Z",
+      "side": 1,
+      "message": "@luca I believed I have addressed all the comments.\nI have also verified the whole chain.",
+      "parentUuid": "8b145dca_e6c756f2",
+      "revId": "68eab57552cbc19b23de648708cba1374478bda4",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
