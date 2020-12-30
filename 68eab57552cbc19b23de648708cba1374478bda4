@@ -33,6 +33,24 @@
       "message": "This approach is tied to EFS: can we park this and see if a more general solution independent from EFS is possible? Have you looked at gc-conductor?",
       "revId": "68eab57552cbc19b23de648708cba1374478bda4",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "179eee61_43690bf7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2020-12-30T08:39:58Z",
+      "side": 1,
+      "message": "Sure, let me explore that as an alternative",
+      "parentUuid": "f607b8f2_5637ba6f",
+      "revId": "68eab57552cbc19b23de648708cba1374478bda4",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
