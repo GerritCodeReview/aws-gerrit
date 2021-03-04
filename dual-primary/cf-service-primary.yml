@@ -2,7 +2,7 @@ AWSTemplateFormatVersion: '2010-09-09'
 Description: Deploy a service into an ECS cluster behind a public load balancer.
 Parameters:
   GerritInstanceNumber:
-    Description: Whether this is master1 or master2
+    Description: Whether this is primary1 or primary2
     Type: Number
     AllowedValues: [1,2]
   ClusterStackName:
@@ -40,9 +40,9 @@ Parameters:
   Subdomain:
         Description: The subdomain of the Gerrit cluster
         Type: String
-        Default: gerrit-master-demo
-  SlaveSubdomain:
-        Description: The subdomain of the Gerrit slave
+        Default: gerrit-primary-demo
+  ReplicaSubdomain:
+        Description: The subdomain of the Gerrit replica
         Type: String
   LBSubdomain:
         Description: The subdomain of the Gerrit load balancer
@@ -132,7 +132,7 @@ Parameters:
   InstanceId:
     Description: Optional identifier for the Gerrit instance
     Type: String
-    Default: gerrit-dual-master-MASTER
+    Default: gerrit-dual-primary-PRIMARY
   MetricsCloudwatchEnabled:
     Description: Whether gerrit metrics should be published to cloudwatch
     Type: String
@@ -206,7 +206,7 @@ Mappings:
       Db: gerrit-db
       Logs: gerrit-logs
     Service:
-      Name: gerrit-master
+      Name: gerrit-primary
     LoadBalancer:
       HTTPPort: 8080
       SSHPort: 29418
@@ -247,7 +247,7 @@ Resources:
             ExecutionRoleArn: !GetAtt ECSTaskExecutionRoleStack.Outputs.TaskExecutionRoleRef
             NetworkMode: bridge
             PlacementConstraints:
-                - Expression: !Sub 'attribute:target_group == master-${GerritInstanceNumber}'
+                - Expression: !Sub 'attribute:target_group == primary-${GerritInstanceNumber}'
                   Type: "memberOf"
             ContainerDefinitions:
                 - Name: !FindInMap ['Gerrit', 'Service', 'Name']
@@ -310,8 +310,8 @@ Resources:
                       Value: !FindInMap ['Git', 'Daemon', 'Port']
                     - Name: GIT_SSH_PORT
                       Value: !FindInMap ['Git', 'SSH', 'Port']
-                    - Name: SLAVE_SUBDOMAIN
-                      Value: !Ref SlaveSubdomain
+                    - Name: REPLICA_SUBDOMAIN
+                      Value: !Ref ReplicaSubdomain
                     - Name: GERRIT_INSTANCE_ID
                       Value: !Ref InstanceId
                     - Name: METRICS_CLOUDWATCH_ENABLED

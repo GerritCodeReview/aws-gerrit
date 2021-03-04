@@ -1,0 +1,36 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: A stack for the Gerrit service Route53 routing.
+Parameters:
+  PrimaryServiceStackName:
+      Description: Stack name of the ECS Primary Gerrit service
+      Type: String
+      Default: gerrit-service-primary
+  ReplicaServiceStackName:
+      Description: Stack name of the ECS Replica Gerrit service
+      Type: String
+      Default: gerrit-service-replica
+
+Resources:
+  PrimaryDnsRecord:
+      Type: AWS::Route53::RecordSet
+      Properties:
+        Name:
+          !Join
+            - '.'
+            - - Fn::ImportValue: !Join [':', [!Ref 'PrimaryServiceStackName', 'Subdomain']]
+              - Fn::ImportValue: !Join [':', [!Ref 'PrimaryServiceStackName', 'HostedZoneName']]
+        HostedZoneName:
+          !Join
+            - ''
+            - - Fn::ImportValue: !Join [':', [!Ref 'PrimaryServiceStackName', 'HostedZoneName']]
+              - '.'
+        Comment: DNS name for Gerrit Primary.
+        Type: A
+        AliasTarget:
+          DNSName:
+            Fn::ImportValue:
+              !Join [':', [!Ref 'PrimaryServiceStackName', 'PublicLoadBalancerDNSName']]
+          HostedZoneId:
+            Fn::ImportValue:
+              !Join [':', [!Ref 'PrimaryServiceStackName', 'CanonicalHostedZoneID']]
+          EvaluateTargetHealth: False

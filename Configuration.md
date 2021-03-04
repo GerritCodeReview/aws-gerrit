@@ -19,7 +19,7 @@ Configuration values affecting deployment environment and cluster properties
 * `AWS_PREFIX`: Optional. A string to prefix stacks and resources with. `gerrit` by default.
 * `DOCKER_REGISTRY_URI`: Mandatory. URI of the Docker registry. See the
   [prerequisites](Prerequisites.md) section for more details.
-* `SSL_CERTIFICATE_ARN`: Mandatory. ARN of the wildcard SSL Certificate, covering both master nodes.
+* `SSL_CERTIFICATE_ARN`: Mandatory. ARN of the wildcard SSL Certificate, covering both primary nodes.
 * `CLUSTER_STACK_NAME`: Optional. Name of the cluster stack. `gerrit-cluster` by default.
 * `DNS_ROUTING_STACK_NAME`: Optional. Name of the DNS routing stack. `gerrit-dns-routing` by default.
 * `HOSTED_ZONE_NAME`: Optional. Name of the hosted zone. `mycompany.com` by default.
@@ -43,9 +43,9 @@ Configuration values to spec up Gerrit containers.
 
 * `CLUSTER_INSTANCE_TYPE`: Optional. The EC2 instance Type used to run the cluster. The default value
 is recipe-specific:
-  * single-master: `m4.large`
-  * master-slave: `m4.xlarge`
-  * dual-master: `m4.2xlarge`
+  * single-primary: `m4.large`
+  * primary-replica: `m4.xlarge`
+  * dual-primary: `m4.2xlarge`
 * `GERRIT_RAM`: RAM allocated (MiB) to the Gerrit container. `6000` by default.
 * `GERRIT_CPU`: vCPU units allocated to the Gerrit container. `1024` by default.
 * `GERRIT_HEAP_LIMIT`: Maximum heap size of the Java process running Gerrit, in bytes.

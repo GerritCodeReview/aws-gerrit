@@ -4,7 +4,7 @@ This is a set of Cloud Formation Templates and scripts to spin up a monitoring
 stack.
 
 The stack includes Prometheus, to scrape Gerrit metrics
-exposed by master and slave, and Grafana to display them.
+exposed by primary and replica, and Grafana to display them.
 
 ## Prerequisites
 

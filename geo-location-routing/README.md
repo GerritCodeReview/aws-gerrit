@@ -12,7 +12,7 @@ It is based on the Route53's GeoLocation routing strategy (docs can be found
 ### Prerequisites
 
 This recipe assumes that you do have a multi-site Gerrit deployment in two regions.
-You can refer to the [relevant documentation](../dual-master/README.md#multi-site)
+You can refer to the [relevant documentation](../dual-primary/README.md#multi-site)
 to understand how to setup Gerrit in a multi-site deployment.
 
 ### Configuration

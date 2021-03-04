@@ -43,7 +43,7 @@ Resources:
             ExecutionRoleArn: !GetAtt ECSTaskExecutionRoleStack.Outputs.TaskExecutionRoleRef
             NetworkMode: bridge
             PlacementConstraints:
-                - Expression: !Sub 'attribute:target_group =~ master.*'
+                - Expression: !Sub 'attribute:target_group =~ primary.*'
                   Type: "memberOf"
             ContainerDefinitions:
                 - Name: !FindInMap ['GitGC', 'Task', 'Name']
@@ -117,7 +117,7 @@ Resources:
         ScheduleExpression: !Sub "cron(${ScheduleCronExpression})"
         State: ENABLED
         Targets:
-          - Id: git-gc-master
+          - Id: git-gc-primary
             RoleArn: !GetAtt EventsInvokeTaskRole.Arn
             EcsParameters:
               TaskDefinitionArn: !Ref TaskDefinition

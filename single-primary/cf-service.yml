@@ -3,7 +3,7 @@ Description: Deploy a service into an ECS cluster behind a public load balancer.
 Parameters:
   GerritServiceName:
     Type: String
-    Default: gerrit-master
+    Default: gerrit-primary
   ClusterStackName:
       Description: Stack name of the ECS cluster to deply the serivces
       Type: String
@@ -47,7 +47,7 @@ Parameters:
   Subdomain:
         Description: The subdomain of the Gerrit cluster
         Type: String
-        Default: gerrit-master-demo
+        Default: gerrit-primary-demo
   LoadBalancerScheme:
         Description: Load Balancer schema, The nodes of an Internet-facing load balancer have public IP addresses.
         Type: String
@@ -126,7 +126,7 @@ Parameters:
   InstanceId:
       Description: Optional identifier for the Gerrit instance
       Type: String
-      Default: gerrit-single-master
+      Default: gerrit-single-primary
   MetricsCloudwatchEnabled:
       Description: Whether gerrit metrics should be published to cloudwatch
       Type: String
@@ -199,7 +199,7 @@ Resources:
             ExecutionRoleArn: !GetAtt ECSTaskExecutionRoleStack.Outputs.TaskExecutionRoleRef
             NetworkMode: bridge
             PlacementConstraints:
-              - Expression: !Sub 'attribute:target_group == master'
+              - Expression: !Sub 'attribute:target_group == primary'
                 Type: "memberOf"
             ContainerDefinitions:
                 - Name: !Ref GerritServiceName
