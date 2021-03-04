@@ -93,10 +93,15 @@ Parameters:
     Description: Gerrit volume size in GiB
     Type: Number
     Default: 10
+  ReplicaFileSystemID:
+    Description: the id of the EFS filesystem to mount on the replicas
+    Type: String
+    Default: ""
 
 Conditions:
   isProvisionedThroughput: !Equals [!Ref FileSystemThroughputMode, "provisioned"]
   CreateEFS: !Equals [!Ref FileSystemID, ""]
+  CreateReplicaEFS: !Equals [!Ref ReplicaFileSystemID, ""]
   NetworkStackNeeded: !Or
     - !Equals [!Ref VPCIdProp, ""]
     - !And
@@ -308,6 +313,22 @@ Resources:
         PublicSubnet: !If [NetworkStackNeeded, !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneRef, !Ref SubnetIdProp]
         SecurityGroupVPCID: !If [NetworkStackNeeded, !GetAtt ECSTaskNetworkStack.Outputs.VPCRef, !Ref VPCIdProp]
         SecurityGroupCidrIp: !Ref SubnetCIDR
+        TagValue: "efs-for-gerrit-primaries"
+
+  GitReplicaFileSystemPermanentStack:
+    Type: AWS::CloudFormation::Stack
+    DeletionPolicy: Retain
+    Condition: CreateEFS
+    Properties:
+      TemplateURL: !Join [ '', ['https://', !Ref TemplateBucketName, '.s3.amazonaws.com/cf-efs-stack.yml'] ]
+      TimeoutInMinutes: '25'
+      Parameters:
+        FileSystemThroughputMode: !Ref FileSystemThroughputMode
+        ProvisionedThroughputInMibps: !Ref ProvisionedThroughputInMibps
+        PublicSubnet: !If [NetworkStackNeeded, !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneRef, !Ref SubnetIdProp]
+        SecurityGroupVPCID: !If [NetworkStackNeeded, !GetAtt ECSTaskNetworkStack.Outputs.VPCRef, !Ref VPCIdProp]
+        SecurityGroupCidrIp: !Ref SubnetCIDR
+        TagValue: "efs-for-gerrit-replicas"
 
   ECSTaskNetworkStack:
     Type: AWS::CloudFormation::Stack
@@ -344,3 +365,8 @@ Outputs:
     Value: !GetAtt ECSCluster.Arn
     Export:
       Name: !Join [ ':', [ !Ref 'AWS::StackName', 'ClusterArn' ] ]
+  ReplicaFileSystemID:
+    Description: The ID of the EFS to be mounted by replicas
+    Value: !If [CreateReplicaEFS, !GetAtt GitReplicaFileSystemPermanentStack.Outputs.FileSystemID, !Ref ReplicaFileSystemID ]
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'ReplicaFileSystemID' ] ]

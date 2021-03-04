@@ -79,6 +79,7 @@ ifdef PRIMARY_MAX_COUNT
 		$(eval CLUSTER_OPTIONAL_PARAMS := $(CLUSTER_OPTIONAL_PARAMS) ParameterKey=PrimaryMaxCount,ParameterValue=$(PRIMARY_MAX_COUNT))
 endif
 
+	# TODO: Should pass Replica filesystem id
 	$(AWS_FC_COMMAND) create-stack \
 		--stack-name $(CLUSTER_STACK_NAME) \
 		--capabilities CAPABILITY_IAM  \

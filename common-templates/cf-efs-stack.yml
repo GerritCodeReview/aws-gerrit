@@ -16,6 +16,9 @@ Parameters:
   SecurityGroupCidrIp:
     Description: The IPv4 address range for the security group, in CIDR format
     Type: String
+  TagValue:
+    Description: A tag value for this EFS resource
+    Type: String
 
 Conditions:
   isProvisionedThroughput: !Equals [!Ref FileSystemThroughputMode, "provisioned"]
@@ -28,7 +31,7 @@ Resources:
       ProvisionedThroughputInMibps: !If [isProvisionedThroughput, !Ref ProvisionedThroughputInMibps, !Ref "AWS::NoValue"]
       FileSystemTags:
         - Key: Name
-          Value: "multi-primary-git-repo"
+          Value: !Ref TagValue
 
   GitMountTarget:
     Type: AWS::EFS::MountTarget
