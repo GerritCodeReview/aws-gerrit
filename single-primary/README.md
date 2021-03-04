@@ -1,16 +1,14 @@
-# Gerrit Master-Slave
+# Gerrit Single Primary
 
-This set of Templates provide all the components to deploy a single Gerrit master
-and a single Gerrit slave in ECS
+This set of Templates provide all the components to deploy a single Gerrit primary
+in ECS
 
 ## Architecture
 
-Five templates are provided in this example:
+Three templates are provided in this example:
 * `cf-cluster`: define the ECS cluster and the networking stack
-* `cf-service-master`: define the service stack running Gerrit master
-* `cf-service-slave`: define the service stack running Gerrit slave
-* `cf-dns-route`: define the DNS routing for the service
-* `cf-dashboard`: define the CloudWatch dashboard for the services
+* `cf-service`: defined the service stack running Gerrit
+* `cf-dns-route`: defined the DNS routing for the service
 
 ### Networking
 
@@ -20,15 +18,10 @@ Five templates are provided in this example:
 * 1 public Subnets:
  * CIDR: 10.0.0.0/24
 * 1 public NLB exposing:
- * Gerrit master HTTP on port 8080
- * Gerrit master SSH on port 29418
-* 1 public NLB exposing:
- * Gerrit slave HTTP on port 8081
- * Gerrit slave SSH on port 39418
- * SSH agent on port 1022
- * Git daemon on port 9418
+ * HTTP on port 8080
+ * SSH on port 29418
 * 1 Internet Gateway
-* 2 type A alias DNS entry, for Gerrit master and slave
+* 1 type A alias DNS entry
 * A SSL certificate available in [AWS Certificate Manager](https://aws.amazon.com/certificate-manager/)
 
 ### Data persistency
@@ -53,13 +46,24 @@ Five templates are provided in this example:
 
 * Standard CloudWatch monitoring metrics for each component
 * Application level CloudWatch monitoring can be enabled as described [here](../Configuration.md#cloudwatch-monitoring)
-* Optionally Prometheus and Grafana stack (see [here](../monitoring/README.md))
+* Prometheus and Grafana stack is not available for this recipe yet. However the work has been done for
+the dual-primary recipe and it could be easily adapted (you can find the relevant issue
+[here](https://bugs.chromium.org/p/gerrit/issues/detail?id=13092)).
 
 ## How to run it
 
+You can find [on GerritForge's YouTube Channel](https://www.youtube.com/watch?v=zr2zCSuclIU) a
+step-by-step guide on how to setup you Gerrit Code Review in AWS.
+
+However, keep reading this guide for a more exhaustive explanation.
+
 ### 0 - Prerequisites
 
-Follow the steps described in the [Prerequisites](../Prerequisites.md) section
+Follow the steps described in the [Prerequisites](../Prerequisites.md) section.
+
+Additionally, whilst it is possible to do so by using an admin user, consider
+limiting access only to what is required by using a dedicated role or user to do
+so.
 
 ### 1 - Configuration
 
@@ -71,31 +75,17 @@ On top of that, you might set the additional parameters, specific for this recip
 
 Configuration values affecting deployment environment and cluster properties
 
-* `SERVICE_MASTER_STACK_NAME`: Optional. Name of the master service stack. `gerrit-service-master` by default.
-* `SERVICE_SLAVE_STACK_NAME`: Optional. Name of the slave service stack. `gerrit-service-slave` by default.
-* `DASHBOARD_STACK_NAME` : Optional. Name of the dashboard stack. `gerrit-dashboard` by default.
-* `MASTER_SUBDOMAIN`: Optional. Name of the master sub domain. `gerrit-master-demo` by default.
-* `SLAVE_SUBDOMAIN`: Optional. Name of the slave sub domain. `gerrit-slave-demo` by default.
-* `GERRIT_MASTER_INSTANCE_ID`: Optional. Identifier for the Gerrit master instance.
-"gerrit-master-slave-MASTER" by default.
-* `GERRIT_SLAVE_INSTANCE_ID`: Optional. Identifier for the Gerrit slave instance.
-"gerrit-master-slave-SLAVE" by default.
+* `SERVICE_STACK_NAME`: Optional. Name of the service stack. `gerrit-service` by default.
+* `GERRIT_INSTANCE_ID`: Optional. Identifier for the Gerrit instance. "gerrit-single-primary" by default.
 * `GERRIT_VOLUME_ID` : Optional. Id of an extisting EBS volume. If empty, a new volume
 for Gerrit data will be created
 * `GERRIT_VOLUME_SNAPSHOT_ID` : Optional. Ignored if GERRIT_VOLUME_ID is not empty. Id of
 the EBS volume snapshot used to create new EBS volume for Gerrit data.
 * `GERRIT_VOLUME_SIZE_IN_GIB`: Optional. The size of the Gerrit data volume, in GiBs. `10` by default.
 
-*NOTE*: if you are planning to run the monitoring stack, set the
-`MASTER_MAX_COUNT` value to at least 2. The resources provided by
-a single EC2 instance won't be enough for all the services that will be ran*
-
-* `PROMETHEUS_SUBDOMAIN`: Optional. Prometheus subdomain. For example: `<AWS_PREFIX>-prometheus`
-* `GRAFANA_SUBDOMAIN`: Optional. Grafana subdomain. For example: `<AWS_PREFIX>-grafana`
-
 ### 2 - Deploy
 
-* Create the cluster, services and DNS routing stacks:
+* Create the cluster, service and DNS routing stacks:
 
 ```
 make [AWS_REGION=a-valid-aws-region] [AWS_PREFIX=some-cluster-prefix] create-all
@@ -124,35 +114,28 @@ Note that this will *not* delete:
 * SSL certificates
 * ECR repositories
 
-### Access your Gerrit instances
+### Access your Gerrit
 
-Get the URL of your Gerrit master instance this way:
+You Gerrit instance will be available at this URL: `http://<HOSTED_ZONE_NAME>.<SUBDOMAIN>`.
 
-```
-aws cloudformation describe-stacks \
-  --stack-name <SERVICE_MASTER_STACK_NAME> \
-  | grep -A1 '"OutputKey": "CanonicalWebUrl"' \
-  | grep OutputValue \
-  | cut -d'"' -f 4
-```
+The available ports are `8080` for HTTP and `29418` for SSH.
 
-Similarly for the slave:
-```
-aws cloudformation describe-stacks \
-  --stack-name <SERVICE_SLAVE_STACK_NAME> \
-  | grep -A1 '"OutputKey": "CanonicalWebUrl"' \
-  | grep OutputValue \
-  | cut -d'"' -f 4
-```
+### External Services
 
-Gerrit master instance ports:
-* HTTP `8080`
-* SSH `29418`
-
-Gerrit slave instance ports:
-* HTTP `9080`
-* SSH `39418`
+If you need to setup some external services (maybe for testing purposes, such as SMTP or LDAP),
+you can follow the instructions [here](../README.md#external-services)
 
 ### Docker
 
 Refer to the [Docker](../Docker.md) section for information on how to setup docker or how to publish images
+
+### Permissions
+
+In order to deploy and destroy a single-primary recipe the invoking user needs to
+have the relevant permissions to perform actions on AWS resources.
+
+The list of actions can be found [here](resources/permission.policy.json).
+The document can be used to create a permission policy directly in AWS.
+
+The policy then needs to be attached to the invoking user group or alternatively
+to the invoking user directly.

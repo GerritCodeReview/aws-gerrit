@@ -1,23 +1,23 @@
-# Gerrit dual-master in High-Availability
+# Gerrit dual-primary in High-Availability
 
-This set of templates provides all the components to deploy a Gerrit dual-master
-in HA in ECS. The 2 masters will share the Git repositories via NFS, using EFS.
+This set of templates provides all the components to deploy a Gerrit dual-primary
+in HA in ECS. The 2 primaries will share the Git repositories via NFS, using EFS.
 
 ## Architecture
 
 The following templates are provided in this example:
 * `cf-cluster`: define the ECS cluster and the networking stack
-* `cf-service-master`: define the service stack running the gerrit master
+* `cf-service-primary`: define the service stack running the gerrit primary
 * `cf-dns-route`: define the DNS routing for the service
-* `cf-service-slave`: define the service stack running the gerrit replica
-* `cf-service-lb`: define the LBs in front of gerrit masters (this includes haproxy as well as NLB)
+* `cf-service-replica`: define the service stack running the gerrit replica
+* `cf-service-lb`: define the LBs in front of gerrit primaries (this includes haproxy as well as NLB)
 * `cf-dashboard`: define the CloudWatch dashboard for the services
 
 When the recipe enables the replication_service (see [docs](#replication-service))
 then these additional templates will be executed:
 
 * `cf-service-replication`: Define a replication stack that will allow git replication
-over the EFS volume, which is mounted by the master instances.
+over the EFS volume, which is mounted by the primary instances.
 
 ### Networking
 
@@ -27,13 +27,13 @@ over the EFS volume, which is mounted by the master instances.
 * 1 public Subnets:
  * CIDR: 10.0.0.0/24
 * 1 public NLB exposing:
- * Gerrit master 1 HTTP on port 8080
- * Gerrit master 1 SSH on port 29418
+ * Gerrit primary 1 HTTP on port 8080
+ * Gerrit primary 1 SSH on port 29418
 * 1 public NLB exposing:
- * Gerrit master 2 HTTP on port 8081
- * Gerrit master 2 SSH on port 39418
+ * Gerrit primary 2 HTTP on port 8081
+ * Gerrit primary 2 SSH on port 39418
 * 1 Internet Gateway
-* 2 type A alias DNS entry, for Gerrit master 1 and 2
+* 2 type A alias DNS entry, for Gerrit primary 1 and 2
 * A wildcard SSL certificate available in [AWS Certificate Manager](https://aws.amazon.com/certificate-manager/)
 
 ### Data persistency
@@ -43,8 +43,8 @@ over the EFS volume, which is mounted by the master instances.
   * Caches
   * Logs
 * EFS volume:
-  * Share Git repositories between masters
-  * Share Web sessions between masters
+  * Share Git repositories between primaries
+  * Share Web sessions between primaries
 
 *NOTE*: This stack uses EFS in provisioned mode, which is a better setting for large repos
 (> 1GB uncompressed) since it provides a lower latency compared to the burst mode.
@@ -71,8 +71,8 @@ Referring to persistent volumes allows to perform [blue-green deployments](#blue
 
 #### Blue/Green deployment
 
-When a dual-master stack is created, unless otherwise specified, a new EFS is
-created and a two new empty EBSs are attached to master1 and master2,
+When a dual-primary stack is created, unless otherwise specified, a new EFS is
+created and a two new empty EBSs are attached to primary1 and primary2,
 respectively.
 
 In a [blue/green deployment](https://en.wikipedia.org/wiki/Blue-green_deployment)
@@ -86,7 +86,7 @@ Later on (days, weeks, months), the need of a change arises, for which a new
 version of the cluster needs to be deployed: this will be the _green_ stack and
 it will need to be deployed as such:
 
-1. Take master1 EBS snapshot of volume attached to /dev/xvdg (note, this needs
+1. Take primary1 EBS snapshot of volume attached to /dev/xvdg (note, this needs
 to be done in a read only window). Ideally this step is already performed
 regularly by a backup script.
 
@@ -144,7 +144,7 @@ blue stack).
 
 * Standard CloudWatch monitoring metrics for each component
 * Application level CloudWatch monitoring can be enabled as described [here](../Configuration.md#cloudwatch-monitoring)
-* Prometheus and Grafana stack is currently not available for dual-master, but a change is in progress to allow this
+* Prometheus and Grafana stack is currently not available for dual-primary, but a change is in progress to allow this
  (see [Issue 12979](https://bugs.chromium.org/p/gerrit/issues/detail?id=12979))
 
 ## How to run it
@@ -163,28 +163,28 @@ On top of that, you might set the additional parameters, specific for this recip
 
 Configuration values affecting deployment environment and cluster properties
 
-* `SERVICE_MASTER1_STACK_NAME`: Optional. Name of the master 1 service stack. `gerrit-service-master-1` by default.
-* `SERVICE_MASTER2_STACK_NAME`: Optional. Name of the master 2 service stack. `gerrit-service-master-2` by default.
+* `SERVICE_PRIMARY1_STACK_NAME`: Optional. Name of the primary 1 service stack. `gerrit-service-primary-1` by default.
+* `SERVICE_PRIMARY2_STACK_NAME`: Optional. Name of the primary 2 service stack. `gerrit-service-primary-2` by default.
 * `DASHBOARD_STACK_NAME` : Optional. Name of the dashboard stack. `gerrit-dashboard` by default.
-* `MASTER1_SUBDOMAIN`: Optional. Name of the master 1 sub domain. `gerrit-master-1-demo` by default.
-* `MASTER2_SUBDOMAIN`: Optional. Name of the master 2 sub domain. `gerrit-master-2-demo` by default.
-* `HTTP_HOST_PORT_MASTER1`: Optional. Gerrit Host HTTP port for master1 (must be different from master2). `9080` by default.
-* `SSH_HOST_PORT_MASTER1:`: Optional. Gerrit Host SSH port for master1 (must be different from master2). `29418` by default.
-* `HTTP_HOST_PORT_MASTER2`: Optional. Gerrit Host HTTP port for master2 (must be different from master1). `9080` by default.
-* `SSH_HOST_PORT_MASTER2:`: Optional. Gerrit Host SSH port for master2 (must be different from master1). `29418` by default.
-* `SLAVE_SUBDOMAIN`: Mandatory. The subdomain of the Gerrit slave. For example: `<AWS_PREFIX>-slave`
-* `LB_SUBDOMAIN`: Mandatory. The subdomain of the Gerrit load balancer. For example: `<AWS_PREFIX>-dual-master`
+* `PRIMARY1_SUBDOMAIN`: Optional. Name of the primary 1 sub domain. `gerrit-primary-1-demo` by default.
+* `PRIMARY2_SUBDOMAIN`: Optional. Name of the primary 2 sub domain. `gerrit-primary-2-demo` by default.
+* `HTTP_HOST_PORT_PRIMARY1`: Optional. Gerrit Host HTTP port for primary1 (must be different from primary2). `9080` by default.
+* `SSH_HOST_PORT_PRIMARY1:`: Optional. Gerrit Host SSH port for primary1 (must be different from primary2). `29418` by default.
+* `HTTP_HOST_PORT_PRIMARY2`: Optional. Gerrit Host HTTP port for primary2 (must be different from primary1). `9080` by default.
+* `SSH_HOST_PORT_PRIMARY2:`: Optional. Gerrit Host SSH port for primary2 (must be different from primary1). `29418` by default.
+* `REPLICA_SUBDOMAIN`: Mandatory. The subdomain of the Gerrit replica. For example: `<AWS_PREFIX>-replica`
+* `LB_SUBDOMAIN`: Mandatory. The subdomain of the Gerrit load balancer. For example: `<AWS_PREFIX>-dual-primary`
 * `FILESYSTEM_THROUGHPUT_MODE`: Optional. The throughput mode for the file system to be created.
 default: `bursting`. More info [here](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-efs-filesystem.html)
 * `FILESYSTEM_PROVISIONED_THROUGHPUT_IN_MIBPS`: Optional. Only used when `FILESYSTEM_THROUGHPUT_MODE` is set to `provisioned`.
 default: `256`.
 
-* `GERRIT_SLAVE_INSTANCE_ID`: Optional. Identifier for the Gerrit slave instance.
-"gerrit-dual-master-SLAVE" by default.
-* `GERRIT_MASTER1_INSTANCE_ID`: Optional. Identifier for the Gerrit master1 instance.
-"gerrit-dual-master-MASTER1" by default.
-* `GERRIT_MASTER2_INSTANCE_ID`: Optional. Identifier for the Gerrit master2 instance.
-"gerrit-dual-master-MASTER2" by default.
+* `GERRIT_REPLICA_INSTANCE_ID`: Optional. Identifier for the Gerrit replica instance.
+"gerrit-dual-primary-REPLICA" by default.
+* `GERRIT_PRIMARY1_INSTANCE_ID`: Optional. Identifier for the Gerrit primary1 instance.
+"gerrit-dual-primary-PRIMARY1" by default.
+* `GERRIT_PRIMARY2_INSTANCE_ID`: Optional. Identifier for the Gerrit primary2 instance.
+"gerrit-dual-primary-PRIMARY2" by default.
 
 * `HA_PROXY_DESIRED_COUNT`: Optional. Desired number of haproxy services.
 "2" by default. Minimum: "2".
@@ -197,14 +197,14 @@ accordingly.
 * `HA_PROXY_MAX_COUNT`: Optional. Maximum number of EC2 instances in the haproxy autoscaling group.
 "2" by default. Minimum: "2".
 
-* `MASTER_MAX_COUNT`: Optional. Maximum number of EC2 instances in the master autoscaling group.
+* `PRIMARY_MAX_COUNT`: Optional. Maximum number of EC2 instances in the primary autoscaling group.
 "2" by default. Minimum: "2".
 
 * `GERRIT_VOLUME_SNAPSHOT_ID` : Optional. Id of the EBS volume snapshot used to
 create new EBS volume for Gerrit data. A new volume will be created for each
-master, based on this snapshot.
+primary, based on this snapshot.
 
-Note that, differently from other recipes, dual-master does not support the
+Note that, differently from other recipes, dual-primary does not support the
 `GERRIT_VOLUME_ID` parameter, since it wouldn't be possible to mount the same
 EBS on multiple EC2 instances.
 
@@ -212,14 +212,14 @@ EBS on multiple EC2 instances.
 * `FILESYSTEM_ID`: Optional. An existing EFS filesystem id.
 
     If empty, a new EFS will be created to store git data.
-    Setting this value is required when deploying a dual-master cluster using
+    Setting this value is required when deploying a dual-primary cluster using
     existing data as well as performing blue/green deployments.
     The nested stack will be *retained* when the cluster is deleted, so that
     existing data can be used to perform blue/green deployments.
 
 * `AUTOREINDEX_POLL_INTERVAL`. Optional. Interval between reindexing of all changes, accounts and groups.
 Default: `10m`
-high-availability docs [here](https://gerrit.googlesource.com/plugins/high-availability/+/refs/heads/master/src/main/resources/Documentation/config.md)
+high-availability docs [here](https://gerrit.googlesource.com/plugins/high-availability/+/refs/heads/primary/src/main/resources/Documentation/config.md)
 
 #### REPLICATION SERVICE
 
@@ -246,7 +246,7 @@ establish replication to a remote Git site.
 #### MULTI-SITE
 
 This recipe supports multi-site. Multi-site is a specific configuration of Gerrit
-that allows it to be part of distributed multi-master of multiple Gerrit clusters.
+that allows it to be part of distributed multi-primary of multiple Gerrit clusters.
 No storage is shared among the Gerrit sites: syncing happens thanks to two
 channels:
 
@@ -259,7 +259,7 @@ for more information on this.
 
 ##### Requirements
 * Kafka brokers and Zookeeper are required by this recipe and are expected to exist
-and accessible with server-side TLS security enabled by the master instances
+and accessible with server-side TLS security enabled by the primary instances
 resulting from the deployment of this recipe.
 * Replication service must be enabled to allow syncing of Git data.
 
@@ -315,7 +315,7 @@ to a specific endpoint, exposed as:
 `$(GIT_REPLICATION_SUBDOMAIN).$(HOSTED_ZONE_NAME):1022`
 
 The service will persist git data on the same EFS volume mounted by the gerrit
-master1 and gerrit master2.
+primary1 and gerrit primary2.
 
 Note that the replication endpoint is not internet-facing, thus replication requests
 must be coming from a peered VPC.
@@ -361,23 +361,23 @@ yes | make [AWS_REGION=a-valid-aws-region] [AWS_PREFIX=some-cluster-prefix] dele
 
 ### Access your Gerrit instances
 
-Get the URL of your Gerrit master instances this way:
+Get the URL of your Gerrit primary instances this way:
 
 ```
 aws cloudformation describe-stacks \
-  --stack-name <SERVICE_MASTER1_STACK_NAME> \
+  --stack-name <SERVICE_PRIMARY1_STACK_NAME> \
   | grep -A1 '"OutputKey": "CanonicalWebUrl"' \
   | grep OutputValue \
   | cut -d'"' -f 4
 
 aws cloudformation describe-stacks \
-  --stack-name <SERVICE_MASTER2_STACK_NAME> \
+  --stack-name <SERVICE_PRIMARY2_STACK_NAME> \
   | grep -A1 '"OutputKey": "CanonicalWebUrl"' \
   | grep OutputValue \
   | cut -d'"' -f 4
 ```
 
-Gerrit master instance ports:
+Gerrit primary instance ports:
 * HTTP `8080`
 * SSH `29418`
 

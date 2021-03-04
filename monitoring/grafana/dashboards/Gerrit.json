@@ -82,7 +82,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "max_over_time(sshd_sessions_connected{instance=\"{{MASTER_URL}}:443\"}[$Window])",
+          "expr": "max_over_time(sshd_sessions_connected{instance=\"{{PRIMARY_URL}}:443\"}[$Window])",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -92,7 +92,7 @@
         }
       ],
       "thresholds": "30,60",
-      "title": "SSH Conn master",
+      "title": "SSH Conn primary",
       "type": "singlestat",
       "valueFontSize": "80%",
       "valueMaps": [
@@ -166,7 +166,7 @@
       "tableColumn": "env",
       "targets": [
         {
-          "expr": "max_over_time(sshd_sessions_connected{instance=\"{{SLAVE_URL}}:443\"}[$Window])",
+          "expr": "max_over_time(sshd_sessions_connected{instance=\"{{REPLICA_URL}}:443\"}[$Window])",
           "format": "time_series",
           "instant": true,
           "intervalFactor": 1,
@@ -174,7 +174,7 @@
         }
       ],
       "thresholds": "30,60",
-      "title": "SSH Conn slave",
+      "title": "SSH Conn replica",
       "type": "singlestat",
       "valueFontSize": "80%",
       "valueMaps": [

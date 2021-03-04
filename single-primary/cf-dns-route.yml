@@ -20,7 +20,7 @@ Resources:
             - ''
             - - Fn::ImportValue: !Join [':', [!Ref 'ServiceStackName', 'HostedZoneName']]
               - '.'
-        Comment: DNS name for Gerrit Master.
+        Comment: DNS name for Gerrit Primary.
         Type: A
         AliasTarget:
           DNSName:

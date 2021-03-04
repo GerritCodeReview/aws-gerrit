@@ -61,7 +61,7 @@ Parameters:
   Subdomain:
         Description: The subdomain of the Gerrit cluster
         Type: String
-        Default: gerrit-dual-master
+        Default: gerrit-dual-primary
   LoadBalancerScheme:
         Description: Load Balancer schema, The nodes of an Internet-facing load balancer have public IP addresses.
         Type: String
@@ -70,14 +70,14 @@ Parameters:
   GerritKeyPrefix:
         Description: Gerrit credentials keys prefix
         Type: String
-  Master1ServiceStackName:
-      Description: Stack name of the ECS Master Gerrit service
+  Primary1ServiceStackName:
+      Description: Stack name of the ECS Primary Gerrit service
       Type: String
-      Default: gerrit-service-master-1
-  Master2ServiceStackName:
-      Description: Stack name of the ECS Master Gerrit service
+      Default: gerrit-service-primary-1
+  Primary2ServiceStackName:
+      Description: Stack name of the ECS Primary Gerrit service
       Type: String
-      Default: gerrit-service-master-2
+      Default: gerrit-service-primary-2
   SyslogSidecarServiceName:
       Description: HAPRoxy Syslog Sidecar service name
       Type: String
@@ -118,12 +118,12 @@ Resources:
                   Essential: true
                   Image: !Sub '${DockerRegistryUrl}/${HAProxyDockerImage}'
                   Environment:
-                    - Name: GERRIT_MASTER_1_URL
+                    - Name: GERRIT_PRIMARY_1_URL
                       Value:
-                        Fn::ImportValue: !Join [':', [!Ref 'Master1ServiceStackName', 'PublicLoadBalancerDNSName']]
-                    - Name: GERRIT_MASTER_2_URL
+                        Fn::ImportValue: !Join [':', [!Ref 'Primary1ServiceStackName', 'PublicLoadBalancerDNSName']]
+                    - Name: GERRIT_PRIMARY_2_URL
                       Value:
-                        Fn::ImportValue: !Join [':', [!Ref 'Master2ServiceStackName', 'PublicLoadBalancerDNSName']]
+                        Fn::ImportValue: !Join [':', [!Ref 'Primary2ServiceStackName', 'PublicLoadBalancerDNSName']]
                     - Name: SYSLOG_SIDECAR
                       Value: !Ref SyslogSidecarServiceName
                   Cpu: 1024

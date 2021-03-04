@@ -1,65 +1,65 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: A stack for the Gerrit service Route53 routing.
 Parameters:
-  Master1ServiceStackName:
-      Description: Stack name of the ECS Master Gerrit service
+  Primary1ServiceStackName:
+      Description: Stack name of the ECS Primary Gerrit service
       Type: String
-      Default: gerrit-service-master-1
-  Master2ServiceStackName:
-      Description: Stack name of the ECS Master Gerrit service
+      Default: gerrit-service-primary-1
+  Primary2ServiceStackName:
+      Description: Stack name of the ECS Primary Gerrit service
       Type: String
-      Default: gerrit-service-master-2
+      Default: gerrit-service-primary-2
   LBServiceStackName:
       Description: Stack name of the ECS LB service
       Type: String
       Default: gerrit-service
 
 Resources:
-  Master1DnsRecord:
+  Primary1DnsRecord:
       Type: AWS::Route53::RecordSet
       Properties:
         Name:
           !Join
             - '.'
-            - - Fn::ImportValue: !Join [':', [!Ref 'Master1ServiceStackName', 'Subdomain']]
-              - Fn::ImportValue: !Join [':', [!Ref 'Master1ServiceStackName', 'HostedZoneName']]
+            - - Fn::ImportValue: !Join [':', [!Ref 'Primary1ServiceStackName', 'Subdomain']]
+              - Fn::ImportValue: !Join [':', [!Ref 'Primary1ServiceStackName', 'HostedZoneName']]
         HostedZoneName:
           !Join
             - ''
-            - - Fn::ImportValue: !Join [':', [!Ref 'Master1ServiceStackName', 'HostedZoneName']]
+            - - Fn::ImportValue: !Join [':', [!Ref 'Primary1ServiceStackName', 'HostedZoneName']]
               - '.'
-        Comment: DNS name for Gerrit Master.
+        Comment: DNS name for Gerrit Primary.
         Type: A
         AliasTarget:
           DNSName:
             Fn::ImportValue:
-              !Join [':', [!Ref 'Master1ServiceStackName', 'PublicLoadBalancerDNSName']]
+              !Join [':', [!Ref 'Primary1ServiceStackName', 'PublicLoadBalancerDNSName']]
           HostedZoneId:
             Fn::ImportValue:
-              !Join [':', [!Ref 'Master1ServiceStackName', 'CanonicalHostedZoneID']]
+              !Join [':', [!Ref 'Primary1ServiceStackName', 'CanonicalHostedZoneID']]
           EvaluateTargetHealth: False
-  Master2DnsRecord:
+  Primary2DnsRecord:
       Type: AWS::Route53::RecordSet
       Properties:
         Name:
           !Join
             - '.'
-            - - Fn::ImportValue: !Join [':', [!Ref 'Master2ServiceStackName', 'Subdomain']]
-              - Fn::ImportValue: !Join [':', [!Ref 'Master2ServiceStackName', 'HostedZoneName']]
+            - - Fn::ImportValue: !Join [':', [!Ref 'Primary2ServiceStackName', 'Subdomain']]
+              - Fn::ImportValue: !Join [':', [!Ref 'Primary2ServiceStackName', 'HostedZoneName']]
         HostedZoneName:
           !Join
             - ''
-            - - Fn::ImportValue: !Join [':', [!Ref 'Master2ServiceStackName', 'HostedZoneName']]
+            - - Fn::ImportValue: !Join [':', [!Ref 'Primary2ServiceStackName', 'HostedZoneName']]
               - '.'
-        Comment: DNS name for Gerrit Master.
+        Comment: DNS name for Gerrit Primary.
         Type: A
         AliasTarget:
           DNSName:
             Fn::ImportValue:
-              !Join [':', [!Ref 'Master2ServiceStackName', 'PublicLoadBalancerDNSName']]
+              !Join [':', [!Ref 'Primary2ServiceStackName', 'PublicLoadBalancerDNSName']]
           HostedZoneId:
             Fn::ImportValue:
-              !Join [':', [!Ref 'Master2ServiceStackName', 'CanonicalHostedZoneID']]
+              !Join [':', [!Ref 'Primary2ServiceStackName', 'CanonicalHostedZoneID']]
           EvaluateTargetHealth: False
   LBDnsRecord:
       Type: AWS::Route53::RecordSet

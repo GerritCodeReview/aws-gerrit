@@ -68,7 +68,7 @@ Parameters:
   GerritGitVolume:
       Description: Gerrit git volume name
       Type: String
-      Default: gerrit-git-master
+      Default: gerrit-git-primary
 
 Resources:
     Service:
@@ -97,7 +97,7 @@ Resources:
             ExecutionRoleArn: !GetAtt ECSTaskExecutionRoleStack.Outputs.TaskExecutionRoleRef
             NetworkMode: bridge
             PlacementConstraints:
-              - Expression: !Sub 'attribute:target_group =~ master.*'
+              - Expression: !Sub 'attribute:target_group =~ primary.*'
                 Type: "memberOf"
             ContainerDefinitions:
                 - Name: !Ref GitAdminSSHContainerName

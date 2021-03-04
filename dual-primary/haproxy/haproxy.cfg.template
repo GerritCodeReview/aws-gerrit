@@ -25,7 +25,7 @@ frontend localnodes
     capture request header X-Forwarded-For len 15
     log-format %[capture.req.hdr(0)]:%cp\ [%t]\ %f\ %b/%s\ %Tq/%Tw/%Tc/%Tr/%Tt\ %ST\ %B\ %CC\ %CS\ %tsc\ %ac/%fc/%bc/%sc/%rc\ %sq/%bq\ {%hrl}\ {%hsl}\ %{+Q}r
 
-    default_backend master
+    default_backend primary
 
 frontend gitssh
     bind *:29418
@@ -34,43 +34,43 @@ frontend gitssh
 
     default_backend ssh
 
-backend master
+backend primary
     mode http
     balance roundrobin
     option forwardfor
     default-server inter 10s fall 3 rise 2
-    option httpchk GET /config/server/healthcheck~status HTTP/1.0\r\nHost:\ $GERRIT_MASTER_1_URL
+    option httpchk GET /config/server/healthcheck~status HTTP/1.0\r\nHost:\ $GERRIT_PRIMARY_1_URL
     http-check expect status 200
-    server gerrit-1 $GERRIT_MASTER_1_URL:8080 check inter 10s
-    server gerrit-2 $GERRIT_MASTER_2_URL:8080 check inter 10s backup
+    server gerrit-1 $GERRIT_PRIMARY_1_URL:8080 check inter 10s
+    server gerrit-2 $GERRIT_PRIMARY_2_URL:8080 check inter 10s backup
 
 backend gerrit-1
     mode http
     option forwardfor
-    server gerrit-1 $GERRIT_MASTER_1_URL:8080
+    server gerrit-1 $GERRIT_PRIMARY_1_URL:8080
 
 backend gerrit-2
     mode http
     option forwardfor
-    server gerrit-2 $GERRIT_MASTER_2_URL:8080
+    server gerrit-2 $GERRIT_PRIMARY_2_URL:8080
 
 backend ssh
     mode tcp
     option redispatch
-    option httpchk GET /config/server/healthcheck~status HTTP/1.0\r\nHost:\ $GERRIT_MASTER_1_URL
+    option httpchk GET /config/server/healthcheck~status HTTP/1.0\r\nHost:\ $GERRIT_PRIMARY_1_URL
     http-check expect status 200
     balance source
     timeout connect 10s
     timeout server 5m
-    server gerrit-ssh-1 $GERRIT_MASTER_1_URL:29418 check port 8080 inter 10s
-    server gerrit-ssh-2 $GERRIT_MASTER_2_URL:29418 check port 8080 inter 10s backup
+    server gerrit-ssh-1 $GERRIT_PRIMARY_1_URL:29418 check port 8080 inter 10s
+    server gerrit-ssh-2 $GERRIT_PRIMARY_2_URL:29418 check port 8080 inter 10s backup
 
 backend gerrit-ssh-1
     mode http
     option forwardfor
-    server gerrit-ssh-1 $GERRIT_MASTER_1_URL:29418
+    server gerrit-ssh-1 $GERRIT_PRIMARY_1_URL:29418
 
 backend gerrit-ssh-2
     mode http
     option forwardfor
-    server gerrit-ssh-2 $GERRIT_MASTER_2_URL:29418
+    server gerrit-ssh-2 $GERRIT_PRIMARY_2_URL:29418

@@ -37,9 +37,9 @@ To manipulate aws cloudformation outputs
 
 ## Templates
 
-* [Standalone Gerrit master sandbox with LDAP authentication](/single-master/README.md)
-* [Gerrit master and slave sandbox with LDAP authentication](/master-slave/README.md)
-* [Gerrit dual-master in HA sandbox with LDAP authentication](/dual-master/README.md)
+* [Standalone Gerrit primary sandbox with LDAP authentication](/single-primary/README.md)
+* [Gerrit primary and replica sandbox with LDAP authentication](/primary-replica/README.md)
+* [Gerrit dual-primary in HA sandbox with LDAP authentication](/dual-primary/README.md)
 
 ## External services
 

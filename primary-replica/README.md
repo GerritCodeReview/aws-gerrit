@@ -1,14 +1,16 @@
-# Gerrit Single Master
+# Gerrit Primary-Replica
 
-This set of Templates provide all the components to deploy a single Gerrit master
-in ECS
+This set of Templates provide all the components to deploy a single Gerrit primary
+and a single Gerrit replica in ECS
 
 ## Architecture
 
-Three templates are provided in this example:
+Five templates are provided in this example:
 * `cf-cluster`: define the ECS cluster and the networking stack
-* `cf-service`: defined the service stack running Gerrit
-* `cf-dns-route`: defined the DNS routing for the service
+* `cf-service-primary`: define the service stack running Gerrit primary
+* `cf-service-replica`: define the service stack running Gerrit replica
+* `cf-dns-route`: define the DNS routing for the service
+* `cf-dashboard`: define the CloudWatch dashboard for the services
 
 ### Networking
 
@@ -18,10 +20,15 @@ Three templates are provided in this example:
 * 1 public Subnets:
  * CIDR: 10.0.0.0/24
 * 1 public NLB exposing:
- * HTTP on port 8080
- * SSH on port 29418
+ * Gerrit primary HTTP on port 8080
+ * Gerrit primary SSH on port 29418
+* 1 public NLB exposing:
+ * Gerrit replica HTTP on port 8081
+ * Gerrit replica SSH on port 39418
+ * SSH agent on port 1022
+ * Git daemon on port 9418
 * 1 Internet Gateway
-* 1 type A alias DNS entry
+* 2 type A alias DNS entry, for Gerrit primary and replica
 * A SSL certificate available in [AWS Certificate Manager](https://aws.amazon.com/certificate-manager/)
 
 ### Data persistency
@@ -46,24 +53,13 @@ Three templates are provided in this example:
 
 * Standard CloudWatch monitoring metrics for each component
 * Application level CloudWatch monitoring can be enabled as described [here](../Configuration.md#cloudwatch-monitoring)
-* Prometheus and Grafana stack is not available for this recipe yet. However the work has been done for
-the dual-master recipe and it could be easily adapted (you can find the relevant issue
-[here](https://bugs.chromium.org/p/gerrit/issues/detail?id=13092)).
+* Optionally Prometheus and Grafana stack (see [here](../monitoring/README.md))
 
 ## How to run it
 
-You can find [on GerritForge's YouTube Channel](https://www.youtube.com/watch?v=zr2zCSuclIU) a
-step-by-step guide on how to setup you Gerrit Code Review in AWS.
-
-However, keep reading this guide for a more exhaustive explanation.
-
 ### 0 - Prerequisites
 
-Follow the steps described in the [Prerequisites](../Prerequisites.md) section.
-
-Additionally, whilst it is possible to do so by using an admin user, consider
-limiting access only to what is required by using a dedicated role or user to do
-so.
+Follow the steps described in the [Prerequisites](../Prerequisites.md) section
 
 ### 1 - Configuration
 
@@ -75,17 +71,31 @@ On top of that, you might set the additional parameters, specific for this recip
 
 Configuration values affecting deployment environment and cluster properties
 
-* `SERVICE_STACK_NAME`: Optional. Name of the service stack. `gerrit-service` by default.
-* `GERRIT_INSTANCE_ID`: Optional. Identifier for the Gerrit instance. "gerrit-single-master" by default.
+* `SERVICE_PRIMARY_STACK_NAME`: Optional. Name of the primary service stack. `gerrit-service-primary` by default.
+* `SERVICE_REPLICA_STACK_NAME`: Optional. Name of the replica service stack. `gerrit-service-replica` by default.
+* `DASHBOARD_STACK_NAME` : Optional. Name of the dashboard stack. `gerrit-dashboard` by default.
+* `PRIMARY_SUBDOMAIN`: Optional. Name of the primary sub domain. `gerrit-primary-demo` by default.
+* `REPLICA_SUBDOMAIN`: Optional. Name of the replica sub domain. `gerrit-replica-demo` by default.
+* `GERRIT_PRIMARY_INSTANCE_ID`: Optional. Identifier for the Gerrit primary instance.
+"gerrit-primary-replica-PRIMARY" by default.
+* `GERRIT_REPLICA_INSTANCE_ID`: Optional. Identifier for the Gerrit replica instance.
+"gerrit-primary-replica-REPLICA" by default.
 * `GERRIT_VOLUME_ID` : Optional. Id of an extisting EBS volume. If empty, a new volume
 for Gerrit data will be created
 * `GERRIT_VOLUME_SNAPSHOT_ID` : Optional. Ignored if GERRIT_VOLUME_ID is not empty. Id of
 the EBS volume snapshot used to create new EBS volume for Gerrit data.
 * `GERRIT_VOLUME_SIZE_IN_GIB`: Optional. The size of the Gerrit data volume, in GiBs. `10` by default.
 
+*NOTE*: if you are planning to run the monitoring stack, set the
+`PRIMARY_MAX_COUNT` value to at least 2. The resources provided by
+a single EC2 instance won't be enough for all the services that will be ran*
+
+* `PROMETHEUS_SUBDOMAIN`: Optional. Prometheus subdomain. For example: `<AWS_PREFIX>-prometheus`
+* `GRAFANA_SUBDOMAIN`: Optional. Grafana subdomain. For example: `<AWS_PREFIX>-grafana`
+
 ### 2 - Deploy
 
-* Create the cluster, service and DNS routing stacks:
+* Create the cluster, services and DNS routing stacks:
 
 ```
 make [AWS_REGION=a-valid-aws-region] [AWS_PREFIX=some-cluster-prefix] create-all
@@ -114,28 +124,35 @@ Note that this will *not* delete:
 * SSL certificates
 * ECR repositories
 
-### Access your Gerrit
+### Access your Gerrit instances
 
-You Gerrit instance will be available at this URL: `http://<HOSTED_ZONE_NAME>.<SUBDOMAIN>`.
+Get the URL of your Gerrit primary instance this way:
 
-The available ports are `8080` for HTTP and `29418` for SSH.
+```
+aws cloudformation describe-stacks \
+  --stack-name <SERVICE_PRIMARY_STACK_NAME> \
+  | grep -A1 '"OutputKey": "CanonicalWebUrl"' \
+  | grep OutputValue \
+  | cut -d'"' -f 4
+```
 
-### External Services
+Similarly for the replica:
+```
+aws cloudformation describe-stacks \
+  --stack-name <SERVICE_REPLICA_STACK_NAME> \
+  | grep -A1 '"OutputKey": "CanonicalWebUrl"' \
+  | grep OutputValue \
+  | cut -d'"' -f 4
+```
 
-If you need to setup some external services (maybe for testing purposes, such as SMTP or LDAP),
-you can follow the instructions [here](../README.md#external-services)
+Gerrit primary instance ports:
+* HTTP `8080`
+* SSH `29418`
+
+Gerrit replica instance ports:
+* HTTP `9080`
+* SSH `39418`
 
 ### Docker
 
 Refer to the [Docker](../Docker.md) section for information on how to setup docker or how to publish images
-
-### Permissions
-
-In order to deploy and destroy a single-master recipe the invoking user needs to
-have the relevant permissions to perform actions on AWS resources.
-
-The list of actions can be found [here](resources/permission.policy.json).
-The document can be used to create a permission policy directly in AWS.
-
-The policy then needs to be attached to the invoking user group or alternatively
-to the invoking user directly.
