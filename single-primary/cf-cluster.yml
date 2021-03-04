@@ -6,9 +6,14 @@ Parameters:
   TemplateBucketName:
     Description: S3 bucket containing cloudformation templates
     Type: String
-  MasterMaxCount:
-    Description: The maximum number of EC2 instances in the master autoscaling group
+  DesiredCapacity:
     Type: Number
+    Default: '1'
+    Description: Number of EC2 instances to launch in your ECS cluster.
+  MaxSize:
+    Type: Number
+    Default: '6'
+    Description: Maximum number of EC2 instances that can be launched in your ECS cluster.
   ECSAMI:
     Description: AMI ID
     Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
@@ -16,7 +21,7 @@ Parameters:
   InstanceType:
     Description: EC2 instance type
     Type: String
-    Default: m4.xlarge
+    Default: m4.large
     AllowedValues: [t2.micro, t2.small, t2.medium, t2.large, m3.medium, m3.large,
       m3.xlarge, m3.2xlarge, m4.large, m4.xlarge, m4.2xlarge, m4.4xlarge, m4.10xlarge,
       c4.large, c4.xlarge, c4.2xlarge, c4.4xlarge, c4.8xlarge, c3.large, c3.xlarge,
@@ -48,29 +53,29 @@ Parameters:
     Default: gerrit-cluster-keys
     Description: EC2 key pair name the cluter's instances
   EnvironmentName:
-      Description: An environment name used to build the log stream names
+      Description: An environment name that will be prefixed to resource names
       Type: String
       Default: test
   GerritVolumeId:
-    Description: Existing Gerrit volume id
-    Type: String
-    Default: ""
+      Description: Existing Gerrit volume id
+      Type: String
+      Default: ""
   GerritVolumeSnapshotId:
-    Description: Id of the EBS snapshot for Gerrit volume
-    Type: String
-    Default: ""
+      Description: Id of the EBS snapshot for Gerrit volume
+      Type: String
+      Default: ""
   GerritVolumeAttachMaxRetries:
-    Description: Maximum number of retries when attaching Gerrit Volume
-    Type: Number
-    Default: 5
+      Description: Maximum number of retries when attaching Gerrit Volume
+      Type: Number
+      Default: 5
   GerritVolumeAttachRetryDelay:
-    Description: The delay in seconds between Gerrit Volume attach attempts
-    Type: Number
-    Default: 5
+      Description: The delay in seconds between Gerrit Volume attach attempts
+      Type: Number
+      Default: 5
   GerritVolumeSizeInGiB:
-    Description: Gerrit volume size in GiB
-    Type: Number
-    Default: 10
+      Description: Gerrit volume size in GiB
+      Type: Number
+      Default: 10
 
 Resources:
   # ECS Resources
@@ -93,23 +98,24 @@ Resources:
           LogGroupName: !Ref AWS::StackName
           RetentionInDays: 14
 
-  MasterASG:
+  # Autoscaling group. This launches the actual EC2 instances that will register
+  # themselves as members of the cluster, and run the docker containers.
+  ECSAutoScalingGroup:
     Type: AWS::AutoScaling::AutoScalingGroup
     Properties:
       VPCZoneIdentifier:
         - !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneRef
-      LaunchConfigurationName: !Ref 'MasterLaunchConfiguration'
+      LaunchConfigurationName: !Ref 'ContainerInstances'
       MinSize: '1'
-      MaxSize: !Ref MasterMaxCount
-      DesiredCapacity: '1'
+      MaxSize: !Ref 'MaxSize'
+      DesiredCapacity: !Ref 'DesiredCapacity'
     CreationPolicy:
       ResourceSignal:
         Timeout: PT15M
     UpdatePolicy:
       AutoScalingReplacingUpdate:
         WillReplace: 'true'
-
-  MasterLaunchConfiguration:
+  ContainerInstances:
     Type: AWS::AutoScaling::LaunchConfiguration
     Properties:
       ImageId: !Ref 'ECSAMI'
@@ -121,12 +127,10 @@ Resources:
         Fn::Base64: !Sub |
           #!/bin/bash -xe
           echo ECS_CLUSTER=${ECSCluster} >> /etc/ecs/ecs.config
-          echo ECS_INSTANCE_ATTRIBUTES={\"target_group\":\"master\"} >> /etc/ecs/ecs.config
+          echo ECS_INSTANCE_ATTRIBUTES={\"target_group\":\"primary\"} >> /etc/ecs/ecs.config
           # Make sure latest version of the helper scripts are installed as per recommendation:
           # https://github.com/awsdocs/aws-cloudformation-user-guide/blob/master/doc_source/cfn-helper-scripts-reference.md#using-the-latest-version
-          yum install -y aws-cfn-bootstrap wget aws-cli xfsprogs
-
-          # ATTACH EBS VOLUME
+          yum install -y aws-cfn-bootstrap aws-cli xfsprogs
           EC2_INSTANCE_ID=`curl -s http://169.254.169.254/latest/meta-data/instance-id`
           VOLUME_ID=${GerritVolumeStack.Outputs.GerritVolumeRef}
           echo "Volume Id: $VOLUME_ID"
@@ -134,13 +138,13 @@ Resources:
           aws ec2 attach-volume --region ${AWS::Region} --volume-id $VOLUME_ID --instance-id $EC2_INSTANCE_ID --device /dev/xvdg
 
           for i in $(seq 1 ${GerritVolumeAttachMaxRetries}); do
-            echo "Waiting for volume $VOLUME_ID to be attached to the instace $EC2_INSTANCE_ID ($i/${GerritVolumeAttachMaxRetries})"
+            echo "Waiting for volume $VOLUME_ID to be attached to the instace $EC2_INSTANCE_ID"
             volumeStatus=`aws ec2 describe-volumes --region ${AWS::Region} --volume-ids $VOLUME_ID`
             if [[ $volumeStatus =~ "\"State\": \"attached\"" ]]; then
               echo "Volume $VOLUME_ID attached to the instace $EC2_INSTANCE_ID"
               break
             elif [[ "$i" -eq "${GerritVolumeAttachMaxRetries}" ]]; then
-              echo "Could not attach the volume $VOLUME_ID to the instace $EC2_INSTANCE_ID after ${GerritVolumeAttachMaxRetries} attempts"
+              echo "Could not attach the volume $VOLUME_ID to the instace $EC2_INSTANCE_ID"
               exit 1
             fi
             sleep ${GerritVolumeAttachRetryDelay}
@@ -173,29 +177,24 @@ Resources:
                 {\"files\":
                   {\"collect_list\":
                     [
-                      {\"file_path\": \"/gerrit-mount-point/gerrit-logs/replication_log\",
-                      \"log_group_name\": \"${AWS::StackName}\",
-                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/master/replication_log\",
-                      \"timezone\": \"UTC\"
-                      },
                       {\"file_path\": \"/gerrit-mount-point/gerrit-logs/httpd_log\",
                       \"log_group_name\": \"${AWS::StackName}\",
-                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/master/httpd_log\",
+                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/httpd_log\",
                       \"timezone\": \"UTC\"
                       },
                       {\"file_path\": \"/gerrit-mount-point/gerrit-logs/sshd_log\",
                       \"log_group_name\": \"${AWS::StackName}\",
-                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/master/sshd_log\",
+                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/sshd_log\",
                       \"timezone\": \"UTC\"
                       },
                       {\"file_path\": \"/gerrit-mount-point/gerrit-logs/gc_log\",
                       \"log_group_name\": \"${AWS::StackName}\",
-                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/master/gc_log\",
+                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/gc_log\",
                       \"timezone\": \"UTC\"
                       },
                       {\"file_path\": \"/gerrit-mount-point/gerrit-logs/audit_log\",
                       \"log_group_name\": \"${AWS::StackName}\",
-                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/master/audit_log\",
+                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/audit_log\",
                       \"timezone\": \"UTC\"
                       }
                     ]
@@ -204,89 +203,12 @@ Resources:
               }
             }" >> /home/ec2-user/gerritlogsaccess.json
           # Install the CloudWatch Logs agent
+          yum install -y wget
           wget https://s3.amazonaws.com/amazoncloudwatch-agent/centos/amd64/latest/amazon-cloudwatch-agent.rpm
           rpm -U ./amazon-cloudwatch-agent.rpm
           /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -c file:/home/ec2-user/gerritlogsaccess.json -s
           # Signal to CloudFormation aws-cfn-bootstrap has been correctly updated
-          /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource MasterASG --region ${AWS::Region}
-
-
-  ReplicaASG:
-    Type: AWS::AutoScaling::AutoScalingGroup
-    Properties:
-      VPCZoneIdentifier:
-        - !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneRef
-      LaunchConfigurationName: !Ref 'ReplicaLaunchConfiguration'
-      MinSize: '1'
-      MaxSize: '1'
-      DesiredCapacity: '1'
-    CreationPolicy:
-      ResourceSignal:
-        Timeout: PT15M
-    UpdatePolicy:
-      AutoScalingReplacingUpdate:
-        WillReplace: 'true'
-
-  ReplicaLaunchConfiguration:
-    Type: AWS::AutoScaling::LaunchConfiguration
-    Properties:
-      ImageId: !Ref 'ECSAMI'
-      SecurityGroups: [!Ref 'EcsHostSecurityGroup']
-      InstanceType: !Ref 'InstanceType'
-      IamInstanceProfile: !Ref 'EC2InstanceProfile'
-      KeyName: !Ref ECSKeyName
-      UserData:
-        Fn::Base64: !Sub |
-          #!/bin/bash -xe
-          echo ECS_CLUSTER=${ECSCluster} >> /etc/ecs/ecs.config
-          echo ECS_INSTANCE_ATTRIBUTES={\"target_group\":\"replica\"} >> /etc/ecs/ecs.config
-
-          # Make sure latest version of the helper scripts are installed as per recommendation:
-          # https://github.com/awsdocs/aws-cloudformation-user-guide/blob/master/doc_source/cfn-helper-scripts-reference.md#using-the-latest-version
-          yum install -y aws-cfn-bootstrap wget
-          # Get the CloudWatch Logs agent
-          echo -e "
-            {\"logs\":
-              {\"logs_collected\":
-                {\"files\":
-                  {\"collect_list\":
-                    [
-                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-slave/_data/replication_log\",
-                      \"log_group_name\": \"${AWS::StackName}\",
-                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/slave/replication_log\",
-                      \"timezone\": \"UTC\"
-                      },
-                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-slave/_data/httpd_log\",
-                      \"log_group_name\": \"${AWS::StackName}\",
-                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/slave/httpd_log\",
-                      \"timezone\": \"UTC\"
-                      },
-                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-slave/_data/sshd_log\",
-                      \"log_group_name\": \"${AWS::StackName}\",
-                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/slave/sshd_log\",
-                      \"timezone\": \"UTC\"
-                      },
-                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-slave/_data/gc_log\",
-                      \"log_group_name\": \"${AWS::StackName}\",
-                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/slave/gc_log\",
-                      \"timezone\": \"UTC\"
-                      },
-                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-slave/_data/audit_log\",
-                      \"log_group_name\": \"${AWS::StackName}\",
-                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/slave/audit_log\",
-                      \"timezone\": \"UTC\"
-                      }
-                    ]
-                  }
-                }
-              }
-            }" >> /home/ec2-user/gerritlogsaccess.json
-          # Install the CloudWatch Logs agent
-          wget https://s3.amazonaws.com/amazoncloudwatch-agent/centos/amd64/latest/amazon-cloudwatch-agent.rpm
-          rpm -U ./amazon-cloudwatch-agent.rpm
-          /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -c file:/home/ec2-user/gerritlogsaccess.json -s
-          # Signal to CloudFormation aws-cfn-bootstrap has been correctly updated
-          /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource ReplicaASG --region ${AWS::Region}
+          /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource ECSAutoScalingGroup --region ${AWS::Region}
 
   EC2InstanceProfile:
     Type: AWS::IAM::InstanceProfile
@@ -328,6 +250,7 @@ Resources:
               - 'ec2:AttachVolume'
               - 'ec2:DescribeVolumes'
             Resource: '*'
+
   ECSTaskNetworkStack:
     Type: AWS::CloudFormation::Stack
     Properties:

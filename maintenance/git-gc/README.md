@@ -21,7 +21,7 @@ make [AWS_REGION=a-valid-aws-region] [AWS_PREFIX=some-cluster-prefix] create-sch
 make [AWS_REGION=a-valid-aws-region] [AWS_PREFIX=some-cluster-prefix] delete-scheduled-gc-task
 ```
 
-The scheduled task will be executed on any master EC2 instance.
+The scheduled task will be executed on any primary EC2 instance.
 You will need to account for this when deciding the instance type and the
 allocated CPU and Memory running on those EC2 instances.
 

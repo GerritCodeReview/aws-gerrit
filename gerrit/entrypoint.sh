@@ -3,12 +3,12 @@
 /tmp/setup_gerrit.py
 git config -f /var/gerrit/etc/gerrit.config gerrit.canonicalWebUrl "${CANONICAL_WEB_URL:-http://$HOSTNAME}"
 git config -f /var/gerrit/etc/gerrit.config httpd.listenUrl "${HTTPD_LISTEN_URL:-http://*:8080/}"
-git config -f /var/gerrit/etc/gerrit.config container.slave "${CONTAINER_SLAVE:-false}"
+git config -f /var/gerrit/etc/gerrit.config container.replica "${CONTAINER_REPLICA:-false}"
 
-if [ $CONTAINER_SLAVE ]; then
-  echo "Slave mode..."
+if [ $CONTAINER_REPLICA ]; then
+  echo "Replica mode..."
 
-  echo "Ensure master specific plugins and libraries are not installed:"
+  echo "Ensure primary specific plugins and libraries are not installed:"
   for jar in "lib/multi-site.jar" "plugins/multi-site.jar" "lib/replication.jar" \
     "lib/events-broker.jar" "plugins/kafka-events.jar" "plugins/zookeeper-refdb.jar" \
     "plugins/websession-broker.jar" "plugins/high-availability.jar"
@@ -30,10 +30,10 @@ if [ $CONTAINER_SLAVE ]; then
   rm -fr /var/gerrit/plugins/replication.jar
 
 else
-  echo "Master mode (init phase)..."
+  echo "Primary mode (init phase)..."
   java -jar /var/gerrit/bin/gerrit.war init --no-auto-start --batch --install-all-plugins -d /var/gerrit
   if [ $REINDEX_AT_STARTUP == "true" ]; then
-    echo "Master mode (reindex phase)..."
+    echo "Primary mode (reindex phase)..."
     java -jar /var/gerrit/bin/gerrit.war reindex -d /var/gerrit
   fi
 fi

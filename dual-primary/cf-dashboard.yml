@@ -1,17 +1,17 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: Deploy a dual-master CloudWatch dashboard.
+Description: Deploy a dual-primary CloudWatch dashboard.
 Parameters:
-  Master1InstanceId:
-      Description: Optional identifier for the Gerrit master1 instance
-      Default: gerrit-dual-master-MASTER1
+  Primary1InstanceId:
+      Description: Optional identifier for the Gerrit primary1 instance
+      Default: gerrit-dual-primary-PRIMARY1
       Type: String
-  Master2InstanceId:
-      Description: Optional identifier for the Gerrit master2 instance
-      Default: gerrit-dual-master-MASTER2
+  Primary2InstanceId:
+      Description: Optional identifier for the Gerrit primary2 instance
+      Default: gerrit-dual-primary-PRIMARY2
       Type: String
-  SlaveInstanceId:
-      Description: Optional identifier for the Gerrit slave instance
-      Default: gerrit-dual-master-SLAVE
+  ReplicaInstanceId:
+      Description: Optional identifier for the Gerrit replica instance
+      Default: gerrit-dual-primary-REPLICA
       Type: String
   MetricsCloudwatchNamespace:
       Description: The CloudWatch namespace for Gerrit metrics
@@ -36,9 +36,9 @@ Resources:
                             "height": 3,
                             "properties": {
                                 "metrics": [
-                                    [ "${MetricsCloudwatchNamespace}", "sshd/sessions/connected", "InstanceId", "${Master1InstanceId}", "Type", "gauge" ],
-                                    [ "${MetricsCloudwatchNamespace}", "sshd/sessions/connected", "InstanceId", "${Master2InstanceId}", "Type", "gauge" ],
-                                    [ "${MetricsCloudwatchNamespace}", "sshd/sessions/connected", "InstanceId", "${SlaveInstanceId}", "Type", "gauge" ]
+                                    [ "${MetricsCloudwatchNamespace}", "sshd/sessions/connected", "InstanceId", "${Primary1InstanceId}", "Type", "gauge" ],
+                                    [ "${MetricsCloudwatchNamespace}", "sshd/sessions/connected", "InstanceId", "${Primary2InstanceId}", "Type", "gauge" ],
+                                    [ "${MetricsCloudwatchNamespace}", "sshd/sessions/connected", "InstanceId", "${ReplicaInstanceId}", "Type", "gauge" ]
                                 ],
                                 "view": "singleValue",
                                 "region": "${AWS::Region}",
@@ -57,9 +57,9 @@ Resources:
                             "properties": {
                                 "metrics": [
                                     [ { "expression": "RATE(METRICS())", "label": "Expression1", "id": "e1", "region": "${AWS::Region}" } ],
-                                    [ "${MetricsCloudwatchNamespace}", "proc/cpu/usage", "InstanceId", "${Master1InstanceId}", "Type", "gauge", { "id": "m1", "visible": false } ],
-                                    [ "${MetricsCloudwatchNamespace}", "proc/cpu/usage", "InstanceId", "${Master2InstanceId}", "Type", "gauge", { "id": "m3", "visible": false } ],
-                                    [ "${MetricsCloudwatchNamespace}", "proc/cpu/usage", "InstanceId", "${SlaveInstanceId}", "Type", "gauge", { "id": "m2", "visible": false } ]
+                                    [ "${MetricsCloudwatchNamespace}", "proc/cpu/usage", "InstanceId", "${Primary1InstanceId}", "Type", "gauge", { "id": "m1", "visible": false } ],
+                                    [ "${MetricsCloudwatchNamespace}", "proc/cpu/usage", "InstanceId", "${Primary2InstanceId}", "Type", "gauge", { "id": "m3", "visible": false } ],
+                                    [ "${MetricsCloudwatchNamespace}", "proc/cpu/usage", "InstanceId", "${ReplicaInstanceId}", "Type", "gauge", { "id": "m2", "visible": false } ]
                                 ],
                                 "view": "timeSeries",
                                 "stacked": false,
@@ -86,9 +86,9 @@ Resources:
                             "height": 6,
                             "properties": {
                                 "metrics": [
-                                    [ "${MetricsCloudwatchNamespace}", "jgit/block_cache/cache_used", "InstanceId", "${Master1InstanceId}", "Type", "gauge", { "id": "m1" } ],
-                                    [ "${MetricsCloudwatchNamespace}", "jgit/block_cache/cache_used", "InstanceId", "${Master2InstanceId}", "Type", "gauge", { "id": "m3" } ],
-                                    [ "${MetricsCloudwatchNamespace}", "jgit/block_cache/cache_used", "InstanceId", "${SlaveInstanceId}", "Type", "gauge", { "id": "m2" } ]
+                                    [ "${MetricsCloudwatchNamespace}", "jgit/block_cache/cache_used", "InstanceId", "${Primary1InstanceId}", "Type", "gauge", { "id": "m1" } ],
+                                    [ "${MetricsCloudwatchNamespace}", "jgit/block_cache/cache_used", "InstanceId", "${Primary2InstanceId}", "Type", "gauge", { "id": "m3" } ],
+                                    [ "${MetricsCloudwatchNamespace}", "jgit/block_cache/cache_used", "InstanceId", "${ReplicaInstanceId}", "Type", "gauge", { "id": "m2" } ]
                                 ],
                                 "view": "timeSeries",
                                 "stacked": false,
@@ -112,9 +112,9 @@ Resources:
                             "height": 6,
                             "properties": {
                                 "metrics": [
-                                    [ "${MetricsCloudwatchNamespace}", "jvm.memory.total.used", "InstanceId", "${Master1InstanceId}", "Type", "gauge" ],
-                                    [ "${MetricsCloudwatchNamespace}", "jvm.memory.total.used", "InstanceId", "${Master2InstanceId}", "Type", "gauge" ],
-                                    [ "${MetricsCloudwatchNamespace}", "jvm.memory.total.used", "InstanceId", "${SlaveInstanceId}", "Type", "gauge" ]
+                                    [ "${MetricsCloudwatchNamespace}", "jvm.memory.total.used", "InstanceId", "${Primary1InstanceId}", "Type", "gauge" ],
+                                    [ "${MetricsCloudwatchNamespace}", "jvm.memory.total.used", "InstanceId", "${Primary2InstanceId}", "Type", "gauge" ],
+                                    [ "${MetricsCloudwatchNamespace}", "jvm.memory.total.used", "InstanceId", "${ReplicaInstanceId}", "Type", "gauge" ]
                                 ],
                                 "view": "timeSeries",
                                 "stacked": false,
@@ -137,9 +137,9 @@ Resources:
                             "height": 6,
                             "properties": {
                                 "metrics": [
-                                    [ "${MetricsCloudwatchNamespace}", "proc/cpu/system_load", "InstanceId", "${Master1InstanceId}", "Type", "gauge" ],
-                                    [ "${MetricsCloudwatchNamespace}", "proc/cpu/system_load", "InstanceId", "${Master2InstanceId}", "Type", "gauge" ],
-                                    [ "${MetricsCloudwatchNamespace}", "proc/cpu/system_load", "InstanceId", "${SlaveInstanceId}", "Type", "gauge" ]
+                                    [ "${MetricsCloudwatchNamespace}", "proc/cpu/system_load", "InstanceId", "${Primary1InstanceId}", "Type", "gauge" ],
+                                    [ "${MetricsCloudwatchNamespace}", "proc/cpu/system_load", "InstanceId", "${Primary2InstanceId}", "Type", "gauge" ],
+                                    [ "${MetricsCloudwatchNamespace}", "proc/cpu/system_load", "InstanceId", "${ReplicaInstanceId}", "Type", "gauge" ]
                                 ],
                                 "view": "timeSeries",
                                 "stacked": false,
@@ -162,9 +162,9 @@ Resources:
                             "height": 6,
                             "properties": {
                                 "metrics": [
-                                    [ "${MetricsCloudwatchNamespace}", "jvm.gc.G1-Old-Generation.time",  "InstanceId", "${Master1InstanceId}", "Type", "gauge" ],
-                                    [ "${MetricsCloudwatchNamespace}", "jvm.gc.G1-Old-Generation.time",  "InstanceId", "${Master2InstanceId}", "Type", "gauge" ],
-                                    [ "${MetricsCloudwatchNamespace}", "jvm.gc.G1-Old-Generation.time",  "InstanceId", "${SlaveInstanceId}", "Type", "gauge" ]
+                                    [ "${MetricsCloudwatchNamespace}", "jvm.gc.G1-Old-Generation.time",  "InstanceId", "${Primary1InstanceId}", "Type", "gauge" ],
+                                    [ "${MetricsCloudwatchNamespace}", "jvm.gc.G1-Old-Generation.time",  "InstanceId", "${Primary2InstanceId}", "Type", "gauge" ],
+                                    [ "${MetricsCloudwatchNamespace}", "jvm.gc.G1-Old-Generation.time",  "InstanceId", "${ReplicaInstanceId}", "Type", "gauge" ]
                                 ],
                                 "view": "timeSeries",
                                 "stacked": false,
@@ -187,9 +187,9 @@ Resources:
                             "height": 6,
                             "properties": {
                                 "metrics": [
-                                    [ "${MetricsCloudwatchNamespace}", "proc/jvm/thread/num_live",  "InstanceId", "${Master1InstanceId}", "Type", "gauge" ],
-                                    [ "${MetricsCloudwatchNamespace}", "proc/jvm/thread/num_live",  "InstanceId", "${Master2InstanceId}", "Type", "gauge" ],
-                                    [ "${MetricsCloudwatchNamespace}", "proc/jvm/thread/num_live",  "InstanceId", "${SlaveInstanceId}", "Type", "gauge" ]
+                                    [ "${MetricsCloudwatchNamespace}", "proc/jvm/thread/num_live",  "InstanceId", "${Primary1InstanceId}", "Type", "gauge" ],
+                                    [ "${MetricsCloudwatchNamespace}", "proc/jvm/thread/num_live",  "InstanceId", "${Primary2InstanceId}", "Type", "gauge" ],
+                                    [ "${MetricsCloudwatchNamespace}", "proc/jvm/thread/num_live",  "InstanceId", "${ReplicaInstanceId}", "Type", "gauge" ]
                                 ],
                                 "view": "timeSeries",
                                 "stacked": false,
@@ -212,8 +212,8 @@ Resources:
                             "height": 6,
                             "properties": {
                                 "metrics": [
-                                    [ "${MetricsCloudwatchNamespace}", "http/server/rest_api/server_latency_total", "InstanceId", "${Master1InstanceId}", "Type", "99.9%", { "id": "m2" } ],
-                                    [ "${MetricsCloudwatchNamespace}", "http/server/rest_api/server_latency_total", "InstanceId", "${Master2InstanceId}", "Type", "99.9%", { "id": "m3" } ]
+                                    [ "${MetricsCloudwatchNamespace}", "http/server/rest_api/server_latency_total", "InstanceId", "${Primary1InstanceId}", "Type", "99.9%", { "id": "m2" } ],
+                                    [ "${MetricsCloudwatchNamespace}", "http/server/rest_api/server_latency_total", "InstanceId", "${Primary2InstanceId}", "Type", "99.9%", { "id": "m3" } ]
                                 ],
                                 "view": "timeSeries",
                                 "stacked": false,
@@ -237,12 +237,12 @@ Resources:
                             "height": 6,
                             "properties": {
                                 "metrics": [
-                                    [ { "expression": "m1+m2", "label": "Master 1 HTTP hits per second", "id": "e2", "region": "${AWS::Region}" } ],
-                                    [ { "expression": "m3+m4", "label": "Master 2 HTTP hits per second", "id": "e1", "region": "${AWS::Region}" } ],
-                                    [ "${MetricsCloudwatchNamespace}", "http/server/success_count_total", "InstanceId", "${Master1InstanceId}", "Type", "count", { "id": "m2", "visible": false } ],
-                                    [ "${MetricsCloudwatchNamespace}", "http/server/error_count_total", "InstanceId", "${Master1InstanceId}", "Type", "count", { "id": "m1", "visible": false } ],
-                                    [ "${MetricsCloudwatchNamespace}", "http/server/success_count_total", "InstanceId", "${Master2InstanceId}", "Type", "count", { "id": "m3", "visible": false } ],
-                                    [ "${MetricsCloudwatchNamespace}", "http/server/error_count_total", "InstanceId", "${Master2InstanceId}", "Type", "count", { "id": "m4", "visible": false } ]
+                                    [ { "expression": "m1+m2", "label": "Primary 1 HTTP hits per second", "id": "e2", "region": "${AWS::Region}" } ],
+                                    [ { "expression": "m3+m4", "label": "Primary 2 HTTP hits per second", "id": "e1", "region": "${AWS::Region}" } ],
+                                    [ "${MetricsCloudwatchNamespace}", "http/server/success_count_total", "InstanceId", "${Primary1InstanceId}", "Type", "count", { "id": "m2", "visible": false } ],
+                                    [ "${MetricsCloudwatchNamespace}", "http/server/error_count_total", "InstanceId", "${Primary1InstanceId}", "Type", "count", { "id": "m1", "visible": false } ],
+                                    [ "${MetricsCloudwatchNamespace}", "http/server/success_count_total", "InstanceId", "${Primary2InstanceId}", "Type", "count", { "id": "m3", "visible": false } ],
+                                    [ "${MetricsCloudwatchNamespace}", "http/server/error_count_total", "InstanceId", "${Primary2InstanceId}", "Type", "count", { "id": "m4", "visible": false } ]
                                 ],
                                 "view": "timeSeries",
                                 "stacked": false,
@@ -267,12 +267,12 @@ Resources:
                             "height": 6,
                             "properties": {
                                 "metrics": [
-                                    [ { "expression": "(m1/(m1+m2))*100", "label": "Master 1 % of HTTP Errors", "id": "e1", "region": "${AWS::Region}" } ],
-                                    [ { "expression": "(m3/(m3+m4))*100", "label": "Master 2 % of HTTP Errors", "id": "e2", "region": "${AWS::Region}" } ],
-                                    [ "${MetricsCloudwatchNamespace}", "http/server/error_count_total", "InstanceId", "${Master1InstanceId}", "Type", "count", { "id": "m1", "visible": false } ],
-                                    [ "${MetricsCloudwatchNamespace}", "http/server/success_count_total", "InstanceId", "${Master1InstanceId}", "Type", "count", { "id": "m2", "visible": false } ],
-                                    [ "${MetricsCloudwatchNamespace}", "http/server/error_count_total", "InstanceId", "${Master2InstanceId}", "Type", "count", { "id": "m3", "visible": false } ],
-                                    [ "${MetricsCloudwatchNamespace}", "http/server/success_count_total", "InstanceId", "${Master2InstanceId}", "Type", "count", { "id": "m4", "visible": false } ]
+                                    [ { "expression": "(m1/(m1+m2))*100", "label": "Primary 1 % of HTTP Errors", "id": "e1", "region": "${AWS::Region}" } ],
+                                    [ { "expression": "(m3/(m3+m4))*100", "label": "Primary 2 % of HTTP Errors", "id": "e2", "region": "${AWS::Region}" } ],
+                                    [ "${MetricsCloudwatchNamespace}", "http/server/error_count_total", "InstanceId", "${Primary1InstanceId}", "Type", "count", { "id": "m1", "visible": false } ],
+                                    [ "${MetricsCloudwatchNamespace}", "http/server/success_count_total", "InstanceId", "${Primary1InstanceId}", "Type", "count", { "id": "m2", "visible": false } ],
+                                    [ "${MetricsCloudwatchNamespace}", "http/server/error_count_total", "InstanceId", "${Primary2InstanceId}", "Type", "count", { "id": "m3", "visible": false } ],
+                                    [ "${MetricsCloudwatchNamespace}", "http/server/success_count_total", "InstanceId", "${Primary2InstanceId}", "Type", "count", { "id": "m4", "visible": false } ]
                                 ],
                                 "view": "timeSeries",
                                 "stacked": false,
@@ -297,9 +297,9 @@ Resources:
                             "height": 6,
                             "properties": {
                                 "metrics": [
-                                    [ "${MetricsCloudwatchNamespace}", "git/upload-pack/request_count_total", "InstanceId", "${Master1InstanceId}", "Type", "count", { "id": "m1" } ],
-                                    [ "${MetricsCloudwatchNamespace}", "git/upload-pack/request_count_total", "InstanceId", "${Master2InstanceId}", "Type", "count", { "id": "m2" } ],
-                                    [ "${MetricsCloudwatchNamespace}", "git/upload-pack/request_count_total", "InstanceId", "${SlaveInstanceId}", "Type", "count", { "id": "m3" } ]
+                                    [ "${MetricsCloudwatchNamespace}", "git/upload-pack/request_count_total", "InstanceId", "${Primary1InstanceId}", "Type", "count", { "id": "m1" } ],
+                                    [ "${MetricsCloudwatchNamespace}", "git/upload-pack/request_count_total", "InstanceId", "${Primary2InstanceId}", "Type", "count", { "id": "m2" } ],
+                                    [ "${MetricsCloudwatchNamespace}", "git/upload-pack/request_count_total", "InstanceId", "${ReplicaInstanceId}", "Type", "count", { "id": "m3" } ]
                                 ],
                                 "view": "timeSeries",
                                 "stacked": false,
@@ -324,14 +324,14 @@ Resources:
                             "properties": {
                                 "metrics": [
                                     [ { "expression": "RATE(METRICS())*PERIOD(m1)", "label": "Expression1", "id": "e1" } ],
-                                    [ "${MetricsCloudwatchNamespace}", "queue/index_batch/total_scheduled_tasks_count", "InstanceId", "${Master1InstanceId}", "Type", "gauge", { "id": "m1", "visible": false } ],
-                                    [ "${MetricsCloudwatchNamespace}", "queue/receive_commits/total_scheduled_tasks_count", "InstanceId", "${Master1InstanceId}", "Type", "gauge", { "id": "m2", "visible": false } ],
-                                    [ "${MetricsCloudwatchNamespace}", "queue/work_queue/total_scheduled_tasks_count", "InstanceId", "${Master1InstanceId}", "Type", "gauge", { "id": "m3", "visible": false } ],
-                                    [ "${MetricsCloudwatchNamespace}", "queue/ssh_command_start/total_scheduled_tasks_count", "InstanceId", "${Master1InstanceId}", "Type", "gauge", { "id": "m4", "visible": false } ],
-                                    [ "${MetricsCloudwatchNamespace}", "queue/index_batch/total_scheduled_tasks_count", "InstanceId", "${Master2InstanceId}", "Type", "gauge", { "id": "m5", "visible": false } ],
-                                    [ "${MetricsCloudwatchNamespace}", "queue/receive_commits/total_scheduled_tasks_count", "InstanceId", "${Master2InstanceId}", "Type", "gauge", { "id": "m6", "visible": false } ],
-                                    [ "${MetricsCloudwatchNamespace}", "queue/work_queue/total_scheduled_tasks_count", "InstanceId", "${Master2InstanceId}", "Type", "gauge", { "id": "m7", "visible": false } ],
-                                    [ "${MetricsCloudwatchNamespace}", "queue/ssh_command_start/total_scheduled_tasks_count",  "InstanceId", "${Master2InstanceId}", "Type", "gauge", { "id": "m8", "visible": false } ]
+                                    [ "${MetricsCloudwatchNamespace}", "queue/index_batch/total_scheduled_tasks_count", "InstanceId", "${Primary1InstanceId}", "Type", "gauge", { "id": "m1", "visible": false } ],
+                                    [ "${MetricsCloudwatchNamespace}", "queue/receive_commits/total_scheduled_tasks_count", "InstanceId", "${Primary1InstanceId}", "Type", "gauge", { "id": "m2", "visible": false } ],
+                                    [ "${MetricsCloudwatchNamespace}", "queue/work_queue/total_scheduled_tasks_count", "InstanceId", "${Primary1InstanceId}", "Type", "gauge", { "id": "m3", "visible": false } ],
+                                    [ "${MetricsCloudwatchNamespace}", "queue/ssh_command_start/total_scheduled_tasks_count", "InstanceId", "${Primary1InstanceId}", "Type", "gauge", { "id": "m4", "visible": false } ],
+                                    [ "${MetricsCloudwatchNamespace}", "queue/index_batch/total_scheduled_tasks_count", "InstanceId", "${Primary2InstanceId}", "Type", "gauge", { "id": "m5", "visible": false } ],
+                                    [ "${MetricsCloudwatchNamespace}", "queue/receive_commits/total_scheduled_tasks_count", "InstanceId", "${Primary2InstanceId}", "Type", "gauge", { "id": "m6", "visible": false } ],
+                                    [ "${MetricsCloudwatchNamespace}", "queue/work_queue/total_scheduled_tasks_count", "InstanceId", "${Primary2InstanceId}", "Type", "gauge", { "id": "m7", "visible": false } ],
+                                    [ "${MetricsCloudwatchNamespace}", "queue/ssh_command_start/total_scheduled_tasks_count",  "InstanceId", "${Primary2InstanceId}", "Type", "gauge", { "id": "m8", "visible": false } ]
                                 ],
                                 "view": "timeSeries",
                                 "stacked": false,
@@ -355,8 +355,8 @@ Resources:
                             "height": 6,
                             "properties": {
                                 "metrics": [
-                                    [ "${MetricsCloudwatchNamespace}", "queue/send_email/scheduled_tasks", "InstanceId", "${Master1InstanceId}", "Type", "gauge" ],
-                                    [ "${MetricsCloudwatchNamespace}", "queue/send_email/scheduled_tasks", "InstanceId", "${Master2InstanceId}", "Type", "gauge" ]
+                                    [ "${MetricsCloudwatchNamespace}", "queue/send_email/scheduled_tasks", "InstanceId", "${Primary1InstanceId}", "Type", "gauge" ],
+                                    [ "${MetricsCloudwatchNamespace}", "queue/send_email/scheduled_tasks", "InstanceId", "${Primary2InstanceId}", "Type", "gauge" ]
                                 ],
                                 "view": "timeSeries",
                                 "stacked": false,
@@ -379,9 +379,9 @@ Resources:
                             "height": 6,
                             "properties": {
                                 "metrics": [
-                                    [ "${MetricsCloudwatchNamespace}", "jgit/block_cache/open_files", "InstanceId", "${Master1InstanceId}", "Type", "gauge" ],
-                                    [ "${MetricsCloudwatchNamespace}", "jgit/block_cache/open_files", "InstanceId", "${Master2InstanceId}", "Type", "gauge" ],
-                                    [ "${MetricsCloudwatchNamespace}", "jgit/block_cache/open_files", "InstanceId", "${SlaveInstanceId}", "Type", "gauge" ]
+                                    [ "${MetricsCloudwatchNamespace}", "jgit/block_cache/open_files", "InstanceId", "${Primary1InstanceId}", "Type", "gauge" ],
+                                    [ "${MetricsCloudwatchNamespace}", "jgit/block_cache/open_files", "InstanceId", "${Primary2InstanceId}", "Type", "gauge" ],
+                                    [ "${MetricsCloudwatchNamespace}", "jgit/block_cache/open_files", "InstanceId", "${ReplicaInstanceId}", "Type", "gauge" ]
                                 ],
                                 "view": "timeSeries",
                                 "stacked": false,

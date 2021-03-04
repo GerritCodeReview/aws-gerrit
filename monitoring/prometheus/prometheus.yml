@@ -14,7 +14,7 @@ scrape_configs:
     - targets: ['localhost:9090']
 
 
-  - job_name: 'gerrit-master-javamelody'
+  - job_name: 'gerrit-primary-javamelody'
 
     scheme: https
     metrics_path: '/monitoring'
@@ -27,11 +27,11 @@ scrape_configs:
     scrape_interval: 1s
 
     static_configs:
-      - targets: ['gerrit-master.gerrit-demo.gerritforgeaws.com:443']
+      - targets: ['gerrit-primary.gerrit-demo.gerritforgeaws.com:443']
         labels:
           env: 'unit'
 
-  - job_name: 'gerrit-master-metrics'
+  - job_name: 'gerrit-primary-metrics'
 
     scheme: https
     metrics_path: '/plugins/metrics-reporter-prometheus/metrics'
@@ -44,11 +44,11 @@ scrape_configs:
     scrape_interval: 5s
 
     static_configs:
-      - targets: ['gerrit-master.gerrit-demo.gerritforgeaws.com:443']
+      - targets: ['gerrit-primary.gerrit-demo.gerritforgeaws.com:443']
         labels:
           env: 'unit'
 
-  - job_name: 'gerrit-slave-javamelody'
+  - job_name: 'gerrit-replica-javamelody'
 
     scheme: https
     metrics_path: '/monitoring'
@@ -61,11 +61,11 @@ scrape_configs:
     scrape_interval: 1s
 
     static_configs:
-      - targets: ['gerrit-slave.gerrit-demo.gerritforgeaws.com:443']
+      - targets: ['gerrit-replica.gerrit-demo.gerritforgeaws.com:443']
         labels:
           env: 'unit'
 
-  - job_name: 'gerrit-slave-metrics'
+  - job_name: 'gerrit-replica-metrics'
 
     scheme: https
     metrics_path: '/plugins/metrics-reporter-prometheus/metrics'
@@ -78,6 +78,6 @@ scrape_configs:
     scrape_interval: 5s
 
     static_configs:
-      - targets: ['gerrit-slave.gerrit-demo.gerritforgeaws.com:443']
+      - targets: ['gerrit-replica.gerrit-demo.gerritforgeaws.com:443']
         labels:
           env: 'unit'

@@ -83,7 +83,7 @@ openssl rand -hex 20 > /tmp/secrets/prometheus_bearer_token
 ### Private/public SSH key for replication (required only for recipes involving replicas)
 
 You will also need to create private and public SSH keys used by the replication plugin to replicate
-from masters to replicas, for example:
+from primaries to replicas, for example:
 
 ```bash
 ssh-keygen -b 2048 -m PEM -t rsa -f /tmp/secrets/replication_user_id_rsa -q -N ""

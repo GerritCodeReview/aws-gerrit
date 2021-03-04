@@ -3,7 +3,7 @@ Description: Deploy a service into an ECS cluster behind a public load balancer.
 Parameters:
   GerritServiceName:
       Type: String
-      Default: gerrit-slave
+      Default: gerrit-replica
   GitDaemonServiceName:
       Type: String
       Default: gerrit-git-daemon
@@ -15,8 +15,8 @@ Parameters:
       Type: String
       Default: gerrit-cluster
   TemplateBucketName:
-      Description: S3 bucket containing cloudformation templates
-      Type: String
+    Description: S3 bucket containing cloudformation templates
+    Type: String
   EnvironmentName:
       Description: An environment name used to build the log stream names
       Type: String
@@ -81,32 +81,32 @@ Parameters:
   Subdomain:
       Description: The subdomain of the Gerrit cluster
       Type: String
-      Default: gerrit-slave-demo
+      Default: gerrit-replica-demo
   LoadBalancerScheme:
-        Description: Load Balancer schema, The nodes of an Internet-facing load balancer have public IP addresses.
-        Type: String
-        Default: internet-facing
-        AllowedValues: [internal, internet-facing]
+      Description: Load Balancer schema, The nodes of an Internet-facing load balancer have public IP addresses.
+      Type: String
+      Default: internet-facing
+      AllowedValues: [internal, internet-facing]
   GerritGitVolume:
       Description: Gerrit git volume name
       Type: String
-      Default: gerrit-git-slave
+      Default: gerrit-git-replica
   GerritDataVolume:
       Description: Gerrit data volume name
       Type: String
-      Default: gerrit-data-slave
+      Default: gerrit-data-replica
   GerritCacheVolume:
       Description: Gerrit cache volume name
       Type: String
-      Default: gerrit-cache-slave
+      Default: gerrit-cache-replica
   GerritDbVolume:
       Description: Gerrit db volume name
       Type: String
-      Default: gerrit-db-slave
+      Default: gerrit-db-replica
   GerritLogsVolume:
       Description: Gerrit logs volume name
       Type: String
-      Default: gerrit-logs-slave
+      Default: gerrit-logs-replica
   GerritKeyPrefix:
       Description: Gerrit credentials keys prefix
       Type: String
@@ -123,13 +123,13 @@ Parameters:
       Type: String
       Default: 6g
   FileDescriptorsSoftLimit:
-      Description: The soft limit for file descriptors allowed in the Gerrit container
-      Type: Number
-      Default: 1024
+    Description: The soft limit for file descriptors allowed in the Gerrit container
+    Type: Number
+    Default: 1024
   FileDescriptorsHardLimit:
-      Description: The hard limit for file descriptors allowed in the Gerrit container
-      Type: Number
-      Default: 1024
+    Description: The hard limit for file descriptors allowed in the Gerrit container
+    Type: Number
+    Default: 1024
   JgitCacheSize:
       Description: JGit cache size
       Type: String
@@ -157,7 +157,7 @@ Parameters:
   InstanceId:
     Description: Optional identifier for the Gerrit instance
     Type: String
-    Default: gerrit-dual-master-SLAVE
+    Default: gerrit-primary-replica-REPLICA
   MetricsCloudwatchEnabled:
     Description: Whether gerrit metrics should be published to cloudwatch
     Type: String
@@ -226,8 +226,8 @@ Resources:
             ExecutionRoleArn: !GetAtt ECSTaskExecutionRoleStack.Outputs.TaskExecutionRoleRef
             NetworkMode: bridge
             PlacementConstraints:
-                - Expression: !Sub 'attribute:target_group == replica'
-                  Type: "memberOf"
+              - Expression: !Sub 'attribute:target_group == replica'
+                Type: "memberOf"
             ContainerDefinitions:
                 - Name: !Ref GerritServiceName
                   Essential: true
@@ -237,7 +237,7 @@ Resources:
                       Value: !Sub 'https://${Subdomain}.${HostedZoneName}'
                     - Name: HTTPD_LISTEN_URL
                       Value: !Sub 'proxy-https://*:${HTTPContainePort}/'
-                    - Name: CONTAINER_SLAVE
+                    - Name: CONTAINER_REPLICA
                       Value: true
                     - Name: GERRIT_KEY_PREFIX
                       Value: !Ref GerritKeyPrefix
@@ -487,12 +487,12 @@ Resources:
             Port: !Ref GitSSHPort
             Protocol: TCP
 
-    SlaveDnsRecord:
+    ReplicaDnsRecord:
         Type: AWS::Route53::RecordSet
         Properties:
           Name: !Sub '${Subdomain}.${HostedZoneName}'
           HostedZoneName: !Sub '${HostedZoneName}.'
-          Comment: DNS name for Gerrit Slave.
+          Comment: DNS name for Gerrit Replica.
           Type: A
           AliasTarget:
             DNSName: !GetAtt 'LoadBalancer.DNSName'

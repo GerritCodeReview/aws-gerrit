@@ -22,7 +22,7 @@ create-all: upload-common-templates \
 						$(optional_git_gc_targets_creation) \
 						dns-routing wait-for-dns-routing-creation
 
-cluster: cluster-keys set-optional-gerrit-master-volume
+cluster: cluster-keys set-optional-gerrit-primary-volume
 ifdef CLUSTER_INSTANCE_TYPE
 		$(eval CLUSTER_OPTIONAL_PARAMS := $(CLUSTER_OPTIONAL_PARAMS) ParameterKey=InstanceType,ParameterValue=$(CLUSTER_INSTANCE_TYPE))
 endif
@@ -45,7 +45,7 @@ endif
 		ParameterKey=VPCIdProp,ParameterValue=$(VPC_ID) \
 		ParameterKey=SubnetIdProp,ParameterValue=$(SUBNET_ID) \
 		$(CLUSTER_OPTIONAL_PARAMS) \
-		$(GERRIT_OPTIONAL_MASTER_VOLUME)
+		$(GERRIT_OPTIONAL_PRIMARY_VOLUME)
 
 service: set-optional-params-metrics-cloudwatch set-optional-params-smtp set-ldap-account-pattern set-optional-gerrit-ulimits set-optional-jgit-conf
 ifdef LOAD_BALANCER_SCHEME
@@ -159,4 +159,4 @@ delete-all: delete-dns-routing wait-for-dns-routing-deletion \
 						delete-cluster wait-for-cluster-deletion
 
 gerrit-publish:
-	$(MAKE) -C ../gerrit gerrit-publish RECIPE=single-master
+	$(MAKE) -C ../gerrit gerrit-publish RECIPE=single-primary

@@ -18,7 +18,7 @@ endif
 	aws s3 cp ../common-templates/cf-gerrit-task-execution-role.yml s3://$(TEMPLATE_BUCKET_NAME)/
 	aws s3 cp ../common-templates/cf-gerrit-network-stack.yml s3://$(TEMPLATE_BUCKET_NAME)/
 	aws s3 cp ../common-templates/cf-gerrit-volume.yml s3://$(TEMPLATE_BUCKET_NAME)/
-	aws s3 cp ../common-templates/cf-master-asg.yml s3://$(TEMPLATE_BUCKET_NAME)/
+	aws s3 cp ../common-templates/cf-primary-asg.yml s3://$(TEMPLATE_BUCKET_NAME)/
 	aws s3 cp ../common-templates/cf-efs-stack.yml s3://$(TEMPLATE_BUCKET_NAME)/
 
 set-optional-params-metrics-cloudwatch:
@@ -83,14 +83,14 @@ ifdef JGIT_OPEN_FILES
 		$(eval JGIT_OPTIONAL_PARAMS := ParameterKey=JgitOpenFiles,ParameterValue=$(JGIT_OPEN_FILES))
 endif
 
-set-optional-gerrit-master-volume:
-	$(eval GERRIT_OPTIONAL_MASTER_VOLUME=)
+set-optional-gerrit-primary-volume:
+	$(eval GERRIT_OPTIONAL_PRIMARY_VOLUME=)
 ifdef GERRIT_VOLUME_ID
-		$(eval GERRIT_OPTIONAL_MASTER_VOLUME := $(GERRIT_OPTIONAL_MASTER_VOLUME) ParameterKey=GerritVolumeId,ParameterValue=$(GERRIT_VOLUME_ID))
+		$(eval GERRIT_OPTIONAL_PRIMARY_VOLUME := $(GERRIT_OPTIONAL_PRIMARY_VOLUME) ParameterKey=GerritVolumeId,ParameterValue=$(GERRIT_VOLUME_ID))
 endif
 ifdef GERRIT_VOLUME_SNAPSHOT_ID
-		$(eval GERRIT_OPTIONAL_MASTER_VOLUME := $(GERRIT_OPTIONAL_MASTER_VOLUME) ParameterKey=GerritVolumeSnapshotId,ParameterValue=$(GERRIT_VOLUME_SNAPSHOT_ID))
+		$(eval GERRIT_OPTIONAL_PRIMARY_VOLUME := $(GERRIT_OPTIONAL_PRIMARY_VOLUME) ParameterKey=GerritVolumeSnapshotId,ParameterValue=$(GERRIT_VOLUME_SNAPSHOT_ID))
 endif
 ifdef GERRIT_VOLUME_SIZE_IN_GIB
-		$(eval GERRIT_OPTIONAL_MASTER_VOLUME := $(GERRIT_OPTIONAL_MASTER_VOLUME) ParameterKey=GerritVolumeSizeInGiB,ParameterValue=$(GERRIT_VOLUME_SIZE_IN_GIB))
+		$(eval GERRIT_OPTIONAL_PRIMARY_VOLUME := $(GERRIT_OPTIONAL_PRIMARY_VOLUME) ParameterKey=GerritVolumeSizeInGiB,ParameterValue=$(GERRIT_VOLUME_SIZE_IN_GIB))
 endif

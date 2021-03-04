@@ -28,7 +28,7 @@ Resources:
       ProvisionedThroughputInMibps: !If [isProvisionedThroughput, !Ref ProvisionedThroughputInMibps, !Ref "AWS::NoValue"]
       FileSystemTags:
         - Key: Name
-          Value: "multi-master-git-repo"
+          Value: "multi-primary-git-repo"
 
   GitMountTarget:
     Type: AWS::EFS::MountTarget

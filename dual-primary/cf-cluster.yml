@@ -71,8 +71,8 @@ Parameters:
     Type: Number
     MinValue: 2
     Default: 2
-  MasterMaxCount:
-    Description: The maximum number of EC2 instances in the master autoscaling group
+  PrimaryMaxCount:
+    Description: The maximum number of EC2 instances in the primary autoscaling group
     ConstraintDescription: number of haproxy must be at least 2
     Type: Number
     Default: 2
@@ -206,10 +206,10 @@ Resources:
 
           /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource HAProxyECSAutoScalingGroup --region ${AWS::Region}
 
-  Master1ASG:
+  Primary1ASG:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: !Join [ '', ['https://', !Ref TemplateBucketName, '.s3.amazonaws.com/cf-master-asg.yml'] ]
+      TemplateURL: !Join [ '', ['https://', !Ref TemplateBucketName, '.s3.amazonaws.com/cf-primary-asg.yml'] ]
       TimeoutInMinutes: '25'
       Parameters:
         GerritInstanceNumber: 1
@@ -223,17 +223,17 @@ Resources:
         FileSystem: !If [CreateEFS, !GetAtt GitFileSystemPermanentStack.Outputs.FileSystemID, !Ref FileSystemID ]
         SubnetId: !If [NetworkStackNeeded, !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneRef, !Ref SubnetIdProp]
         LogGroupName: !Ref AWS::StackName
-        MasterMaxCount: !Ref MasterMaxCount
+        PrimaryMaxCount: !Ref PrimaryMaxCount
         GerritVolumeAttachMaxRetries: !Ref GerritVolumeAttachMaxRetries
         GerritVolumeAttachRetryDelay: !Ref GerritVolumeAttachRetryDelay
         GerritVolumeSnapshotId: !Ref GerritVolumeSnapshotId
         GerritVolumeSizeInGiB: !Ref GerritVolumeSizeInGiB
         TemplateBucketName: !Ref TemplateBucketName
 
-  Master2ASG:
+  Primary2ASG:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: !Join [ '', ['https://', !Ref TemplateBucketName, '.s3.amazonaws.com/cf-master-asg.yml'] ]
+      TemplateURL: !Join [ '', ['https://', !Ref TemplateBucketName, '.s3.amazonaws.com/cf-primary-asg.yml'] ]
       TimeoutInMinutes: '25'
       Parameters:
         GerritInstanceNumber: 2
@@ -247,7 +247,7 @@ Resources:
         FileSystem: !If [CreateEFS, !GetAtt GitFileSystemPermanentStack.Outputs.FileSystemID, !Ref FileSystemID ]
         SubnetId: !If [NetworkStackNeeded, !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneRef, !Ref SubnetIdProp]
         LogGroupName: !Ref AWS::StackName
-        MasterMaxCount: !Ref MasterMaxCount
+        PrimaryMaxCount: !Ref PrimaryMaxCount
         GerritVolumeAttachMaxRetries: !Ref GerritVolumeAttachMaxRetries
         GerritVolumeAttachRetryDelay: !Ref GerritVolumeAttachRetryDelay
         GerritVolumeSnapshotId: !Ref GerritVolumeSnapshotId

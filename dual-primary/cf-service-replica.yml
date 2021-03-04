@@ -2,78 +2,114 @@ AWSTemplateFormatVersion: '2010-09-09'
 Description: Deploy a service into an ECS cluster behind a public load balancer.
 Parameters:
   GerritServiceName:
-    Type: String
-    Default: gerrit-master
-  SlaveServiceStackName:
-    Type: String
-    Default: gerrit-slave
-  TemplateBucketName:
-    Description: S3 bucket containing cloudformation templates
-    Type: String
+      Type: String
+      Default: gerrit-replica
+  GitDaemonServiceName:
+      Type: String
+      Default: gerrit-git-daemon
+  GitSSHServiceName:
+      Type: String
+      Default: gerrit-git-ssh
   ClusterStackName:
       Description: Stack name of the ECS cluster to deply the serivces
       Type: String
       Default: gerrit-cluster
+  TemplateBucketName:
+      Description: S3 bucket containing cloudformation templates
+      Type: String
   EnvironmentName:
       Description: An environment name used to build the log stream names
       Type: String
       Default: test
-  DockerImage:
-        Description: Gerrit official Docker image
-        Type: String
-        Default: aws-gerrit/gerrit:latest
-  GerritLBDockerImage:
-        Description: Load Balancer official Docker image
-        Type: String
-        Default: haproxy:1.7
+  GerritDockerImage:
+      Description: Gerrit official Docker image
+      Type: String
+      Default: aws-gerrit/gerrit:latest
+  GitDaemonDockerImage:
+      Description: Git daemon Docker image
+      Type: String
+      Default: aws-gerrit/git-daemon:latest
+  GitSSHDockerImage:
+      Description: Git SSH Docker image
+      Type: String
+      Default: aws-gerrit/git-ssh:latest
   DockerRegistryUrl:
-        Description: Docker registry URL
-        Type: String
+      Description: Docker registry URL
+      Type: String
   DesiredCount:
-        Description: How many instances of this task should we run across our cluster?
-        Type: Number
-        Default: 1
-  HTTPPort:
-        Description: Gerrit HTTP port
-        Type: Number
-        Default: 8080
+      Description: How many instances of this task should we run across our cluster?
+      Type: Number
+      Default: 1
+  HTTPHostPort:
+      Description: Gerrit Host HTTP port
+      Type: Number
+      Default: 9080
+  HTTPContainePort:
+      Description: Gerrit Container HTTP port
+      Type: Number
+      Default: 8080
   HTTPSPort:
-        Description: Gerrit HTTPS port
-        Type: Number
-        Default: 443
-  SSHPort:
-        Description: Gerrit SSH port
-        Type: Number
-        Default: 29418
+      Description: Gerrit HTTPS port
+      Type: Number
+      Default: 443
+  SSHHostPort:
+      Description: Gerrit SSH port
+      Type: Number
+      Default: 39418
+  SSHContainerPort:
+      Description: Gerrit SSH port
+      Type: Number
+      Default: 29418
   GitPort:
-        Description: Git daemon port
-        Type: Number
-        Default: 9418
+      Description: Git daemon port
+      Type: Number
+      Default: 9418
   GitSSHPort:
-        Description: Git ssh port
-        Type: Number
-        Default: 1022
+      Description: Git ssh port
+      Type: Number
+      Default: 1022
+  GitSSHContainerPort:
+      Description: Git ssh port
+      Type: Number
+      Default: 22
   CertificateArn:
-        Description: SSL Certificates ARN
-        Type: String
+      Description: SSL Certificates ARN
+      Type: String
   HostedZoneName:
-        Description: The route53 HostedZoneName.
-        Type: String
+      Description: The route53 HostedZoneName.
+      Type: String
   Subdomain:
-        Description: The subdomain of the Gerrit cluster
-        Type: String
-        Default: gerrit-master-demo
+      Description: The subdomain of the Gerrit cluster
+      Type: String
+      Default: gerrit-replica-demo
   LoadBalancerScheme:
         Description: Load Balancer schema, The nodes of an Internet-facing load balancer have public IP addresses.
         Type: String
         Default: internet-facing
         AllowedValues: [internal, internet-facing]
-  SlaveSubdomain:
-        Description: The subdomain of the Gerrit slave
-        Type: String
+  GerritGitVolume:
+      Description: Gerrit git volume name
+      Type: String
+      Default: gerrit-git-replica
+  GerritDataVolume:
+      Description: Gerrit data volume name
+      Type: String
+      Default: gerrit-data-replica
+  GerritCacheVolume:
+      Description: Gerrit cache volume name
+      Type: String
+      Default: gerrit-cache-replica
+  GerritDbVolume:
+      Description: Gerrit db volume name
+      Type: String
+      Default: gerrit-db-replica
+  GerritLogsVolume:
+      Description: Gerrit logs volume name
+      Type: String
+      Default: gerrit-logs-replica
   GerritKeyPrefix:
-        Description: Gerrit credentials keys prefix
-        Type: String
+      Description: Gerrit credentials keys prefix
+      Type: String
   GerritRAM:
       Description: RAM to allocate to the Gerrit container
       Type: Number
@@ -118,33 +154,10 @@ Parameters:
       Description: Query pattern to use when searching for a user account
       Type: String
       Default: (&(objectClass=person)(uid=${username}))
-  SMTPServer:
-      Description: SMTP server URL
-      Type: String
-  SMTPServerPort:
-      Description: SMTP server port
-      Type: Number
-      Default: 465
-  SMTPUser:
-      Description: User name to authenticate with, if required for relay
-      Type: String
-  SMTPDomain:
-      Description: Domain to be used in the From field
-      Type: String
-  SMTPEncryption:
-      Description: Encryption to be used
-      Type: String
-      Default: ssl
-      AllowedValues: ['ssl', 'tls', 'none']
-  SMTPSslVerify:
-      Description: If false and SMTPEncryption is 'ssl' or 'tls', Gerrit will not verify the server certificate when it connects to send an email message.
-      Type: String
-      Default: true
-      AllowedValues: [true, false]
   InstanceId:
     Description: Optional identifier for the Gerrit instance
     Type: String
-    Default: gerrit-master-slave-MASTER
+    Default: gerrit-dual-primary-REPLICA
   MetricsCloudwatchEnabled:
     Description: Whether gerrit metrics should be published to cloudwatch
     Type: String
@@ -177,37 +190,35 @@ Parameters:
     Type: CommaDelimitedList
     Default: ''
 
-Mappings:
-  Gerrit:
-    Volume:
-      Git: gerrit-git
-      Data: gerrit-data
-      Index: gerrit-index
-      Cache: gerrit-cache
-      Db: gerrit-db
-      Logs: gerrit-logs
-
 Resources:
-    Service:
+    GerritService:
         Type: AWS::ECS::Service
         DependsOn:
           - HTTPListener
           - SSHListener
+          - GitListener
+          - GitSSHListener
         Properties:
             Cluster:
               Fn::ImportValue:
                   !Join [':', [!Ref 'ClusterStackName', 'ClusterName']]
             DesiredCount: !Ref DesiredCount
-            TaskDefinition: !Ref TaskDefinition
+            TaskDefinition: !Ref GerritTaskDefinition
             LoadBalancers:
                 - ContainerName: !Ref GerritServiceName
-                  ContainerPort: !Ref HTTPPort
+                  ContainerPort: !Ref HTTPContainePort
                   TargetGroupArn: !Ref HTTPTargetGroup
                 - ContainerName: !Ref GerritServiceName
-                  ContainerPort: !Ref SSHPort
+                  ContainerPort: !Ref SSHContainerPort
                   TargetGroupArn: !Ref SSHTargetGroup
+                - ContainerName: !Ref GitDaemonServiceName
+                  ContainerPort: !Ref GitPort
+                  TargetGroupArn: !Ref GitTargetGroup
+                - ContainerName: !Ref GitSSHServiceName
+                  ContainerPort: !Ref GitSSHContainerPort
+                  TargetGroupArn: !Ref GitSSHTargetGroup
 
-    TaskDefinition:
+    GerritTaskDefinition:
         Type: AWS::ECS::TaskDefinition
         Properties:
             Family: !Join ['', [!Ref GerritServiceName, TaskDefinition]]
@@ -215,23 +226,23 @@ Resources:
             ExecutionRoleArn: !GetAtt ECSTaskExecutionRoleStack.Outputs.TaskExecutionRoleRef
             NetworkMode: bridge
             PlacementConstraints:
-              - Expression: !Sub 'attribute:target_group == master'
-                Type: "memberOf"
+                - Expression: !Sub 'attribute:target_group == replica'
+                  Type: "memberOf"
             ContainerDefinitions:
                 - Name: !Ref GerritServiceName
                   Essential: true
-                  Image: !Sub '${DockerRegistryUrl}/${DockerImage}'
+                  Image: !Sub '${DockerRegistryUrl}/${GerritDockerImage}'
                   Environment:
                     - Name: CANONICAL_WEB_URL
                       Value: !Sub 'https://${Subdomain}.${HostedZoneName}'
                     - Name: HTTPD_LISTEN_URL
-                      Value: !Sub 'proxy-https://*:${HTTPPort}/'
-                    - Name: AWS_REGION
-                      Value: !Ref AWS::Region
-                    - Name: SETUP_REPLICATION
+                      Value: !Sub 'proxy-https://*:${HTTPContainePort}/'
+                    - Name: CONTAINER_REPLICA
                       Value: true
                     - Name: GERRIT_KEY_PREFIX
                       Value: !Ref GerritKeyPrefix
+                    - Name: AWS_REGION
+                      Value: !Ref AWS::Region
                     - Name: GERRIT_HEAP_LIMIT
                       Value: !Ref GerritHeapLimit
                     - Name: JGIT_CACHE_SIZE
@@ -248,30 +259,8 @@ Resources:
                       Value: !Ref LDAPGroupBase
                     - Name: LDAP_ACCOUNT_PATTERN
                       Value: !Ref LDAPAccountPattern
-                    - Name: SMTP_SERVER
-                      Value: !Ref SMTPServer
-                    - Name: SMTP_SERVER_PORT
-                      Value: !Ref SMTPServerPort
-                    - Name: SMTP_ENCRYPTION
-                      Value: !Ref SMTPEncryption
-                    - Name: SMTP_SSL_VERIFY
-                      Value: !Ref SMTPSslVerify
-                    - Name: SMTP_USER
-                      Value: !Ref SMTPUser
-                    - Name: SMTP_DOMAIN
-                      Value: !Ref SMTPDomain
                     - Name: GERRIT_INSTANCE_ID
                       Value: !Ref InstanceId
-                    - Name: GIT_PORT
-                      Value: !Ref GitPort
-                    - Name: GIT_SSH_PORT
-                      Value: !Ref GitSSHPort
-                    - Name: SLAVE_SUBDOMAIN
-                      Value: !Ref SlaveSubdomain
-                    - Name: HOSTED_ZONE_NAME
-                      Value: !Ref HostedZoneName
-                    - Name: REINDEX_AT_STARTUP
-                      Value: false
                     - Name: METRICS_CLOUDWATCH_ENABLED
                       Value: !Ref MetricsCloudwatchEnabled
                     - Name: METRICS_CLOUDWATCH_NAMESPACE
@@ -291,26 +280,69 @@ Resources:
                       HardLimit: !Ref FileDescriptorsHardLimit
                       SoftLimit: !Ref FileDescriptorsSoftLimit
                   MountPoints:
-                    - SourceVolume: !FindInMap ['Gerrit', 'Volume', 'Git']
+                    - SourceVolume: !Ref GerritGitVolume
                       ContainerPath: /var/gerrit/git
-                    - SourceVolume: !FindInMap ['Gerrit', 'Volume', 'Data']
+                    - SourceVolume: !Ref GerritDataVolume
                       ContainerPath: /var/gerrit/data
-                    - SourceVolume: !FindInMap ['Gerrit', 'Volume', 'Index']
-                      ContainerPath: /var/gerrit/index
-                    - SourceVolume: !FindInMap ['Gerrit', 'Volume', 'Cache']
+                    - SourceVolume: !Ref GerritCacheVolume
                       ContainerPath: /var/gerrit/cache
-                    - SourceVolume: !FindInMap ['Gerrit', 'Volume', 'Db']
+                    - SourceVolume: !Ref GerritDbVolume
                       ContainerPath: /var/gerrit/db
-                    - SourceVolume: !FindInMap ['Gerrit', 'Volume', 'Logs']
+                    - SourceVolume: !Ref GerritLogsVolume
                       ContainerPath: /var/gerrit/logs
                   Cpu: !Ref GerritCPU
                   Memory: !Ref GerritRAM
                   PortMappings:
-                    - ContainerPort: !Ref HTTPPort
-                      HostPort: !Ref HTTPPort
+                    - ContainerPort: !Ref HTTPContainePort
+                      HostPort: !Ref HTTPHostPort
                       Protocol: tcp
-                    - ContainerPort: !Ref SSHPort
-                      HostPort: !Ref SSHPort
+                    - ContainerPort: !Ref SSHContainerPort
+                      HostPort: !Ref SSHHostPort
+                      Protocol: tcp
+                  LogConfiguration:
+                    LogDriver: awslogs
+                    Options:
+                        awslogs-group: !Ref ClusterStackName
+                        awslogs-region: !Ref AWS::Region
+                        awslogs-stream-prefix: !Ref EnvironmentName
+                - Name: !Ref GitDaemonServiceName
+                  Essential: true
+                  Image: !Sub '${DockerRegistryUrl}/${GitDaemonDockerImage}'
+                  MountPoints:
+                    - SourceVolume: !Ref GerritGitVolume
+                      ContainerPath: /var/gerrit/git
+                  Cpu: 256
+                  Memory: 512
+                  PortMappings:
+                    - ContainerPort: !Ref GitPort
+                      HostPort: !Ref GitPort
+                      Protocol: tcp
+                  LogConfiguration:
+                    LogDriver: awslogs
+                    Options:
+                        awslogs-group: !Ref ClusterStackName
+                        awslogs-region: !Ref AWS::Region
+                        awslogs-stream-prefix: !Ref EnvironmentName
+                - Name: !Ref GitSSHServiceName
+                  Essential: true
+                  Image: !Sub '${DockerRegistryUrl}/${GitSSHDockerImage}'
+                  Environment:
+                    - Name: TZ
+                      Value: US/Pacific
+                    - Name: SSH_USERS
+                      Value: gerrit:1000:1000
+                    - Name: AWS_REGION
+                      Value: !Ref AWS::Region
+                    - Name: GERRIT_KEY_PREFIX
+                      Value: !Ref GerritKeyPrefix
+                  MountPoints:
+                    - SourceVolume: !Ref GerritGitVolume
+                      ContainerPath: /var/gerrit/git
+                  Cpu: 256
+                  Memory: 512
+                  PortMappings:
+                    - ContainerPort: !Ref GitSSHContainerPort
+                      HostPort: !Ref GitSSHPort
                       Protocol: tcp
                   LogConfiguration:
                     LogDriver: awslogs
@@ -319,24 +351,41 @@ Resources:
                         awslogs-region: !Ref AWS::Region
                         awslogs-stream-prefix: !Ref EnvironmentName
             Volumes:
-              - Name: !FindInMap ['Gerrit', 'Volume', 'Db']
-                Host:
-                  SourcePath: !Join ['/', ["/gerrit-mount-point", !FindInMap ['Gerrit', 'Volume', 'Db']]]
-              - Name: !FindInMap ['Gerrit', 'Volume', 'Git']
-                Host:
-                  SourcePath: !Join ['/', ["/gerrit-mount-point", !FindInMap ['Gerrit', 'Volume', 'Git']]]
-              - Name: !FindInMap ['Gerrit', 'Volume', 'Data']
-                Host:
-                  SourcePath: !Join ['/', ["/gerrit-mount-point", !FindInMap ['Gerrit', 'Volume', 'Data']]]
-              - Name: !FindInMap ['Gerrit', 'Volume', 'Cache']
-                Host:
-                  SourcePath: !Join ['/', ["/gerrit-mount-point", !FindInMap ['Gerrit', 'Volume', 'Cache']]]
-              - Name: !FindInMap ['Gerrit', 'Volume', 'Index']
-                Host:
-                  SourcePath: !Join ['/', ["/gerrit-mount-point", !FindInMap ['Gerrit', 'Volume', 'Index']]]
-              - Name: !FindInMap ['Gerrit', 'Volume', 'Logs']
-                Host:
-                  SourcePath: !Join ['/', ["/gerrit-mount-point", !FindInMap ['Gerrit', 'Volume', 'Logs']]]
+              - Name: !Ref 'GerritDbVolume'
+                DockerVolumeConfiguration:
+                  Scope: shared
+                  Autoprovision: true
+                  Driver: local
+                  Labels:
+                    gerrit-db: !Join ['-', [!Ref EnvironmentName, !Ref GerritDbVolume]]
+              - Name: !Ref 'GerritGitVolume'
+                DockerVolumeConfiguration:
+                  Scope: shared
+                  Autoprovision: true
+                  Driver: local
+                  Labels:
+                    gerrit-git: !Join ['-', [!Ref EnvironmentName, !Ref GerritGitVolume]]
+              - Name: !Ref 'GerritDataVolume'
+                DockerVolumeConfiguration:
+                  Scope: shared
+                  Autoprovision: true
+                  Driver: local
+                  Labels:
+                    gerrit-data: !Join ['-', [!Ref EnvironmentName, !Ref GerritDataVolume]]
+              - Name: !Ref 'GerritCacheVolume'
+                DockerVolumeConfiguration:
+                  Scope: shared
+                  Autoprovision: true
+                  Driver: local
+                  Labels:
+                    gerrit-cache: !Join ['-', [!Ref EnvironmentName, !Ref GerritCacheVolume]]
+              - Name: !Ref 'GerritLogsVolume'
+                DockerVolumeConfiguration:
+                  Scope: shared
+                  Autoprovision: true
+                  Driver: local
+                  Labels:
+                    gerrit-logs: !Join ['-', [!Ref EnvironmentName, !Ref GerritLogsVolume]]
 
     LoadBalancer:
         Type: AWS::ElasticLoadBalancingV2::LoadBalancer
@@ -357,8 +406,9 @@ Resources:
             VpcId:
               Fn::ImportValue:
                   !Join [':', [!Ref 'ClusterStackName', 'VPCId']]
-            Port: !Ref HTTPPort
+            Port: !Ref HTTPHostPort
             Protocol: TCP
+            HealthCheckPort: !Ref HTTPHostPort
 
     HTTPListener:
         Type: AWS::ElasticLoadBalancingV2::Listener
@@ -380,8 +430,9 @@ Resources:
             VpcId:
               Fn::ImportValue:
                   !Join [':', [!Ref 'ClusterStackName', 'VPCId']]
-            Port: !Ref SSHPort
+            Port: !Ref SSHHostPort
             Protocol: TCP
+            HealthCheckPort: !Ref SSHHostPort
 
     SSHListener:
         Type: AWS::ElasticLoadBalancingV2::Listener
@@ -391,8 +442,62 @@ Resources:
             - Type: forward
               TargetGroupArn: !Ref SSHTargetGroup
             LoadBalancerArn: !Ref LoadBalancer
-            Port: !Ref SSHPort
+            Port: !Ref SSHHostPort
             Protocol: TCP
+
+    GitTargetGroup:
+        Type: AWS::ElasticLoadBalancingV2::TargetGroup
+        DependsOn: LoadBalancer
+        Properties:
+            VpcId:
+              Fn::ImportValue:
+                  !Join [':', [!Ref 'ClusterStackName', 'VPCId']]
+            Port: !Ref GitPort
+            Protocol: TCP
+
+    GitListener:
+        Type: AWS::ElasticLoadBalancingV2::Listener
+        DependsOn: LoadBalancer
+        Properties:
+            DefaultActions:
+            - Type: forward
+              TargetGroupArn: !Ref GitTargetGroup
+            LoadBalancerArn: !Ref LoadBalancer
+            Port: !Ref GitPort
+            Protocol: TCP
+
+    GitSSHTargetGroup:
+        Type: AWS::ElasticLoadBalancingV2::TargetGroup
+        DependsOn: LoadBalancer
+        Properties:
+            VpcId:
+              Fn::ImportValue:
+                  !Join [':', [!Ref 'ClusterStackName', 'VPCId']]
+            Port: !Ref GitSSHPort
+            Protocol: TCP
+
+    GitSSHListener:
+        Type: AWS::ElasticLoadBalancingV2::Listener
+        DependsOn: LoadBalancer
+        Properties:
+            DefaultActions:
+            - Type: forward
+              TargetGroupArn: !Ref GitSSHTargetGroup
+            LoadBalancerArn: !Ref LoadBalancer
+            Port: !Ref GitSSHPort
+            Protocol: TCP
+
+    ReplicaDnsRecord:
+        Type: AWS::Route53::RecordSet
+        Properties:
+          Name: !Sub '${Subdomain}.${HostedZoneName}'
+          HostedZoneName: !Sub '${HostedZoneName}.'
+          Comment: DNS name for Gerrit Replica.
+          Type: A
+          AliasTarget:
+            DNSName: !GetAtt 'LoadBalancer.DNSName'
+            HostedZoneId: !GetAtt 'LoadBalancer.CanonicalHostedZoneID'
+            EvaluateTargetHealth: False
 
     ECSTaskExecutionRoleStack:
       Type: AWS::CloudFormation::Stack

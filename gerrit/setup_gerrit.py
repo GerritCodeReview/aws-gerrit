@@ -173,21 +173,21 @@ with open(GERRIT_CONFIG_DIRECTORY + "gerrit.config", 'w',
     })
     f.write(template.render(config_for_template))
 
-containerSlave = (os.getenv('CONTAINER_SLAVE') == 'true')
-if ((not containerSlave) and setupReplication):
+containerReplica = (os.getenv('CONTAINER_REPLICA') == 'true')
+if ((not containerReplica) and setupReplication):
     print("Setting Replication config in '" +
           GERRIT_CONFIG_DIRECTORY + "replication.config'")
     template = env.get_template("replication.config.template")
     with open(GERRIT_CONFIG_DIRECTORY + "replication.config", 'w', encoding='utf-8') as f:
-        SLAVE_FQDN = os.getenv('SLAVE_SUBDOMAIN') + "." + os.getenv('HOSTED_ZONE_NAME')
+        REPLICA_FQDN = os.getenv('REPLICA_SUBDOMAIN') + "." + os.getenv('HOSTED_ZONE_NAME')
         REMOTE_TARGET = os.getenv('REMOTE_REPLICATION_TARGET_HOST', '')
         # In a multi-site setup, the very first replication needs to be
         # triggered manually from site-A to site-B, once the latter is ready,
         # thus "REPLICATE_ON_STARTUP" needs to be disabled
         REPLICATE_ON_STARTUP = "false" if setupMultiSite else "true"
         f.write(template.render(
-                SLAVE_1_URL="git://" + SLAVE_FQDN + ":" + os.getenv('GIT_PORT') + "/${name}.git",
-                SLAVE_1_AMDIN_URL="ssh://gerrit@" + SLAVE_FQDN + ":" + os.getenv('GIT_SSH_PORT') + "/var/gerrit/git/${name}.git",
+                REPLICA_1_URL="git://" + REPLICA_FQDN + ":" + os.getenv('GIT_PORT') + "/${name}.git",
+                REPLICA_1_AMDIN_URL="ssh://gerrit@" + REPLICA_FQDN + ":" + os.getenv('GIT_SSH_PORT') + "/var/gerrit/git/${name}.git",
                 REMOTE_TARGET=REMOTE_TARGET,
                 REMOTE_TARGET_URL="git://" + REMOTE_TARGET + ":" + os.getenv('GIT_PORT') + "/${name}.git",
                 REMOTE_ADMIN_TARGET_URL="ssh://gerrit@" + REMOTE_TARGET + ":" + os.getenv('GIT_SSH_PORT') + "/var/gerrit/git/${name}.git",
