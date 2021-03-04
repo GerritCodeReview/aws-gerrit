@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2c9c4d1c_8084662d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-03-04T21:10:04Z",
+      "side": 1,
+      "message": "Before adding additional code on aws-gerrit I thought about fixing banned terms.\nThis is long due and needed to be done at some point.\n\nAlso allows to proceed forward without needing to use banned terms any longer, which would just add more debt and be inappropriate.\n\nI have successfully tested and single-primary primary-replica\nI am going to test dual-primary tomorrow.",
+      "revId": "3c64819a62d85bdaf0ad6488d0c18e276bc85fd1",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
