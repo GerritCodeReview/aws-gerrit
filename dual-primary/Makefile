@@ -50,7 +50,7 @@ create-all: upload-common-templates \
 						$(optional_git_gc_targets_creation) \
 						dns-routing wait-for-dns-routing-creation
 
-cluster: cluster-keys set-optional-gerrit-primary-volume
+cluster: cluster-keys set-optional-gerrit-primary-volume set-optional-params-for-replica-filesystem
 ifdef CLUSTER_INSTANCE_TYPE
 		$(eval CLUSTER_OPTIONAL_PARAMS := $(CLUSTER_OPTIONAL_PARAMS) ParameterKey=InstanceType,ParameterValue=$(CLUSTER_INSTANCE_TYPE))
 endif
@@ -91,7 +91,8 @@ endif
 		ParameterKey=VPCIdProp,ParameterValue=$(VPC_ID) \
 		ParameterKey=SubnetIdProp,ParameterValue=$(SUBNET_ID) \
 		$(CLUSTER_OPTIONAL_PARAMS) \
-		$(GERRIT_OPTIONAL_PRIMARY_VOLUME)
+		$(GERRIT_OPTIONAL_PRIMARY_VOLUME) \
+		$(GERRIT_OPTIONAL_PARAMS_REPLICA_FILESYSTEM)
 
 service-primary-1: set-optional-params-metrics-cloudwatch set-optional-params-smtp \
 					set-optional-params-multisite set-ldap-account-pattern \
@@ -494,7 +495,7 @@ confirm-persistent-stack-deletion:
 	@echo ""
 	@echo -n "Are you sure you want to continue? [y/N] " && read ans && [ $${ans:-N} = y ]
 
-delete-all-including-retained-stack: confirm-persistent-stack-deletion delete-all delete-git-persistent-stack delete-network-persistent-stack
+delete-all-including-retained-stack: confirm-persistent-stack-deletion delete-all delete-git-persistent-stack delete-git-replica-persistent-stack delete-network-persistent-stack
 
 delete-git-persistent-stack:
 
@@ -511,6 +512,23 @@ delete-git-persistent-stack:
 		echo "*** Git persistent stack '$(EFS_STACK_NAME)' deleted" \
 		, \
 		echo "No Git persistent stack found. Nothing to do." \
+	)
+
+delete-git-replica-persistent-stack:
+
+	$(eval REPLICA_EFS_STACK_NAME := $(shell $(AWS_FC_COMMAND) list-stacks --stack-status-filter CREATE_COMPLETE --query "StackSummaries[*].StackName" | jq -r '.[]| select(startswith("$(CLUSTER_STACK_NAME)-ReplicaGitFileSystemPermanentStack"))'))
+
+	$(if $(REPLICA_EFS_STACK_NAME), \
+		$(AWS_FC_COMMAND) delete-stack \
+			--stack-name $(REPLICA_EFS_STACK_NAME) \
+			--region $(AWS_REGION) && \
+		echo "*** Wait for Git persistent stack of replicas '$(REPLICA_EFS_STACK_NAME)' deletion" && \
+		$(AWS_FC_COMMAND) wait stack-delete-complete \
+			--stack-name $(REPLICA_EFS_STACK_NAME) \
+			--region $(AWS_REGION) && \
+		echo "*** Git persistent stack '$(EFSREPLICA_EFS_STACK_NAME_STACK_NAME)' deleted" \
+		, \
+		echo "No Git persistent stack for replicas found. Nothing to do." \
 	)
 
 delete-network-persistent-stack:

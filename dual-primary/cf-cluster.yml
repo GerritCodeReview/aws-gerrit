@@ -93,10 +93,24 @@ Parameters:
     Description: Gerrit volume size in GiB
     Type: Number
     Default: 10
+  ReplicaFileSystemID:
+    Description: Gerrit replicas shared filesystem id
+    Type: String
+    Default: ""
+  ReplicaFileSystemThroughputMode:
+    Description: Gerrit replicas shared filesystem throughput mode
+    Type: String
+    Default: bursting
+    AllowedValues: [bursting, provisioned]
+  ReplicaProvisionedThroughputInMibps:
+    Description: Gerrit replicas shared filesystem throughput, measured in MiB/s. Valid values are 1-1024.
+    Type: Number
+    Default: 256
 
 Conditions:
   isProvisionedThroughput: !Equals [!Ref FileSystemThroughputMode, "provisioned"]
   CreateEFS: !Equals [!Ref FileSystemID, ""]
+  CreateReplicaEFS: !Equals [!Ref ReplicaFileSystemID, ""]
   NetworkStackNeeded: !Or
     - !Equals [!Ref VPCIdProp, ""]
     - !And
@@ -308,6 +322,22 @@ Resources:
         PublicSubnet: !If [NetworkStackNeeded, !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneRef, !Ref SubnetIdProp]
         SecurityGroupVPCID: !If [NetworkStackNeeded, !GetAtt ECSTaskNetworkStack.Outputs.VPCRef, !Ref VPCIdProp]
         SecurityGroupCidrIp: !Ref SubnetCIDR
+        TagValue: "efs-for-gerrit-primaries"
+
+  ReplicaGitFileSystemPermanentStack:
+    Type: AWS::CloudFormation::Stack
+    DeletionPolicy: Retain
+    Condition: CreateReplicaEFS
+    Properties:
+      TemplateURL: !Join [ '', ['https://', !Ref TemplateBucketName, '.s3.amazonaws.com/cf-efs-stack.yml'] ]
+      TimeoutInMinutes: '25'
+      Parameters:
+        FileSystemThroughputMode: !Ref ReplicaFileSystemThroughputMode
+        ProvisionedThroughputInMibps: !Ref ReplicaProvisionedThroughputInMibps
+        PublicSubnet: !If [NetworkStackNeeded, !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneRef, !Ref SubnetIdProp]
+        SecurityGroupVPCID: !If [NetworkStackNeeded, !GetAtt ECSTaskNetworkStack.Outputs.VPCRef, !Ref VPCIdProp]
+        SecurityGroupCidrIp: !Ref SubnetCIDR
+        TagValue: "efs-for-gerrit-replicas"
 
   ECSTaskNetworkStack:
     Type: AWS::CloudFormation::Stack
@@ -344,3 +374,8 @@ Outputs:
     Value: !GetAtt ECSCluster.Arn
     Export:
       Name: !Join [ ':', [ !Ref 'AWS::StackName', 'ClusterArn' ] ]
+  ReplicaFileSystemID:
+    Description: The ID of the EFS to be mounted by replicas
+    Value: !If [CreateReplicaEFS, !GetAtt ReplicaGitFileSystemPermanentStack.Outputs.FileSystemID, !Ref ReplicaFileSystemID ]
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'ReplicaFileSystemID' ] ]
