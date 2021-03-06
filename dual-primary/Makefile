@@ -508,23 +508,6 @@ delete-git-primary-persistent-stack:
 		echo "No Git persistent stack found. Nothing to do." \
 	)
 
-delete-git-replica-persistent-stack:
-
-	$(eval REPLICA_EFS_STACK_NAME := $(shell $(AWS_FC_COMMAND) list-stacks --stack-status-filter CREATE_COMPLETE --query "StackSummaries[*].StackName" | jq -r '.[]| select(startswith("$(CLUSTER_STACK_NAME)-ReplicaGitFileSystemPermanentStack"))'))
-
-	$(if $(REPLICA_EFS_STACK_NAME), \
-		$(AWS_FC_COMMAND) delete-stack \
-			--stack-name $(REPLICA_EFS_STACK_NAME) \
-			--region $(AWS_REGION) && \
-		echo "*** Wait for Git persistent stack of replicas '$(REPLICA_EFS_STACK_NAME)' deletion" && \
-		$(AWS_FC_COMMAND) wait stack-delete-complete \
-			--stack-name $(REPLICA_EFS_STACK_NAME) \
-			--region $(AWS_REGION) && \
-		echo "*** Git persistent stack '$(EFSREPLICA_EFS_STACK_NAME_STACK_NAME)' deleted" \
-		, \
-		echo "No Git persistent stack for replicas found. Nothing to do." \
-	)
-
 gerrit-publish:
 ifeq ($(MULTISITE_ENABLED),true)
 	$(MAKE) -C ../gerrit gerrit-publish RECIPE=dual-primary PLUGINS="$(MULTI_SITE_PLUGINS)" PLUGINS_LIBS_LINKS="$(MULTI_SITE_PLUGINS_LIBS_LINKS)" MAVEN_LIBS="$(MULTI_SITE_MAVEN_LIBS)"
