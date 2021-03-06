@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b874ac4a_e9785b16",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-03-06T14:23:53Z",
+      "side": 1,
+      "message": "This works: but I would like to retain the replica EFS, in a similar way we do to the dual-primary recipe.",
+      "revId": "edcde9983f64e4e19d0e7f6b10eaeb823f1f6028",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
