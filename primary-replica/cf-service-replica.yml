@@ -359,12 +359,10 @@ Resources:
                   Labels:
                     gerrit-db: !Join ['-', [!Ref EnvironmentName, !Ref GerritDbVolume]]
               - Name: !Ref 'GerritGitVolume'
-                DockerVolumeConfiguration:
-                  Scope: shared
-                  Autoprovision: true
-                  Driver: local
-                  Labels:
-                    gerrit-git: !Join ['-', [!Ref EnvironmentName, !Ref GerritGitVolume]]
+                EFSVolumeConfiguration:
+                  FilesystemId:
+                    Fn::ImportValue:
+                      !Join [':', [!Ref 'ClusterStackName', 'ReplicaFileSystemID']]
               - Name: !Ref 'GerritDataVolume'
                 DockerVolumeConfiguration:
                   Scope: shared
