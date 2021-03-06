@@ -93,6 +93,27 @@ a single EC2 instance won't be enough for all the services that will be ran*
 * `PROMETHEUS_SUBDOMAIN`: Optional. Prometheus subdomain. For example: `<AWS_PREFIX>-prometheus`
 * `GRAFANA_SUBDOMAIN`: Optional. Grafana subdomain. For example: `<AWS_PREFIX>-grafana`
 
+##### Shared filesystem for replicas
+
+replicas share a data via an EFS filesystem which is
+mounted under the `/var/gerrit/git` directory. This allows git data to persist
+beyond the lifespan of a single instance and to be shared so that replicas can
+scale down and up according to needs.
+
+* `REPLICA_FILESYSTEM_ID`: Optional. An existing EFS filesystem id to mount on replicas.
+
+    If empty, a new EFS will be created to store git data.
+    Setting this value is required when deploying a dual-primary cluster using
+    existing data as well as performing blue/green deployments.
+    The nested stack will be *retained* when the cluster is deleted, so that
+    existing data can be used to perform blue/green deployments.
+
+* `REPLICA_FILESYSTEM_THROUGHPUT_MODE`: Optional. The throughput mode for the file system to be created.
+default: `bursting`. More info [here](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-efs-filesystem.html)
+
+* `REPLICA_FILESYSTEM_PROVISIONED_THROUGHPUT_IN_MIBPS`: Optional. Only used when `REPLICA_FILESYSTEM_THROUGHPUT_MODE` is set to `provisioned`.
+default: `256`.
+
 ### 2 - Deploy
 
 * Create the cluster, services and DNS routing stacks:

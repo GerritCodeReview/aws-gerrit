@@ -31,7 +31,7 @@ create-all: upload-common-templates \
 						$(optional_git_gc_targets_creation) \
 						dns-routing wait-for-dns-routing-creation
 
-cluster: cluster-keys set-optional-gerrit-primary-volume
+cluster: cluster-keys set-optional-gerrit-primary-volume set-optional-params-for-replica-filesystem
 ifdef CLUSTER_INSTANCE_TYPE
 		$(eval CLUSTER_OPTIONAL_PARAMS := $(CLUSTER_OPTIONAL_PARAMS) ParameterKey=InstanceType,ParameterValue=$(CLUSTER_INSTANCE_TYPE))
 endif
@@ -57,7 +57,8 @@ endif
 		ParameterKey=VPCIdProp,ParameterValue=$(VPC_ID) \
 		ParameterKey=SubnetIdProp,ParameterValue=$(SUBNET_ID) \
 		$(CLUSTER_OPTIONAL_PARAMS) \
-		$(GERRIT_OPTIONAL_PRIMARY_VOLUME)
+		$(GERRIT_OPTIONAL_PRIMARY_VOLUME) \
+		$(GERRIT_OPTIONAL_PARAMS_REPLICA_FILESYSTEM)
 
 service-primary: set-optional-params-metrics-cloudwatch set-optional-params-smtp set-ldap-account-pattern set-optional-gerrit-ulimits set-optional-jgit-conf
 ifdef LOAD_BALANCER_SCHEME
