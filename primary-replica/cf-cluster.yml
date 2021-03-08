@@ -337,6 +337,7 @@ Resources:
             Resource: '*'
   ECSTaskNetworkStack:
     Type: AWS::CloudFormation::Stack
+    DeletionPolicy: Retain
     Condition: NetworkStackNeeded
     Properties:
       TemplateURL: !Join [ '', ['https://', !Ref TemplateBucketName, '.s3.amazonaws.com/cf-gerrit-network-stack.yml'] ]

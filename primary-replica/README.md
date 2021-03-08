@@ -123,6 +123,40 @@ Note that this will *not* delete:
 * Secrets stored in Secret Manager
 * SSL certificates
 * ECR repositories
+* VPC and subnets (if created as part of this deployment, rather than externally
+provided)
+
+### Persistent stacks
+
+Blue/green deployment of the primary-replica recipe requires that the blue and
+the green stacks are deployed within the same VPC.
+
+In order to preserve the VPC, the IGW and the subnet upon deletion of
+the blue stack, the nested network cloudformation template needs to be
+protected from deletion.
+
+Note that you can completely delete the stack, including explicitly retained
+resources such as the EFS Git filesystem, VPC and subnets, by issuing the more
+aggressive command:
+
+```
+make [AWS_REGION=a-valid-aws-region] [AWS_PREFIX=some-cluster-prefix] delete-all-including-retained-stack
+```
+
+Note that this will execute a prompt to confirm your choice:
+
+```
+* * * * WARNING * * * * this is going to completely destroy the stack, including git data.
+
+Are you sure you want to continue? [y/N]
+```
+
+If you want to automate this programmatically you can just pipe the `yes`
+command to the make:
+
+```
+yes | make [AWS_REGION=a-valid-aws-region] [AWS_PREFIX=some-cluster-prefix] delete-all-including-retained-stack
+```
 
 ### Access your Gerrit instances
 
