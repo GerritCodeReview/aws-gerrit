@@ -172,6 +172,7 @@ else
 		@echo "METRICS_CLOUDWATCH_ENABLED is set to false. Dashboard creation skipped".
 endif
 
+delete-all-including-retained-stack: confirm-persistent-stack-deletion delete-all delete-network-persistent-stack
 
 wait-for-cluster-creation:
 	@echo "*** Wait for cluster stack '$(CLUSTER_STACK_NAME)' creation"
