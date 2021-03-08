@@ -41,6 +41,24 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8cf13fe6_b968a79f",
+        "filename": "dual-primary/cf-cluster.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2021-03-08T22:11:57Z",
+      "side": 1,
+      "message": "Forget it, I just realise I miss-read it.",
+      "parentUuid": "642daff7_f5c82fee",
+      "revId": "0fb2af2b86ffc193f88e0e13416abf391d7950bd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "311f6670_a362558c",
