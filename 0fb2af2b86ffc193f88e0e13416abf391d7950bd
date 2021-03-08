@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3efd3b15_d5a0f38c",
+        "filename": "dual-primary/cf-cluster.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2021-03-08T22:10:01Z",
+      "side": 1,
+      "message": "nit: Shall we also rename those with the \"Primary\" prefix?",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 56,
+        "endChar": 14
+      },
+      "revId": "0fb2af2b86ffc193f88e0e13416abf391d7950bd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "642daff7_f5c82fee",
+        "filename": "dual-primary/cf-cluster.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2021-03-08T22:10:01Z",
+      "side": 1,
+      "message": "Is this correct? If we specify a FileSystemID we need to create a new EFS?",
+      "revId": "0fb2af2b86ffc193f88e0e13416abf391d7950bd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "311f6670_a362558c",
+        "filename": "dual-primary/cf-cluster.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2021-03-08T22:10:01Z",
+      "side": 1,
+      "message": "nit: worth adding the primary prefix here?",
+      "range": {
+        "startLine": 312,
+        "startChar": 2,
+        "endLine": 312,
+        "endChar": 29
+      },
+      "revId": "0fb2af2b86ffc193f88e0e13416abf391d7950bd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
