@@ -1,6 +1,7 @@
 SHELL := /bin/bash
 
 ROOT_DIR=$(dir $(realpath $(filter %Makefile.common,$(MAKEFILE_LIST))))
+AWS_FC_COMMAND=export AWS_PAGER=;aws cloudformation
 include $(ROOT_DIR)common.env
 
 cluster-keys:
@@ -106,3 +107,25 @@ endif
 ifdef REPLICA_FILESYSTEM_PROVISIONED_THROUGHPUT_IN_MIBPS
 		$(eval GERRIT_OPTIONAL_PARAMS_REPLICA_FILESYSTEM := $(GERRIT_OPTIONAL_PARAMS_REPLICA_FILESYSTEM) ParameterKey=ReplicaProvisionedThroughputInMibps,ParameterValue=$(REPLICA_FILESYSTEM_PROVISIONED_THROUGHPUT_IN_MIBPS))
 endif
+
+confirm-persistent-stack-deletion:
+	@echo ""
+	@echo "* * * * WARNING * * * * this is going to completely destroy the stack, including git data."
+	@echo ""
+	@echo -n "Are you sure you want to continue? [y/N] " && read ans && [ $${ans:-N} = y ]
+
+delete-network-persistent-stack:
+	$(eval NETWORK_STACK_NAME=$(shell $(AWS_FC_COMMAND) list-stacks --stack-status-filter CREATE_COMPLETE --query "StackSummaries[*].StackName" | jq -r '.[]| select(startswith("$(CLUSTER_STACK_NAME)-ECSTaskNetworkStack"))'))
+
+	$(if $(NETWORK_STACK_NAME), \
+		$(AWS_FC_COMMAND) delete-stack \
+			--stack-name $(NETWORK_STACK_NAME) \
+			--region $(AWS_REGION) && \
+		echo "*** Wait for Network stack '$(NETWORK_STACK_NAME)' deletion" && \
+		$(AWS_FC_COMMAND) wait stack-delete-complete \
+			--stack-name $(NETWORK_STACK_NAME) \
+			--region $(AWS_REGION) && \
+		echo "*** Network stack '$(NETWORK_STACK_NAME)' deleted" \
+		, \
+		echo "No network stack found. Nothing to do." \
+	)
