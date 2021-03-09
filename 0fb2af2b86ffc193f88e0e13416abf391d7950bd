@@ -72,6 +72,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "adae47d1_0ca45b7a",
+        "filename": "dual-primary/cf-cluster.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-03-09T10:54:51Z",
+      "side": 1,
+      "message": "Done in the next change",
+      "parentUuid": "c2897dd9_7e2cec09",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 56,
+        "endChar": 14
+      },
+      "revId": "0fb2af2b86ffc193f88e0e13416abf391d7950bd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "642daff7_f5c82fee",
@@ -168,6 +192,30 @@
       "side": 1,
       "message": "See above, I will do this in a separate change",
       "parentUuid": "90cc4953_02952b1b",
+      "range": {
+        "startLine": 312,
+        "startChar": 2,
+        "endLine": 312,
+        "endChar": 29
+      },
+      "revId": "0fb2af2b86ffc193f88e0e13416abf391d7950bd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "22c96a1e_1fe93e41",
+        "filename": "dual-primary/cf-cluster.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-03-09T10:54:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05a15ace_a15f31c1",
       "range": {
         "startLine": 312,
         "startChar": 2,
