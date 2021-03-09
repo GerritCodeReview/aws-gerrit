@@ -174,9 +174,9 @@ Configuration values affecting deployment environment and cluster properties
 * `SSH_HOST_PORT_PRIMARY2:`: Optional. Gerrit Host SSH port for primary2 (must be different from primary1). `29418` by default.
 * `REPLICA_SUBDOMAIN`: Mandatory. The subdomain of the Gerrit replica. For example: `<AWS_PREFIX>-replica`
 * `LB_SUBDOMAIN`: Mandatory. The subdomain of the Gerrit load balancer. For example: `<AWS_PREFIX>-dual-primary`
-* `FILESYSTEM_THROUGHPUT_MODE`: Optional. The throughput mode for the file system to be created.
+* `PRIMARY_FILESYSTEM_THROUGHPUT_MODE`: Optional. The throughput mode for the primary file system to be created.
 default: `bursting`. More info [here](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-efs-filesystem.html)
-* `FILESYSTEM_PROVISIONED_THROUGHPUT_IN_MIBPS`: Optional. Only used when `FILESYSTEM_THROUGHPUT_MODE` is set to `provisioned`.
+* `PRIMARY_FILESYSTEM_PROVISIONED_THROUGHPUT_IN_MIBPS`: Optional. Only used when `PRIMARY_FILESYSTEM_THROUGHPUT_MODE` is set to `provisioned`.
 default: `256`.
 
 * `GERRIT_REPLICA_INSTANCE_ID`: Optional. Identifier for the Gerrit replica instance.

@@ -54,14 +54,14 @@ cluster: cluster-keys set-optional-gerrit-primary-volume set-optional-params-for
 ifdef CLUSTER_INSTANCE_TYPE
 		$(eval CLUSTER_OPTIONAL_PARAMS := $(CLUSTER_OPTIONAL_PARAMS) ParameterKey=InstanceType,ParameterValue=$(CLUSTER_INSTANCE_TYPE))
 endif
-ifdef FILESYSTEM_THROUGHPUT_MODE
-		$(eval CLUSTER_OPTIONAL_PARAMS := $(CLUSTER_OPTIONAL_PARAMS) ParameterKey=FileSystemThroughputMode,ParameterValue=$(FILESYSTEM_THROUGHPUT_MODE))
+ifdef PRIMARY_FILESYSTEM_THROUGHPUT_MODE
+		$(eval CLUSTER_OPTIONAL_PARAMS := $(CLUSTER_OPTIONAL_PARAMS) ParameterKey=PrimaryFileSystemThroughputMode,ParameterValue=$(PRIMARY_FILESYSTEM_THROUGHPUT_MODE))
 endif
-ifdef FILESYSTEM_PROVISIONED_THROUGHPUT_IN_MIBPS
-		$(eval CLUSTER_OPTIONAL_PARAMS := $(CLUSTER_OPTIONAL_PARAMS) ParameterKey=ProvisionedThroughputInMibps,ParameterValue=$(FILESYSTEM_PROVISIONED_THROUGHPUT_IN_MIBPS))
+ifdef PRIMARY_FILESYSTEM_PROVISIONED_THROUGHPUT_IN_MIBPS
+		$(eval CLUSTER_OPTIONAL_PARAMS := $(CLUSTER_OPTIONAL_PARAMS) ParameterKey=PrimaryProvisionedThroughputInMibps,ParameterValue=$(PRIMARY_FILESYSTEM_PROVISIONED_THROUGHPUT_IN_MIBPS))
 endif
-ifdef FILESYSTEM_ID
-		$(eval CLUSTER_OPTIONAL_PARAMS := $(CLUSTER_OPTIONAL_PARAMS) ParameterKey=FileSystemID,ParameterValue=$(FILESYSTEM_ID))
+ifdef PRIMARY_FILESYSTEM_ID
+		$(eval CLUSTER_OPTIONAL_PARAMS := $(CLUSTER_OPTIONAL_PARAMS) ParameterKey=PrimaryFileSystemID,ParameterValue=$(PRIMARY_FILESYSTEM_ID))
 endif
 ifdef SUBNET_CIDR
 		$(eval CLUSTER_OPTIONAL_PARAMS := $(CLUSTER_OPTIONAL_PARAMS) ParameterKey=SubnetCIDR,ParameterValue=$(SUBNET_CIDR))
@@ -495,11 +495,11 @@ confirm-persistent-stack-deletion:
 	@echo ""
 	@echo -n "Are you sure you want to continue? [y/N] " && read ans && [ $${ans:-N} = y ]
 
-delete-all-including-retained-stack: confirm-persistent-stack-deletion delete-all delete-git-persistent-stack delete-git-replica-persistent-stack delete-network-persistent-stack
+delete-all-including-retained-stack: confirm-persistent-stack-deletion delete-all delete-git-primary-persistent-stack delete-git-replica-persistent-stack delete-network-persistent-stack
 
-delete-git-persistent-stack:
+delete-git-primary-persistent-stack:
 
-	$(eval EFS_STACK_NAME := $(shell $(AWS_FC_COMMAND) list-stacks --stack-status-filter CREATE_COMPLETE --query "StackSummaries[*].StackName" | jq -r '.[]| select(startswith("$(CLUSTER_STACK_NAME)-GitFileSystemPermanentStack"))'))
+	$(eval EFS_STACK_NAME := $(shell $(AWS_FC_COMMAND) list-stacks --stack-status-filter CREATE_COMPLETE --query "StackSummaries[*].StackName" | jq -r '.[]| select(startswith("$(CLUSTER_STACK_NAME)-PrimaryGitFileSystemPermanentStack"))'))
 
 	$(if $(EFS_STACK_NAME), \
 		$(AWS_FC_COMMAND) delete-stack \
