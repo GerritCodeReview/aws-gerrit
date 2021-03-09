@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8a5580d6_d8b66c7e",
+        "filename": "dual-primary/cf-cluster.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2021-03-09T09:48:33Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "3efd3b15_d5a0f38c",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 56,
+        "endChar": 14
+      },
+      "revId": "0fb2af2b86ffc193f88e0e13416abf391d7950bd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "642daff7_f5c82fee",
         "filename": "dual-primary/cf-cluster.yml",
         "patchSetId": 2
@@ -72,6 +96,30 @@
       "writtenOn": "2021-03-08T22:10:01Z",
       "side": 1,
       "message": "nit: worth adding the primary prefix here?",
+      "range": {
+        "startLine": 312,
+        "startChar": 2,
+        "endLine": 312,
+        "endChar": 29
+      },
+      "revId": "0fb2af2b86ffc193f88e0e13416abf391d7950bd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "90cc4953_02952b1b",
+        "filename": "dual-primary/cf-cluster.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2021-03-09T09:48:33Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "311f6670_a362558c",
       "range": {
         "startLine": 312,
         "startChar": 2,
