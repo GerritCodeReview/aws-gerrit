@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d7901a87_005c7e4b",
+        "filename": "primary-replica/cf-cluster.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-03-09T08:51:47Z",
+      "side": 1,
+      "message": "dual-primary already has this logic.\nsingle-master does not have it yet, but this change is specifically for the primary-replica recipe, because it is needed as preparation for the sharing of the EFS stack for replicas (see subsequent changes).\n\nWhilst we could do this for all recipes, single-master does not need EFS (all data is on EBS, which can already be restored), so it makes less sense to have it done there.\n\nIf we find need to do it we should do it as a separate change imho.\n\nWDYT?",
+      "parentUuid": "8d2949b7_7308f1d4",
+      "revId": "02eb45ca1b13212a89a0257e133bf4b5aa2a733e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5e2226e9_bb18637e",
         "filename": "primary-replica/cf-cluster.yml",
         "patchSetId": 1
@@ -31,6 +49,30 @@
       "writtenOn": "2021-03-09T08:30:29Z",
       "side": 1,
       "message": "Is this necessary for this change?",
+      "range": {
+        "startLine": 340,
+        "startChar": 1,
+        "endLine": 341,
+        "endChar": 33
+      },
+      "revId": "02eb45ca1b13212a89a0257e133bf4b5aa2a733e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6801d9bc_244942af",
+        "filename": "primary-replica/cf-cluster.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-03-09T08:51:47Z",
+      "side": 1,
+      "message": "Well spotted @ponch!\nThe Retain stack was meant to be part of the *next* change in the chain.\n\nLet me fix that.",
+      "parentUuid": "5e2226e9_bb18637e",
       "range": {
         "startLine": 340,
         "startChar": 1,
