@@ -58,6 +58,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "72ac11aa_a0f06cca",
+        "filename": "common-templates/cf-efs-stack.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-03-09T10:20:26Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fee3c287_763ca858",
+      "range": {
+        "startLine": 31,
+        "startChar": 18,
+        "endLine": 31,
+        "endChar": 31
+      },
+      "revId": "3c64819a62d85bdaf0ad6488d0c18e276bc85fd1",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b8509875_7326f823",
@@ -119,6 +143,30 @@
       "side": 1,
       "message": "\u003e Isn\u0027t \"primary\" the new term used in lieu of \"master\", regardless of replication?\n\nI am not sure, it would be best to create a glossary in Gerrit IMHO. Let\u0027s see what the community says about it.",
       "parentUuid": "8b5d7edf_88359734",
+      "range": {
+        "startLine": 21,
+        "startChar": 30,
+        "endLine": 21,
+        "endChar": 42
+      },
+      "revId": "3c64819a62d85bdaf0ad6488d0c18e276bc85fd1",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "96c69de1_4154531f",
+        "filename": "common.env",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-03-09T10:20:26Z",
+      "side": 1,
+      "message": "Makes sense.\nI will merge this once I have verified the counterpart in the CI.\n\nWe can then make adjustments on the way regarding the naming if needed.",
+      "parentUuid": "59c4beb8_31d466df",
       "range": {
         "startLine": 21,
         "startChar": 30,
