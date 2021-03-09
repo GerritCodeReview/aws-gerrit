@@ -79,6 +79,30 @@
       },
       "revId": "3c64819a62d85bdaf0ad6488d0c18e276bc85fd1",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b5d7edf_88359734",
+        "filename": "common.env",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-03-09T09:01:04Z",
+      "side": 1,
+      "message": "Isn\u0027t \"primary\" the new term used in lieu of \"master\", regardless of replication?",
+      "parentUuid": "b8509875_7326f823",
+      "range": {
+        "startLine": 21,
+        "startChar": 30,
+        "endLine": 21,
+        "endChar": 42
+      },
+      "revId": "3c64819a62d85bdaf0ad6488d0c18e276bc85fd1",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
