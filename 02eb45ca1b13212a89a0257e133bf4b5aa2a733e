@@ -81,6 +81,30 @@
       },
       "revId": "02eb45ca1b13212a89a0257e133bf4b5aa2a733e",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bc3bf557_7971821b",
+        "filename": "primary-replica/cf-cluster.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-03-09T08:57:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6801d9bc_244942af",
+      "range": {
+        "startLine": 340,
+        "startChar": 1,
+        "endLine": 341,
+        "endChar": 33
+      },
+      "revId": "02eb45ca1b13212a89a0257e133bf4b5aa2a733e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
