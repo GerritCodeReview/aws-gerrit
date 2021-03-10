@@ -50,7 +50,9 @@ create-all: upload-common-templates \
 						$(optional_git_gc_targets_creation) \
 						dns-routing wait-for-dns-routing-creation
 
-cluster: cluster-keys set-optional-gerrit-primary-volume set-optional-params-for-replica-filesystem
+cluster: cluster-keys set-optional-gerrit-primary-volume \
+			set-optional-params-for-replica-filesystem \
+			set-optional-params-for-replica-auto-scaling-capacity
 ifdef CLUSTER_INSTANCE_TYPE
 		$(eval CLUSTER_OPTIONAL_PARAMS := $(CLUSTER_OPTIONAL_PARAMS) ParameterKey=InstanceType,ParameterValue=$(CLUSTER_INSTANCE_TYPE))
 endif
@@ -92,7 +94,8 @@ endif
 		ParameterKey=SubnetIdProp,ParameterValue=$(SUBNET_ID) \
 		$(CLUSTER_OPTIONAL_PARAMS) \
 		$(GERRIT_OPTIONAL_PRIMARY_VOLUME) \
-		$(GERRIT_OPTIONAL_PARAMS_REPLICA_FILESYSTEM)
+		$(GERRIT_OPTIONAL_PARAMS_REPLICA_FILESYSTEM) \
+		$(GERRIT_OPTIONAL_PARAMS_REPLICA_AUTO_SCALING_CAPACITY)
 
 service-primary-1: set-optional-params-metrics-cloudwatch set-optional-params-smtp \
 					set-optional-params-multisite set-ldap-account-pattern \
@@ -227,7 +230,13 @@ service-replication:
 		ParameterKey=HostedZoneName,ParameterValue=$(HOSTED_ZONE_NAME) \
 		ParameterKey=GitReplicationSubdomain,ParameterValue=$(GIT_REPLICATION_SUBDOMAIN)
 
-service-replica: set-optional-params-metrics-cloudwatch set-ldap-account-pattern set-optional-gerrit-ulimits set-optional-jgit-conf
+service-replica: set-optional-params-metrics-cloudwatch \
+					set-ldap-account-pattern \
+					set-optional-gerrit-ulimits \
+					set-optional-jgit-conf \
+					set-optional-params-for-replica-auto-scaling-capacity \
+					set-optional-params-for-replica-auto-scaling-policy
+
 ifdef GERRIT_REPLICA_INSTANCE_ID
 		$(eval REPLICA_SERVICE_OPTIONAL_PARAMS := $(REPLICA_SERVICE_OPTIONAL_PARAMS) ParameterKey=InstanceId,ParameterValue=$(GERRIT_REPLICA_INSTANCE_ID))
 endif
@@ -261,7 +270,9 @@ endif
 		$(LDAP_ACCOUNT_PATTERN_PARAM) \
 		$(REPLICA_SERVICE_OPTIONAL_PARAMS) \
 		$(METRICS_CW_OPTIONAL_PARAMS) \
-		$(GERRIT_ULIMITS)
+		$(GERRIT_ULIMITS) \
+		$(GERRIT_OPTIONAL_PARAMS_REPLICA_AUTO_SCALING_CAPACITY) \
+		$(GERRIT_OPTIONAL_PARAMS_REPLICA_AUTO_SCALING_POLICY)
 
 service-lb:
 ifdef LOAD_BALANCER_SCHEME

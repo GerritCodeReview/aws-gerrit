@@ -106,6 +106,18 @@ Parameters:
     Description: Gerrit replicas shared filesystem throughput, measured in MiB/s. Valid values are 1-1024.
     Type: Number
     Default: 256
+  ReplicaAutoScalingMinCapacity:
+    Type: Number
+    Description: The minimum number of tasks that replicas should scale in to
+    Default: 1
+  ReplicaAutoScalingDesiredCapacity:
+    Description: The desired number of replica tasks to run
+    Type: Number
+    Default: 1
+  ReplicaAutoScalingMaxCapacity:
+    Type: Number
+    Description: The maximum number of tasks that replicas should scale out to
+    Default: 2
 
 Conditions:
   isProvisionedThroughput: !Equals [!Ref PrimaryFileSystemThroughputMode, "provisioned"]
@@ -144,9 +156,9 @@ Resources:
       VPCZoneIdentifier:
         - !If [NetworkStackNeeded, !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneRef, !Ref SubnetIdProp]
       LaunchConfigurationName: !Ref 'ReplicaLaunchConfiguration'
-      MinSize: '1'
-      MaxSize: '1'
-      DesiredCapacity: '1'
+      MinSize: !Ref ReplicaAutoScalingMinCapacity
+      MaxSize: !Ref ReplicaAutoScalingMaxCapacity
+      DesiredCapacity: !Ref ReplicaAutoScalingDesiredCapacity
     CreationPolicy:
       ResourceSignal:
         Timeout: PT15M
