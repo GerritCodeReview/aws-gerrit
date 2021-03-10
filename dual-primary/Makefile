@@ -52,7 +52,8 @@ create-all: upload-common-templates \
 
 cluster: cluster-keys set-optional-gerrit-primary-volume \
 			set-optional-params-for-replica-filesystem \
-			set-optional-params-for-replica-auto-scaling-capacity
+			set-optional-params-for-replica-auto-scaling-capacity \
+			set-optional-params-for-replica-capacity-provider
 ifdef CLUSTER_INSTANCE_TYPE
 		$(eval CLUSTER_OPTIONAL_PARAMS := $(CLUSTER_OPTIONAL_PARAMS) ParameterKey=InstanceType,ParameterValue=$(CLUSTER_INSTANCE_TYPE))
 endif
@@ -95,7 +96,8 @@ endif
 		$(CLUSTER_OPTIONAL_PARAMS) \
 		$(GERRIT_OPTIONAL_PRIMARY_VOLUME) \
 		$(GERRIT_OPTIONAL_PARAMS_REPLICA_FILESYSTEM) \
-		$(GERRIT_OPTIONAL_PARAMS_REPLICA_AUTO_SCALING_CAPACITY)
+		$(GERRIT_OPTIONAL_PARAMS_REPLICA_AUTO_SCALING_CAPACITY) \
+		$(GERRIT_OPTIONAL_PARAMS_REPLICA_CAPACITY_PROVIDER)
 
 service-primary-1: set-optional-params-metrics-cloudwatch set-optional-params-smtp \
 					set-optional-params-multisite set-ldap-account-pattern \
