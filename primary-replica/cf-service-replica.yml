@@ -222,6 +222,8 @@ Resources:
             Cluster:
               Fn::ImportValue:
                   !Join [':', [!Ref 'ClusterStackName', 'ClusterName']]
+            CapacityProviderStrategy:
+              - CapacityProvider: !Sub '${AWS::StackName}-ReplicaCapacityProvider'
             DesiredCount: !Ref ReplicaAutoScalingDesiredCapacity
             TaskDefinition: !Ref GerritTaskDefinition
             LoadBalancers:
