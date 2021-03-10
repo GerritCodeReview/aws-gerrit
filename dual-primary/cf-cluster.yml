@@ -133,6 +133,21 @@ Resources:
   # ECS Resources
   ECSCluster:
     Type: AWS::ECS::Cluster
+    Properties:
+      ClusterName: !Sub '${AWS::StackName}-ECSCluster'
+      CapacityProviders: [ !Ref ReplicaCapacityProvider ]
+
+  ReplicaCapacityProvider:
+    Type: AWS::ECS::CapacityProvider
+    Properties:
+      Name: !Sub '${AWS::StackName}-ReplicaCapacityProvider'
+      AutoScalingGroupProvider:
+        AutoScalingGroupArn: !Ref ReplicaECSAutoScalingGroup
+        ManagedScaling:
+          MaximumScalingStepSize: 1
+          MinimumScalingStepSize: 1
+          Status: ENABLED
+          TargetCapacity: 100
 
   EcsHostSecurityGroup:
     Type: AWS::EC2::SecurityGroup
@@ -177,7 +192,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash -xe
-          echo ECS_CLUSTER=${ECSCluster} >> /etc/ecs/ecs.config
+          echo ECS_CLUSTER=${AWS::StackName}-ECSCluster >> /etc/ecs/ecs.config
           echo ECS_INSTANCE_ATTRIBUTES={\"target_group\":\"replica\"} >> /etc/ecs/ecs.config
 
           # Make sure latest version of the helper scripts are installed as per recommendation:
@@ -218,7 +233,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash -xe
-          echo ECS_CLUSTER=${ECSCluster} >> /etc/ecs/ecs.config
+          echo ECS_CLUSTER=${AWS::StackName}-ECSCluster >> /etc/ecs/ecs.config
           echo ECS_INSTANCE_ATTRIBUTES={\"target_group\":\"haproxy\"} >> /etc/ecs/ecs.config
 
           # Make sure latest version of the helper scripts are installed as per recommendation:

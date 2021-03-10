@@ -222,6 +222,9 @@ Resources:
             Cluster:
               Fn::ImportValue:
                   !Join [':', [!Ref 'ClusterStackName', 'ClusterName']]
+            CapacityProviderStrategy:
+              - CapacityProvider: !Sub '${ClusterStackName}-ReplicaCapacityProvider'
+                Weight: 100
             DesiredCount: !Ref ReplicaAutoScalingDesiredCapacity
             TaskDefinition: !Ref GerritTaskDefinition
             LoadBalancers:
