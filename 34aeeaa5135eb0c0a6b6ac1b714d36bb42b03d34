@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aac06ff0_821b994f",
+        "filename": "primary-replica/cf-service-replica.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2021-03-10T20:22:40Z",
+      "side": 1,
+      "message": "Does 1 makes sense as a default value for maximum number of instances?\nI would say at least 2, WDYT?",
+      "range": {
+        "startLine": 199,
+        "startChar": 3,
+        "endLine": 199,
+        "endChar": 14
+      },
+      "revId": "34aeeaa5135eb0c0a6b6ac1b714d36bb42b03d34",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f2e5ab84_2df5c805",
+        "filename": "primary-replica/setup.env.template",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2021-03-10T20:22:40Z",
+      "side": 1,
+      "message": "nit: unrelated, but this empty line with blanks should go :-)",
+      "range": {
+        "startLine": 51,
+        "startChar": 1,
+        "endLine": 51,
+        "endChar": 13
+      },
+      "revId": "34aeeaa5135eb0c0a6b6ac1b714d36bb42b03d34",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
