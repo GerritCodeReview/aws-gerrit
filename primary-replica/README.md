@@ -133,6 +133,18 @@ capacity of the ASG, since they always need to be in sync.
 The scaling policy adds or removes capacity as required to keep the average CPU
 Usage (of the replica service) close to the specified target value.
 
+Now, tasks in the provisioning state that cannot find sufficient resources on
+the existing instances will automatically trigger the capacity provider to scale
+out the replica ASG. As more EC2 instances become available, tasks in the
+provisioning state will get placed onto those instances, reducing the number of
+tasks in provisioning.
+
+Conversely, as the average CPU usage (of the replica service) drops under the
+specified target value, and replica tasks get removed, the capacity provider
+will reduce the number of EC2 instances too.
+
+Note that only EC2 instances that are not running any replica task will scale in.
+
 These are the available settings:
 
 * `REPLICA_AUTOSCALING_MIN_CAPACITY` Optional. The minimum number of tasks that
@@ -162,6 +174,32 @@ default: *300* seconds
 * `REPLICA_AUTOSCALING_TARGET_CPU_PERCENTAGE` Optional. Aggregate CPU
 utilization target for auto-scaling. Auto-scaling will add or remove tasks in
 the replica service to be as close as possible to this value
+
+* `REPLICA_CAPACITY_PROVIDER_TARGET` Optional. The target capacity value for the
+capacity provider of replicas (must be > 0 and <= 100).
+default: *100*
+
+   Setting this value to 100 means that there will be no _spare capacity_
+allocated on the replica ASG:
+
+   If 3 replica tasks are needed, then the ASG will adjust to have exactly 3 EC2
+
+   Setting this value to less than 100 enables spare capacity in the ASG. For
+example, if you set this value to 50 the scaling policy will adjust the EC2
+until it is exactly twice the number of instances needed to run all of the
+tasks:
+
+   If 3 replica tasks are needed, then there ASG will adjust to 6 EC2
+
+* `REPLICA_CAPACITY_PROVIDER_MIN_STEP_SIZE` Optional. The minimum number of EC2
+instances for replicas that will scale in or scale out at one time (must be >= 1
+and <= 10)
+default: *1*
+
+* `REPLICA_CAPACITY_PROVIDER_MAX_STEP_SIZE` Optional. The maximum number of EC2
+instances for replicas that will scale in or scale out at one time (must be >= 1
+and <= 10)
+default: *1*
 
 ### 2 - Deploy
 

@@ -118,6 +118,27 @@ Parameters:
     Type: Number
     Description: The maximum number of tasks that replicas should scale out to
     Default: 2
+  ReplicaCapacityProviderTarget:
+    Type: Number
+    Description: The target capacity value for the capacity provider of replicas
+    ConstraintDescription: The specified value must be > 0 and <= 100
+    Default: 100
+    MinValue: 1
+    MaxValue: 100
+  ReplicaCapacityProviderMinStepSize:
+    Type: Number
+    Description: The minimum number of EC2 instances for replicas that will scale in or scale out at one time
+    ConstraintDescription: The specified value must be >= 1 and <= 10
+    Default: 1
+    MinValue: 1
+    MaxValue: 10
+  ReplicaCapacityProviderMaxStepSize:
+    Type: Number
+    Description: The maximum number of EC2 instances for replicas that will scale in or scale out at one time
+    ConstraintDescription: The specified value must be >= 1 and less <= 10
+    Default: 1
+    MinValue: 1
+    MaxValue: 10
 
 Conditions:
   isProvisionedThroughput: !Equals [!Ref PrimaryFileSystemThroughputMode, "provisioned"]
@@ -133,6 +154,22 @@ Resources:
   # ECS Resources
   ECSCluster:
     Type: AWS::ECS::Cluster
+    Properties:
+      ClusterName: !Sub '${AWS::StackName}-ECSCluster'
+      CapacityProviders: [ !Ref ReplicaCapacityProvider ]
+
+  ReplicaCapacityProvider:
+    Type: AWS::ECS::CapacityProvider
+    Properties:
+      Name: !Sub '${AWS::StackName}-ReplicaCapacityProvider'
+      AutoScalingGroupProvider:
+        AutoScalingGroupArn: !Ref ReplicaECSAutoScalingGroup
+        ManagedTerminationProtection: ENABLED
+        ManagedScaling:
+          MaximumScalingStepSize: !Ref ReplicaCapacityProviderMaxStepSize
+          MinimumScalingStepSize: !Ref ReplicaCapacityProviderMinStepSize
+          Status: ENABLED
+          TargetCapacity: !Ref ReplicaCapacityProviderTarget
 
   EcsHostSecurityGroup:
     Type: AWS::EC2::SecurityGroup
@@ -159,6 +196,7 @@ Resources:
       MinSize: !Ref ReplicaAutoScalingMinCapacity
       MaxSize: !Ref ReplicaAutoScalingMaxCapacity
       DesiredCapacity: !Ref ReplicaAutoScalingDesiredCapacity
+      NewInstancesProtectedFromScaleIn: true
     CreationPolicy:
       ResourceSignal:
         Timeout: PT15M
@@ -177,7 +215,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash -xe
-          echo ECS_CLUSTER=${ECSCluster} >> /etc/ecs/ecs.config
+          echo ECS_CLUSTER=${AWS::StackName}-ECSCluster >> /etc/ecs/ecs.config
           echo ECS_INSTANCE_ATTRIBUTES={\"target_group\":\"replica\"} >> /etc/ecs/ecs.config
 
           # Make sure latest version of the helper scripts are installed as per recommendation:
@@ -218,7 +256,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash -xe
-          echo ECS_CLUSTER=${ECSCluster} >> /etc/ecs/ecs.config
+          echo ECS_CLUSTER=${AWS::StackName}-ECSCluster >> /etc/ecs/ecs.config
           echo ECS_INSTANCE_ATTRIBUTES={\"target_group\":\"haproxy\"} >> /etc/ecs/ecs.config
 
           # Make sure latest version of the helper scripts are installed as per recommendation:
