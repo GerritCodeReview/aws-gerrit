@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "28377f23_931995df",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-03-10T16:03:18Z",
+      "side": 1,
+      "message": "I forgot to mention the additional parameters in the setup.env.template file.\n\nI question the importance of the template files, but as long as we keep them we should also keep them up-to-date.",
+      "revId": "9026ea660f1a4b4649b7c5b8bea9150b810b0df2",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
