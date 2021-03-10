@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "10f61d6f_85752b22",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2021-03-10T22:13:49Z",
+      "side": 1,
+      "message": "The \u0027Feature\u0027 tag isn\u0027t indexed and I could not find this change with a search :-(\nCan you use \u0027Bug\u0027 instead?",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 7
+      },
+      "revId": "34aeeaa5135eb0c0a6b6ac1b714d36bb42b03d34",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "aac06ff0_821b994f",
         "filename": "primary-replica/cf-service-replica.yml",
         "patchSetId": 2
