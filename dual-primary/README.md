@@ -242,6 +242,55 @@ default: `bursting`. More info [here](https://docs.aws.amazon.com/AWSCloudFormat
 * `REPLICA_FILESYSTEM_PROVISIONED_THROUGHPUT_IN_MIBPS`: Optional. Only used when `REPLICA_FILESYSTEM_THROUGHPUT_MODE` is set to `provisioned`.
 default: `256`.
 
+##### Auto Scaling of replicas instances
+
+Gerrit replicas have the ability to scale in or out automatically to accommodate
+to the increase or decrease of traffic. The traffic might be typically coming
+from build or test jobs executed by some sort of automated build pipeline.
+
+Since they all [share the same git data over EFS](#shared-filesystem-for-replicas),
+replicas are immediately ready to serve traffic as soon as they come up and
+register behind the loadbalancer.
+
+There is a 1 to 1 relationship between replica and EC2 instances: on each EC2
+instance in the 'replica' ASG, runs one and only one replica task.
+Because of this, when specifying the capacity for replicas (minimum, desired and
+maximum), they will both configure for the capacity of tasks as well as the
+capacity of the ASG, since they always need to be in sync.
+
+The scaling policy adds or removes capacity as required to keep the average CPU
+Usage (of the replica service) close to the specified target value.
+
+These are the available settings:
+
+* `REPLICA_AUTOSCALING_MIN_CAPACITY` Optional. The minimum number of tasks that
+replicas should scale in to. This is also the minimum number of EC2 instances in
+the replica ASG
+default: *1*
+
+* `REPLICA_AUTOSCALING_DESIRED_CAPACITY` Optional. The desired number of
+replica tasks to run. This is also the desired number of EC2 instances in the
+replica ASG.
+default: *1*
+
+* `REPLICA_AUTOSCALING_MAX_CAPACITY` Optional. The maximum number of tasks that
+replicas should scale out to. This is also the maximum number of EC2 instances
+in the replica ASG
+default: *1*
+
+* `REPLICA_AUTOSCALING_SCALE_IN_COOLDOWN` Optional. The amount of time, in
+seconds, after a scale-in activity completes before another scale-in activity
+can start
+default: *300* seconds
+
+* `REPLICA_AUTOSCALING_SCALE_OUT_COOLDOWN` Optional. The amount of time, in
+seconds, to wait for a previous scale-out activity to take effect
+default: *300* seconds
+
+* `REPLICA_AUTOSCALING_TARGET_CPU_PERCENTAGE` Optional. Aggregate CPU
+utilization target for auto-scaling. Auto-scaling will add or remove tasks in
+the replica service to be as close as possible to this value
+
 #### REPLICATION SERVICE
 
 * `REPLICATION_SERVICE_ENABLED`: Optional. Whether to expose a replication endpoint.
