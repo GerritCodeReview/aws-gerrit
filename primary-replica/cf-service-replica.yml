@@ -36,10 +36,6 @@ Parameters:
   DockerRegistryUrl:
       Description: Docker registry URL
       Type: String
-  DesiredCount:
-      Description: How many instances of this task should we run across our cluster?
-      Type: Number
-      Default: 1
   HTTPHostPort:
       Description: Gerrit Host HTTP port
       Type: Number
@@ -189,6 +185,30 @@ Parameters:
     Description: Comma separated list of regex patterns to exclude metrics reported to CloudWatch
     Type: CommaDelimitedList
     Default: ''
+  ReplicaAutoScalingMinCapacity:
+    Type: Number
+    Description: The minimum number of tasks that replicas should scale in to
+    Default: 1
+  ReplicaAutoScalingDesiredCapacity:
+    Description: The desired number of replica tasks to run
+    Type: Number
+    Default: 1
+  ReplicaAutoScalingMaxCapacity:
+    Type: Number
+    Description: The maximum number of tasks that replicas should scale out to
+    Default: 1
+  ReplicaAutoScalingScaleInCooldown:
+    Type: Number
+    Description: The amount of time, in seconds, after a scale-in activity completes before another scale-in activity can start
+    Default: 300
+  ReplicaAutoScalingScaleOutCooldown:
+    Type: Number
+    Description: The amount of time, in seconds, to wait for a previous scale-out activity to take effect.
+    Default: 300
+  ReplicaAutoScalingTargetCPUPercentage:
+    Type: Number
+    Description: Aggregate CPU utilization target for auto-scaling
+    Default: 75.0
 
 Resources:
     GerritService:
@@ -202,7 +222,7 @@ Resources:
             Cluster:
               Fn::ImportValue:
                   !Join [':', [!Ref 'ClusterStackName', 'ClusterName']]
-            DesiredCount: !Ref DesiredCount
+            DesiredCount: !Ref ReplicaAutoScalingDesiredCapacity
             TaskDefinition: !Ref GerritTaskDefinition
             LoadBalancers:
                 - ContainerName: !Ref GerritServiceName
@@ -384,6 +404,59 @@ Resources:
                   Driver: local
                   Labels:
                     gerrit-logs: !Join ['-', [!Ref EnvironmentName, !Ref GerritLogsVolume]]
+
+    GerritServiceScalingTarget:
+      Type: AWS::ApplicationAutoScaling::ScalableTarget
+      DependsOn: GerritService
+      Properties:
+        MinCapacity: !Ref ReplicaAutoScalingMinCapacity
+        MaxCapacity: !Ref ReplicaAutoScalingMaxCapacity
+        ResourceId:
+          !Join
+          - ''
+          - - 'service/'
+            - Fn::ImportValue: !Join [':', [!Ref 'ClusterStackName', 'ClusterName']]
+            - '/'
+            - !GetAtt GerritService.Name
+        RoleARN: !GetAtt [AutoscalingRole, Arn]
+        ScalableDimension: ecs:service:DesiredCount
+        ServiceNamespace: ecs
+
+    GerritServiceScalingPolicy:
+      Type: AWS::ApplicationAutoScaling::ScalingPolicy
+      Properties:
+        PolicyName: ReplicaCPUTrackingPolicy
+        PolicyType: TargetTrackingScaling
+        ScalingTargetId: !Ref GerritServiceScalingTarget
+        TargetTrackingScalingPolicyConfiguration:
+          PredefinedMetricSpecification:
+            PredefinedMetricType: ECSServiceAverageCPUUtilization
+          ScaleInCooldown: !Ref ReplicaAutoScalingScaleInCooldown
+          ScaleOutCooldown: !Ref ReplicaAutoScalingScaleOutCooldown
+          TargetValue: !Ref ReplicaAutoScalingTargetCPUPercentage
+
+    AutoscalingRole:
+      Type: AWS::IAM::Role
+      Properties:
+        AssumeRolePolicyDocument:
+          Statement:
+            - Effect: Allow
+              Principal:
+                Service: [application-autoscaling.amazonaws.com]
+              Action: ['sts:AssumeRole']
+        Path: /
+        Policies:
+          - PolicyName: gerrit-service-autoscaling
+            PolicyDocument:
+              Statement:
+                - Effect: Allow
+                  Action:
+                    - 'application-autoscaling:*'
+                    - 'cloudwatch:DescribeAlarms'
+                    - 'cloudwatch:PutMetricAlarm'
+                    - 'ecs:DescribeServices'
+                    - 'ecs:UpdateService'
+                  Resource: '*'
 
     LoadBalancer:
         Type: AWS::ElasticLoadBalancingV2::LoadBalancer
