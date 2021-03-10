@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a6672647_1e9d8971",
+        "filename": "dual-primary/cf-cluster.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2021-03-10T20:45:03Z",
+      "side": 1,
+      "message": "Same comment as in the parent change: should we put 2 as a default? Otherwise isn\u0027t really scaling to anything :-(",
+      "range": {
+        "startLine": 120,
+        "startChar": 4,
+        "endLine": 120,
+        "endChar": 14
+      },
+      "revId": "f306a1392ddf1f33cec9bca85045ba2eb41f093b",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
