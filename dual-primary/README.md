@@ -261,6 +261,20 @@ capacity of the ASG, since they always need to be in sync.
 The scaling policy adds or removes capacity as required to keep the average CPU
 Usage (of the replica service) close to the specified target value.
 
+Now, tasks in the provisioning state that cannot find sufficient resources on
+the existing instances will automatically trigger the capacity provider to scale
+out the replica ASG. As more EC2 instances become available, tasks in the
+provisioning state will get placed onto those instances, reducing the number of
+tasks in provisioning.
+
+Conversely, as the average CPU usage (of the replica service) drops under the
+specified target value, and replica tasks get removed, the capacity provider
+will reduce the number of EC2 instances too.
+
+EC2 instances will be added and removed 1 at a time and EC2 instances in the
+replica ASG will always be completely utilized: Any instances not running any
+tasks will be scaled in.
+
 These are the available settings:
 
 * `REPLICA_AUTOSCALING_MIN_CAPACITY` Optional. The minimum number of tasks that
