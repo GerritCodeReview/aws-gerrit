@@ -1,0 +1,71 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Resources related to the EFS filesystem apt to store git data.
+Parameters:
+  AutoScalingMinCapacity:
+    Type: Number
+    Description: The minimum number of tasks the service should scale in to
+  AutoScalingDesiredCapacity:
+    Description: The desired number of tasks to run
+    Type: Number
+  AutoScalingMaxCapacity:
+    Type: Number
+    Description: The maximum number of tasks the service should scale out to
+  AutoScalingScaleInCooldown:
+    Type: Number
+    Description: The amount of time, in seconds, after a scale-in activity completes before another scale-in activity can start
+  AutoScalingScaleOutCooldown:
+    Type: Number
+    Description: The amount of time, in seconds, to wait for a previous scale-out activity to take effect.
+  AutoScalingTargetCPUPercentage:
+    Type: Number
+    Description: Aggregate CPU utilization target for auto-scaling
+  ResourceId:
+    Type: String
+    Description: The identifier of the resource associated with the scalable target.
+
+Resources:
+    GerritServiceScalingTarget:
+      Type: AWS::ApplicationAutoScaling::ScalableTarget
+      Properties:
+        MinCapacity: !Ref AutoScalingMinCapacity
+        MaxCapacity: !Ref AutoScalingMaxCapacity
+        ResourceId: !Ref ResourceId
+        RoleARN: !GetAtt [AutoscalingRole, Arn]
+        ScalableDimension: ecs:service:DesiredCount
+        ServiceNamespace: ecs
+
+    GerritServiceScalingPolicy:
+      Type: AWS::ApplicationAutoScaling::ScalingPolicy
+      Properties:
+        PolicyName: ReplicaCPUTrackingPolicy
+        PolicyType: TargetTrackingScaling
+        ScalingTargetId: !Ref GerritServiceScalingTarget
+        TargetTrackingScalingPolicyConfiguration:
+          PredefinedMetricSpecification:
+            PredefinedMetricType: ECSServiceAverageCPUUtilization
+          ScaleInCooldown: !Ref AutoScalingScaleInCooldown
+          ScaleOutCooldown: !Ref AutoScalingScaleOutCooldown
+          TargetValue: !Ref AutoScalingTargetCPUPercentage
+
+    AutoscalingRole:
+      Type: AWS::IAM::Role
+      Properties:
+        AssumeRolePolicyDocument:
+          Statement:
+            - Effect: Allow
+              Principal:
+                Service: [application-autoscaling.amazonaws.com]
+              Action: ['sts:AssumeRole']
+        Path: /
+        Policies:
+          - PolicyName: gerrit-service-autoscaling
+            PolicyDocument:
+              Statement:
+                - Effect: Allow
+                  Action:
+                    - 'application-autoscaling:*'
+                    - 'cloudwatch:DescribeAlarms'
+                    - 'cloudwatch:PutMetricAlarm'
+                    - 'ecs:DescribeServices'
+                    - 'ecs:UpdateService'
+                  Resource: '*'
