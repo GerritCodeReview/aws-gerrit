@@ -22,6 +22,30 @@
       },
       "revId": "f306a1392ddf1f33cec9bca85045ba2eb41f093b",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1b542027_798517c4",
+        "filename": "dual-primary/cf-cluster.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-03-11T12:59:00Z",
+      "side": 1,
+      "message": "See my previous reply, let\u0027s decide an approach there and I will address this comment too",
+      "parentUuid": "a6672647_1e9d8971",
+      "range": {
+        "startLine": 120,
+        "startChar": 4,
+        "endLine": 120,
+        "endChar": 14
+      },
+      "revId": "f306a1392ddf1f33cec9bca85045ba2eb41f093b",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
