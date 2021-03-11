@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "186b1efc_ab55595a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-03-11T14:26:52Z",
+      "side": 1,
+      "message": "There are some assumptions and decisions I took when implementing this.\nI would like to double-check those with you:\n\nWhat do you think about basing scaling of replicas on CPU usage, like I did? Is it.a good metric? Would memory or network out be better?\n\nAnother option would be to base the scaling on some *app metric* (we use cloudwatch metrics, so we could base it on some gerrit specific behaviour)\n\nWhat do you think about tracking policy for scaling: (i.e. the attempt to make a specific metric near to a certain value).\nWould Step policy be better? [1]\n\n[1]https://docs.aws.amazon.com/autoscaling/ec2/userguide/as-scaling-simple-step.html\n\n",
+      "revId": "8d7184e9d214a6674a5732e32891a86c9d0b1ec9",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
