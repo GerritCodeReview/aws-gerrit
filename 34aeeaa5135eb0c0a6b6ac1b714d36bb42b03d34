@@ -49,6 +49,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9987248b_3bcf57df",
+        "filename": "primary-replica/cf-service-replica.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-03-11T12:56:52Z",
+      "side": 1,
+      "message": "It\u0027s an interesting point, I have been thinking about this too.\nThe rationale behind is that this is the most conservative option that gets the job done, which I think is what defaults aim to do.\n\nI was thinking that not every company might have need to scale out replicas, so don\u0027t allow scaling unless explicitly told so, might be a sensible default.\n\nDo you think we should take the opposite approach?",
+      "parentUuid": "aac06ff0_821b994f",
+      "range": {
+        "startLine": 199,
+        "startChar": 3,
+        "endLine": 199,
+        "endChar": 14
+      },
+      "revId": "34aeeaa5135eb0c0a6b6ac1b714d36bb42b03d34",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f2e5ab84_2df5c805",
         "filename": "primary-replica/setup.env.template",
         "patchSetId": 2
@@ -60,6 +84,30 @@
       "writtenOn": "2021-03-10T20:22:40Z",
       "side": 1,
       "message": "nit: unrelated, but this empty line with blanks should go :-)",
+      "range": {
+        "startLine": 51,
+        "startChar": 1,
+        "endLine": 51,
+        "endChar": 13
+      },
+      "revId": "34aeeaa5135eb0c0a6b6ac1b714d36bb42b03d34",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c47000b8_69e09bf1",
+        "filename": "primary-replica/setup.env.template",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-03-11T12:56:52Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f2e5ab84_2df5c805",
       "range": {
         "startLine": 51,
         "startChar": 1,
