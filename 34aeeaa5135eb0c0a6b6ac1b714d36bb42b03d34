@@ -121,6 +121,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "67205f3c_a30be54b",
+        "filename": "primary-replica/cf-service-replica.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-03-12T14:20:35Z",
+      "side": 1,
+      "message": "\u003e \u003e It\u0027s an interesting point, I have been thinking about this too.\n\u003e \u003e The rationale behind is that this is the most conservative option that gets the job done, which I think is what defaults aim to do.\n\u003e \u003e \n\u003e \u003e I was thinking that not every company might have need to scale out replicas, so don\u0027t allow scaling unless explicitly told so, might be a sensible default.\n\u003e \n\u003e I does not make sense to me to have a Gerrit replica on an EFS volume *IF* I do not want to enable auto-scaling.\n\u003e \n\u003e Are you saying that even IF we don\u0027t want a recipe with auto-scaling but simply a primary/replica scenario, we would now have to use EFS anyway and an ASG with min\u003dmax\u003d1?\n\u003e \n\u003e If yes, Houston we do have a problem: EFS is *very expensive* and slow compared to a simple EBS volume, if it is not for having ASG enabled, then it is just money for nothing :-)\n\nIt\u0027s a good point luca!\nAvoidin to scale  for no reason saves money (i.e. you don\u0027t pay for extra EC2 instances), but the cost of EFS is way higher.\n\nYou\u0027re absolutely right, let me change the default to 2.",
+      "parentUuid": "739e8cd1_5f2b680b",
+      "range": {
+        "startLine": 199,
+        "startChar": 3,
+        "endLine": 199,
+        "endChar": 14
+      },
+      "revId": "34aeeaa5135eb0c0a6b6ac1b714d36bb42b03d34",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f2e5ab84_2df5c805",
         "filename": "primary-replica/setup.env.template",
         "patchSetId": 2
