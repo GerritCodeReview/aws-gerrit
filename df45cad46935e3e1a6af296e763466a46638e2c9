@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "679f2b7b_b1bfb1fc",
+        "filename": "dual-primary/cf-cluster.yml",
+        "patchSetId": 10
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2021-03-13T01:50:28Z",
+      "side": 1,
+      "message": "Do we really want to scale up only when we are 100%? I believe it would be a bit too late.",
+      "range": {
+        "startLine": 150,
+        "startChar": 10,
+        "endLine": 150,
+        "endChar": 29
+      },
+      "revId": "df45cad46935e3e1a6af296e763466a46638e2c9",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9adfabda_3b0ca063",
+        "filename": "primary-replica/cf-cluster.yml",
+        "patchSetId": 10
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2021-03-13T01:50:28Z",
+      "side": 1,
+      "message": "Same as above: do we want to wait to reach 100% utilisation before scaling up?",
+      "range": {
+        "startLine": 126,
+        "startChar": 10,
+        "endLine": 126,
+        "endChar": 29
+      },
+      "revId": "df45cad46935e3e1a6af296e763466a46638e2c9",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
