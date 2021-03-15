@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "84e1b17b_58bdbe76",
+        "filename": "dual-primary/README.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-03-15T10:15:53Z",
+      "side": 1,
+      "message": "Scaled in is correct, as in \"removed\"\n\n\"Any instances not running any tasks will be removed.\"\n\nDoes it make sense?",
+      "parentUuid": "c7b88b3b_d884014b",
+      "range": {
+        "startLine": 276,
+        "startChar": 21,
+        "endLine": 276,
+        "endChar": 23
+      },
+      "revId": "df45cad46935e3e1a6af296e763466a46638e2c9",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "557415cd_ed6911cf",
         "filename": "dual-primary/cf-cluster.yml",
         "patchSetId": 10
@@ -49,6 +73,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f030de32_93c9d23a",
+        "filename": "dual-primary/cf-cluster.yml",
+        "patchSetId": 10
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-03-15T10:15:53Z",
+      "side": 1,
+      "message": "Yeah I was thinking about this:\n\n\"When managed termination protection is enabled, Amazon ECS prevents the Amazon EC2 instances in an Auto Scaling group that contain tasks from being terminated during a scale-in action.\"\n\nI was thinking that, since we have a targetCapacity of 100 (1 to 1 mapping between tasks and EC2 instances), the ASG can only scale down, when the task has already gone down, so termination protection wouldn\u0027t help because the EC2 instance should always be free from tasks before a scale-in event.\n\nHaving said that:\n- I am planning to make the targetCapacity configurable\n- I am not sure if the ASG scaling event might kick in when the *required* number of tasks goes down, rather than the *actual* number of tasks.\n\nSo I think it would always be safer to have the managed termination protection enabled.\n\nIf you agree I\u0027ll go ahead and set it: At the end of the day, we never want a replica to be brutally terminated right?\n\nWDYT?",
+      "parentUuid": "557415cd_ed6911cf",
+      "range": {
+        "startLine": 144,
+        "startChar": 6,
+        "endLine": 144,
+        "endChar": 30
+      },
+      "revId": "df45cad46935e3e1a6af296e763466a46638e2c9",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "af18aabe_ca38e9a3",
         "filename": "dual-primary/cf-cluster.yml",
         "patchSetId": 10
@@ -60,6 +108,30 @@
       "writtenOn": "2021-03-15T09:42:56Z",
       "side": 1,
       "message": "I think this setting makes sense in our case. What it is not clear to me is how many instances will be added every time we scale up. Where do we set it?",
+      "range": {
+        "startLine": 147,
+        "startChar": 10,
+        "endLine": 148,
+        "endChar": 35
+      },
+      "revId": "df45cad46935e3e1a6af296e763466a46638e2c9",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cce41493_54100f9b",
+        "filename": "dual-primary/cf-cluster.yml",
+        "patchSetId": 10
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-03-15T10:15:53Z",
+      "side": 1,
+      "message": "The number of instances will be decided by the capacity provider, depending on the AWS/ECS/ManagedScaling metric.\n\nImaging the replica CPU goes up a lot for a long period of time, then the number of needed replicas will go up to say, 3 instances.\n\nThe capacity provider will need to scale up from 1 to 3: These are boundaries for which that scale up is required.\n\nBasically we are saying \"add one replica at the time. Wait and then add another one if needed\".\n\nAs opposed to \"add two or 3 in a single step\".\n\nDo you think we should make this configurable?",
+      "parentUuid": "af18aabe_ca38e9a3",
       "range": {
         "startLine": 147,
         "startChar": 10,
@@ -130,6 +202,30 @@
       "writtenOn": "2021-03-15T09:42:56Z",
       "side": 1,
       "message": "out?",
+      "range": {
+        "startLine": 148,
+        "startChar": 21,
+        "endLine": 148,
+        "endChar": 23
+      },
+      "revId": "df45cad46935e3e1a6af296e763466a46638e2c9",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a79ac58a_4028d7c0",
+        "filename": "primary-replica/README.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-03-15T10:15:53Z",
+      "side": 1,
+      "message": "See above.",
+      "parentUuid": "b54471de_ad506fad",
       "range": {
         "startLine": 148,
         "startChar": 21,
