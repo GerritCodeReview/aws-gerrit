@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8aa73073_8be9209f",
+        "filename": "dual-primary/cf-cluster.yml",
+        "patchSetId": 10
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-03-15T08:54:27Z",
+      "side": 1,
+      "message": "Let\u0027s make sure we interpret this value in the same way.\n\nTargetCapacity \u003d 100 does not mean \"scale when CPU usage is 100%\" (CPU Usage drives when to scale *tasks*, not when to scale the ASG).\n\nTargetCapacity \u003d 100 just means that we don\u0027t want any _spare capacity_ on the ASG.\n\nIf 3 replica tasks are needed, then the ASG will adjust to have exactly 3 EC2.\n\nTargetCapacity less than 100 enables spare capacity in the ASG. For example, if you set the TargetCapacity \u003d 50 the scaling policy will adjust the EC2 until it is exactly twice the number of instances needed to run all of the tasks:\n\nIf 3 replica tasks are needed, then there ASG will adjust to 6 EC2.\n\nIt boils down to how quickly one wants to be able to scale:\n\n* Setting targetCapacity to \u003c 100 will allow to *pre-scale* the ASG so that there is always an EC2 instance ready to run an additional task. Pay more, but scale faster.\n\n* Setting targetCapacity \u003d 100 will be more economic (you don\u0027t run any spare EC2 instance). Pay less, but scale more slowly.\n\nPerhaps we should make this configurable?",
+      "parentUuid": "679f2b7b_b1bfb1fc",
+      "range": {
+        "startLine": 150,
+        "startChar": 10,
+        "endLine": 150,
+        "endChar": 29
+      },
+      "revId": "df45cad46935e3e1a6af296e763466a46638e2c9",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9adfabda_3b0ca063",
         "filename": "primary-replica/cf-cluster.yml",
         "patchSetId": 10
@@ -37,6 +61,30 @@
       "writtenOn": "2021-03-13T01:50:28Z",
       "side": 1,
       "message": "Same as above: do we want to wait to reach 100% utilisation before scaling up?",
+      "range": {
+        "startLine": 126,
+        "startChar": 10,
+        "endLine": 126,
+        "endChar": 29
+      },
+      "revId": "df45cad46935e3e1a6af296e763466a46638e2c9",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f2b4fc06_38193512",
+        "filename": "primary-replica/cf-cluster.yml",
+        "patchSetId": 10
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-03-15T08:54:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9adfabda_3b0ca063",
       "range": {
         "startLine": 126,
         "startChar": 10,
