@@ -48,6 +48,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "023b0ac7_831faaa4",
+        "filename": "dual-primary/README.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2021-03-15T10:34:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "84e1b17b_58bdbe76",
+      "range": {
+        "startLine": 276,
+        "startChar": 21,
+        "endLine": 276,
+        "endChar": 23
+      },
+      "revId": "df45cad46935e3e1a6af296e763466a46638e2c9",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "557415cd_ed6911cf",
@@ -95,6 +119,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "77f4e6c5_366a001c",
+        "filename": "dual-primary/cf-cluster.yml",
+        "patchSetId": 10
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2021-03-15T10:34:07Z",
+      "side": 1,
+      "message": "Yep, makes sense. It won\u0027t hurt",
+      "parentUuid": "f030de32_93c9d23a",
+      "range": {
+        "startLine": 144,
+        "startChar": 6,
+        "endLine": 144,
+        "endChar": 30
+      },
+      "revId": "df45cad46935e3e1a6af296e763466a46638e2c9",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "af18aabe_ca38e9a3",
@@ -132,6 +180,30 @@
       "side": 1,
       "message": "The number of instances will be decided by the capacity provider, depending on the AWS/ECS/ManagedScaling metric.\n\nImaging the replica CPU goes up a lot for a long period of time, then the number of needed replicas will go up to say, 3 instances.\n\nThe capacity provider will need to scale up from 1 to 3: These are boundaries for which that scale up is required.\n\nBasically we are saying \"add one replica at the time. Wait and then add another one if needed\".\n\nAs opposed to \"add two or 3 in a single step\".\n\nDo you think we should make this configurable?",
       "parentUuid": "af18aabe_ca38e9a3",
+      "range": {
+        "startLine": 147,
+        "startChar": 10,
+        "endLine": 148,
+        "endChar": 35
+      },
+      "revId": "df45cad46935e3e1a6af296e763466a46638e2c9",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e978b550_81fae54c",
+        "filename": "dual-primary/cf-cluster.yml",
+        "patchSetId": 10
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2021-03-15T10:34:07Z",
+      "side": 1,
+      "message": "I don\u0027t think we need to make it configurable, at least for the time being. I was wondering if there was a way of saying, for example: add 30% more instances of my current fleet, as you would do in a \"traditional\" ASG.",
+      "parentUuid": "cce41493_54100f9b",
       "range": {
         "startLine": 147,
         "startChar": 10,
