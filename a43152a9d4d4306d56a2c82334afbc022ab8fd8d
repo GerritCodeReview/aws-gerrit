@@ -16,6 +16,24 @@
       "message": "@Ponch, I remember you setup this with the initial implementation of the aws-gerrit.\nWas this needed for any other reason?\nAre you aware of any side effect in removing this?",
       "revId": "a43152a9d4d4306d56a2c82334afbc022ab8fd8d",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "825b7805_66ba094a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2021-03-15T21:27:46Z",
+      "side": 1,
+      "message": "\u003e @Ponch, I remember you setup this with the initial implementation of the aws-gerrit.\n\u003e Was this needed for any other reason?\n\nI believe it was just used because it is the default config in the Gerrit docker image. It makes sense in a single-node setup but NOT in a multi-node setup, because of the generated healthcheck failures.\n\n\u003e Are you aware of any side effect in removing this?\n\nNope.",
+      "parentUuid": "b7cee023_0f108fcd",
+      "revId": "a43152a9d4d4306d56a2c82334afbc022ab8fd8d",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
