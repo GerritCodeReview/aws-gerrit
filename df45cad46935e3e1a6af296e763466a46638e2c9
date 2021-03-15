@@ -3,6 +3,75 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c7b88b3b_d884014b",
+        "filename": "dual-primary/README.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2021-03-15T09:42:56Z",
+      "side": 1,
+      "message": "out?",
+      "range": {
+        "startLine": 276,
+        "startChar": 21,
+        "endLine": 276,
+        "endChar": 23
+      },
+      "revId": "df45cad46935e3e1a6af296e763466a46638e2c9",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "557415cd_ed6911cf",
+        "filename": "dual-primary/cf-cluster.yml",
+        "patchSetId": 10
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2021-03-15T09:42:56Z",
+      "side": 1,
+      "message": "I am trying to understand if we need to add `ManagedTerminationProtection` as well. Maybe you already have an idea about it?",
+      "range": {
+        "startLine": 144,
+        "startChar": 6,
+        "endLine": 144,
+        "endChar": 30
+      },
+      "revId": "df45cad46935e3e1a6af296e763466a46638e2c9",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "af18aabe_ca38e9a3",
+        "filename": "dual-primary/cf-cluster.yml",
+        "patchSetId": 10
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2021-03-15T09:42:56Z",
+      "side": 1,
+      "message": "I think this setting makes sense in our case. What it is not clear to me is how many instances will be added every time we scale up. Where do we set it?",
+      "range": {
+        "startLine": 147,
+        "startChar": 10,
+        "endLine": 148,
+        "endChar": 35
+      },
+      "revId": "df45cad46935e3e1a6af296e763466a46638e2c9",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "679f2b7b_b1bfb1fc",
         "filename": "dual-primary/cf-cluster.yml",
         "patchSetId": 10
@@ -43,6 +112,29 @@
         "startChar": 10,
         "endLine": 150,
         "endChar": 29
+      },
+      "revId": "df45cad46935e3e1a6af296e763466a46638e2c9",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b54471de_ad506fad",
+        "filename": "primary-replica/README.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2021-03-15T09:42:56Z",
+      "side": 1,
+      "message": "out?",
+      "range": {
+        "startLine": 148,
+        "startChar": 21,
+        "endLine": 148,
+        "endChar": 23
       },
       "revId": "df45cad46935e3e1a6af296e763466a46638e2c9",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
