@@ -82,6 +82,10 @@ Parameters:
       Description: HAPRoxy Syslog Sidecar service name
       Type: String
       Default: gerrit-haproxy-sidecar
+  HealthCheckGracePeriodSeconds:
+      Description: HAProxy Healtcheck Grace Period
+      Type: Number
+      Default: 60
 
 Resources:
     LBService:
@@ -95,6 +99,7 @@ Resources:
                   !Join [':', [!Ref 'ClusterStackName', 'ClusterName']]
             DesiredCount: !Ref DesiredCount
             TaskDefinition: !Ref TaskDefinition
+            HealthCheckGracePeriodSeconds: !Ref HealthCheckGracePeriodSeconds
             LoadBalancers:
                 - ContainerName: !Ref LBServiceName
                   ContainerPort: !Ref HTTPContainerPort
