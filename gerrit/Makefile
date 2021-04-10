@@ -43,11 +43,23 @@ gerrit-get-plugins:
 		|| { echo >&2 "Cannot download $$mavenlib: Check internet connection. Aborting"; exit 1; } \
 	done
 
-gerrit-build:
+gerrit-build: check-gerrit-version-patch-vs-war-url
 	cat Dockerfile | \
-		GERRIT_VERSION=$(GERRIT_VERSION) GERRIT_PATCH=$(GERRIT_PATCH) envsubst | \
+		GERRIT_VERSION=$(GERRIT_VERSION) GERRIT_PATCH=$(GERRIT_PATCH) GERRIT_WAR_URL=$(GERRIT_WAR_URL) envsubst | \
 		docker build -f - -t aws-gerrit/gerrit:$(IMAGE_TAG) .
 	docker tag aws-gerrit/gerrit:$(IMAGE_TAG) $(DOCKER_REGISTRY_URI)/aws-gerrit/gerrit:$(IMAGE_TAG)
+
+check-gerrit-version-patch-vs-war-url:
+	if [[ "$(GERRIT_WAR_URL)" != "" ]]; \
+	then; \
+		curl $(GERRIT_WAR_URL) > gerrit.war; \
+		GERRIT_VERSION_FROM_WAR=$$(java -jar gerrit.war version | awk '{print $3}' | cut -d '.' -f 1,2); \
+		if [[ "$$GERRIT_VERSION_FROM_WAR" != "$(GERRIT_VERSION)" ]]; \
+		then; \
+			echo "GERRIT_VERSION=$(GERRIT_VERSION) is not compatible with $$(java -jar gerrit.war version) from $(GERRIT_WAR_URL)"; \
+			exit -1; \
+		fi; \
+	fi
 
 gerrit-publish: gerrit-get-plugins docker-registry-login gerrit-build
 	docker push $(DOCKER_REGISTRY_URI)/aws-gerrit/gerrit:$(IMAGE_TAG)
