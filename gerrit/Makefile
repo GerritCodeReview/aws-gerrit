@@ -45,7 +45,7 @@ gerrit-get-plugins:
 
 gerrit-build:
 	cat Dockerfile | \
-		GERRIT_VERSION=$(GERRIT_VERSION) GERRIT_PATCH=$(GERRIT_PATCH) envsubst | \
+		GERRIT_VERSION=$(GERRIT_VERSION) GERRIT_PATCH=$(GERRIT_PATCH) GERRIT_WAR_URL=$(GERRIT_WAR_URL) envsubst | \
 		docker build -f - -t aws-gerrit/gerrit:$(IMAGE_TAG) .
 	docker tag aws-gerrit/gerrit:$(IMAGE_TAG) $(DOCKER_REGISTRY_URI)/aws-gerrit/gerrit:$(IMAGE_TAG)
 
