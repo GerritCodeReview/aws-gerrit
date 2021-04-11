@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "017ffeb7_8fbe6553",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-04-11T09:46:24Z",
+      "side": 1,
+      "message": "post merge comment: @ponch, shall we bring this change to other recipes as well?",
+      "revId": "d8366c98e0f875389aaf9a848164c31ce95f83bc",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
