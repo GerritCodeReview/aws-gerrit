@@ -22,6 +22,30 @@
       },
       "revId": "51e6b841f46129faeb54382f4d048c6dda08e826",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e552f483_593e662f",
+        "filename": "gerrit/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2021-04-11T09:54:25Z",
+      "side": 1,
+      "message": "\u003e How does the $GERRIT_VERSION.$GERRIT_PATCH relate to the overriding $GERRIT_WAR_URL?\n\u003e \n\u003e What would mean for example to have a\n\u003e \n\u003e GERRIT_VERSION\u003d3.2\n\u003e GERRIT_PATCH\u003d3\n\u003e GERRIT_WAR_URL\u003dhttps://gerrit-releases.storage.googleapis.com/gerrit-2.16.27.war\n\nThe above settings may not work, because a Gerrit 2.16.27 won\u0027t be compatible with a setup of Gerrit 3.2.3\n\n\u003e Aren\u0027t these two ways of configuring the docker mutually exclusive concepts?\n\nNot mutually exclusive, but certainly need to be compatible, otherwise you would end up overriding a gerrit.war into an unsupported environment.",
+      "parentUuid": "0f383d36_5fcc3c19",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 66
+      },
+      "revId": "51e6b841f46129faeb54382f4d048c6dda08e826",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
