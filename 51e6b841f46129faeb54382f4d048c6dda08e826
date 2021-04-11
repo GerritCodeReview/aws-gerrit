@@ -46,6 +46,30 @@
       },
       "revId": "51e6b841f46129faeb54382f4d048c6dda08e826",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e4bec6d7_38321f1d",
+        "filename": "gerrit/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-04-11T10:16:42Z",
+      "side": 1,
+      "message": "Is there any way we can make it impossible to configure it in an incompatible way?\nCan the version be extracted from the jar, for example? or some other way?\n\nIf not, I think we should at least document that GERRIT_VERSION GERRIT_PATCH and GERRIT_WAR_URL need to be pointing to the same version.\n\nThe first two will be used to choose the environment and the latter for the actual WAR.\n\nWDYT?",
+      "parentUuid": "e552f483_593e662f",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 66
+      },
+      "revId": "51e6b841f46129faeb54382f4d048c6dda08e826",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
