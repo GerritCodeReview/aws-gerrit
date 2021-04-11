@@ -70,6 +70,30 @@
       },
       "revId": "51e6b841f46129faeb54382f4d048c6dda08e826",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "69e7ae5a_0e09668b",
+        "filename": "gerrit/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1011323
+      },
+      "writtenOn": "2021-04-11T10:25:02Z",
+      "side": 1,
+      "message": "\u003e Can the version be extracted from the jar, for example? or some other way?\n\nThere is version command:\n\n  $ java -jar bazel-bin/gerrit.war version\n  gerrit version 3.4.0-rc0-70-g8e74478885-dirty",
+      "parentUuid": "e4bec6d7_38321f1d",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 66
+      },
+      "revId": "51e6b841f46129faeb54382f4d048c6dda08e826",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
