@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0f383d36_5fcc3c19",
+        "filename": "gerrit/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-04-11T09:43:13Z",
+      "side": 1,
+      "message": "How does the $GERRIT_VERSION.$GERRIT_PATCH relate to the overriding $GERRIT_WAR_URL?\n\nWhat would mean for example to have a\n\nGERRIT_VERSION\u003d3.2\nGERRIT_PATCH\u003d3\nGERRIT_WAR_URL\u003dhttps://gerrit-releases.storage.googleapis.com/gerrit-2.16.27.war\n\nAren\u0027t these two ways of configuring the docker mutually exclusive concepts?",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 66
+      },
+      "revId": "51e6b841f46129faeb54382f4d048c6dda08e826",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
