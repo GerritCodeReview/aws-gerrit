@@ -35,6 +35,23 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "09778cea_e4c598e9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2021-04-14T12:13:37Z",
+      "side": 1,
+      "message": "We could merge, in theory, but let\u0027s wait for @Tony to answer on his -1.",
+      "revId": "b6f6350d2f5ae9674292de702abffd4e06032b1a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f0da53cc_01dddca2",
@@ -60,6 +77,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7ef54bbe_775f85a4",
+        "filename": "gerrit/Makefile",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2021-04-14T12:13:37Z",
+      "side": 1,
+      "message": "AFAIK a Java 11 executable can run a Java 8 war file, isn\u0027t it?",
+      "parentUuid": "f0da53cc_01dddca2",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 20
+      },
+      "revId": "b6f6350d2f5ae9674292de702abffd4e06032b1a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "dab5a3ba_9b64a307",
         "filename": "gerrit/Makefile",
         "patchSetId": 6
@@ -71,6 +112,30 @@
       "writtenOn": "2021-04-14T11:59:16Z",
       "side": 1,
       "message": "When I suggested to extract the version from the jar I thought we were going to use it *for* setting up the environment, not just to verify that it matched the one provided.\n\nWhy having to specify versions in two different places, one explicitly via GERRIT_VERSION,GERRIT_PATCH and one, implicitly, via the provided war file? \nIf a war is provided why don\u0027t we just infer the environment needed from it?\n\nGERRIT_VERSION\u003d$(java -jar gerrit.war version | awk \u0027{print $3}\u0027 | cut -d \u0027-\u0027 -f1 | cut -d\u0027.\u0027 -f1,2)\n\nGERRIT_PATCH\u003d$(java -jar gerrit.war version | awk \u0027{print $3}\u0027 | cut -d \u0027-\u0027 -f1 | cut -d\u0027.\u0027 -f3)\n\nWDYT?",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 101
+      },
+      "revId": "b6f6350d2f5ae9674292de702abffd4e06032b1a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dd9195c4_248707a2",
+        "filename": "gerrit/Makefile",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2021-04-14T12:13:37Z",
+      "side": 1,
+      "message": "\u003e When I suggested to extract the version from the jar I thought we were going to use it *for* setting up the environment, not just to verify that it matched the one provided.\n\u003e \n\u003e Why having to specify versions in two different places, one explicitly via GERRIT_VERSION,GERRIT_PATCH and one, implicitly, via the provided war file? \n\u003e If a war is provided why don\u0027t we just infer the environment needed from it?\n\nNot really: we can infer the GERRIT_VERSION but not the GERRIT_PATCH. So, we would need GERRIT_PATCH anyway.\n\n\u003e GERRIT_PATCH\u003d$(java -jar gerrit.war version | awk \u0027{print $3}\u0027 | cut -d \u0027-\u0027 -f1 | cut -d\u0027.\u0027 -f3)\n\nNot sure this would always work, as the version may \"misinterpret\" the patch version.",
+      "parentUuid": "dab5a3ba_9b64a307",
       "range": {
         "startLine": 57,
         "startChar": 0,
