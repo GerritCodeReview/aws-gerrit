@@ -52,6 +52,23 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "324b6ec2_d4e034f1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-04-14T12:23:22Z",
+      "side": 1,
+      "message": "Good to go 😊",
+      "revId": "b6f6350d2f5ae9674292de702abffd4e06032b1a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f0da53cc_01dddca2",
@@ -99,6 +116,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cd2a249e_393be737",
+        "filename": "gerrit/Makefile",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-04-14T12:23:22Z",
+      "side": 1,
+      "message": "Yep, makes sense",
+      "parentUuid": "7ef54bbe_775f85a4",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 20
+      },
+      "revId": "b6f6350d2f5ae9674292de702abffd4e06032b1a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dab5a3ba_9b64a307",
@@ -136,6 +177,30 @@
       "side": 1,
       "message": "\u003e When I suggested to extract the version from the jar I thought we were going to use it *for* setting up the environment, not just to verify that it matched the one provided.\n\u003e \n\u003e Why having to specify versions in two different places, one explicitly via GERRIT_VERSION,GERRIT_PATCH and one, implicitly, via the provided war file? \n\u003e If a war is provided why don\u0027t we just infer the environment needed from it?\n\nNot really: we can infer the GERRIT_VERSION but not the GERRIT_PATCH. So, we would need GERRIT_PATCH anyway.\n\n\u003e GERRIT_PATCH\u003d$(java -jar gerrit.war version | awk \u0027{print $3}\u0027 | cut -d \u0027-\u0027 -f1 | cut -d\u0027.\u0027 -f3)\n\nNot sure this would always work, as the version may \"misinterpret\" the patch version.",
       "parentUuid": "dab5a3ba_9b64a307",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 101
+      },
+      "revId": "b6f6350d2f5ae9674292de702abffd4e06032b1a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d12c53e_54487ee4",
+        "filename": "gerrit/Makefile",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-04-14T12:23:22Z",
+      "side": 1,
+      "message": "\u003e \u003e When I suggested to extract the version from the jar I thought we were going to use it *for* setting up the environment, not just to verify that it matched the one provided.\n\u003e \u003e \n\u003e \u003e Why having to specify versions in two different places, one explicitly via GERRIT_VERSION,GERRIT_PATCH and one, implicitly, via the provided war file? \n\u003e \u003e If a war is provided why don\u0027t we just infer the environment needed from it?\n\u003e \n\u003e Not really: we can infer the GERRIT_VERSION but not the GERRIT_PATCH. So, we would need GERRIT_PATCH anyway.\n\u003e \n\u003e \u003e GERRIT_PATCH\u003d$(java -jar gerrit.war version | awk \u0027{print $3}\u0027 | cut -d \u0027-\u0027 -f1 | cut -d\u0027.\u0027 -f3)\n\u003e \n\u003e Not sure this would always work, as the version may \"misinterpret\" the patch version.\n\nI am not sure by \"the version may \"misinterpret\" the patch version.\"? you probably can think of some cases I am not aware of.\n\nAnyway, I think this change is definitely good enough for now, and we can always improve later if needed, I will remove my -1 😊",
+      "parentUuid": "dd9195c4_248707a2",
       "range": {
         "startLine": 57,
         "startChar": 0,
