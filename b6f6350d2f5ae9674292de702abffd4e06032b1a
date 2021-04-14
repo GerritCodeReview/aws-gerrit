@@ -33,6 +33,52 @@
       "message": "LGTM, however I would document, in a followup change, the usage of GERRIT_VERSION, GERRIT_PATCH and GERRIT_WAR_URL. I realised they are not mentioned at all in the documentation.\n\nIt might be worth adding them since they are important parameters. I have added an issue for it: https://bugs.chromium.org/p/gerrit/issues/detail?id\u003d14387",
       "revId": "b6f6350d2f5ae9674292de702abffd4e06032b1a",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0da53cc_01dddca2",
+        "filename": "gerrit/Makefile",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-04-14T11:59:16Z",
+      "side": 1,
+      "message": "Do we need to explicitly set java 11?\nIs this going to work with 2.16?",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 20
+      },
+      "revId": "b6f6350d2f5ae9674292de702abffd4e06032b1a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dab5a3ba_9b64a307",
+        "filename": "gerrit/Makefile",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-04-14T11:59:16Z",
+      "side": 1,
+      "message": "When I suggested to extract the version from the jar I thought we were going to use it *for* setting up the environment, not just to verify that it matched the one provided.\n\nWhy having to specify versions in two different places, one explicitly via GERRIT_VERSION,GERRIT_PATCH and one, implicitly, via the provided war file? \nIf a war is provided why don\u0027t we just infer the environment needed from it?\n\nGERRIT_VERSION\u003d$(java -jar gerrit.war version | awk \u0027{print $3}\u0027 | cut -d \u0027-\u0027 -f1 | cut -d\u0027.\u0027 -f1,2)\n\nGERRIT_PATCH\u003d$(java -jar gerrit.war version | awk \u0027{print $3}\u0027 | cut -d \u0027-\u0027 -f1 | cut -d\u0027.\u0027 -f3)\n\nWDYT?",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 101
+      },
+      "revId": "b6f6350d2f5ae9674292de702abffd4e06032b1a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
