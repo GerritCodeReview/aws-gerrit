@@ -16,6 +16,23 @@
       "message": "This is working E2E, see:\nhttps://gerrit-ci.gerritforge.com/job/gatling-gerrit-test/296/console",
       "revId": "b6f6350d2f5ae9674292de702abffd4e06032b1a",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "16dfe2e6_090e979f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2021-04-14T09:30:54Z",
+      "side": 1,
+      "message": "LGTM, however I would document, in a followup change, the usage of GERRIT_VERSION, GERRIT_PATCH and GERRIT_WAR_URL. I realised they are not mentioned at all in the documentation.\n\nIt might be worth adding them since they are important parameters. I have added an issue for it: https://bugs.chromium.org/p/gerrit/issues/detail?id\u003d14387",
+      "revId": "b6f6350d2f5ae9674292de702abffd4e06032b1a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
