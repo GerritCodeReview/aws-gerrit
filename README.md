@@ -59,3 +59,8 @@ but by default all EC2 instances are blocking it. To enable port 25 please follo
 
 If you need a testing LDAP server you can find details on how to easily
 create one in the [LDAP folder](ldap/README.md).
+
+### Operations
+
+A set of utilities to perform operational tasks is also provided.
+Refer to the relevant [documentation](./operations/Operations.md) for details on this.
