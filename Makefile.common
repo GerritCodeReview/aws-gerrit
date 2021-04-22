@@ -1,3 +1,5 @@
+include ../operations/export-logs/Makefile
+
 SHELL := /bin/bash
 
 ROOT_DIR=$(dir $(realpath $(filter %Makefile.common,$(MAKEFILE_LIST))))
