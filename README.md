@@ -60,6 +60,7 @@ but by default all EC2 instances are blocking it. To enable port 25 please follo
 If you need a testing LDAP server you can find details on how to easily
 create one in the [LDAP folder](ldap/README.md).
 
+<<<<<<< HEAD
 ## Logging
 
 All recipes stream every log to CloudWatch. This always includes `sshd_log`,
@@ -98,3 +99,8 @@ test/gerrit-primary/bb21cb504ca44150b770ca05e922e332
 ```
 
 The task name can be found in the Amazon ECS console's `Task` section.
+
+### Operations
+
+A set of utilities to perform operational tasks is also provided.
+Refer to the relevant [documentation](./operations/Operations.md) for details on this.
