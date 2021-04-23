@@ -39,8 +39,9 @@ Three templates are provided in this example:
 
 ### Logging
 
-* Gerrit `error_log` is exported in a Log Group in CloudWatch
-* Other Gerrit logs still need to be exported
+* All the logs are forwarded to AWS CloudWatch in the LogGroup with the cluster
+  stack name. Please refer to the general [logging documentation](../README.md#logging)
+  for further information on logging.
 
 ### Monitoring
 

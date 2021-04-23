@@ -192,6 +192,11 @@ Resources:
                       \"log_stream_name\": \"${EnvironmentName}/{instance_id}/gc_log\",
                       \"timezone\": \"UTC\"
                       },
+                      {\"file_path\": \"/gerrit-mount-point/gerrit-logs/error_log\",
+                      \"log_group_name\": \"${AWS::StackName}\",
+                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/error_log\",
+                      \"timezone\": \"UTC\"
+                      },
                       {\"file_path\": \"/gerrit-mount-point/gerrit-logs/audit_log\",
                       \"log_group_name\": \"${AWS::StackName}\",
                       \"log_stream_name\": \"${EnvironmentName}/{instance_id}/audit_log\",

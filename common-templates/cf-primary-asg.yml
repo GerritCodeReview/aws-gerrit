@@ -177,6 +177,11 @@ Resources:
                       \"log_stream_name\": \"${EnvironmentName}/{instance_id}/$PRIMARY_ID/httpd_log\",
                       \"timezone\": \"UTC\"
                       },
+                      {\"file_path\": \"/gerrit-mount-point/gerrit-logs/error_log\",
+                      \"log_group_name\": \"${LogGroupName}\",
+                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/$PRIMARY_ID/error_log\",
+                      \"timezone\": \"UTC\"
+                      },
                       {\"file_path\": \"/gerrit-mount-point/gerrit-logs/sshd_log\",
                       \"log_group_name\": \"${LogGroupName}\",
                       \"log_stream_name\": \"${EnvironmentName}/{instance_id}/$PRIMARY_ID/sshd_log\",
