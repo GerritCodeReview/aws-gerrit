@@ -138,7 +138,8 @@ blue stack).
 ### Logging
 
 * All the logs are forwarded to AWS CloudWatch in the LogGroup with the cluster
-  stack name
+  stack name. Please refer to the general [logging documentation](../README.md#logging)
+  for further information on logging.
 
 ### Monitoring
 

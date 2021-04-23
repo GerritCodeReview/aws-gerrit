@@ -59,3 +59,42 @@ but by default all EC2 instances are blocking it. To enable port 25 please follo
 
 If you need a testing LDAP server you can find details on how to easily
 create one in the [LDAP folder](ldap/README.md).
+
+## Logging
+
+All recipes stream every log to CloudWatch. This always includes `sshd_log`,
+`httpd_log` and `gc_log`.
+
+#### error_log
+The 'error_log' might or might not be available depending on which version of
+gerrit is being deployed.
+From gerrit 3.3 it will always be available.
+Prior to that it will be available from:
+
+* stable-3.0 -> starting from 3.0.13
+* stable-3.1 -> starting from 3.1.10
+* stable-3.2 -> starting from 3.2.5
+
+When the `error_log` is not available, Gerrit will still output the same content
+to standard error. Refer to the [standard error section](#standard-error).
+
+#### Standard error
+Different recipes deploy different services to ECS (please refer to the
+documentation of each recipe for details on what services are actually deployed).
+
+Every ECS service will stream anything outputted to stderr to cloudwatch, to a
+stream name that will take the form of:
+
+```
+{environmentName}/{serviceName}/{taskId}
+```
+
+For example, given the `gerrit-primary` service running task
+`bb21cb504ca44150b770ca05e922e332`, on the `test` environment, the stderr will
+be streamed to:
+
+```
+test/gerrit-primary/bb21cb504ca44150b770ca05e922e332
+```
+
+The task name can be found in the Amazon ECS console's `Task` section.
