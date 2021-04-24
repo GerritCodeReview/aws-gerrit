@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b72bef37_1ddd36ac",
+        "filename": "operations/Operations.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2021-04-24T02:32:37Z",
+      "side": 1,
+      "message": "Or best just make the creation of the bucket optional: WDYT?",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 59
+      },
+      "revId": "7d38e671a2b41d1bc7893f8e27777bbad561459d",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2468a8e7_ec7117ca",
+        "filename": "operations/Operations.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2021-04-24T02:32:37Z",
+      "side": 1,
+      "message": "Cool stuff 👍",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 46
+      },
+      "revId": "7d38e671a2b41d1bc7893f8e27777bbad561459d",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6b556cb0_84db699d",
+        "filename": "operations/export-logs/Makefile",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2021-04-24T02:32:37Z",
+      "side": 1,
+      "message": "Can this be made optional? I reckon we may not want to create a bucket every time we export the logs.",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 87
+      },
+      "revId": "7d38e671a2b41d1bc7893f8e27777bbad561459d",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
