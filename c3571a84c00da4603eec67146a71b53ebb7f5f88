@@ -22,6 +22,30 @@
       },
       "revId": "c3571a84c00da4603eec67146a71b53ebb7f5f88",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c4a79d4_f216cbc6",
+        "filename": "README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-04-26T09:00:51Z",
+      "side": 1,
+      "message": "Nope and perhaps we should document which versions we do support.\nThe intention of this comment however is to explain that also for versions that we *do* support, error_log might not be available.\n\nFor example, when deploying 3.2.3 or 3.1.8, the error_log will not be created.",
+      "parentUuid": "f974bcd3_fc505480",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 35
+      },
+      "revId": "c3571a84c00da4603eec67146a71b53ebb7f5f88",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
