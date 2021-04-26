@@ -24,6 +24,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "d787d5d6_e5a99a51",
+        "filename": "operations/Operations.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-04-26T09:06:01Z",
+      "side": 1,
+      "message": "See above, the creation of the bucket is already optional.",
+      "parentUuid": "b72bef37_1ddd36ac",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 59
+      },
+      "revId": "7d38e671a2b41d1bc7893f8e27777bbad561459d",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "2468a8e7_ec7117ca",
@@ -60,6 +84,30 @@
       "writtenOn": "2021-04-24T02:32:37Z",
       "side": 1,
       "message": "Can this be made optional? I reckon we may not want to create a bucket every time we export the logs.",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 87
+      },
+      "revId": "7d38e671a2b41d1bc7893f8e27777bbad561459d",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d1eaed7e_ea4c6528",
+        "filename": "operations/export-logs/Makefile",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-04-26T09:06:01Z",
+      "side": 1,
+      "message": "it is already optional, excerpt from the documentation[1]:\n\n```Note: this command assumes that the bucket already exists and that is configured with the relevant policy allowing cloudwatch to export logs into it (see permissions) for more information on how to set this up.\n\nAlternatively you can create, setup the bucket and export the logs in one command.\n...\n```\n\nShould I re-word the description to make it more obvious?\n\n[1]gerrit/+/7d38e671a2b41d1bc7893f8e27777bbad561459d/operations/Operations.md",
+      "parentUuid": "6b556cb0_84db699d",
       "range": {
         "startLine": 5,
         "startChar": 0,
