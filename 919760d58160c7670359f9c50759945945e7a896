@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a94946e1_ba97b2f1",
+        "filename": "operations/export-logs/Makefile",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2021-04-27T19:52:17Z",
+      "side": 1,
+      "message": "this is in second. Need to be converted in ms",
+      "range": {
+        "startLine": 3,
+        "startChar": 22,
+        "endLine": 3,
+        "endChar": 32
+      },
+      "revId": "919760d58160c7670359f9c50759945945e7a896",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
