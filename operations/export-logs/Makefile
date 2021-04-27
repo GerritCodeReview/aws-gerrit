@@ -1,6 +1,6 @@
 now = $(shell date +%s)
 destination-prefix-name = gerrit-export-logs-ts-$(now)
-EXPORT_FROM_SECONDS ?= 0000000000
+EXPORT_FROM_MILLIS ?= 0000000000000
 
 create-s3-export-logs-bucket:
 	$(eval CREATE_S3_EXPORT_PARAMS_LOGS_PARAMS := --bucket $(S3_EXPORT_LOGS_BUCKET_NAME))
@@ -29,10 +29,10 @@ launch-export-task:
 	$(eval TASK_ID := $(shell $(AWS) logs create-export-task --task-name $(DESTINATION_PREFIX) \
 		--log-group-name $(CLUSTER_STACK_NAME) \
 		--destination $(S3_EXPORT_LOGS_BUCKET_NAME) \
-		--from $(EXPORT_FROM_SECONDS)000 --to $(now)000 \
+		--from $(EXPORT_FROM_MILLIS) --to $(now)000 \
 		--destination-prefix $(DESTINATION_PREFIX) | jq -r '.taskId'))
 
-	@echo "Launched export task id $(TASK_ID) from $(EXPORT_FROM_SECONDS)000 to $(now)000"
+	@echo "Launched export task id $(TASK_ID) from $(EXPORT_FROM_MILLIS) to $(now)000"
 
 wait_for_export:
 	while [[ $$(aws logs describe-export-tasks --task-id "$(TASK_ID)" | jq -r '.exportTasks[0].status.code') =~ RUNNING|PENDING|PENDING_CANCEL ]]; do \
