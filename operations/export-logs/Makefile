@@ -30,18 +30,18 @@ launch-export-task:
 		--log-group-name $(CLUSTER_STACK_NAME) \
 		--destination $(S3_EXPORT_LOGS_BUCKET_NAME) \
 		--from $(EXPORT_FROM_SECONDS)000 --to $(now)000 \
-		--destination-prefix $(DESTINATION_PREFIX) | jq -r '.taskId'))
+		--destination-prefix $(DESTINATION_PREFIX)  | grep '"taskId"' | cut -d':' -f2 | tr -d ' ",'))
 
 	@echo "Launched export task id $(TASK_ID) from $(EXPORT_FROM_SECONDS)000 to $(now)000"
 
 wait_for_export:
-	while [[ $$(aws logs describe-export-tasks --task-id "$(TASK_ID)" | jq -r '.exportTasks[0].status.code') =~ RUNNING|PENDING|PENDING_CANCEL ]]; do \
+	while [[ $$(aws logs describe-export-tasks --task-id "$(TASK_ID)" | grep '"code"' | cut -d ':' -f2 | tr -d ' ,"') =~ RUNNING|PENDING|PENDING_CANCEL ]]; do \
   		echo "Wait for task $(DESTINATION_PREFIX) (id: $(TASK_ID)) to complete"; \
   		sleep 5; \
   	done;
 
 	@echo "Export logs to $(S3_EXPORT_LOGS_BUCKET_NAME)/$(DESTINATION_PREFIX) terminated."
-	$(AWS) logs describe-export-tasks --task-id "$(TASK_ID)" | jq -r '.exportTasks[0].status.code'
+	$(AWS) logs describe-export-tasks --task-id "$(TASK_ID)" | grep '"code"' | cut -d ':' -f2 | tr -d ' ,"'
 
 output_log_urls:
 	@echo
@@ -49,7 +49,7 @@ output_log_urls:
 	@for i in \
 		$(shell aws s3api list-objects --bucket $(S3_EXPORT_LOGS_BUCKET_NAME) \
 			--prefix "$(DESTINATION_PREFIX)/$(TASK_ID)" | \
-			 jq -r '.Contents[] | select(.Key|test("httpd_log|sshd_log|error_log")) | .Key'); do \
+			 grep .Key | grep -E '(httpd_log|sshd_log|error_log)' | cut -d':' -f2 | tr -d ' ","'); do \
 		  echo https://$(S3_EXPORT_LOGS_BUCKET_NAME).s3.amazonaws.com/$$i; \
 		done;
 	@echo "**********************************************"
