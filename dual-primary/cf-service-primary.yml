@@ -225,6 +225,7 @@ Resources:
         DependsOn:
           - HTTPListener
           - SSHListener
+          - DebugListener
         Properties:
             Cluster:
               Fn::ImportValue:
@@ -238,6 +239,9 @@ Resources:
                 - ContainerName: !FindInMap ['Gerrit', 'Service', 'Name']
                   ContainerPort: !FindInMap ['Gerrit', 'Container', 'SSHPort']
                   TargetGroupArn: !Ref SSHTargetGroup
+                - ContainerName: !FindInMap ['Gerrit', 'Service', 'Name']
+                  ContainerPort: 7007
+                  TargetGroupArn: !Ref DebugTargetGroup
 
     TaskDefinition:
         Type: AWS::ECS::TaskDefinition
@@ -368,6 +372,9 @@ Resources:
                     - ContainerPort: !FindInMap ['Gerrit', 'Container', 'SSHPort']
                       HostPort: !Ref SSHHostPort
                       Protocol: tcp
+                    - ContainerPort: 7007
+                      HostPort: 7007
+                      Protocol: tcp
                   LogConfiguration:
                     LogDriver: awslogs
                     Options:
@@ -450,6 +457,31 @@ Resources:
             LoadBalancerArn: !Ref LoadBalancer
             Port: !FindInMap ['Gerrit', 'LoadBalancer', 'SSHPort']
             Protocol: TCP
+
+
+    DebugTargetGroup:
+      Type: AWS::ElasticLoadBalancingV2::TargetGroup
+      DependsOn: LoadBalancer
+      Properties:
+        VpcId:
+          Fn::ImportValue:
+            !Join [':', [!Ref 'ClusterStackName', 'VPCId']]
+        Port: 7007
+        Protocol: TCP
+
+    DebugListener:
+      Type: AWS::ElasticLoadBalancingV2::Listener
+      DependsOn: LoadBalancer
+      Properties:
+        DefaultActions:
+          - Type: forward
+            TargetGroupArn: !Ref DebugTargetGroup
+        LoadBalancerArn: !Ref LoadBalancer
+        Port: 7007
+        Protocol: TCP
+
+
+
 
     ECSTaskExecutionRoleStack:
       Type: AWS::CloudFormation::Stack
