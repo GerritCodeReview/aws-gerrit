@@ -60,6 +60,7 @@
 	javaOptions = "-Dflogger.backend_factory=com.google.common.flogger.backend.log4j.Log4jBackendFactory#getInstance"
 	javaOptions = "-Dflogger.logging_context=com.google.gerrit.server.logging.LoggingContext#getInstance"
 	javaOptions = "-verbose:gc -XX:+PrintGCDetails -Xloggc:/var/gerrit/logs/gc_log"
+	javaOptions = "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:7007"
 	user = gerrit
 	javaHome = /usr/lib/jvm/jre
 	javaOptions = -Djava.security.egd=file:/dev/./urandom
