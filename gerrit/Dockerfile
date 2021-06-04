@@ -28,7 +28,7 @@ RUN chown -R gerrit:gerrit \
 
 USER gerrit
 
-RUN bash -c '[ "$GERRIT_WAR_URL" == "" ] || curl $GERRIT_WAR_URL > /var/gerrit/bin/gerrit.war'
+COPY ./gerrit.war /var/gerrit/bin/gerrit.war
 
 # Install AWS cli
 RUN pip3 install awscli --upgrade --user

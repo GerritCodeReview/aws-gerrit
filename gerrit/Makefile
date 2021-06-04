@@ -50,10 +50,9 @@ gerrit-build: check-gerrit-version-vs-war-url
 	docker tag aws-gerrit/gerrit:$(IMAGE_TAG) $(DOCKER_REGISTRY_URI)/aws-gerrit/gerrit:$(IMAGE_TAG)
 
 check-gerrit-version-vs-war-url:
-	. set-java.sh 11; \
 	if [[ "$(GERRIT_WAR_URL)" != "" ]]; \
 	then \
-		curl $(GERRIT_WAR_URL) > gerrit.war; \
+		cp /Users/syntonyze/dev/source/gerrit/bazel-bin/release.war gerrit.war; \
 		GERRIT_VERSION_FROM_WAR=$$(java -jar gerrit.war version | awk '{print $$3}' | cut -d '.' -f 1,2); \
 		if [[ "$$GERRIT_VERSION_FROM_WAR" != "$(GERRIT_VERSION)" ]]; \
 		then \
