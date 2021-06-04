@@ -1,9 +1,8 @@
-include ../operations/export-logs/Makefile
-
 SHELL := /bin/bash
 
 ROOT_DIR=$(dir $(realpath $(filter %Makefile.common,$(MAKEFILE_LIST))))
 AWS_FC_COMMAND=export AWS_PAGER=;aws cloudformation
+include $(ROOT_DIR)/operations/export-logs/Makefile
 include $(ROOT_DIR)common.env
 
 cluster-keys:
