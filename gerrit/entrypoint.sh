@@ -10,7 +10,7 @@ if [ $CONTAINER_REPLICA ]; then
 
   echo "Ensure primary specific plugins and libraries are not installed:"
   for jar in "lib/multi-site.jar" "plugins/multi-site.jar" "lib/replication.jar" \
-    "lib/events-broker.jar" "plugins/kafka-events.jar" "plugins/zookeeper-refdb.jar" \
+    "lib/events-broker.jar" "plugins/events-kafka.jar" "plugins/zookeeper-refdb.jar" \
     "plugins/websession-broker.jar" "plugins/high-availability.jar"
   do
     echo "rm -f /var/gerrit/$jar"

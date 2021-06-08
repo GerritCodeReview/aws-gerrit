@@ -15,7 +15,7 @@ GIT_GC_SOURCE_PATH=/mnt/efs/gerrit-shared/git
 
 SINGLE_SITE_PLUGINS=javamelody high-availability healthcheck metrics-reporter-cloudwatch
 
-MULTI_SITE_PLUGINS=$(SINGLE_SITE_PLUGINS) multi-site kafka-events websession-broker zookeeper-refdb~zk-3.5
+MULTI_SITE_PLUGINS=$(SINGLE_SITE_PLUGINS) multi-site events-kafka websession-broker zookeeper-refdb~zk-3.5
 MULTI_SITE_PLUGINS_LIBS_LINKS=multi-site replication
 MULTI_SITE_MAVEN_LIBS=events-broker~$(EVENTSBROKER_LIB_VER)
 
