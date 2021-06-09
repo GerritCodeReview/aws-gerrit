@@ -1,6 +1,29 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "e6f129fc_431a9eca",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-06-09T06:52:53Z",
+      "side": 1,
+      "message": "nit: bump *defaults*",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 49
+      },
+      "revId": "e87ba1dd0b7dc6286b45fe2f4143908ca8de3c49",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "c1e31b2c_e13c95aa",
@@ -14,6 +37,24 @@
       "writtenOn": "2021-06-08T23:30:40Z",
       "side": 1,
       "message": "Tested with single-primary and works E2E",
+      "revId": "e87ba1dd0b7dc6286b45fe2f4143908ca8de3c49",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "19693571_b5842e00",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-06-09T06:52:53Z",
+      "side": 1,
+      "message": "We should probably test the multi-site deployment works too: the events-broker library is not installed on the single-primary recipe (nor in the primary-replica one).\n\nI can help testing if needed?",
+      "parentUuid": "c1e31b2c_e13c95aa",
       "revId": "e87ba1dd0b7dc6286b45fe2f4143908ca8de3c49",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
