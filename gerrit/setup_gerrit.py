@@ -173,6 +173,7 @@ with open(GERRIT_CONFIG_DIRECTORY + "gerrit.config", 'w',
         'REFS_DB_ENABLED': os.getenv('REFS_DB_ENABLED'),
         'DYNAMODB_LOCKS_TABLE_NAME': os.getenv('DYNAMODB_LOCKS_TABLE_NAME'),
         'DYNAMODB_REFS_TABLE_NAME': os.getenv('DYNAMODB_REFS_TABLE_NAME'),
+        'XRAY_ENABLED': os.getenv('XRAY_ENABLED')
     })
     f.write(template.render(config_for_template))
 

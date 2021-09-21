@@ -39,7 +39,12 @@ endif
 		$(CLUSTER_OPTIONAL_PARAMS) \
 		$(GERRIT_OPTIONAL_PRIMARY_VOLUME)
 
-service: set-optional-params-metrics-cloudwatch set-optional-params-smtp set-ldap-account-pattern set-optional-gerrit-ulimits set-optional-jgit-conf
+service: set-optional-params-metrics-cloudwatch \
+			set-optional-params-smtp \
+			set-ldap-account-pattern \
+			set-optional-gerrit-ulimits \
+			set-optional-jgit-conf \
+			set-optional-x-ray
 ifdef LOAD_BALANCER_SCHEME
 		$(eval SERVICE_OPTIONAL_PARAMS := $(SERVICE_OPTIONAL_PARAMS) ParameterKey=LoadBalancerScheme,ParameterValue=$(LOAD_BALANCER_SCHEME))
 endif
@@ -77,7 +82,8 @@ endif
 		$(SERVICE_OPTIONAL_PARAMS) \
 		$(METRICS_CW_OPTIONAL_PARAMS) \
 		$(SMTP_OPTIONAL_PARAMS) \
-		$(GERRIT_ULIMITS)
+		$(GERRIT_ULIMITS) \
+		$(XRAY_OPTIONAL_PARAMS)
 
 dns-routing:
 	$(AWS_FC_COMMAND) create-stack \
