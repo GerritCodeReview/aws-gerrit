@@ -161,3 +161,8 @@ See more details [here](https://gerrit-review.googlesource.com/Documentation/con
   See [Gerrit documentation](https://gerrit-review.googlesource.com/Documentation/config-gerrit.html#sendemail.sslVerify)
   Default: false
 
+#### X-Ray
+
+To enable X-Ray tracing just set the `XRAY_ENABLED` environment variable to `true`.
+This will install an x-ray daemon task alongside gerrit and will automatically
+instrument Gerrit to trace all HTTP and jdbc related traffic (such as H2 caches).
