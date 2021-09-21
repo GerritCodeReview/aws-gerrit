@@ -1,8 +1,10 @@
 FROM gerritcodereview/gerrit:$GERRIT_VERSION.$GERRIT_PATCH-centos8
 
+ARG withXRay=false
+
 USER root
 
-RUN  yum install -y python36 python3-libs python36-devel python3-pip
+RUN  yum install -y python36 python3-libs python36-devel python3-pip unzip wget
 
 COPY ssh-config /var/gerrit/.ssh/config
 RUN chown -R gerrit:gerrit /var/gerrit/.ssh
@@ -20,6 +22,12 @@ RUN chmod +x /tmp/setup_gerrit.py \
 COPY plugins /var/gerrit/plugins
 COPY lib /var/gerrit/lib
 COPY etc /var/gerrit/etc
+
+RUN if [ "$withXRay" = "true" ]; then \
+    echo "Building docker with xray-agent" && \
+    wget -P /tmp/ https://github.com/aws/aws-xray-java-agent/releases/latest/download/xray-agent.zip && \
+    unzip /tmp/xray-agent.zip -d /tmp; \
+  fi
 
 RUN chown -R gerrit:gerrit \
     /var/gerrit/plugins \
