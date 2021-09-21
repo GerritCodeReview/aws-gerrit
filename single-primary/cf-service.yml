@@ -162,8 +162,17 @@ Parameters:
     Description: Comma separated list of regex patterns to exclude metrics reported to CloudWatch
     Type: CommaDelimitedList
     Default: '^(?!.*(sshd\\/sessions\\/connected|proc\\/cpu\\/usage|jgit\\/block_cache\\/cache_used|jvm\\.memory\\.total.used|proc\\/cpu\\/system_load|jvm\\.gc\\.G1-Old-Generation\\.time|proc\\/jvm\\/thread\\/num_live|git\\/upload-pack\\/request_count_total|http\\/server\\/rest_api\\/server_latency_total|http\\/server\\/success_count_total|http\\/server\\/error_count_total|queue\\/index_batch\\/total_scheduled_tasks_count|queue\\/receive_commits\\/total_scheduled_tasks_count|queue\\/work_queue\\/total_scheduled_tasks_count|queue\\/ssh_command_start\\/total_scheduled_tasks_count|queue\\/send_email\\/scheduled_tasks|jgit\\/block_cache\\/open_files|jgit\\/block_cache\\/cache_used)).*'
+  EnableXray:
+    Description: Whether to enable X-Ray tracing for Gerrit
+    Type: String
+    Default: false
+    AllowedValues: [true, false]
 
 Mappings:
+  XRay:
+    Info:
+      ContainerName: xray-daemon
+      Port: 2000
   Gerrit:
     Volume:
       Git: gerrit-git
@@ -175,6 +184,7 @@ Mappings:
 
 Conditions:
   CreateCloudwatchDashboard: !Equals [!Ref MetricsCloudwatchEnabled, true]
+  ShouldEnableXRay: !Equals [!Ref EnableXray, true]
 Resources:
     Service:
         Type: AWS::ECS::Service
@@ -210,6 +220,12 @@ Resources:
                   Essential: true
                   Image: !Sub '${DockerRegistryUrl}/${DockerImage}'
                   Environment:
+                    - Name: XRAY_ENABLED
+                      Value: !Ref EnableXray
+                    - Name: AWS_XRAY_TRACING_NAME
+                      Value: !Ref InstanceId
+                    - Name: AWS_XRAY_DAEMON_ADDRESS
+                      Value: !Join [':', [!FindInMap ['XRay', 'Info', 'ContainerName'], !FindInMap ['XRay', 'Info', 'Port']]]
                     - Name: CANONICAL_WEB_URL
                       Value: !Sub 'https://${HttpSubdomain}.${HostedZoneName}'
                     - Name: SSHD_ADVERTISED_ADDRESS
@@ -298,6 +314,20 @@ Resources:
                         awslogs-group: !Ref ClusterStackName
                         awslogs-region: !Ref AWS::Region
                         awslogs-stream-prefix: !Ref EnvironmentName
+                  Links:
+                    - !FindInMap ['XRay', 'Info', 'ContainerName']
+                - Fn::If:
+                    - ShouldEnableXRay
+                    - Name: !FindInMap ['XRay', 'Info', 'ContainerName']
+                      Essential: false
+                      Image: "amazon/aws-xray-daemon"
+                      Cpu: 32
+                      MemoryReservation: 256
+                      PortMappings:
+                        - HostPort: 2000
+                          ContainerPort: 2000
+                          Protocol: "udp"
+                    - AWS::NoValue
             Volumes:
               - Name: !FindInMap ['Gerrit', 'Volume', 'Db']
                 Host:
