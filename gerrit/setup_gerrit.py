@@ -169,7 +169,8 @@ with open(GERRIT_CONFIG_DIRECTORY + "gerrit.config", 'w',
         'METRICS_CLOUDWATCH_DRY_RUN': os.getenv('METRICS_CLOUDWATCH_DRY_RUN'),
         'METRICS_CLOUDWATCH_EXCLUDE_METRICS_LIST': os.getenv('METRICS_CLOUDWATCH_EXCLUDE_METRICS_LIST'),
         'MULTISITE_ENABLED': os.getenv('MULTISITE_ENABLED'),
-        'MULTISITE_KAFKA_BROKERS': os.getenv('MULTISITE_KAFKA_BROKERS')
+        'MULTISITE_KAFKA_BROKERS': os.getenv('MULTISITE_KAFKA_BROKERS'),
+        'XRAY_ENABLED': os.getenv('XRAY_ENABLED')
     })
     f.write(template.render(config_for_template))
 

@@ -41,6 +41,17 @@ Resources:
                   - 'secretsmanager:GetSecretValue'
                   - 'kms:Decrypt'
                 Resource: '*'
+          - PolicyName: AmazonECSTaskXRayRolePolicy
+            PolicyDocument:
+              Statement:
+              - Effect: Allow
+                Action:
+                  - "xray:PutTraceSegments"
+                  - "xray:PutTelemetryRecords"
+                  - "xray:GetSamplingRules"
+                  - "xray:GetSamplingTargets"
+                  - "xray:GetSamplingStatisticSummaries"
+                Resource: '*'
 
 Outputs:
   TaskExecutionRoleRef:

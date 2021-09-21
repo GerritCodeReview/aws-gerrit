@@ -60,6 +60,9 @@
 	javaOptions = "-Dflogger.backend_factory=com.google.common.flogger.backend.log4j.Log4jBackendFactory#getInstance"
 	javaOptions = "-Dflogger.logging_context=com.google.gerrit.server.logging.LoggingContext#getInstance"
 	javaOptions = "-verbose:gc -XX:+PrintGCDetails -Xloggc:/var/gerrit/logs/gc_log"
+{% if XRAY_ENABLED == "true" %}
+	javaOptions = "-javaagent:/tmp/disco/disco-java-agent.jar=pluginPath=/tmp/disco/disco-plugins:loggerfactory=software.amazon.disco.agent.reflect.logging.StandardOutputLoggerFactory:verbose"
+{% endif %}
 	user = gerrit
 	javaHome = /usr/lib/jvm/jre
 	javaOptions = -Djava.security.egd=file:/dev/./urandom

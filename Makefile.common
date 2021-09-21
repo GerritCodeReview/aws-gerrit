@@ -146,6 +146,12 @@ ifdef REPLICA_CAPACITY_PROVIDER_MAX_STEP_SIZE
 		$(eval GERRIT_OPTIONAL_PARAMS_REPLICA_CAPACITY_PROVIDER := $(GERRIT_OPTIONAL_PARAMS_REPLICA_CAPACITY_PROVIDER) ParameterKey=ReplicaCapacityProviderMaxStepSize,ParameterValue=$(REPLICA_CAPACITY_PROVIDER_MAX_STEP_SIZE))
 endif
 
+set-optional-x-ray:
+	$(eval XRAY_OPTIONAL_PARAMS=)
+ifdef XRAY_ENABLED
+		$(eval XRAY_OPTIONAL_PARAMS := $(XRAY_OPTIONAL_PARAMS) ParameterKey=EnableXray,ParameterValue=$(XRAY_ENABLED))
+endif
+
 confirm-persistent-stack-deletion:
 	@echo ""
 	@echo "* * * * WARNING * * * * this is going to completely destroy the stack, including git data."
