@@ -173,6 +173,12 @@ ifdef SUBNET2_AZ
 		$(eval GERRIT_OPTIONAL_PARAMS_NETWORK := $(GERRIT_OPTIONAL_PARAMS_NETWORK) ParameterKey=Subnet2AZProp,ParameterValue=$(SUBNET2_AZ))
 endif
 
+set-optional-x-ray:
+	$(eval XRAY_OPTIONAL_PARAMS=)
+ifdef XRAY_ENABLED
+		$(eval XRAY_OPTIONAL_PARAMS := $(XRAY_OPTIONAL_PARAMS) ParameterKey=EnableXray,ParameterValue=$(XRAY_ENABLED))
+endif
+
 confirm-persistent-stack-deletion:
 	@echo ""
 	@echo "* * * * WARNING * * * * this is going to completely destroy the stack, including git data."
