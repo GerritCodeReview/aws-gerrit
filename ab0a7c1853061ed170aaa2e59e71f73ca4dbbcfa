@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "713f632b_9c280045",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-09-21T22:05:00Z",
+      "side": 1,
+      "message": "This CR will be the base on top of which we will be basing the more interesting work for dual-primary.\n\nThe latter is more complicated as it requires configuration of haproxy and the replacement of the syslog-sidecar with rsyslog, among other things.",
+      "revId": "ab0a7c1853061ed170aaa2e59e71f73ca4dbbcfa",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
