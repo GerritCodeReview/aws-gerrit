@@ -16,6 +16,98 @@
       "message": "This CR will be the base on top of which we will be basing the more interesting work for dual-primary.\n\nThe latter is more complicated as it requires configuration of haproxy and the replacement of the syslog-sidecar with rsyslog, among other things.",
       "revId": "ab0a7c1853061ed170aaa2e59e71f73ca4dbbcfa",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ed6f49ce_07f79282",
+        "filename": "gerrit/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2021-09-22T13:04:33Z",
+      "side": 1,
+      "message": "should we have a param which sets the version. With the `latest` we can have unpredictable behaviour",
+      "range": {
+        "startLine": 28,
+        "startChar": 70,
+        "endLine": 28,
+        "endChar": 76
+      },
+      "revId": "ab0a7c1853061ed170aaa2e59e71f73ca4dbbcfa",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "96c37a13_2e0dfeb6",
+        "filename": "gerrit/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2021-09-22T13:04:33Z",
+      "side": 1,
+      "message": "could we use different location than /tmp ?",
+      "range": {
+        "startLine": 29,
+        "startChar": 34,
+        "endLine": 29,
+        "endChar": 37
+      },
+      "revId": "ab0a7c1853061ed170aaa2e59e71f73ca4dbbcfa",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca9b070d_e3dba396",
+        "filename": "gerrit/Makefile",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2021-09-22T13:04:33Z",
+      "side": 1,
+      "message": "is this change related?",
+      "range": {
+        "startLine": 48,
+        "startChar": 2,
+        "endLine": 48,
+        "endChar": 76
+      },
+      "revId": "ab0a7c1853061ed170aaa2e59e71f73ca4dbbcfa",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e5b5d5e_89fdd532",
+        "filename": "gerrit/etc/gerrit.config.template",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2021-09-22T13:04:33Z",
+      "side": 1,
+      "message": "should we make the logging level configurable?",
+      "range": {
+        "startLine": 64,
+        "startChar": 181,
+        "endLine": 64,
+        "endChar": 188
+      },
+      "revId": "ab0a7c1853061ed170aaa2e59e71f73ca4dbbcfa",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
