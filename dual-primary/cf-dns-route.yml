@@ -15,72 +15,146 @@ Parameters:
       Default: gerrit-service
 
 Resources:
-  Primary1DnsRecord:
+
+  ############
+  ##  SSH   ##
+  ############
+
+  Primary1DnsRecordForSSH:
       Type: AWS::Route53::RecordSet
       Properties:
         Name:
           !Join
             - '.'
-            - - Fn::ImportValue: !Join [':', [!Ref 'Primary1ServiceStackName', 'Subdomain']]
+            - - !Join
+                - '-'
+                - - Fn::ImportValue: !Join [ ':', [ !Ref 'Primary1ServiceStackName', 'Subdomain' ] ]
+                  - 'ssh'
               - Fn::ImportValue: !Join [':', [!Ref 'Primary1ServiceStackName', 'HostedZoneName']]
         HostedZoneName:
           !Join
             - ''
             - - Fn::ImportValue: !Join [':', [!Ref 'Primary1ServiceStackName', 'HostedZoneName']]
               - '.'
-        Comment: DNS name for Gerrit Primary.
+        Comment: DNS name for nlb serving SSH requests to primary gerrit 1
         Type: A
         AliasTarget:
           DNSName:
             Fn::ImportValue:
-              !Join [':', [!Ref 'Primary1ServiceStackName', 'PublicLoadBalancerDNSName']]
+              !Join [':', [!Ref 'Primary1ServiceStackName', 'GerritSSHLoadBalancerDNSName']]
           HostedZoneId:
             Fn::ImportValue:
-              !Join [':', [!Ref 'Primary1ServiceStackName', 'CanonicalHostedZoneID']]
+              !Join [':', [!Ref 'Primary1ServiceStackName', 'GerritSSHCanonicalHostedZoneID']]
           EvaluateTargetHealth: False
-  Primary2DnsRecord:
+
+  Primary2DnsRecordForSSH:
       Type: AWS::Route53::RecordSet
       Properties:
         Name:
           !Join
             - '.'
-            - - Fn::ImportValue: !Join [':', [!Ref 'Primary2ServiceStackName', 'Subdomain']]
+            - - !Join
+                - '-'
+                - - Fn::ImportValue: !Join [ ':', [ !Ref 'Primary2ServiceStackName', 'Subdomain' ] ]
+                  - 'ssh'
               - Fn::ImportValue: !Join [':', [!Ref 'Primary2ServiceStackName', 'HostedZoneName']]
         HostedZoneName:
           !Join
             - ''
             - - Fn::ImportValue: !Join [':', [!Ref 'Primary2ServiceStackName', 'HostedZoneName']]
               - '.'
-        Comment: DNS name for Gerrit Primary.
+        Comment: DNS name for nlb serving SSH requests to primary gerrit 2
         Type: A
         AliasTarget:
           DNSName:
             Fn::ImportValue:
-              !Join [':', [!Ref 'Primary2ServiceStackName', 'PublicLoadBalancerDNSName']]
+              !Join [':', [!Ref 'Primary2ServiceStackName', 'GerritSSHLoadBalancerDNSName']]
           HostedZoneId:
             Fn::ImportValue:
-              !Join [':', [!Ref 'Primary2ServiceStackName', 'CanonicalHostedZoneID']]
+              !Join [':', [!Ref 'Primary2ServiceStackName', 'GerritSSHCanonicalHostedZoneID']]
           EvaluateTargetHealth: False
-  LBDnsRecord:
+
+  HaProxyDnsRecord:
       Type: AWS::Route53::RecordSet
       Properties:
         Name:
           !Join
             - '.'
-            - - Fn::ImportValue: !Join [':', [!Ref 'LBServiceStackName', 'Subdomain']]
+            - - !Join
+                - '-'
+                - - Fn::ImportValue: !Join [ ':', [ !Ref 'LBServiceStackName', 'Subdomain' ] ]
+                  - 'ssh'
               - Fn::ImportValue: !Join [':', [!Ref 'LBServiceStackName', 'HostedZoneName']]
         HostedZoneName:
           !Join
             - ''
             - - Fn::ImportValue: !Join [':', [!Ref 'LBServiceStackName', 'HostedZoneName']]
               - '.'
-        Comment: DNS name for Gerrit LB.
+        Comment: DNS name for haproxy serving SSH requests to gerrit
         Type: A
         AliasTarget:
           DNSName:
             Fn::ImportValue:
-              !Join [':', [!Ref 'LBServiceStackName', 'PublicLoadBalancerDNSName']]
+              !Join [':', [!Ref 'LBServiceStackName', 'HaProxySSHLoadBalancerDNSName']]
           HostedZoneId:
             Fn::ImportValue:
-              !Join [':', [!Ref 'LBServiceStackName', 'CanonicalHostedZoneID']]
+              !Join [':', [!Ref 'LBServiceStackName', 'HaProxySSHCanonicalHostedZoneID']]
           EvaluateTargetHealth: False
+
+############
+##  HTTP  ##
+############
+
+  Primary1DnsRecordForHTTP:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      Name:
+        !Join
+        - '.'
+        - - !Join
+            - '-'
+            - - Fn::ImportValue: !Join [ ':', [ !Ref 'Primary1ServiceStackName', 'Subdomain' ] ]
+              - 'http'
+          - Fn::ImportValue: !Join [':', [!Ref 'Primary1ServiceStackName', 'HostedZoneName']]
+      HostedZoneName:
+        !Join
+        - ''
+        - - Fn::ImportValue: !Join [':', [!Ref 'Primary1ServiceStackName', 'HostedZoneName']]
+          - '.'
+      Comment: DNS name for nlb serving HTTP requests to primary gerrit 1
+      Type: A
+      AliasTarget:
+        DNSName:
+          Fn::ImportValue:
+            !Join [':', [!Ref 'Primary1ServiceStackName', 'GerritHTTPLoadBalancerDNSName']]
+        HostedZoneId:
+          Fn::ImportValue:
+            !Join [':', [!Ref 'Primary1ServiceStackName', 'GerritHTTPCanonicalHostedZoneID']]
+        EvaluateTargetHealth: False
+
+  Primary2DnsRecordForHTTP:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      Name:
+        !Join
+        - '.'
+        - - !Join
+            - '-'
+            - - Fn::ImportValue: !Join [ ':', [ !Ref 'Primary2ServiceStackName', 'Subdomain' ] ]
+              - 'http'
+          - Fn::ImportValue: !Join [':', [!Ref 'Primary2ServiceStackName', 'HostedZoneName']]
+      HostedZoneName:
+        !Join
+        - ''
+        - - Fn::ImportValue: !Join [':', [!Ref 'Primary2ServiceStackName', 'HostedZoneName']]
+          - '.'
+      Comment: DNS name for nlb serving HTTP requests to primary gerrit 2
+      Type: A
+      AliasTarget:
+        DNSName:
+          Fn::ImportValue:
+            !Join [':', [!Ref 'Primary2ServiceStackName', 'GerritHTTPLoadBalancerDNSName']]
+        HostedZoneId:
+          Fn::ImportValue:
+            !Join [':', [!Ref 'Primary2ServiceStackName', 'GerritHTTPCanonicalHostedZoneID']]
+        EvaluateTargetHealth: False

@@ -32,26 +32,10 @@ Parameters:
         MinValue: 2
         Default: 2
         ConstraintDescription: number of haproxy must be at least 2
-  HTTPGerritPort:
-        Description: Gerrit HTTP port
-        Type: Number
-        Default: 8080
   SSHGerritPort:
         Description: Gerrit SSH port
         Type: Number
         Default: 29418
-  HTTPContainerPort:
-        Description: Gerrit HTTP port
-        Type: Number
-        Default: 80
-  HTTPSHostPort:
-        Description: Gerrit HTTPS port
-        Type: Number
-        Default: 443
-  HTTPHostPort:
-        Description: HAProxy HTTP port
-        Type: Number
-        Default: 80
   CertificateArn:
         Description: SSL Certificates ARN
         Type: String
@@ -91,7 +75,6 @@ Resources:
     LBService:
         Type: AWS::ECS::Service
         DependsOn:
-          - HTTPListener
           - SSHListener
         Properties:
             Cluster:
@@ -101,9 +84,6 @@ Resources:
             TaskDefinition: !Ref TaskDefinition
             HealthCheckGracePeriodSeconds: !Ref HealthCheckGracePeriodSeconds
             LoadBalancers:
-                - ContainerName: !Ref LBServiceName
-                  ContainerPort: !Ref HTTPContainerPort
-                  TargetGroupArn: !Ref HTTPTargetGroup
                 - ContainerName: !Ref LBServiceName
                   ContainerPort: !Ref SSHGerritPort
                   TargetGroupArn: !Ref SSHTargetGroup
@@ -125,18 +105,15 @@ Resources:
                   Environment:
                     - Name: GERRIT_PRIMARY_1_URL
                       Value:
-                        Fn::ImportValue: !Join [':', [!Ref 'Primary1ServiceStackName', 'PublicLoadBalancerDNSName']]
+                        Fn::ImportValue: !Join [':', [!Ref 'Primary1ServiceStackName', 'GerritSSHLoadBalancerDNSName']]
                     - Name: GERRIT_PRIMARY_2_URL
                       Value:
-                        Fn::ImportValue: !Join [':', [!Ref 'Primary2ServiceStackName', 'PublicLoadBalancerDNSName']]
+                        Fn::ImportValue: !Join [':', [!Ref 'Primary2ServiceStackName', 'GerritSSHLoadBalancerDNSName']]
                     - Name: SYSLOG_SIDECAR
                       Value: !Ref SyslogSidecarServiceName
                   Cpu: 1024
                   Memory: 2048
                   PortMappings:
-                    - ContainerPort: !Ref HTTPContainerPort
-                      HostPort: !Ref HTTPHostPort
-                      Protocol: tcp
                     - ContainerPort: !Ref SSHGerritPort
                       HostPort: !Ref SSHGerritPort
                       Protocol: tcp
@@ -166,9 +143,10 @@ Resources:
         TemplateURL: !Join [ '', ['https://', !Ref TemplateBucketName, '.s3.amazonaws.com/cf-gerrit-task-execution-role.yml'] ]
         TimeoutInMinutes: '5'
 
-    LoadBalancer:
+    HaProxySSHLoadBalancer:
         Type: AWS::ElasticLoadBalancingV2::LoadBalancer
         Properties:
+            Name: 'haproxy-ssh-nlb'
             Type: network
             Scheme: !Ref 'LoadBalancerScheme'
             Subnets:
@@ -178,32 +156,9 @@ Resources:
                 - Key: Name
                   Value: !Join ['-', [!Ref 'EnvironmentName', !Ref 'LBServiceName', 'alb']]
 
-    HTTPTargetGroup:
-        Type: AWS::ElasticLoadBalancingV2::TargetGroup
-        DependsOn: LoadBalancer
-        Properties:
-            VpcId:
-              Fn::ImportValue:
-                  !Join [':', [!Ref 'ClusterStackName', 'VPCId']]
-            Port: !Ref HTTPHostPort
-            Protocol: TCP
-
-    HTTPListener:
-        Type: AWS::ElasticLoadBalancingV2::Listener
-        DependsOn: LoadBalancer
-        Properties:
-            Certificates:
-              - CertificateArn: !Ref CertificateArn
-            DefaultActions:
-            - Type: forward
-              TargetGroupArn: !Ref HTTPTargetGroup
-            LoadBalancerArn: !Ref LoadBalancer
-            Port: !Ref HTTPSHostPort
-            Protocol: TLS
-
     SSHTargetGroup:
         Type: AWS::ElasticLoadBalancingV2::TargetGroup
-        DependsOn: LoadBalancer
+        DependsOn: HaProxySSHLoadBalancer
         Properties:
             VpcId:
               Fn::ImportValue:
@@ -213,31 +168,31 @@ Resources:
 
     SSHListener:
         Type: AWS::ElasticLoadBalancingV2::Listener
-        DependsOn: LoadBalancer
+        DependsOn: HaProxySSHLoadBalancer
         Properties:
             DefaultActions:
             - Type: forward
               TargetGroupArn: !Ref SSHTargetGroup
-            LoadBalancerArn: !Ref LoadBalancer
+            LoadBalancerArn: !Ref HaProxySSHLoadBalancer
             Port: !Ref SSHGerritPort
             Protocol: TCP
 
 Outputs:
-  PublicLoadBalancerDNSName:
-    Description: The DNS name of the external load balancer
-    Value: !GetAtt 'LoadBalancer.DNSName'
+  HaProxySSHLoadBalancerDNSName:
+    Description: The DNS name of the haproxy SSH load balancer
+    Value: !GetAtt 'HaProxySSHLoadBalancer.DNSName'
     Export:
-      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'PublicLoadBalancerDNSName' ] ]
-  CanonicalHostedZoneID:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'HaProxySSHLoadBalancerDNSName' ] ]
+  HaProxySSHCanonicalHostedZoneID:
     Description: Canonical Hosted Zone ID
-    Value: !GetAtt 'LoadBalancer.CanonicalHostedZoneID'
+    Value: !GetAtt 'HaProxySSHLoadBalancer.CanonicalHostedZoneID'
     Export:
-      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'CanonicalHostedZoneID' ] ]
-  PublicLoadBalancerUrl:
-    Description: The url of the external load balancer
-    Value: !Join ['', ['https://', !GetAtt 'LoadBalancer.DNSName']]
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'HaProxySSHCanonicalHostedZoneID' ] ]
+  HaProxySSHLoadBalancerUrl:
+    Description: The url of the haproxy SSH load balancer
+    Value: !Join ['', ['https://', !GetAtt 'HaProxySSHLoadBalancer.DNSName']]
     Export:
-      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'PublicLoadBalancerUrl' ] ]
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'HaProxySSHLoadBalancerUrl' ] ]
   HostedZoneName:
     Description: Route53 Hosted Zone name
     Value: !Ref HostedZoneName
