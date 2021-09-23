@@ -1,5 +1,6 @@
 global
-    log gerrit-haproxy-sidecar local0 debug
+    log gerrit-haproxy-sidecar:514 local0
+    log stdout local1
 
     chroot /var/lib/haproxy
     stats socket /var/run/haproxy/admin.sock mode 660 level admin
@@ -18,12 +19,91 @@ defaults
     timeout server  900000
     timeout check 30000
 
-frontend localnodes
+frontend haproxy
     bind *:80
     mode http
     option httplog
-    capture request header X-Forwarded-For len 15
-    log-format %[capture.req.hdr(0)]:%cp\ [%t]\ %f\ %b/%s\ %Tq/%Tw/%Tc/%Tr/%Tt\ %ST\ %B\ %CC\ %CS\ %tsc\ %ac/%fc/%bc/%sc/%rc\ %sq/%bq\ {%hrl}\ {%hsl}\ %{+Q}r
+
+      # Create custom headers as temporary holding places for info
+     http-request set-header X-Scheme http if !{ ssl_fc }
+     http-request set-header X-Scheme https if { ssl_fc }
+     http-request set-header X-TraceId %[rand,hex,bytes(8,8),lower]%[rand,hex,bytes(8,8),lower]%[rand,hex,bytes(8,8),lower]
+     http-request set-header X-SegmentId0 %[rand,hex,bytes(8,8),lower]%[rand,hex,bytes(8,8),lower]
+     http-request set-header X-SegmentId1 %[rand,hex,bytes(8,8),lower]%[rand,hex,bytes(8,8),lower]
+     http-request set-header X-SegmentId2 %[rand,hex,bytes(8,8),lower]%[rand,hex,bytes(8,8),lower]
+     http-request set-header X-SegmentId3 %[rand,hex,bytes(8,8),lower]%[rand,hex,bytes(8,8),lower]
+     http-request set-header X-SegmentId4 %[rand,hex,bytes(8,8),lower]%[rand,hex,bytes(8,8),lower]
+
+     # Declare capture slots for logging headers
+     declare capture request len 512
+     http-request capture req.fhdr(User-Agent) id 0
+
+     declare capture request len 5
+     http-request capture req.hdr(X-Scheme) id 1
+
+     declare capture request len 512
+     http-request capture req.hdr(Host) id 2
+
+     declare capture request len 24
+     http-request capture req.hdr(X-TraceId) id 3
+
+     declare capture request len 16
+     http-request capture req.hdr(X-SegmentId0) id 4
+
+     declare capture request len 16
+     http-request capture req.hdr(X-SegmentId1) id 5
+
+     declare capture request len 16
+     http-request capture req.hdr(X-SegmentId2) id 6
+
+     declare capture request len 16
+     http-request capture req.hdr(X-SegmentId3) id 7
+
+     declare capture request len 16
+     http-request capture req.hdr(X-SegmentId4) id 8
+
+     declare capture response len 8
+     http-response capture res.hdr(Content-Length) id 0
+
+     # Generate a unique Trace ID
+     unique-id-format %{+X}o\ 1-%[date,hex,bytes(8,8),lower]-%[capture.req.hdr(3)]
+     http-request set-header X-Amzn-Trace-Id Root=%[unique-id,lower]
+
+     # ci = client IP
+     # cp = client port
+     # Ts = timestamp
+     # ft = frontend name
+     # b = backend name
+     # s = server name
+     # TR = time to receive 1st byte
+     # Tw = time spent waiting in queue
+     # Tc = time spent to establish server connection
+     # Tr = server response time
+     # Ta = total active time of request
+     # ST = status code
+     # B = bytes read
+     # CC = captured request cookie
+     # CS = captured response cookie
+     # ts = termination state code
+     # ac = active connections
+     # fc = frontend connections
+     # bc = backend connections
+     # sc = server connections
+     # rc = number of retries
+     # sq = connections queued for server
+     # bq = requests processed before this one
+     # capture.req.method = HTTP method
+     # capture.req.hdr(0) = User-Agent
+     # scheme://URL
+     # trace ID
+     # segment ID 1
+     # segment ID 2
+     # segment ID 3
+     # segment ID 4
+     # segment ID 5
+     # capture.res.hdr(0) = Content-Length
+
+     log-format "%ci|%cp|%Ts|%ft|%b|%s|%TR|%Tw|%Tc|%Tr|%Ta|%ST|%B|%CC|%CS|%ts|%ac|%fc|%bc|%sc|%rc|%sq|%bq|%[capture.req.method]|%[capture.req.hdr(0)]|%[capture.req.hdr(1)]://%[capture.req.hdr(2)]%HP|%ID|%[capture.req.hdr(4)]|%[capture.req.hdr(5)]|%[capture.req.hdr(6)]|%[capture.req.hdr(7)]|%[capture.req.hdr(8)]|%[capture.res.hdr(0)]"
 
     default_backend primary
 
@@ -39,7 +119,7 @@ backend primary
     balance roundrobin
     option forwardfor
     default-server inter 10s fall 3 rise 2
-    option httpchk GET /config/server/healthcheck~status HTTP/1.0\r\nHost:\ $GERRIT_PRIMARY_1_URL
+    option httpchk GET /config/server/healthcheck~status HTTP/1.0\r\nHost:\ $GERRIT_PRIMARY_1_URL\r\nUser-agent:\ haproxy
     http-check expect status 200
     server gerrit-1 $GERRIT_PRIMARY_1_URL:8080 check inter 10s
     server gerrit-2 $GERRIT_PRIMARY_2_URL:8080 check inter 10s backup

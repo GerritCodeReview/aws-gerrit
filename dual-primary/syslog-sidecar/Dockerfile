@@ -1,11 +1,14 @@
-FROM alpine:3.4
-MAINTAINER Ryan Schlesinger <ryan@outstand.com>
+FROM ubuntu:bionic
 
-RUN apk add --no-cache bash syslog-ng
+EXPOSE 514/udp
 
-RUN mkdir /sidecar
-COPY config/* /etc/syslog-ng/
-COPY docker-entrypoint.sh /docker-entrypoint.sh
-VOLUME ["/sidecar"]
-CMD ["syslog-ng", "-F"]
-ENTRYPOINT ["/docker-entrypoint.sh"]
+WORKDIR /app
+RUN apt update && apt install -y wget
+RUN wget https://s3.dualstack.us-east-2.amazonaws.com/aws-xray-assets.us-east-2/xray-daemon/aws-xray-daemon-3.x.deb
+RUN dpkg -i aws-xray-daemon-3.x.deb
+
+COPY 49-haproxy.conf /etc/rsyslog.d/
+COPY init.sh .
+RUN chmod +x ./init.sh
+
+ENTRYPOINT /bin/bash -c ./init.sh

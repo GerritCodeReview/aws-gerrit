@@ -102,7 +102,8 @@ endif
 service-primary-1: set-optional-params-metrics-cloudwatch set-optional-params-smtp \
 					set-optional-params-multisite set-ldap-account-pattern \
 					set-optional-gerrit-ulimits set-optional-jgit-conf \
-					set-high-availability-optional-params
+					set-high-availability-optional-params \
+					set-optional-x-ray
 ifdef GERRIT_PRIMARY1_INSTANCE_ID
 		$(eval PRIMARY1_SERVICE_OPTIONAL_PARAMS := $(PRIMARY1_SERVICE_OPTIONAL_PARAMS) ParameterKey=InstanceId,ParameterValue=$(GERRIT_PRIMARY1_INSTANCE_ID))
 endif
@@ -155,12 +156,14 @@ endif
 		$(LDAP_ACCOUNT_PATTERN_PARAM) \
 		$(METRICS_CW_OPTIONAL_PARAMS) \
 		$(SMTP_OPTIONAL_PARAMS) \
-		$(GERRIT_ULIMITS)
+		$(GERRIT_ULIMITS) \
+		$(XRAY_OPTIONAL_PARAMS)
 
 service-primary-2: set-optional-params-metrics-cloudwatch set-optional-params-smtp \
 					set-optional-params-multisite set-ldap-account-pattern \
 					set-optional-gerrit-ulimits set-optional-jgit-conf \
-					set-high-availability-optional-params
+					set-high-availability-optional-params \
+					set-optional-x-ray
 ifdef GERRIT_PRIMARY2_INSTANCE_ID
 		$(eval PRIMARY2_SERVICE_OPTIONAL_PARAMS := $(PRIMARY2_SERVICE_OPTIONAL_PARAMS) ParameterKey=InstanceId,ParameterValue=$(GERRIT_PRIMARY2_INSTANCE_ID))
 endif
@@ -214,7 +217,8 @@ endif
 		$(LDAP_ACCOUNT_PATTERN_PARAM) \
 		$(METRICS_CW_OPTIONAL_PARAMS) \
 		$(SMTP_OPTIONAL_PARAMS) \
-		$(GERRIT_ULIMITS)
+		$(GERRIT_ULIMITS) \
+		$(XRAY_OPTIONAL_PARAMS)
 
 service-replication:
 	$(AWS_FC_COMMAND) create-stack \
@@ -237,7 +241,8 @@ service-replica: set-optional-params-metrics-cloudwatch \
 					set-optional-gerrit-ulimits \
 					set-optional-jgit-conf \
 					set-optional-params-for-replica-auto-scaling-capacity \
-					set-optional-params-for-replica-auto-scaling-policy
+					set-optional-params-for-replica-auto-scaling-policy \
+					set-optional-x-ray
 
 ifdef GERRIT_REPLICA_INSTANCE_ID
 		$(eval REPLICA_SERVICE_OPTIONAL_PARAMS := $(REPLICA_SERVICE_OPTIONAL_PARAMS) ParameterKey=InstanceId,ParameterValue=$(GERRIT_REPLICA_INSTANCE_ID))
@@ -274,7 +279,8 @@ endif
 		$(METRICS_CW_OPTIONAL_PARAMS) \
 		$(GERRIT_ULIMITS) \
 		$(GERRIT_OPTIONAL_PARAMS_REPLICA_AUTO_SCALING_CAPACITY) \
-		$(GERRIT_OPTIONAL_PARAMS_REPLICA_AUTO_SCALING_POLICY)
+		$(GERRIT_OPTIONAL_PARAMS_REPLICA_AUTO_SCALING_POLICY) \
+		$(XRAY_OPTIONAL_PARAMS)
 
 service-lb:
 ifdef LOAD_BALANCER_SCHEME

@@ -1,0 +1,17 @@
+TotalBufferSizeMB: 0
+Concurrency: 8
+Region: "us-east-1"
+Endpoint: ""
+Socket:
+  UDPAddress: "127.0.0.1:2000"
+  TCPAddress: "127.0.0.1:2000"
+Logging:
+  LogRotation: true
+  LogLevel: "dev"
+  LogPath: ""
+LocalMode: true
+ResourceARN: ""
+RoleARN: ""
+NoVerifySSL: false
+ProxyAddress: ""
+Version: 2

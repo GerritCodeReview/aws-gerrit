@@ -1,17 +1,20 @@
-#!/bin/sh
+#!/bin/sh -x
 set -e
 
+envsubst < /usr/local/etc/haproxy/haproxy.cfg.template > /usr/local/etc/haproxy/haproxy.cfg
+
+### COPIED FROM haproxy:1.9.8 ###
 # first arg is `-f` or `--some-option`
 if [ "${1#-}" != "$1" ]; then
 	set -- haproxy "$@"
 fi
 
 if [ "$1" = 'haproxy' ]; then
-	# if the user wants "haproxy", let's use "haproxy-systemd-wrapper" instead so we can have proper reloadability implemented by upstream
 	shift # "haproxy"
-	set -- "$(which haproxy-systemd-wrapper)" -p /run/haproxy.pid "$@"
+	# if the user wants "haproxy", let's add a couple useful flags
+	#   -W  -- "master-worker mode" (similar to the old "haproxy-systemd-wrapper"; allows for reload via "SIGUSR2")
+	#   -db -- disables background mode
+	set -- haproxy -W -db "$@"
 fi
-
-envsubst < /usr/local/etc/haproxy/haproxy.cfg.template > /usr/local/etc/haproxy/haproxy.cfg
 
 exec "$@"
