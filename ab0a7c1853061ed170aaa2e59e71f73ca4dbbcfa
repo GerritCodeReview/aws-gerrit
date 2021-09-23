@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "79ee4110_c894c0bd",
+        "filename": "gerrit/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-09-23T08:07:13Z",
+      "side": 1,
+      "message": "This is the official release of the aws-xray-java-agent.\n\nI think we really want the latest one in this case (note this is not docker, but the agent), because they update the agent alongside the AWS service, so ideally we always want them in sync.\n\nForgetting to update the version in the setup.env will be riskier than using \u0027latest\u0027 in my opinion.",
+      "parentUuid": "ed6f49ce_07f79282",
+      "range": {
+        "startLine": 28,
+        "startChar": 70,
+        "endLine": 28,
+        "endChar": 76
+      },
+      "revId": "ab0a7c1853061ed170aaa2e59e71f73ca4dbbcfa",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "96c37a13_2e0dfeb6",
         "filename": "gerrit/Dockerfile",
         "patchSetId": 1
@@ -54,6 +78,30 @@
       "writtenOn": "2021-09-22T13:04:33Z",
       "side": 1,
       "message": "could we use different location than /tmp ?",
+      "range": {
+        "startLine": 29,
+        "startChar": 34,
+        "endLine": 29,
+        "endChar": 37
+      },
+      "revId": "ab0a7c1853061ed170aaa2e59e71f73ca4dbbcfa",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b6f6e457_225c7a61",
+        "filename": "gerrit/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-09-23T08:07:13Z",
+      "side": 1,
+      "message": "Sure, but why do you think that will be an improvement?",
+      "parentUuid": "96c37a13_2e0dfeb6",
       "range": {
         "startLine": 29,
         "startChar": 34,
@@ -87,6 +135,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e1b75742_8750e630",
+        "filename": "gerrit/Makefile",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-09-23T08:07:13Z",
+      "side": 1,
+      "message": "Yes, with the introduction of an ARG ($withXRay) in the Dockerfile template has other variables starting with ($, dollar), which we don\u0027t want envsubst to replace.\n\nThe way to tell envsubst to replace only a specific set of variables is to explicitly list them, so that others will not be expanded to empty strings.",
+      "parentUuid": "ca9b070d_e3dba396",
+      "range": {
+        "startLine": 48,
+        "startChar": 2,
+        "endLine": 48,
+        "endChar": 76
+      },
+      "revId": "ab0a7c1853061ed170aaa2e59e71f73ca4dbbcfa",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6e5b5d5e_89fdd532",
@@ -100,6 +172,54 @@
       "writtenOn": "2021-09-22T13:04:33Z",
       "side": 1,
       "message": "should we make the logging level configurable?",
+      "range": {
+        "startLine": 64,
+        "startChar": 181,
+        "endLine": 64,
+        "endChar": 188
+      },
+      "revId": "ab0a7c1853061ed170aaa2e59e71f73ca4dbbcfa",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e4c83029_08e09873",
+        "filename": "gerrit/etc/gerrit.config.template",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-09-23T08:07:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6e5b5d5e_89fdd532",
+      "range": {
+        "startLine": 64,
+        "startChar": 181,
+        "endLine": 64,
+        "endChar": 188
+      },
+      "revId": "ab0a7c1853061ed170aaa2e59e71f73ca4dbbcfa",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fd47ba18_cca603bc",
+        "filename": "gerrit/etc/gerrit.config.template",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-09-23T08:07:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6e5b5d5e_89fdd532",
       "range": {
         "startLine": 64,
         "startChar": 181,
