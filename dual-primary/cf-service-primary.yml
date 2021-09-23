@@ -397,9 +397,10 @@ Resources:
                 Host:
                   SourcePath: !Join ['/', ["/gerrit-mount-point", !FindInMap ['Gerrit', 'Volume', 'Logs']]]
 
-    LoadBalancer:
+    GerritSSHLoadBalancer:
         Type: AWS::ElasticLoadBalancingV2::LoadBalancer
         Properties:
+            Name: !Sub 'gerrit-${GerritInstanceNumber}-ssh-nlb'
             Type: network
             Scheme: !Ref 'LoadBalancerScheme'
             Subnets:
@@ -407,32 +408,46 @@ Resources:
                   !Join [':', [!Ref 'ClusterStackName', 'PublicSubnetOne']]
             Tags:
                 - Key: Name
-                  Value: !Join ['-', [!Ref 'EnvironmentName', !FindInMap ['Gerrit', 'Service', 'Name'], 'nlb']]
+                  Value: !Join ['-', [!Ref 'EnvironmentName', !FindInMap ['Gerrit', 'Service', 'Name'], 'ssh-nlb']]
+
+    GerritHTTPLoadBalancer:
+      Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+      Properties:
+        Name: !Sub 'gerrit-${GerritInstanceNumber}-http-alb'
+        Type: application
+        Scheme: !Ref 'LoadBalancerScheme'
+        Subnets:
+          - Fn::ImportValue:
+              !Join [':', [!Ref 'ClusterStackName', 'PublicSubnetOne']]
+          - Fn::ImportValue:
+              !Join [':', [!Ref 'ClusterStackName', 'PublicSubnetTwo']]
+        Tags:
+          - Key: Name
+            Value: !Join ['-', [!Ref 'EnvironmentName', !FindInMap ['Gerrit', 'Service', 'Name'], 'http-alb']]
 
     HTTPTargetGroup:
         Type: AWS::ElasticLoadBalancingV2::TargetGroup
-        DependsOn: LoadBalancer
+        DependsOn: GerritHTTPLoadBalancer
         Properties:
             VpcId:
               Fn::ImportValue:
                   !Join [':', [!Ref 'ClusterStackName', 'VPCId']]
             Port: !Ref HTTPHostPort
-            Protocol: TCP
+            Protocol: HTTP
 
     HTTPListener:
         Type: AWS::ElasticLoadBalancingV2::Listener
-        DependsOn: LoadBalancer
         Properties:
             DefaultActions:
             - Type: forward
               TargetGroupArn: !Ref HTTPTargetGroup
-            LoadBalancerArn: !Ref LoadBalancer
+            LoadBalancerArn: !Ref GerritHTTPLoadBalancer
             Port: !FindInMap ['Gerrit', 'LoadBalancer', 'HTTPPort']
-            Protocol: TCP
+            Protocol: HTTP
 
     SSHTargetGroup:
         Type: AWS::ElasticLoadBalancingV2::TargetGroup
-        DependsOn: LoadBalancer
+        DependsOn: GerritSSHLoadBalancer
         Properties:
             VpcId:
               Fn::ImportValue:
@@ -442,12 +457,11 @@ Resources:
 
     SSHListener:
         Type: AWS::ElasticLoadBalancingV2::Listener
-        DependsOn: LoadBalancer
         Properties:
             DefaultActions:
             - Type: forward
               TargetGroupArn: !Ref SSHTargetGroup
-            LoadBalancerArn: !Ref LoadBalancer
+            LoadBalancerArn: !Ref GerritSSHLoadBalancer
             Port: !FindInMap ['Gerrit', 'LoadBalancer', 'SSHPort']
             Protocol: TCP
 
@@ -458,21 +472,37 @@ Resources:
         TimeoutInMinutes: '5'
 
 Outputs:
-  PublicLoadBalancerDNSName:
-    Description: The DNS name of the external load balancer
-    Value: !GetAtt 'LoadBalancer.DNSName'
+  GerritSSHLoadBalancerDNSName:
+    Description: The DNS name of the gerrit SSH loadbalancer
+    Value: !GetAtt 'GerritSSHLoadBalancer.DNSName'
     Export:
-      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'PublicLoadBalancerDNSName' ] ]
-  CanonicalHostedZoneID:
-    Description: Canonical Hosted Zone ID
-    Value: !GetAtt 'LoadBalancer.CanonicalHostedZoneID'
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'GerritSSHLoadBalancerDNSName' ] ]
+  GerritSSHLoadBalancerUrl:
+    Description: The DNS name of the gerrit SSH loadbalancer
+    Value: !Join ['', ['http://', !GetAtt 'GerritSSHLoadBalancer.DNSName']]
     Export:
-      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'CanonicalHostedZoneID' ] ]
-  PublicLoadBalancerUrl:
-    Description: The url of the external load balancer
-    Value: !Join ['', ['http://', !GetAtt 'LoadBalancer.DNSName']]
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'GerritSSHLoadBalancerUrl' ] ]
+  GerritHTTPLoadBalancerDNSName:
+    Description: The DNS name of the gerrit HTTP loadbalancer
+    Value: !GetAtt 'GerritHTTPLoadBalancer.DNSName'
     Export:
-      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'PublicLoadBalancerUrl' ] ]
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'GerritHTTPLoadBalancerDNSName' ] ]
+  GerritHTTPLoadBalancerUrl:
+    Description: The url of the gerrit HTTP loadbalancer
+    Value: !Join ['', ['http://', !GetAtt 'GerritHTTPLoadBalancer.DNSName']]
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'GerritHTTPLoadBalancerUrl' ] ]
+  GerritSSHCanonicalHostedZoneID:
+    Description: Canonical Hosted Zone ID of the gerrit SSH loadbalancer
+    Value: !GetAtt 'GerritSSHLoadBalancer.CanonicalHostedZoneID'
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'GerritSSHCanonicalHostedZoneID' ] ]
+  GerritHTTPCanonicalHostedZoneID:
+    Description: Canonical Hosted Zone ID of the gerrit HTTP loadbalancer
+    Value: !GetAtt 'GerritHTTPLoadBalancer.CanonicalHostedZoneID'
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'GerritHTTPCanonicalHostedZoneID' ] ]
+
   HostedZoneName:
     Description: Route53 Hosted Zone name
     Value: !Ref HostedZoneName

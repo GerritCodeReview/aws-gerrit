@@ -13,11 +13,19 @@ Parameters:
   SubnetIdProp:
     Type: String
     Default: ""
-    Description: Subnet id. If empty Network Stack will be created
+    Description: Subnet1 id. If empty Network Stack will be created
+  SubnetId2Prop:
+    Type: String
+    Default: ""
+    Description: Subnet2 id. If empty Network Stack will be created
   SubnetCIDR:
     Type: String
     Default: 10.0.0.0/24
-    Description: Subnet CIDR.
+    Description: Subnet 1 CIDR.
+  Subnet2CIDR:
+    Type: String
+    Default: 10.0.32.0/24
+    Description: Subnet 2 CIDR.
   VPCCIDR:
     Type: String
     Default: 10.0.0.0/16
@@ -51,6 +59,18 @@ Resources:
       CidrBlock: !Ref 'SubnetCIDR'
       MapPublicIpOnLaunch: true
 
+  PublicSubnetTwo:
+    Condition: CreateNetworkStack
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone:
+        Fn::Select:
+          - 1
+          - Fn::GetAZs: {Ref: 'AWS::Region'}
+      VpcId: !If [CreateVPC, !Ref 'VPC', !Ref 'VPCIdProp' ]
+      CidrBlock: !Ref 'Subnet2CIDR'
+      MapPublicIpOnLaunch: true
+
   # Setup networking resources for the public subnets. Containers
   # in the public subnets have public IP addresses and the routing table
   # sends network traffic via the internet gateway.
@@ -82,10 +102,22 @@ Resources:
     Properties:
       SubnetId: !Ref PublicSubnetOne
       RouteTableId: !Ref PublicRouteTable
+  PublicSubnetTwoRouteTableAssociation:
+    Condition: CreateNetworkStack
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PublicSubnetTwo
+      RouteTableId: !Ref PublicRouteTable
+
 Outputs:
   VPCRef:
     Value: !If [CreateVPC, !Ref 'VPC', !Ref 'VPCIdProp' ]
   PublicSubnetOneRef:
     Value: !If [CreateNetworkStack, !Ref 'PublicSubnetOne', !Ref 'SubnetIdProp' ]
+  PublicSubnetTwoRef:
+    Value: !If [CreateNetworkStack, !Ref 'PublicSubnetTwo', !Ref 'SubnetIdProp' ]
+
   PublicOneCIDR:
     Value: !Ref 'SubnetCIDR'
+  PublicTwoCIDR:
+    Value: !Ref 'Subnet2CIDR'
