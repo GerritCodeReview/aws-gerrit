@@ -18,6 +18,23 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "439e41a2_41ff36c1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-09-24T10:08:28Z",
+      "side": 1,
+      "message": "Marking as WIP, until we have a better picture of how to enable this for dual-primary too",
+      "revId": "ab0a7c1853061ed170aaa2e59e71f73ca4dbbcfa",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ed6f49ce_07f79282",
