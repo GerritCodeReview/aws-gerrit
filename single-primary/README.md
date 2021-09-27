@@ -14,9 +14,10 @@ Three templates are provided in this example:
 
 * Single VPC:
  * CIDR: 10.0.0.0/16
-* Single Availability Zone
-* 1 public Subnets:
+* Single Availability Zone2
+* 2 public Subnets:
  * CIDR: 10.0.0.0/24
+ * CIDR: 10.0.32.0/24
 * 1 public NLB exposing:
  * HTTP on port 8080
  * SSH on port 29418

@@ -10,22 +10,40 @@ Parameters:
     Type: String
     Default: ""
     Description: VPC id. If empty VPC will be created
-  SubnetIdProp:
+  Subnet1IdProp:
     Type: String
     Default: ""
-    Description: Subnet id. If empty Network Stack will be created
-  SubnetCIDR:
+    Description: Subnet1 id. If empty Network Stack will be created
+  Subnet2IdProp:
+    Type: String
+    Default: ""
+    Description: Subnet2 id. If empty Network Stack will be created
+  Subnet1CIDR:
     Type: String
     Default: 10.0.0.0/24
-    Description: Subnet CIDR.
+    Description: Subnet 1 CIDR.
+  Subnet2CIDR:
+    Type: String
+    Default: 10.0.32.0/24
+    Description: Subnet 2 CIDR.
   VPCCIDR:
     Type: String
     Default: 10.0.0.0/16
     Description: VPC CIDR.
+  Subnet1AZProp:
+    Type: String
+    Default: ""
+    Description: The Availability Zone of subnet1
+  Subnet2AZProp:
+    Type: String
+    Default: ""
+    Description: The Availability Zone of subnet2
 
 Conditions:
   CreateVPC: !Equals [!Ref VPCIdProp, ""]
-  CreateNetworkStack: !Equals [!Ref SubnetIdProp, ""]
+  CreateNetworkStack: !Equals [!Ref Subnet1IdProp, ""]
+  HasSubnet1AZ: !Equals [!Ref Subnet1AZProp, ""]
+  HasSubnet2AZ: !Equals [!Ref Subnet2AZProp, ""]
   CreateInternetGateway: !And
      - !Equals [!Ref InternetGatewayIdProp, ""]
      - !Condition CreateNetworkStack
@@ -44,11 +62,29 @@ Resources:
     Type: AWS::EC2::Subnet
     Properties:
       AvailabilityZone:
-         Fn::Select:
-         - 0
-         - Fn::GetAZs: {Ref: 'AWS::Region'}
+        Fn::If:
+          - HasSubnet1AZ
+          - !Ref 'Subnet1AZProp'
+          - Fn::Select:
+              - 0
+              - Fn::GetAZs: {Ref: 'AWS::Region'}
       VpcId: !If [CreateVPC, !Ref 'VPC', !Ref 'VPCIdProp' ]
-      CidrBlock: !Ref 'SubnetCIDR'
+      CidrBlock: !Ref 'Subnet1CIDR'
+      MapPublicIpOnLaunch: true
+
+  PublicSubnetTwo:
+    Condition: CreateNetworkStack
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone:
+        Fn::If:
+          - HasSubnet2AZ
+          - !Ref 'Subnet2AZProp'
+          - Fn::Select:
+              - 1
+              - Fn::GetAZs: {Ref: 'AWS::Region'}
+      VpcId: !If [CreateVPC, !Ref 'VPC', !Ref 'VPCIdProp' ]
+      CidrBlock: !Ref 'Subnet2CIDR'
       MapPublicIpOnLaunch: true
 
   # Setup networking resources for the public subnets. Containers
@@ -82,10 +118,24 @@ Resources:
     Properties:
       SubnetId: !Ref PublicSubnetOne
       RouteTableId: !Ref PublicRouteTable
+  PublicSubnetTwoRouteTableAssociation:
+    Condition: CreateNetworkStack
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PublicSubnetTwo
+      RouteTableId: !Ref PublicRouteTable
 Outputs:
   VPCRef:
     Value: !If [CreateVPC, !Ref 'VPC', !Ref 'VPCIdProp' ]
   PublicSubnetOneRef:
-    Value: !If [CreateNetworkStack, !Ref 'PublicSubnetOne', !Ref 'SubnetIdProp' ]
+    Value: !If [CreateNetworkStack, !Ref 'PublicSubnetOne', !Ref 'Subnet1IdProp' ]
+  PublicSubnetOneAZ:
+    Value: !If [CreateNetworkStack, !GetAtt PublicSubnetOne.AvailabilityZone, !Ref 'Subnet1AZProp' ]
   PublicOneCIDR:
-    Value: !Ref 'SubnetCIDR'
+    Value: !Ref 'Subnet1CIDR'
+  PublicSubnetTwoRef:
+    Value: !If [CreateNetworkStack, !Ref 'PublicSubnetTwo', !Ref 'Subnet2IdProp' ]
+  PublicSubnetTwoAZ:
+    Value: !If [CreateNetworkStack, !GetAtt PublicSubnetTwo.AvailabilityZone, !Ref 'Subnet2AZProp' ]
+  PublicTwoCIDR:
+    Value: !Ref 'Subnet2CIDR'

@@ -13,6 +13,9 @@ Parameters:
       Description: Gerrit volume size in GiB
       Type: Number
       Default: 10
+  AvailabilityZone:
+    Description: The Availability Zone in which to create the volume
+    Type: String
 
 Conditions:
   CreateEBSVolume: !Equals [!Ref GerritVolumeId, ""]
@@ -24,10 +27,7 @@ Resources:
     Condition: CreateEBSVolume
     Type: AWS::EC2::Volume
     Properties:
-      AvailabilityZone: !Select
-        - 0
-        - !GetAZs
-           Ref: 'AWS::Region'
+      AvailabilityZone: !Ref AvailabilityZone
       SnapshotId: !If [CreateEBSVolumeBasedOnSnapshot, !Ref GerritVolumeSnapshotId, !Ref "AWS::NoValue"]
       Size: !If [CreateEBSVolumeBasedOnSnapshot,  !Ref "AWS::NoValue", !Ref GerritVolumeSizeInGiB]
 

@@ -16,9 +16,10 @@ Five templates are provided in this example:
 
 * Single VPC:
  * CIDR: 10.0.0.0/16
-* Single Availability Zone
-* 1 public Subnets:
+* Two Availability Zones
+* 2 public Subnets:
  * CIDR: 10.0.0.0/24
+ * CIDR: 10.0.32.0/24
 * 1 public NLB exposing:
  * Gerrit primary HTTP on port 8080
  * Gerrit primary SSH on port 29418
