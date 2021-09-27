@@ -19,23 +19,6 @@ then these additional templates will be executed:
 * `cf-service-replication`: Define a replication stack that will allow git replication
 over the EFS volume, which is mounted by the primary instances.
 
-### Networking
-
-* Single VPC:
- * CIDR: 10.0.0.0/16
-* Single Availability Zone
-* 1 public Subnets:
- * CIDR: 10.0.0.0/24
-* 1 public NLB exposing:
- * Gerrit primary 1 HTTP on port 8080
- * Gerrit primary 1 SSH on port 29418
-* 1 public NLB exposing:
- * Gerrit primary 2 HTTP on port 8081
- * Gerrit primary 2 SSH on port 39418
-* 1 Internet Gateway
-* 2 type A alias DNS entry, for Gerrit primary 1 and 2
-* A wildcard SSL certificate available in [AWS Certificate Manager](https://aws.amazon.com/certificate-manager/)
-
 ### Data persistency
 
 * EBS volumes for:
@@ -93,8 +76,9 @@ regularly by a backup script.
 2. Update the `setup.env` to point to existing volumes, for example:
 
 ```bash
-FILESYSTEM_ID=fs-c621b733
-GERRIT_VOLUME_SNAPSHOT_ID=snap-0afa165bdf4881915
+PRIMARY_FILESYSTEM_ID=fs-93514727
+REPLICA_FILESYSTEM_ID=fs-9c514728
+GERRIT_VOLUME_SNAPSHOT_ID=snap-048a5c2dfc14a81eb
 ```
 
 If the network stack was created as part of this deployment (i.e. a new VPC was
@@ -102,9 +86,16 @@ created as part of this deployment), then you need to set network resources so
 that the green stack can be deployed in the same VPC, for example:
 
 ```bash
-VPC_ID=vpc-08d2159c53f7a1ff5
-INTERNET_GATEWAY_ID=igw-0c0577829910ce7f3
-SUBNET_ID=subnet-05efd67802b1cbd5b
+VPC_ID=	vpc-03292278512e783c7
+INTERNET_GATEWAY_ID=igw-0cb5b144c294f9411
+
+SUBNET1_ID=subnet-066065ea55fda52cf
+SUBNET1_AZ=us-east-1a
+SUBNET1_CIDR=10.0.0.0/24
+
+SUBNET2_ID=subnet-0fefe45d89ce02b31
+SUBNET2_AZ=us-east-1b
+SUBNET2_CIDR=10.0.32.0/24
 ```
 
 3. Deploy the *green* stack:

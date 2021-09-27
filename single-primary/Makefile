@@ -22,15 +22,9 @@ create-all: upload-common-templates \
 						$(optional_git_gc_targets_creation) \
 						dns-routing wait-for-dns-routing-creation
 
-cluster: cluster-keys set-optional-gerrit-primary-volume
+cluster: cluster-keys set-optional-gerrit-primary-volume set-optional-network-params
 ifdef CLUSTER_INSTANCE_TYPE
 		$(eval CLUSTER_OPTIONAL_PARAMS := $(CLUSTER_OPTIONAL_PARAMS) ParameterKey=InstanceType,ParameterValue=$(CLUSTER_INSTANCE_TYPE))
-endif
-ifdef SUBNET_CIDR
-		$(eval CLUSTER_OPTIONAL_PARAMS := $(CLUSTER_OPTIONAL_PARAMS) ParameterKey=SubnetCIDR,ParameterValue=$(SUBNET_CIDR))
-endif
-ifdef VPC_CIDR
-		$(eval CLUSTER_OPTIONAL_PARAMS := $(CLUSTER_OPTIONAL_PARAMS) ParameterKey=VPCCIDR,ParameterValue=$(VPC_CIDR))
 endif
 
 	$(AWS_FC_COMMAND) create-stack \
@@ -41,9 +35,7 @@ endif
 		--parameters \
 		ParameterKey=ECSKeyName,ParameterValue=$(CLUSTER_KEYS) \
 		ParameterKey=TemplateBucketName,ParameterValue=$(TEMPLATE_BUCKET_NAME) \
-		ParameterKey=InternetGatewayIdProp,ParameterValue=$(INTERNET_GATEWAY_ID) \
-		ParameterKey=VPCIdProp,ParameterValue=$(VPC_ID) \
-		ParameterKey=SubnetIdProp,ParameterValue=$(SUBNET_ID) \
+		$(GERRIT_OPTIONAL_PARAMS_NETWORK) \
 		$(CLUSTER_OPTIONAL_PARAMS) \
 		$(GERRIT_OPTIONAL_PRIMARY_VOLUME)
 

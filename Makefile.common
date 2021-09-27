@@ -146,6 +146,36 @@ ifdef REPLICA_CAPACITY_PROVIDER_MAX_STEP_SIZE
 		$(eval GERRIT_OPTIONAL_PARAMS_REPLICA_CAPACITY_PROVIDER := $(GERRIT_OPTIONAL_PARAMS_REPLICA_CAPACITY_PROVIDER) ParameterKey=ReplicaCapacityProviderMaxStepSize,ParameterValue=$(REPLICA_CAPACITY_PROVIDER_MAX_STEP_SIZE))
 endif
 
+set-optional-network-params:
+	$(eval GERRIT_OPTIONAL_PARAMS_NETWORK=)
+ifdef INTERNET_GATEWAY_ID
+		$(eval GERRIT_OPTIONAL_PARAMS_NETWORK := $(GERRIT_OPTIONAL_PARAMS_NETWORK) ParameterKey=InternetGatewayIdProp,ParameterValue=$(INTERNET_GATEWAY_ID))
+endif
+ifdef VPC_ID
+		$(eval GERRIT_OPTIONAL_PARAMS_NETWORK := $(GERRIT_OPTIONAL_PARAMS_NETWORK) ParameterKey=VPCIdProp,ParameterValue=$(VPC_ID))
+endif
+ifdef VPC_CIDR
+		$(eval GERRIT_OPTIONAL_PARAMS_NETWORK := $(GERRIT_OPTIONAL_PARAMS_NETWORK) ParameterKey=VPCCIDR,ParameterValue=$(VPC_CIDR))
+endif
+ifdef SUBNET1_CIDR
+		$(eval GERRIT_OPTIONAL_PARAMS_NETWORK := $(GERRIT_OPTIONAL_PARAMS_NETWORK) ParameterKey=Subnet1CIDR,ParameterValue=$(SUBNET1_CIDR))
+endif
+ifdef SUBNET1_ID
+		$(eval GERRIT_OPTIONAL_PARAMS_NETWORK := $(GERRIT_OPTIONAL_PARAMS_NETWORK) ParameterKey=Subnet1IdProp,ParameterValue=$(SUBNET1_ID))
+endif
+ifdef SUBNET1_AZ
+		$(eval GERRIT_OPTIONAL_PARAMS_NETWORK := $(GERRIT_OPTIONAL_PARAMS_NETWORK) ParameterKey=Subnet1AZProp,ParameterValue=$(SUBNET1_AZ))
+endif
+ifdef SUBNET2_CIDR
+		$(eval GERRIT_OPTIONAL_PARAMS_NETWORK := $(GERRIT_OPTIONAL_PARAMS_NETWORK) ParameterKey=Subnet2CIDR,ParameterValue=$(SUBNET2_CIDR))
+endif
+ifdef SUBNET2_ID
+		$(eval GERRIT_OPTIONAL_PARAMS_NETWORK := $(GERRIT_OPTIONAL_PARAMS_NETWORK) ParameterKey=Subnet2IdProp,ParameterValue=$(SUBNET2_ID))
+endif
+ifdef SUBNET2_AZ
+		$(eval GERRIT_OPTIONAL_PARAMS_NETWORK := $(GERRIT_OPTIONAL_PARAMS_NETWORK) ParameterKey=Subnet2AZProp,ParameterValue=$(SUBNET2_AZ))
+endif
+
 confirm-persistent-stack-deletion:
 	@echo ""
 	@echo "* * * * WARNING * * * * this is going to completely destroy the stack, including git data."
