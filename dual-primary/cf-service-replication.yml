@@ -155,9 +155,14 @@ Resources:
         Properties:
             Type: network
             Scheme: internal
+            LoadBalancerAttributes:
+              - Key: 'load_balancing.cross_zone.enabled'
+                Value: true
             Subnets:
               - Fn::ImportValue:
                   !Join [':', [!Ref 'ClusterStackName', 'PublicSubnetOne']]
+              - Fn::ImportValue:
+                  !Join [':', [!Ref 'ClusterStackName', 'PublicSubnetTwo']]
             Tags:
                 - Key: Name
                   Value: !Join ['-', [!Ref 'EnvironmentName', !Ref GitReplicationServiceName, 'nlb']]

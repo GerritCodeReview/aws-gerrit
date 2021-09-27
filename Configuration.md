@@ -61,18 +61,44 @@ is recipe-specific:
 `1024` by default.
 * `GERRIT_CONTAINER_FDS_HARD_LIMIT`: The hard limit for file descriptors allowed in the Gerrit container
 `1024` by default.
+
+* `LOAD_BALANCER_SCHEME`: Optional. The Load Balancer scheme type. `internet-facing` by default.
+  Allowed values: internal, internet-facing
+
+#### NETWORKING
+
+All recipes are deployed in a single VPC, on public subnets that span across two
+AZs.  They can be deployed either in pre-existing VPC where multiple subnets have
+already been created or in a new VPC.
+
+to deploy AWS gerrit in an existing VPC, *ALL* following parameters need to be set.
+
 * `INTERNET_GATEWAY_ID`: Optional. Id of the existing Internet Gateway.
   If not set, create a new Internet Gateway
 * `VPC_ID`: Optional. Id of the existing VPC.
   If not set, create a new VPC.
 * `VPC_CIDR`: Optional. CIDR mask for the VPC.
   `10.0.0.0/16` by default.
-* `SUBNET_ID`: Optional. Id of the existing Subnet.
+* `SUBNET1_ID`: Optional. Id of the existing Subnet1.
   If not set, create a new Network Stack.
-* `SUBNET_CIDR`: Optional. CIDR mask of the Subnet.
+* `SUBNET2_ID`: Optional. Id of the existing Subnet2.
+  If not set, create a new Network Stack.
+* `SUBNET1_CIDR`: Optional. CIDR mask of the Subnet1.
   `10.0.0.0/24` by default.
-* LOAD_BALANCER_SCHEME: Optional. The Load Balancer scheme type. `internet-facing` by default.
-  Allowed values: internal, internet-facing
+  Note that this is ignored when`SUBNET1_ID` is provided
+* `SUBNET2_CIDR`: Optional. CIDR mask of the Subnet2.
+  `10.0.32.0/24` by default.
+  Note that this is ignored when`SUBNET2_ID` is provided
+* `SUBNET1_AZ`: Conditional. The Availability Zone of subnet1
+    the first AZ in the `region` by default.
+    Note that this is mandatory when `SUBNET1_ID` is provided, and it is expected
+    to be AZ in which that subnet belongs.
+* `SUBNET2_AZ`: Conditional. The Availability Zone of subnet2
+  the second AZ in the `region` by default.
+  Note that this is mandatory when `SUBNET2_ID` is provided, and it is expected
+  to be AZ in which that subnet belongs.
+
+When not specified, a new VPC with two subnets in two regions will be created.
 
 #### CloudWatch Monitoring
 
