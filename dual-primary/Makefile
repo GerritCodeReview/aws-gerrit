@@ -66,8 +66,11 @@ endif
 ifdef PRIMARY_FILESYSTEM_ID
 		$(eval CLUSTER_OPTIONAL_PARAMS := $(CLUSTER_OPTIONAL_PARAMS) ParameterKey=PrimaryFileSystemID,ParameterValue=$(PRIMARY_FILESYSTEM_ID))
 endif
-ifdef SUBNET_CIDR
-		$(eval CLUSTER_OPTIONAL_PARAMS := $(CLUSTER_OPTIONAL_PARAMS) ParameterKey=SubnetCIDR,ParameterValue=$(SUBNET_CIDR))
+ifdef SUBNET1_CIDR
+		$(eval CLUSTER_OPTIONAL_PARAMS := $(CLUSTER_OPTIONAL_PARAMS) ParameterKey=Subnet1CIDR,ParameterValue=$(SUBNET1_CIDR))
+endif
+ifdef SUBNET2_CIDR
+		$(eval CLUSTER_OPTIONAL_PARAMS := $(CLUSTER_OPTIONAL_PARAMS) ParameterKey=Subnet2CIDR,ParameterValue=$(SUBNET2_CIDR))
 endif
 ifdef VPC_CIDR
 		$(eval CLUSTER_OPTIONAL_PARAMS := $(CLUSTER_OPTIONAL_PARAMS) ParameterKey=VPCCIDR,ParameterValue=$(VPC_CIDR))
@@ -92,7 +95,8 @@ endif
 		ParameterKey=TemplateBucketName,ParameterValue=$(TEMPLATE_BUCKET_NAME) \
 		ParameterKey=InternetGatewayIdProp,ParameterValue=$(INTERNET_GATEWAY_ID) \
 		ParameterKey=VPCIdProp,ParameterValue=$(VPC_ID) \
-		ParameterKey=SubnetIdProp,ParameterValue=$(SUBNET_ID) \
+		ParameterKey=Subnet1IdProp,ParameterValue=$(SUBNET1_ID) \
+		ParameterKey=Subnet2IdProp,ParameterValue=$(SUBNET2_ID) \
 		$(CLUSTER_OPTIONAL_PARAMS) \
 		$(GERRIT_OPTIONAL_PRIMARY_VOLUME) \
 		$(GERRIT_OPTIONAL_PARAMS_REPLICA_FILESYSTEM) \

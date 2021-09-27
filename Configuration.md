@@ -67,10 +67,14 @@ is recipe-specific:
   If not set, create a new VPC.
 * `VPC_CIDR`: Optional. CIDR mask for the VPC.
   `10.0.0.0/16` by default.
-* `SUBNET_ID`: Optional. Id of the existing Subnet.
+* `SUBNET1_ID`: Optional. Id of the existing Subnet1.
   If not set, create a new Network Stack.
-* `SUBNET_CIDR`: Optional. CIDR mask of the Subnet.
+* `SUBNET2_ID`: Optional. Id of the existing Subnet2.
+  If not set, create a new Network Stack.
+* `SUBNET1_CIDR`: Optional. CIDR mask of the Subnet1.
   `10.0.0.0/24` by default.
+* `SUBNET2_CIDR`: Optional. CIDR mask of the Subnet2.
+  `10.0.32.0/24` by default.
 * LOAD_BALANCER_SCHEME: Optional. The Load Balancer scheme type. `internet-facing` by default.
   Allowed values: internal, internet-facing
 

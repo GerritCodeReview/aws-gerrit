@@ -104,7 +104,8 @@ that the green stack can be deployed in the same VPC, for example:
 ```bash
 VPC_ID=vpc-08d2159c53f7a1ff5
 INTERNET_GATEWAY_ID=igw-0c0577829910ce7f3
-SUBNET_ID=subnet-05efd67802b1cbd5b
+SUBNET1_ID=subnet-05efd67802b1cbd5b
+SUBNET1_ID=subnet-05abd63501b1dbd5b
 ```
 
 3. Deploy the *green* stack:

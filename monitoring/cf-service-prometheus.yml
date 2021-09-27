@@ -112,6 +112,9 @@
           Properties:
               Type: network
               Scheme: internet-facing
+              LoadBalancerAttributes:
+                - Key: 'load_balancing.cross_zone.enabled'
+                  Value: true
               Subnets:
                 - Fn::ImportValue:
                     !Join [':', [!Ref 'ClusterStackName', 'PublicSubnetOne']]
