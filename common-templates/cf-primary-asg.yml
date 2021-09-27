@@ -41,6 +41,9 @@ Parameters:
   SubnetId:
     Description: The subnet ID where gerrit primary in the Auto Scaling group can be created
     Type: String
+  AvailabilityZone:
+    Description: The Availability Zone in which to create the volume from a snapshot
+    Type: String
   LogGroupName:
     Description: The log group name
     Type: String
@@ -235,6 +238,7 @@ Resources:
         GerritVolumeId: ""
         GerritVolumeSnapshotId: !Ref GerritVolumeSnapshotId
         GerritVolumeSizeInGiB: !Ref GerritVolumeSizeInGiB
+        AvailabilityZone: !Ref AvailabilityZone
 
 Outputs:
   PrimaryLaunchConfiguration:

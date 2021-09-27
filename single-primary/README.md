@@ -10,20 +10,6 @@ Three templates are provided in this example:
 * `cf-service`: defined the service stack running Gerrit
 * `cf-dns-route`: defined the DNS routing for the service
 
-### Networking
-
-* Single VPC:
- * CIDR: 10.0.0.0/16
-* Single Availability Zone
-* 1 public Subnets:
- * CIDR: 10.0.0.0/24
-* 1 public NLB exposing:
- * HTTP on port 8080
- * SSH on port 29418
-* 1 Internet Gateway
-* 1 type A alias DNS entry
-* A SSL certificate available in [AWS Certificate Manager](https://aws.amazon.com/certificate-manager/)
-
 ### Data persistency
 
 * EBS volumes for:

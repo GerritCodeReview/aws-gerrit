@@ -36,14 +36,30 @@ Parameters:
     Type: String
     Default: ""
     Description: VPC id. If empty VPC will be created
-  SubnetIdProp:
+  Subnet1IdProp:
     Type: String
     Default: ""
-    Description: Subnet id. If empty Network Stack will be created
-  SubnetCIDR:
+    Description: ID of Subnet 1. If empty Network Stack will be created
+  Subnet1CIDR:
     Type: String
     Default: 10.0.0.0/24
-    Description: Subnet CIDR.
+    Description: Subnet 1 CIDR.
+  Subnet1AZProp:
+    Type: String
+    Default: ""
+    Description: The Availability Zone of subnet1
+  Subnet2IdProp:
+    Type: String
+    Default: ""
+    Description: ID of Subnet 2. If empty Network Stack will be created
+  Subnet2CIDR:
+    Type: String
+    Default: 10.0.32.0/24
+    Description: Subnet 2 CIDR.
+  Subnet2AZProp:
+    Type: String
+    Default: ""
+    Description: The Availability Zone of subnet2
   VPCCIDR:
     Type: String
     Default: 10.0.0.0/16
@@ -265,8 +281,12 @@ Resources:
         InternetGatewayIdProp: !Ref 'InternetGatewayIdProp'
         VPCIdProp: !Ref 'VPCIdProp'
         VPCCIDR: !Ref 'VPCCIDR'
-        SubnetIdProp: !Ref 'SubnetIdProp'
-        SubnetCIDR: !Ref 'SubnetCIDR'
+        Subnet1IdProp: !Ref 'Subnet1IdProp'
+        Subnet1CIDR: !Ref 'Subnet1CIDR'
+        Subnet1AZProp: !Ref 'Subnet1AZProp'
+        Subnet2IdProp: !Ref 'Subnet2IdProp'
+        Subnet2CIDR: !Ref 'Subnet2CIDR'
+        Subnet2AZProp: !Ref 'Subnet2AZProp'
 
   GerritVolumeStack:
     Type: AWS::CloudFormation::Stack
@@ -277,6 +297,7 @@ Resources:
         GerritVolumeId: !Ref 'GerritVolumeId'
         GerritVolumeSnapshotId: !Ref 'GerritVolumeSnapshotId'
         GerritVolumeSizeInGiB: !Ref 'GerritVolumeSizeInGiB'
+        AvailabilityZone: !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneAZ
 
 Outputs:
   ClusterName:
@@ -294,6 +315,21 @@ Outputs:
     Value: !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneRef
     Export:
       Name: !Join [ ':', [ !Ref 'AWS::StackName', 'PublicSubnetOne' ] ]
+  PublicSubnetOneAZ:
+    Description: Public subnet one AZ
+    Value: !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneAZ
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'PublicSubnetOneAZ' ] ]
+  PublicSubnetTwo:
+    Description: Public subnet two
+    Value: !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetTwoRef
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'PublicSubnetTwo' ] ]
+  PublicSubnetTwoAZ:
+    Description: Public subnet two AZ
+    Value: !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetTwoAZ
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'PublicSubnetTwoAZ' ] ]
   ClusterArn:
     Description: The ARN of the ECS cluster
     Value: !GetAtt ECSCluster.Arn

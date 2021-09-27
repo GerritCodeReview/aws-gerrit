@@ -12,25 +12,6 @@ Five templates are provided in this example:
 * `cf-dns-route`: define the DNS routing for the service
 * `cf-dashboard`: define the CloudWatch dashboard for the services
 
-### Networking
-
-* Single VPC:
- * CIDR: 10.0.0.0/16
-* Single Availability Zone
-* 1 public Subnets:
- * CIDR: 10.0.0.0/24
-* 1 public NLB exposing:
- * Gerrit primary HTTP on port 8080
- * Gerrit primary SSH on port 29418
-* 1 public NLB exposing:
- * Gerrit replica HTTP on port 8081
- * Gerrit replica SSH on port 39418
- * SSH agent on port 1022
- * Git daemon on port 9418
-* 1 Internet Gateway
-* 2 type A alias DNS entry, for Gerrit primary and replica
-* A SSL certificate available in [AWS Certificate Manager](https://aws.amazon.com/certificate-manager/)
-
 ### Data persistency
 
 * EBS volumes for:

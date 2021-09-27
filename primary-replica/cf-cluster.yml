@@ -31,14 +31,30 @@ Parameters:
     Type: String
     Default: ""
     Description: VPC id. If empty VPC will be created
-  SubnetIdProp:
+  Subnet1IdProp:
     Type: String
     Default: ""
-    Description: Subnet id. If empty Network Stack will be created
-  SubnetCIDR:
+    Description: Subnet id 1. If empty Network Stack will be created
+  Subnet1CIDR:
     Type: String
     Default: 10.0.0.0/24
-    Description: Subnet CIDR.
+    Description: Subnet 1 CIDR.
+  Subnet1AZProp:
+    Type: String
+    Default: ""
+    Description: The Availability Zone of subnet1
+  Subnet2IdProp:
+    Type: String
+    Default: ""
+    Description: Subnet id 2. If empty Network Stack will be created
+  Subnet2CIDR:
+    Type: String
+    Default: 10.0.32.0/24
+    Description: Subnet 2 CIDR.
+  Subnet2AZProp:
+    Type: String
+    Default: ""
+    Description: The Availability Zone of subnet2
   VPCCIDR:
     Type: String
     Default: 10.0.0.0/16
@@ -124,7 +140,8 @@ Conditions:
     - !Equals [!Ref VPCIdProp, ""]
     - !And
       - !Equals [!Ref InternetGatewayIdProp, ""]
-      - !Equals [!Ref SubnetIdProp, ""]
+      - !Equals [!Ref Subnet1IdProp, ""]
+      - !Equals [!Ref Subnet2IdProp, ""]
 
 Resources:
   # ECS Resources
@@ -167,7 +184,7 @@ Resources:
     Type: AWS::AutoScaling::AutoScalingGroup
     Properties:
       VPCZoneIdentifier:
-        - !If [NetworkStackNeeded, !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneRef, !Ref SubnetIdProp]
+        - !If [NetworkStackNeeded, !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneRef, !Ref Subnet1IdProp]
       LaunchConfigurationName: !Ref 'PrimaryLaunchConfiguration'
       MinSize: '1'
       MaxSize: !Ref PrimaryMaxCount
@@ -290,7 +307,8 @@ Resources:
     Type: AWS::AutoScaling::AutoScalingGroup
     Properties:
       VPCZoneIdentifier:
-        - !If [NetworkStackNeeded, !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneRef, !Ref SubnetIdProp]
+        - !If [NetworkStackNeeded, !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneRef, !Ref Subnet1IdProp]
+        - !If [NetworkStackNeeded, !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetTwoRef, !Ref Subnet2IdProp]
       LaunchConfigurationName: !Ref 'ReplicaLaunchConfiguration'
       MinSize: !Ref ReplicaAutoScalingMinCapacity
       MaxSize: !Ref ReplicaAutoScalingMaxCapacity
@@ -415,8 +433,12 @@ Resources:
         InternetGatewayIdProp: !Ref 'InternetGatewayIdProp'
         VPCIdProp: !Ref 'VPCIdProp'
         VPCCIDR: !Ref 'VPCCIDR'
-        SubnetIdProp: !Ref 'SubnetIdProp'
-        SubnetCIDR: !Ref 'SubnetCIDR'
+        Subnet1IdProp: !Ref 'Subnet1IdProp'
+        Subnet1CIDR: !Ref 'Subnet1CIDR'
+        Subnet1AZProp: !Ref 'Subnet1AZProp'
+        Subnet2IdProp: !Ref 'Subnet2IdProp'
+        Subnet2CIDR: !Ref 'Subnet2CIDR'
+        Subnet2AZProp: !Ref 'Subnet2AZProp'
 
   GerritVolumeStack:
     Type: AWS::CloudFormation::Stack
@@ -427,6 +449,7 @@ Resources:
         GerritVolumeId: !Ref 'GerritVolumeId'
         GerritVolumeSnapshotId: !Ref 'GerritVolumeSnapshotId'
         GerritVolumeSizeInGiB: !Ref 'GerritVolumeSizeInGiB'
+        AvailabilityZone: !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneAZ
 
   ReplicaGitFileSystemPermanentStack:
     Type: AWS::CloudFormation::Stack
@@ -438,9 +461,11 @@ Resources:
       Parameters:
         FileSystemThroughputMode: !Ref ReplicaFileSystemThroughputMode
         ProvisionedThroughputInMibps: !Ref ReplicaProvisionedThroughputInMibps
-        PublicSubnet: !If [NetworkStackNeeded, !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneRef, !Ref SubnetIdProp]
+        PublicSubnet1: !If [NetworkStackNeeded, !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneRef, !Ref Subnet1IdProp]
+        PublicSubnet2: !If [NetworkStackNeeded, !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetTwoRef, !Ref Subnet2IdProp]
         SecurityGroupVPCID: !If [NetworkStackNeeded, !GetAtt ECSTaskNetworkStack.Outputs.VPCRef, !Ref VPCIdProp]
-        SecurityGroupCidrIp: !Ref SubnetCIDR
+        SecurityGroupCidrIp1: !Ref Subnet1CIDR
+        SecurityGroupCidrIp2: !Ref Subnet2CIDR
         TagValue: "efs-for-gerrit-replicas"
 
 Outputs:
@@ -456,9 +481,24 @@ Outputs:
       Name: !Join [ ':', [ !Ref 'AWS::StackName', 'VPCId' ] ]
   PublicSubnetOne:
     Description: Public subnet one
-    Value: !If [NetworkStackNeeded, !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneRef, !Ref SubnetIdProp]
+    Value: !If [NetworkStackNeeded, !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneRef, !Ref Subnet1IdProp]
     Export:
       Name: !Join [ ':', [ !Ref 'AWS::StackName', 'PublicSubnetOne' ] ]
+  PublicSubnetOneAZ:
+    Description: Public subnet one AZ
+    Value: !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneAZ
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'PublicSubnetOneAZ' ] ]
+  PublicSubnetTwo:
+    Description: Public subnet two
+    Value: !If [NetworkStackNeeded, !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetTwoRef, !Ref Subnet2IdProp]
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'PublicSubnetTwo' ] ]
+  PublicSubnetTwoAZ:
+    Description: Public subnet two AZ
+    Value: !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetTwoAZ
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'PublicSubnetTwoAZ' ] ]
   ClusterArn:
     Description: The ARN of the ECS cluster
     Value: !GetAtt ECSCluster.Arn
