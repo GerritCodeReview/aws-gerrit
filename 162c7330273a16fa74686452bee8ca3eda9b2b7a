@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c3d20bb6_9f8ebe4b",
+        "filename": "common-templates/cf-primary-asg.yml",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-09-29T18:48:13Z",
+      "side": 1,
+      "message": "This is a nested template, so there is no risk that it might be called without values.\n\nAny default will be resolved in the root stack and whichever value is eventually decided for will be sent to the nested stack.\n\nIf you look at other parameters, none of them has a default.\n\nDoes it make sense?",
+      "parentUuid": "1a3c5fb5_d6c133d6",
+      "range": {
+        "startLine": 45,
+        "startChar": 86,
+        "endLine": 45,
+        "endChar": 97
+      },
+      "revId": "162c7330273a16fa74686452bee8ca3eda9b2b7a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "bfa62854_610d761e",
         "filename": "primary-replica/cf-cluster.yml",
         "patchSetId": 4
@@ -54,6 +78,24 @@
       "writtenOn": "2021-09-29T18:24:47Z",
       "side": 1,
       "message": "why we are not checking for Subnet1IdProp as well and in the other templates?",
+      "revId": "162c7330273a16fa74686452bee8ca3eda9b2b7a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "36441ff5_6b280b75",
+        "filename": "primary-replica/cf-cluster.yml",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-09-29T18:48:13Z",
+      "side": 1,
+      "message": "You touched on a very important point.\nFrom a configuration point of view it makes no sense, say to pass *partially* these parameters.\n\nIf you pass subnet1, but not subnet2. What should we do?\nOr if you pass subnetIDs, but not a VPC.\netc, etc.\n\nAs we documented, *all* of them needs to be passed, but at the moment (and this was the case even before this change) we don\u0027t check the consistency of all these parameters.\n\nAt the moment if one parameter is passed we infer the intention by assuming all other ones also are, which is the reason why I didn\u0027t add the extra subnet check here.\n\nThe CF template would not allow us such a complex logic, so I think perhaps we should/could have a Makefile target, say: `checkParameters` to fail fast if there\u0027s some inconsistency.\n\nWDYT?",
+      "parentUuid": "bfa62854_610d761e",
       "revId": "162c7330273a16fa74686452bee8ca3eda9b2b7a",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
