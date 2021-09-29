@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "39adf4be_b03c66b7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-09-29T14:02:17Z",
+      "side": 1,
+      "message": "I apologize for the length of this CR.\n\nChanging the nested stacks (efs and networking), which are at the earth of all recipes forces to adjust most cloudformation template and their related documentation.\n\nThe inability to DRY out cloudformation template (as opposed to using CDK for example), does not help in containing the changes.\n\nEven though it touches many files, most of those are just few lines and I am hopeful that this can be reviewed quite easily.",
+      "revId": "162c7330273a16fa74686452bee8ca3eda9b2b7a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
