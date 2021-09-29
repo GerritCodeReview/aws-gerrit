@@ -18,6 +18,23 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a954eb4a_61df34aa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2021-09-29T18:57:04Z",
+      "side": 1,
+      "message": "LGTM I am trying to spin up a stack to double check it works fine for me as well",
+      "revId": "162c7330273a16fa74686452bee8ca3eda9b2b7a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1a3c5fb5_d6c133d6",
@@ -67,6 +84,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "93090fbf_a7621bb4",
+        "filename": "common-templates/cf-primary-asg.yml",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2021-09-29T18:57:04Z",
+      "side": 1,
+      "message": "Ok, so the \"if provided\" is not needed since we will always get it, right?",
+      "parentUuid": "c3d20bb6_9f8ebe4b",
+      "range": {
+        "startLine": 45,
+        "startChar": 86,
+        "endLine": 45,
+        "endChar": 97
+      },
+      "revId": "162c7330273a16fa74686452bee8ca3eda9b2b7a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "bfa62854_610d761e",
         "filename": "primary-replica/cf-cluster.yml",
         "patchSetId": 4
@@ -96,6 +137,24 @@
       "side": 1,
       "message": "You touched on a very important point.\nFrom a configuration point of view it makes no sense, say to pass *partially* these parameters.\n\nIf you pass subnet1, but not subnet2. What should we do?\nOr if you pass subnetIDs, but not a VPC.\netc, etc.\n\nAs we documented, *all* of them needs to be passed, but at the moment (and this was the case even before this change) we don\u0027t check the consistency of all these parameters.\n\nAt the moment if one parameter is passed we infer the intention by assuming all other ones also are, which is the reason why I didn\u0027t add the extra subnet check here.\n\nThe CF template would not allow us such a complex logic, so I think perhaps we should/could have a Makefile target, say: `checkParameters` to fail fast if there\u0027s some inconsistency.\n\nWDYT?",
       "parentUuid": "bfa62854_610d761e",
+      "revId": "162c7330273a16fa74686452bee8ca3eda9b2b7a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1105f0be_47b37924",
+        "filename": "primary-replica/cf-cluster.yml",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2021-09-29T18:57:04Z",
+      "side": 1,
+      "message": "Yep, makes sense. I was just wondering why we are checking it in the dual-primary/cf-cluster.yml and not here. I thought the multiple would have become mandatory.",
+      "parentUuid": "36441ff5_6b280b75",
       "revId": "162c7330273a16fa74686452bee8ca3eda9b2b7a",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
