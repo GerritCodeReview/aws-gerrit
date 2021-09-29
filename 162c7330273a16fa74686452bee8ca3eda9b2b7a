@@ -16,6 +16,46 @@
       "message": "I apologize for the length of this CR.\n\nChanging the nested stacks (efs and networking), which are at the earth of all recipes forces to adjust most cloudformation template and their related documentation.\n\nThe inability to DRY out cloudformation template (as opposed to using CDK for example), does not help in containing the changes.\n\nEven though it touches many files, most of those are just few lines and I am hopeful that this can be reviewed quite easily.",
       "revId": "162c7330273a16fa74686452bee8ca3eda9b2b7a",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1a3c5fb5_d6c133d6",
+        "filename": "common-templates/cf-primary-asg.yml",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2021-09-29T18:24:47Z",
+      "side": 1,
+      "message": "looks like we are not defaulting it. What happens if it is not passed?",
+      "range": {
+        "startLine": 45,
+        "startChar": 86,
+        "endLine": 45,
+        "endChar": 97
+      },
+      "revId": "162c7330273a16fa74686452bee8ca3eda9b2b7a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bfa62854_610d761e",
+        "filename": "primary-replica/cf-cluster.yml",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2021-09-29T18:24:47Z",
+      "side": 1,
+      "message": "why we are not checking for Subnet1IdProp as well and in the other templates?",
+      "revId": "162c7330273a16fa74686452bee8ca3eda9b2b7a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
