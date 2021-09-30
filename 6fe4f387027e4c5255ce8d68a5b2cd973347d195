@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c67877b_fdb125a1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2021-09-30T12:30:12Z",
+      "side": 1,
+      "message": "- tested dual-primary and primary-replica stacks\n- tested blue-green deployment\n- checked the AZ have been correctly assigned\n- for primary-replica checked allocation of new instances are allocated in the correct AZ",
+      "revId": "6fe4f387027e4c5255ce8d68a5b2cd973347d195",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
