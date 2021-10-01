@@ -423,6 +423,10 @@ Resources:
                   !Join [':', [!Ref 'ClusterStackName', 'VPCId']]
             Port: !Ref HTTPHostPort
             Protocol: TCP
+            HealthCheckPort: !Ref HTTPHostPort
+            HealthCheckProtocol: HTTP
+            HealthCheckPath: '/config/server/healthcheck~status'
+            Name: !Sub 'gerrit-${GerritInstanceNumber}-primary-http'
 
     HTTPListener:
         Type: AWS::ElasticLoadBalancingV2::Listener
@@ -444,6 +448,10 @@ Resources:
                   !Join [':', [!Ref 'ClusterStackName', 'VPCId']]
             Port: !Ref SSHHostPort
             Protocol: TCP
+            HealthCheckPort: !Ref HTTPHostPort
+            HealthCheckProtocol: HTTP
+            HealthCheckPath: '/config/server/healthcheck~status'
+            Name: !Sub 'gerrit-${GerritInstanceNumber}-primary-ssh'
 
     SSHListener:
         Type: AWS::ElasticLoadBalancingV2::Listener

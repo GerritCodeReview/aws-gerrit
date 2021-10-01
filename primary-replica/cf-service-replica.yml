@@ -455,6 +455,9 @@ Resources:
             Port: !Ref HTTPHostPort
             Protocol: TCP
             HealthCheckPort: !Ref HTTPHostPort
+            HealthCheckProtocol: HTTP
+            HealthCheckPath: '/config/server/healthcheck~status'
+            Name: 'gerrit-replica-http'
 
     HTTPListener:
         Type: AWS::ElasticLoadBalancingV2::Listener
@@ -478,7 +481,10 @@ Resources:
                   !Join [':', [!Ref 'ClusterStackName', 'VPCId']]
             Port: !Ref SSHHostPort
             Protocol: TCP
-            HealthCheckPort: !Ref SSHHostPort
+            HealthCheckPort: !Ref HTTPHostPort
+            HealthCheckProtocol: HTTP
+            HealthCheckPath: '/config/server/healthcheck~status'
+            Name: 'gerrit-replica-ssh'
 
     SSHListener:
         Type: AWS::ElasticLoadBalancingV2::Listener
