@@ -506,6 +506,7 @@ Resources:
                   !Join [':', [!Ref 'ClusterStackName', 'VPCId']]
             Port: !Ref GitPort
             Protocol: TCP
+            Name: 'gerrit-replica-git'
 
     GitListener:
         Type: AWS::ElasticLoadBalancingV2::Listener
@@ -527,6 +528,7 @@ Resources:
                   !Join [':', [!Ref 'ClusterStackName', 'VPCId']]
             Port: !Ref GitSSHPort
             Protocol: TCP
+            Name: 'gerrit-replica-git-ssh'
 
     GitSSHListener:
         Type: AWS::ElasticLoadBalancingV2::Listener

@@ -192,6 +192,7 @@ Resources:
                   !Join [':', [!Ref 'ClusterStackName', 'VPCId']]
             Port: !Ref HTTPHostPort
             Protocol: TCP
+            Name: 'haproxy-http'
 
     HTTPListener:
         Type: AWS::ElasticLoadBalancingV2::Listener
@@ -215,6 +216,7 @@ Resources:
                   !Join [':', [!Ref 'ClusterStackName', 'VPCId']]
             Port: !Ref SSHGerritPort
             Protocol: TCP
+            Name: 'haproxy-ssh'
 
     SSHListener:
         Type: AWS::ElasticLoadBalancingV2::Listener
