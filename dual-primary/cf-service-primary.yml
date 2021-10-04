@@ -23,14 +23,6 @@ Parameters:
   DockerRegistryUrl:
         Description: Docker registry URL
         Type: String
-  HTTPHostPort:
-        Description: Gerrit HTTP port
-        Type: Number
-        Default: 8080
-  SSHHostPort:
-        Description: Gerrit SSH port
-        Type: Number
-        Default: 29418
   CertificateArn:
         Description: SSL Certificates ARN
         Type: String
@@ -207,12 +199,9 @@ Mappings:
       Logs: gerrit-logs
     Service:
       Name: gerrit-primary
-    LoadBalancer:
-      HTTPPort: 8080
-      SSHPort: 29418
-    Container:
-      HTTPPort: 8080
-      SSHPort: 29418
+    Port:
+      HTTP: 8080
+      SSH: 29418
   Git:
     Daemon:
       Port: 9418
@@ -233,12 +222,21 @@ Resources:
             TaskDefinition: !Ref TaskDefinition
             LoadBalancers:
                 - ContainerName: !FindInMap ['Gerrit', 'Service', 'Name']
-                  ContainerPort: !FindInMap ['Gerrit', 'Container', 'HTTPPort']
+                  ContainerPort: !FindInMap ['Gerrit', 'Port', 'HTTP']
                   TargetGroupArn: !Ref HTTPTargetGroup
                 - ContainerName: !FindInMap ['Gerrit', 'Service', 'Name']
-                  ContainerPort: !FindInMap ['Gerrit', 'Container', 'SSHPort']
+                  ContainerPort: !FindInMap ['Gerrit', 'Port', 'SSH']
                   TargetGroupArn: !Ref SSHTargetGroup
-
+                - ContainerName: !FindInMap ['Gerrit', 'Service', 'Name']
+                  ContainerPort: !FindInMap ['Gerrit', 'Port', 'HTTP']
+                  TargetGroupArn:
+                    Fn::ImportValue:
+                      !Join [ ':', [ !Ref 'ClusterStackName', 'PrimariesGerritHTTPTargetGroup' ] ]
+                - ContainerName: !FindInMap ['Gerrit', 'Service', 'Name']
+                  ContainerPort: !FindInMap ['Gerrit', 'Port', 'SSH']
+                  TargetGroupArn:
+                    Fn::ImportValue:
+                      !Join [ ':', [ !Ref 'ClusterStackName', 'PrimariesGerritSSHTargetGroup' ] ]
     TaskDefinition:
         Type: AWS::ECS::TaskDefinition
         Properties:
@@ -259,7 +257,7 @@ Resources:
                     - Name: HTTPD_LISTEN_URL
                       Value: !Sub
                         - 'proxy-https://*:${HTTPContainerPort}/'
-                        - { HTTPContainerPort: !FindInMap ['Gerrit', 'Container', 'HTTPPort'] }
+                        - { HTTPContainerPort: !FindInMap ['Gerrit', 'Port', 'HTTP'] }
                     - Name: AWS_REGION
                       Value: !Ref AWS::Region
                     - Name: SETUP_REPLICATION
@@ -273,7 +271,7 @@ Resources:
                     - Name: HA_PEER_URL
                       Value: !Sub
                         - 'http://${PeerSubdomain}.${HostedZoneName}:${HTTPGerritLBPort}'
-                        - { HTTPGerritLBPort: !FindInMap ['Gerrit', 'LoadBalancer', 'HTTPPort'] }
+                        - { HTTPGerritLBPort: !FindInMap ['Gerrit', 'Port', 'HTTP'] }
                     - Name: HOSTED_ZONE_NAME
                       Value: !Ref HostedZoneName
                     - Name: REINDEX_AT_STARTUP
@@ -362,11 +360,11 @@ Resources:
                   Cpu: !Ref GerritCPU
                   Memory: !Ref GerritRAM
                   PortMappings:
-                    - ContainerPort: !FindInMap ['Gerrit', 'Container', 'HTTPPort']
-                      HostPort: !Ref HTTPHostPort
+                    - ContainerPort: !FindInMap ['Gerrit', 'Port', 'HTTP']
+                      HostPort: !FindInMap ['Gerrit', 'Port', 'HTTP']
                       Protocol: tcp
-                    - ContainerPort: !FindInMap ['Gerrit', 'Container', 'SSHPort']
-                      HostPort: !Ref SSHHostPort
+                    - ContainerPort: !FindInMap ['Gerrit', 'Port', 'SSH']
+                      HostPort: !FindInMap ['Gerrit', 'Port', 'SSH']
                       Protocol: tcp
                   LogConfiguration:
                     LogDriver: awslogs
@@ -421,9 +419,9 @@ Resources:
             VpcId:
               Fn::ImportValue:
                   !Join [':', [!Ref 'ClusterStackName', 'VPCId']]
-            Port: !Ref HTTPHostPort
+            Port: !FindInMap ['Gerrit', 'Port', 'HTTP']
             Protocol: TCP
-            HealthCheckPort: !Ref HTTPHostPort
+            HealthCheckPort: !FindInMap ['Gerrit', 'Port', 'HTTP']
             HealthCheckProtocol: HTTP
             HealthCheckPath: '/config/server/healthcheck~status'
             Name: !Sub 'gerrit-${GerritInstanceNumber}-primary-http'
@@ -436,7 +434,7 @@ Resources:
             - Type: forward
               TargetGroupArn: !Ref HTTPTargetGroup
             LoadBalancerArn: !Ref LoadBalancer
-            Port: !FindInMap ['Gerrit', 'LoadBalancer', 'HTTPPort']
+            Port: !FindInMap ['Gerrit', 'Port', 'HTTP']
             Protocol: TCP
 
     SSHTargetGroup:
@@ -446,9 +444,9 @@ Resources:
             VpcId:
               Fn::ImportValue:
                   !Join [':', [!Ref 'ClusterStackName', 'VPCId']]
-            Port: !Ref SSHHostPort
+            Port: !FindInMap ['Gerrit', 'Port', 'SSH']
             Protocol: TCP
-            HealthCheckPort: !Ref HTTPHostPort
+            HealthCheckPort: !FindInMap ['Gerrit', 'Port', 'HTTP']
             HealthCheckProtocol: HTTP
             HealthCheckPath: '/config/server/healthcheck~status'
             Name: !Sub 'gerrit-${GerritInstanceNumber}-primary-ssh'
@@ -461,7 +459,7 @@ Resources:
             - Type: forward
               TargetGroupArn: !Ref SSHTargetGroup
             LoadBalancerArn: !Ref LoadBalancer
-            Port: !FindInMap ['Gerrit', 'LoadBalancer', 'SSHPort']
+            Port: !FindInMap ['Gerrit', 'Port', 'SSH']
             Protocol: TCP
 
     ECSTaskExecutionRoleStack:

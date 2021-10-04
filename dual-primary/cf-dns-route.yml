@@ -1,10 +1,14 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: A stack for the Gerrit service Route53 routing.
 Parameters:
+  ClusterStackName:
+    Description: Stack name of the Cluster
+    Type: String
+    Default: gerrit-cluster-stack
   Primary1ServiceStackName:
-      Description: Stack name of the ECS Primary Gerrit service
-      Type: String
-      Default: gerrit-service-primary-1
+    Description: Stack name of the ECS Primary Gerrit service
+    Type: String
+    Default: gerrit-service-primary-1
   Primary2ServiceStackName:
       Description: Stack name of the ECS Primary Gerrit service
       Type: String
@@ -13,6 +17,12 @@ Parameters:
       Description: Stack name of the ECS LB service
       Type: String
       Default: gerrit-service
+  PrimariesGerritSubdomain:
+    Description: The subdomain of the load balancer serving requests to primary gerrit instances
+    Type: String
+  PrimariesGerritHostedZoneName:
+    Description: The zone name of the load balancer serving requests to primary gerrit instances
+    Type: String
 
 Resources:
   Primary1DnsRecord:
@@ -84,3 +94,27 @@ Resources:
             Fn::ImportValue:
               !Join [':', [!Ref 'LBServiceStackName', 'CanonicalHostedZoneID']]
           EvaluateTargetHealth: False
+
+  PrimariesGerritDnsRecord:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      Name:
+        !Join
+        - '.'
+        - - !Ref PrimariesGerritSubdomain
+          - !Ref PrimariesGerritHostedZoneName
+      HostedZoneName:
+        !Join
+        - ''
+        - - !Ref PrimariesGerritHostedZoneName
+          - '.'
+      Comment: DNS name for the load balancer serving requests to primary gerrit instances
+      Type: A
+      AliasTarget:
+        DNSName:
+          Fn::ImportValue:
+            !Join [':', [!Ref 'ClusterStackName', 'PrimariesGerritLoadBalancerDNSName']]
+        HostedZoneId:
+          Fn::ImportValue:
+            !Join [':', [!Ref 'ClusterStackName', 'PrimariesGerritCanonicalHostedZoneID']]
+        EvaluateTargetHealth: False
