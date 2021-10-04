@@ -155,6 +155,11 @@ Parameters:
     Default: 1
     MinValue: 1
     MaxValue: 10
+  ActiveActiveLoadBalancerScheme:
+    Description: The schema of the active/active Gerrit load balancer
+    Type: String
+    Default: internet-facing
+    AllowedValues: [internal, internet-facing]
 
 Conditions:
   isProvisionedThroughput: !Equals [!Ref PrimaryFileSystemThroughputMode, "provisioned"]
@@ -166,6 +171,13 @@ Conditions:
       - !Equals [!Ref InternetGatewayIdProp, ""]
       - !Equals [!Ref Subnet1IdProp, ""]
       - !Equals [!Ref Subnet2IdProp, ""]
+
+Mappings:
+  Gerrit:
+    Port:
+      HTTPS: 443
+      HTTP: 8080
+      SSH: 29418
 
 Resources:
   # ECS Resources
@@ -288,6 +300,63 @@ Resources:
           /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -s
 
           /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource HAProxyECSAutoScalingGroup --region ${AWS::Region}
+
+  ActiveActiveGerritLoadBalancer:
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+    Properties:
+      Type: network
+      Scheme: !Ref ActiveActiveLoadBalancerScheme
+      Name: 'active-active-gerrit'
+      LoadBalancerAttributes:
+        - Key: 'load_balancing.cross_zone.enabled'
+          Value: true
+      Subnets:
+        - !If [NetworkStackNeeded, !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneRef, !Ref Subnet1IdProp]
+        - !If [NetworkStackNeeded, !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetTwoRef, !Ref Subnet2IdProp]
+
+  ActiveActiveGerritHTTPTargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    DependsOn: ActiveActiveGerritLoadBalancer
+    Properties:
+      VpcId: !If [NetworkStackNeeded, !GetAtt ECSTaskNetworkStack.Outputs.VPCRef, !Ref VPCIdProp]
+      Port: 8080
+      Protocol: TCP
+      HealthCheckPort: 8080
+      HealthCheckProtocol: HTTP
+      HealthCheckPath: '/config/server/healthcheck~status'
+      Name: 'active-active-gerrit-http'
+
+  ActiveActiveHTTPListener:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      DefaultActions:
+        - Type: forward
+          TargetGroupArn: !Ref ActiveActiveGerritHTTPTargetGroup
+      LoadBalancerArn: !Ref ActiveActiveGerritLoadBalancer
+      Port: !FindInMap ['Gerrit', 'Port', 'HTTPS']
+      Protocol: TLS
+
+  ActiveActiveGerritSSHTargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    DependsOn: ActiveActiveGerritLoadBalancer
+    Properties:
+      VpcId: !If [NetworkStackNeeded, !GetAtt ECSTaskNetworkStack.Outputs.VPCRef, !Ref VPCIdProp]
+      Port: !FindInMap ['Gerrit', 'Port', 'SSH']
+      Protocol: TCP
+      HealthCheckPort: !FindInMap ['Gerrit', 'Port', 'HTTP']
+      HealthCheckProtocol: HTTP
+      HealthCheckPath: '/config/server/healthcheck~status'
+      Name: 'active-active-gerrit-ssh'
+
+  ActiveActiveSSHListener:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      DefaultActions:
+        - Type: forward
+          TargetGroupArn: !Ref ActiveActiveGerritSSHTargetGroup
+      LoadBalancerArn: !Ref ActiveActiveGerritLoadBalancer
+      Port: !FindInMap ['Gerrit', 'Port', 'SSH']
+      Protocol: TCP
 
   Primary1ASG:
     Type: AWS::CloudFormation::Stack
@@ -473,3 +542,23 @@ Outputs:
     Value: !If [CreateReplicaEFS, !GetAtt ReplicaGitFileSystemPermanentStack.Outputs.FileSystemID, !Ref ReplicaFileSystemID ]
     Export:
       Name: !Join [ ':', [ !Ref 'AWS::StackName', 'ReplicaFileSystemID' ] ]
+  ActiveActiveGerritHTTPTargetGroup:
+    Description: The target group registering both gerrit1 and gerrit2 serving HTTP traffic
+    Value: !Ref 'ActiveActiveGerritHTTPTargetGroup'
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'ActiveActiveGerritHTTPTargetGroup' ] ]
+  ActiveActiveGerritSSHTargetGroup:
+    Description: The target group registering both gerrit1 and gerrit2 serving SSH traffic
+    Value: !Ref 'ActiveActiveGerritSSHTargetGroup'
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'ActiveActiveGerritSSHTargetGroup' ] ]
+  ActiveActiveGerritLoadBalancerDNSName:
+    Description: The DNS name of the load balancer serving requests to both gerrit1 and gerrit2
+    Value: !GetAtt 'ActiveActiveGerritLoadBalancer.DNSName'
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'ActiveActiveGerritLoadBalancerDNSName' ] ]
+  ActiveActiveGerritCanonicalHostedZoneID:
+    Description: Canonical Hosted Zone ID of the load balancer serving requests to both gerrit1 and gerrit2
+    Value: !GetAtt 'ActiveActiveGerritLoadBalancer.CanonicalHostedZoneID'
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'ActiveActiveGerritCanonicalHostedZoneID' ] ]

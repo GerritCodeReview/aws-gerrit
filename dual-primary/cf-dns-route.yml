@@ -1,10 +1,14 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: A stack for the Gerrit service Route53 routing.
 Parameters:
+  ClusterStackName:
+    Description: Stack name of the Cluster
+    Type: String
+    Default: gerrit-cluster-stack
   Primary1ServiceStackName:
-      Description: Stack name of the ECS Primary Gerrit service
-      Type: String
-      Default: gerrit-service-primary-1
+    Description: Stack name of the ECS Primary Gerrit service
+    Type: String
+    Default: gerrit-service-primary-1
   Primary2ServiceStackName:
       Description: Stack name of the ECS Primary Gerrit service
       Type: String
@@ -13,6 +17,12 @@ Parameters:
       Description: Stack name of the ECS LB service
       Type: String
       Default: gerrit-service
+  ActiveActiveSubdomain:
+    Description: The subdomain of the active-active gerrit load balancer
+    Type: String
+  ActiveActiveHostedZoneName:
+    Description: The zone name of the active-active gerrit load balancer
+    Type: String
 
 Resources:
   Primary1DnsRecord:
@@ -84,3 +94,27 @@ Resources:
             Fn::ImportValue:
               !Join [':', [!Ref 'LBServiceStackName', 'CanonicalHostedZoneID']]
           EvaluateTargetHealth: False
+
+  ActiveActiveDnsRecord:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      Name:
+        !Join
+        - '.'
+        - - !Ref ActiveActiveSubdomain
+          - !Ref ActiveActiveHostedZoneName
+      HostedZoneName:
+        !Join
+        - ''
+        - - !Ref ActiveActiveHostedZoneName
+          - '.'
+      Comment: DNS name for active-active gerrit load balancer
+      Type: A
+      AliasTarget:
+        DNSName:
+          Fn::ImportValue:
+            !Join [':', [!Ref 'ClusterStackName', 'ActiveActiveGerritLoadBalancerDNSName']]
+        HostedZoneId:
+          Fn::ImportValue:
+            !Join [':', [!Ref 'ClusterStackName', 'ActiveActiveGerritCanonicalHostedZoneID']]
+        EvaluateTargetHealth: False
