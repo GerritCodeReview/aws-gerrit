@@ -76,6 +76,9 @@ endif
 ifdef PRIMARY_MAX_COUNT
 		$(eval CLUSTER_OPTIONAL_PARAMS := $(CLUSTER_OPTIONAL_PARAMS) ParameterKey=PrimaryMaxCount,ParameterValue=$(PRIMARY_MAX_COUNT))
 endif
+ifdef LOAD_BALANCER_SCHEME
+		$(eval CLUSTER_OPTIONAL_PARAMS := $(CLUSTER_OPTIONAL_PARAMS) ParameterKey=ActiveActiveLoadBalancerScheme,ParameterValue=$(LOAD_BALANCER_SCHEME))
+endif
 
 	$(AWS_FC_COMMAND) create-stack \
 		--stack-name $(CLUSTER_STACK_NAME) \
@@ -85,6 +88,7 @@ endif
 		--parameters \
 		ParameterKey=ECSKeyName,ParameterValue=$(CLUSTER_KEYS) \
 		ParameterKey=TemplateBucketName,ParameterValue=$(TEMPLATE_BUCKET_NAME) \
+		ParameterKey=ActiveActiveCertificateArn,ParameterValue=$(SSL_CERTIFICATE_ARN) \
 		$(GERRIT_OPTIONAL_PARAMS_NETWORK) \
 		$(CLUSTER_OPTIONAL_PARAMS) \
 		$(GERRIT_OPTIONAL_PRIMARY_VOLUME) \
@@ -130,8 +134,6 @@ endif
 		ParameterKey=ReplicaSubdomain,ParameterValue=$(REPLICA_SUBDOMAIN) \
 		ParameterKey=DockerRegistryUrl,ParameterValue=$(DOCKER_REGISTRY_URI) \
 		ParameterKey=CertificateArn,ParameterValue=$(SSL_CERTIFICATE_ARN) \
-		ParameterKey=HTTPHostPort,ParameterValue=$(HTTP_HOST_PORT_PRIMARY1) \
-		ParameterKey=SSHHostPort,ParameterValue=$(SSH_HOST_PORT_PRIMARY1) \
 		ParameterKey=GerritKeyPrefix,ParameterValue=$(GERRIT_KEY_PREFIX)\
 		ParameterKey=DockerImage,ParameterValue=aws-gerrit/gerrit:$(IMAGE_TAG) \
 		ParameterKey=PeerSubdomain,ParameterValue=$(PRIMARY2_SUBDOMAIN) \
@@ -188,8 +190,6 @@ endif
 		ParameterKey=ReplicaSubdomain,ParameterValue=$(REPLICA_SUBDOMAIN) \
 		ParameterKey=DockerRegistryUrl,ParameterValue=$(DOCKER_REGISTRY_URI) \
 		ParameterKey=CertificateArn,ParameterValue=$(SSL_CERTIFICATE_ARN) \
-		ParameterKey=HTTPHostPort,ParameterValue=$(HTTP_HOST_PORT_PRIMARY2) \
-		ParameterKey=SSHHostPort,ParameterValue=$(SSH_HOST_PORT_PRIMARY2) \
 		ParameterKey=GerritKeyPrefix,ParameterValue=$(GERRIT_KEY_PREFIX)\
 		ParameterKey=DockerImage,ParameterValue=aws-gerrit/gerrit:$(IMAGE_TAG) \
 		ParameterKey=PeerSubdomain,ParameterValue=$(PRIMARY1_SUBDOMAIN) \
@@ -305,7 +305,10 @@ dns-routing:
 		--parameters \
 		ParameterKey=Primary1ServiceStackName,ParameterValue=$(SERVICE_PRIMARY1_STACK_NAME) \
 		ParameterKey=Primary2ServiceStackName,ParameterValue=$(SERVICE_PRIMARY2_STACK_NAME) \
-		ParameterKey=LBServiceStackName,ParameterValue=$(LOAD_BALANCER_STACK_NAME)
+		ParameterKey=LBServiceStackName,ParameterValue=$(LOAD_BALANCER_STACK_NAME) \
+		ParameterKey=ClusterStackName,ParameterValue=$(CLUSTER_STACK_NAME) \
+		ParameterKey=ActiveActiveHostedZoneName,ParameterValue=$(HOSTED_ZONE_NAME) \
+		ParameterKey=ActiveActiveSubdomain,ParameterValue=$(ACTIVE_ACTIVE_SUBDOMAIN)
 
 dashboard:
 ifeq ($(METRICS_CLOUDWATCH_ENABLED),true)

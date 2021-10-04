@@ -160,12 +160,10 @@ Configuration values affecting deployment environment and cluster properties
 * `DASHBOARD_STACK_NAME` : Optional. Name of the dashboard stack. `gerrit-dashboard` by default.
 * `PRIMARY1_SUBDOMAIN`: Optional. Name of the primary 1 sub domain. `gerrit-primary-1-demo` by default.
 * `PRIMARY2_SUBDOMAIN`: Optional. Name of the primary 2 sub domain. `gerrit-primary-2-demo` by default.
-* `HTTP_HOST_PORT_PRIMARY1`: Optional. Gerrit Host HTTP port for primary1 (must be different from primary2). `9080` by default.
-* `SSH_HOST_PORT_PRIMARY1:`: Optional. Gerrit Host SSH port for primary1 (must be different from primary2). `29418` by default.
-* `HTTP_HOST_PORT_PRIMARY2`: Optional. Gerrit Host HTTP port for primary2 (must be different from primary1). `9080` by default.
-* `SSH_HOST_PORT_PRIMARY2:`: Optional. Gerrit Host SSH port for primary2 (must be different from primary1). `29418` by default.
 * `REPLICA_SUBDOMAIN`: Mandatory. The subdomain of the Gerrit replica. For example: `<AWS_PREFIX>-replica`
 * `LB_SUBDOMAIN`: Mandatory. The subdomain of the Gerrit load balancer. For example: `<AWS_PREFIX>-dual-primary`
+* `ACTIVE_ACTIVE_SUBDOMAIN`: Mandatory. The subdomain of the lb serving traffic to both gerrit instances.
+   For example: `<AWS_PREFIX>-active-active`
 * `PRIMARY_FILESYSTEM_THROUGHPUT_MODE`: Optional. The throughput mode for the primary file system to be created.
 default: `bursting`. More info [here](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-efs-filesystem.html)
 * `PRIMARY_FILESYSTEM_PROVISIONED_THROUGHPUT_IN_MIBPS`: Optional. Only used when `PRIMARY_FILESYSTEM_THROUGHPUT_MODE` is set to `provisioned`.
