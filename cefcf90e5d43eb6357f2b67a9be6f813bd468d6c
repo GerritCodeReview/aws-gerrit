@@ -45,6 +45,29 @@
       },
       "revId": "cefcf90e5d43eb6357f2b67a9be6f813bd468d6c",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "10443a40_46c174f5",
+        "filename": "dual-primary/setup.env.template",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2021-10-05T19:48:30Z",
+      "side": 1,
+      "message": "Why do we need yet another subdomain?",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 23
+      },
+      "revId": "cefcf90e5d43eb6357f2b67a9be6f813bd468d6c",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
