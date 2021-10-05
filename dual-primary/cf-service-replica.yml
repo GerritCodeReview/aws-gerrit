@@ -458,6 +458,13 @@ Resources:
             HealthCheckProtocol: HTTP
             HealthCheckPath: '/config/server/healthcheck~status'
             Name: 'gerrit-replica-http'
+            TargetGroupAttributes:
+              - Key: 'stickiness.enabled'
+                Value: true
+              # NLB only supports source_ip. Move this to `lb_cookie` or `app_cookie`
+              # when this target group is moved behind an ALB
+              - Key: 'stickiness.type'
+                Value: 'source_ip'
 
     HTTPListener:
         Type: AWS::ElasticLoadBalancingV2::Listener
@@ -485,6 +492,11 @@ Resources:
             HealthCheckProtocol: HTTP
             HealthCheckPath: '/config/server/healthcheck~status'
             Name: 'gerrit-replica-ssh'
+            TargetGroupAttributes:
+              - Key: 'stickiness.enabled'
+                Value: true
+              - Key: 'stickiness.type'
+                Value: 'source_ip'
 
     SSHListener:
         Type: AWS::ElasticLoadBalancingV2::Listener
@@ -507,6 +519,11 @@ Resources:
             Port: !Ref GitPort
             Protocol: TCP
             Name: 'gerrit-replica-git'
+            TargetGroupAttributes:
+              - Key: 'stickiness.enabled'
+                Value: true
+              - Key: 'stickiness.type'
+                Value: 'source_ip'
 
     GitListener:
         Type: AWS::ElasticLoadBalancingV2::Listener
@@ -529,6 +546,11 @@ Resources:
             Port: !Ref GitSSHPort
             Protocol: TCP
             Name: 'gerrit-replica-git-ssh'
+            TargetGroupAttributes:
+              - Key: 'stickiness.enabled'
+                Value: true
+              - Key: 'stickiness.type'
+                Value: 'source_ip'
 
     GitSSHListener:
         Type: AWS::ElasticLoadBalancingV2::Listener
