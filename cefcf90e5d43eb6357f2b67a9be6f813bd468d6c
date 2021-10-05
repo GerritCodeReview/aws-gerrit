@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "278875b4_ca06c281",
+        "filename": "dual-primary/cf-cluster.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2021-10-05T19:32:19Z",
+      "side": 1,
+      "message": "should that be come from Mapping as well?",
+      "range": {
+        "startLine": 325,
+        "startChar": 12,
+        "endLine": 325,
+        "endChar": 16
+      },
+      "revId": "cefcf90e5d43eb6357f2b67a9be6f813bd468d6c",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "853417f8_95a055fa",
+        "filename": "dual-primary/cf-cluster.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2021-10-05T19:32:19Z",
+      "side": 1,
+      "message": "same as above",
+      "range": {
+        "startLine": 327,
+        "startChar": 23,
+        "endLine": 327,
+        "endChar": 27
+      },
+      "revId": "cefcf90e5d43eb6357f2b67a9be6f813bd468d6c",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
