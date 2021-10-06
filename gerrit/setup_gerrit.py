@@ -169,7 +169,10 @@ with open(GERRIT_CONFIG_DIRECTORY + "gerrit.config", 'w',
         'METRICS_CLOUDWATCH_DRY_RUN': os.getenv('METRICS_CLOUDWATCH_DRY_RUN'),
         'METRICS_CLOUDWATCH_EXCLUDE_METRICS_LIST': os.getenv('METRICS_CLOUDWATCH_EXCLUDE_METRICS_LIST'),
         'MULTISITE_ENABLED': os.getenv('MULTISITE_ENABLED'),
-        'MULTISITE_KAFKA_BROKERS': os.getenv('MULTISITE_KAFKA_BROKERS')
+        'MULTISITE_KAFKA_BROKERS': os.getenv('MULTISITE_KAFKA_BROKERS'),
+        'REFS_DB_ENABLED': os.getenv('REFS_DB_ENABLED'),
+        'DYNAMODB_LOCKS_TABLE_NAME': os.getenv('DYNAMODB_LOCKS_TABLE_NAME'),
+        'DYNAMODB_REFS_TABLE_NAME': os.getenv('DYNAMODB_REFS_TABLE_NAME'),
     })
     f.write(template.render(config_for_template))
 
@@ -214,22 +217,11 @@ if (setupHA):
         f.write(template.render(
             HA_PEER_URL=os.getenv('HA_PEER_URL'),
             HA_AUTOREINDEX_POLL_INTERVAL=os.getenv('HA_AUTOREINDEX_POLL_INTERVAL'),
-            MULTISITE_ENABLED=os.getenv('MULTISITE_ENABLED')
+            MULTISITE_ENABLED=os.getenv('MULTISITE_ENABLED'),
+            REFS_DB_ENABLED=os.getenv('REFS_DB_ENABLED')
         ))
 
 if setupMultiSite:
-    CONFIGURATION_FILE = "zookeeper-refdb.config"
-    CONFIGURATION_TARGET = GERRIT_CONFIG_DIRECTORY + CONFIGURATION_FILE
-    TEMPLATE_FILE = CONFIGURATION_FILE + ".template"
-
-    print("*** "+ CONFIGURATION_TARGET)
-    template = env.get_template("zookeeper-refdb.config.template")
-    with open(CONFIGURATION_TARGET, 'w', encoding='utf-8') as f:
-        f.write(template.render(
-            MULTISITE_ZOOKEEPER_CONNECT_STRING=os.getenv('MULTISITE_ZOOKEEPER_CONNECT_STRING'),
-            MULTISITE_ZOOKEEPER_ROOT_NODE=os.getenv('MULTISITE_ZOOKEEPER_ROOT_NODE')
-        ))
-
     CONFIGURATION_TARGET = GERRIT_CONFIG_DIRECTORY + "multi-site.config"
 
     print("*** "+ CONFIGURATION_TARGET)

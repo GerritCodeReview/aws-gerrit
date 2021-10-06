@@ -172,16 +172,14 @@ Parameters:
     Description: Comma separated list of Kafka broker hosts (host:port) to use for publishing events to the message broker
     Type: CommaDelimitedList
     Default: ''
-  MultiSiteZookeeperConnectString:
-    Description: Connection string to Zookeeper
+  DynamoDBLocksTableName:
+    Description: The name of the DynamoDB locks table
     Type: String
-    Default: ''
-  MultiSiteZookeeperRootNode:
-    Description: Root node to use in Zookeeper to store/retrieve information
+    Default: 'locksTable'
+  DynamoDBRefsTableName:
+    Description: The name of the DynamoDB refs table
     Type: String
-    ConstraintDescription: Choose a slash-separated ('/') string not starting with a slash ('/')
-    AllowedPattern: '^[^\/].*'
-    Default: 'gerrit/multi-site'
+    Default: 'refsDb'
   AutoReindexPollInterval:
     Description: Interval between reindexing of all changes, accounts and groups.
     Type: String
@@ -334,10 +332,12 @@ Resources:
                       Value: !Ref MultiSiteEnabled
                     - Name: MULTISITE_KAFKA_BROKERS
                       Value: !Join [',', !Ref MultiSiteKafkaBrokers]
-                    - Name: MULTISITE_ZOOKEEPER_CONNECT_STRING
-                      Value: !Ref MultiSiteZookeeperConnectString
-                    - Name: MULTISITE_ZOOKEEPER_ROOT_NODE
-                      Value: !Ref MultiSiteZookeeperRootNode
+                    - Name: REFS_DB_ENABLED
+                      Value: true
+                    - Name: DYNAMODB_LOCKS_TABLE_NAME
+                      Value: !Ref DynamoDBLocksTableName
+                    - Name: DYNAMODB_REFS_TABLE_NAME
+                      Value: !Ref DynamoDBRefsTableName
                   Ulimits:
                     - Name: nofile
                       HardLimit: !Ref FileDescriptorsHardLimit

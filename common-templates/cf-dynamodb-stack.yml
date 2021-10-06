@@ -1,0 +1,62 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: DynamoDB tables for refs-db validation
+Parameters:
+  DynamoDBLocksTableName:
+    Description: The name of the DynamoDB locks table
+    Type: String
+  DynamoDBRefsTableName:
+    Description: The name of the DynamoDB refs table
+    Type: String
+
+Mappings:
+  DynamoDB:
+    CapacityUnits:
+      Read: 10
+      Write: 10
+
+Resources:
+  RefsDbTable:
+    DeletionPolicy: Retain
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Ref DynamoDBRefsTableName
+      AttributeDefinitions:
+        - AttributeName: refPath
+          AttributeType: S
+      KeySchema:
+        - AttributeName: refPath
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: !FindInMap ['DynamoDB', 'CapacityUnits', 'Read']
+        WriteCapacityUnits: !FindInMap ['DynamoDB', 'CapacityUnits', 'Write']
+
+  LocksTable:
+    DeletionPolicy: Retain
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Ref DynamoDBLocksTableName
+      AttributeDefinitions:
+        - AttributeName: lockKey
+          AttributeType: S
+        - AttributeName: lockValue
+          AttributeType: S
+      KeySchema:
+        - AttributeName: lockKey
+          KeyType: HASH
+        - AttributeName: lockValue
+          KeyType: RANGE
+      ProvisionedThroughput:
+        ReadCapacityUnits: !FindInMap ['DynamoDB', 'CapacityUnits', 'Read']
+        WriteCapacityUnits: !FindInMap ['DynamoDB', 'CapacityUnits', 'Write']
+
+Outputs:
+  RefsDbTable:
+    Description: The refs-db table
+    Value: !Ref RefsDbTable
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'RefsDbTable' ] ]
+  LocksTable:
+    Description: The locks-db table
+    Value: !Ref LocksTable
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'LocksTable' ] ]

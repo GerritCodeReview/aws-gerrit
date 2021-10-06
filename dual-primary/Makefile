@@ -15,7 +15,10 @@ GIT_GC_SOURCE_PATH=/mnt/efs/gerrit-shared/git
 
 SINGLE_SITE_PLUGINS=javamelody high-availability healthcheck metrics-reporter-cloudwatch
 
-MULTI_SITE_PLUGINS=$(SINGLE_SITE_PLUGINS) multi-site kafka-events websession-broker zookeeper-refdb~zk-3.5
+HA_SITE_PLUGINS=$(SINGLE_SITE_PLUGINS) aws-dynamodb-refdb
+HA_SITE_PLUGINS_LIBS_LINKS=high-availability
+
+MULTI_SITE_PLUGINS=$(SINGLE_SITE_PLUGINS) multi-site kafka-events websession-broker
 MULTI_SITE_PLUGINS_LIBS_LINKS=multi-site replication
 MULTI_SITE_MAVEN_LIBS=events-broker~$(EVENTSBROKER_LIB_VER)
 
@@ -54,7 +57,8 @@ cluster: cluster-keys set-optional-gerrit-primary-volume \
 			set-optional-params-for-replica-filesystem \
 			set-optional-params-for-replica-auto-scaling-capacity \
 			set-optional-params-for-replica-capacity-provider \
-			set-optional-network-params
+			set-optional-network-params \
+			set-optional-refs-db-params
 ifdef CLUSTER_INSTANCE_TYPE
 		$(eval CLUSTER_OPTIONAL_PARAMS := $(CLUSTER_OPTIONAL_PARAMS) ParameterKey=InstanceType,ParameterValue=$(CLUSTER_INSTANCE_TYPE))
 endif
@@ -79,6 +83,9 @@ endif
 ifdef LOAD_BALANCER_SCHEME
 		$(eval CLUSTER_OPTIONAL_PARAMS := $(CLUSTER_OPTIONAL_PARAMS) ParameterKey=PrimariesGerritLoadBalancerScheme,ParameterValue=$(LOAD_BALANCER_SCHEME))
 endif
+ifdef CREATE_REFS_DB_TABLES
+		$(eval CLUSTER_OPTIONAL_PARAMS := $(CLUSTER_OPTIONAL_PARAMS) ParameterKey=CreateRefsDBTables,ParameterValue=$(CREATE_REFS_DB_TABLES))
+endif
 
 	$(AWS_FC_COMMAND) create-stack \
 		--stack-name $(CLUSTER_STACK_NAME) \
@@ -94,12 +101,14 @@ endif
 		$(GERRIT_OPTIONAL_PRIMARY_VOLUME) \
 		$(GERRIT_OPTIONAL_PARAMS_REPLICA_FILESYSTEM) \
 		$(GERRIT_OPTIONAL_PARAMS_REPLICA_AUTO_SCALING_CAPACITY) \
-		$(GERRIT_OPTIONAL_PARAMS_REPLICA_CAPACITY_PROVIDER)
+		$(GERRIT_OPTIONAL_PARAMS_REPLICA_CAPACITY_PROVIDER) \
+		$(REFS_DB_OPTIONAL_PARAMS)
 
 service-primary-1: set-optional-params-metrics-cloudwatch set-optional-params-smtp \
 					set-optional-params-multisite set-ldap-account-pattern \
 					set-optional-gerrit-ulimits set-optional-jgit-conf \
-					set-high-availability-optional-params
+					set-high-availability-optional-params \
+					set-optional-refs-db-params
 ifdef GERRIT_PRIMARY1_INSTANCE_ID
 		$(eval PRIMARY1_SERVICE_OPTIONAL_PARAMS := $(PRIMARY1_SERVICE_OPTIONAL_PARAMS) ParameterKey=InstanceId,ParameterValue=$(GERRIT_PRIMARY1_INSTANCE_ID))
 endif
@@ -150,12 +159,14 @@ endif
 		$(LDAP_ACCOUNT_PATTERN_PARAM) \
 		$(METRICS_CW_OPTIONAL_PARAMS) \
 		$(SMTP_OPTIONAL_PARAMS) \
-		$(GERRIT_ULIMITS)
+		$(GERRIT_ULIMITS) \
+		$(REFS_DB_OPTIONAL_PARAMS)
 
 service-primary-2: set-optional-params-metrics-cloudwatch set-optional-params-smtp \
 					set-optional-params-multisite set-ldap-account-pattern \
 					set-optional-gerrit-ulimits set-optional-jgit-conf \
-					set-high-availability-optional-params
+					set-high-availability-optional-params \
+					set-optional-refs-db-params
 ifdef GERRIT_PRIMARY2_INSTANCE_ID
 		$(eval PRIMARY2_SERVICE_OPTIONAL_PARAMS := $(PRIMARY2_SERVICE_OPTIONAL_PARAMS) ParameterKey=InstanceId,ParameterValue=$(GERRIT_PRIMARY2_INSTANCE_ID))
 endif
@@ -207,7 +218,8 @@ endif
 		$(LDAP_ACCOUNT_PATTERN_PARAM) \
 		$(METRICS_CW_OPTIONAL_PARAMS) \
 		$(SMTP_OPTIONAL_PARAMS) \
-		$(GERRIT_ULIMITS)
+		$(GERRIT_ULIMITS) \
+		$(REFS_DB_OPTIONAL_PARAMS)
 
 service-replication:
 	$(AWS_FC_COMMAND) create-stack \
@@ -498,7 +510,7 @@ delete-all: delete-dns-routing wait-for-dns-routing-deletion \
 						$(optional_git_gc_targets_deletion) \
 						delete-cluster wait-for-cluster-deletion
 
-delete-all-including-retained-stack: confirm-persistent-stack-deletion delete-all delete-git-primary-persistent-stack delete-git-replica-persistent-stack delete-network-persistent-stack
+delete-all-including-retained-stack: confirm-persistent-stack-deletion delete-all delete-git-primary-persistent-stack delete-git-replica-persistent-stack delete-network-persistent-stack delete-dynamodb-persistent-stack
 
 delete-git-primary-persistent-stack:
 
@@ -521,7 +533,7 @@ gerrit-publish:
 ifeq ($(MULTISITE_ENABLED),true)
 	$(MAKE) -C ../gerrit gerrit-publish RECIPE=dual-primary PLUGINS="$(MULTI_SITE_PLUGINS)" PLUGINS_LIBS_LINKS="$(MULTI_SITE_PLUGINS_LIBS_LINKS)" MAVEN_LIBS="$(MULTI_SITE_MAVEN_LIBS)"
 else
-	$(MAKE) -C ../gerrit gerrit-publish RECIPE=dual-primary PLUGINS="$(SINGLE_SITE_PLUGINS)"
+	$(MAKE) -C ../gerrit gerrit-publish RECIPE=dual-primary PLUGINS="$(HA_SITE_PLUGINS)" PLUGINS_LIBS_LINKS="$(HA_SITE_PLUGINS_LIBS_LINKS)"
 endif
 
 haproxy-publish:
@@ -541,3 +553,28 @@ set-high-availability-optional-params:
 ifdef AUTOREINDEX_POLL_INTERVAL
 		$(eval HA_OPTIONAL_PARAMS := ParameterKey=AutoReindexPollInterval,ParameterValue=$(AUTOREINDEX_POLL_INTERVAL))
 endif
+
+set-optional-refs-db-params:
+	$(eval REFS_DB_OPTIONAL_PARAMS=)
+ifdef DYNAMODB_LOCKS_TABLE_NAME
+		$(eval REFS_DB_OPTIONAL_PARAMS := $(REFS_DB_OPTIONAL_PARAMS) ParameterKey=DynamoDBLocksTableName,ParameterValue=$(DYNAMODB_LOCKS_TABLE_NAME))
+endif
+ifdef DYNAMODB_REFS_TABLE_NAME
+		$(eval REFS_DB_OPTIONAL_PARAMS := $(REFS_DB_OPTIONAL_PARAMS) ParameterKey=DynamoDBRefsTableName,ParameterValue=$(DYNAMODB_REFS_TABLE_NAME))
+endif
+
+delete-dynamodb-persistent-stack:
+	$(eval DYNAMODB_STACK_NAME=$(shell $(AWS_FC_COMMAND) list-stacks --stack-status-filter CREATE_COMPLETE --query "StackSummaries[*].StackName" | jq -r '.[]| select(startswith("$(CLUSTER_STACK_NAME)-DynamoDBPersistentStack"))'))
+
+	$(if $(DYNAMODB_STACK_NAME), \
+		$(AWS_FC_COMMAND) delete-stack \
+			--stack-name $(DYNAMODB_STACK_NAME) \
+			--region $(AWS_REGION) && \
+		echo "*** Wait for DynamoDB stack '$(DYNAMODB_STACK_NAME)' deletion" && \
+		$(AWS_FC_COMMAND) wait stack-delete-complete \
+			--stack-name $(DYNAMODB_STACK_NAME) \
+			--region $(AWS_REGION) && \
+		echo "*** DynamoDB stack '$(DYNAMODB_STACK_NAME)' deleted" \
+		, \
+		echo "No DynamoDB stack found. Nothing to do." \
+	)
