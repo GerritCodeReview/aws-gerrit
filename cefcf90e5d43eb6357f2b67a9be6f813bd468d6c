@@ -72,6 +72,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5704256c_a0d98016",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-10-06T10:27:00Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b021736f_526cfcaa",
+      "range": {
+        "startLine": 19,
+        "startChar": 6,
+        "endLine": 19,
+        "endChar": 29
+      },
+      "revId": "cefcf90e5d43eb6357f2b67a9be6f813bd468d6c",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cccd4574_13560dae",
@@ -142,6 +166,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6666d071_4faf259c",
+        "filename": "dual-primary/cf-cluster.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-10-06T10:27:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "278875b4_ca06c281",
+      "range": {
+        "startLine": 325,
+        "startChar": 12,
+        "endLine": 325,
+        "endChar": 16
+      },
+      "revId": "cefcf90e5d43eb6357f2b67a9be6f813bd468d6c",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "853417f8_95a055fa",
@@ -165,6 +213,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "43ed1da2_9b641ee3",
+        "filename": "dual-primary/cf-cluster.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-10-06T10:27:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "853417f8_95a055fa",
+      "range": {
+        "startLine": 327,
+        "startChar": 23,
+        "endLine": 327,
+        "endChar": 27
+      },
+      "revId": "cefcf90e5d43eb6357f2b67a9be6f813bd468d6c",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "05836d00_c7cf1614",
@@ -178,6 +250,30 @@
       "writtenOn": "2021-10-06T09:01:30Z",
       "side": 1,
       "message": "HTTPS ?",
+      "range": {
+        "startLine": 332,
+        "startChar": 14,
+        "endLine": 332,
+        "endChar": 18
+      },
+      "revId": "cefcf90e5d43eb6357f2b67a9be6f813bd468d6c",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dc838768_fc704790",
+        "filename": "dual-primary/cf-cluster.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-10-06T10:27:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05836d00_c7cf1614",
       "range": {
         "startLine": 332,
         "startChar": 14,
