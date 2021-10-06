@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b021736f_526cfcaa",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-10-06T09:31:16Z",
+      "side": 1,
+      "message": "\u003e Are we going to give the user the possibility of choosing between Active/Active and Active/Passive?\n\nWe decided not to do that.\nThe plan is to have a global-refdb and to configure the high-availability plugin to use it.\n\n\u003e \n\u003e * If yes, I thought we were going for active/active only, as show-case of the best you can get from Gerrit.\n\u003e * If not, why do we need to specify the architecture in the variable name?\n\nWe don\u0027t have to.\nYou\u0027re right, probably active_active is not a good name choice, I just wanted to highlight that this LB serves requests to both gerrit instances.\n\nI will go with PRIMARIES_GERRIT_SUBDOMAIN (and related resource names).\n\nDo you think that\u0027s better?",
+      "parentUuid": "2ac7d5a0_226825f3",
+      "range": {
+        "startLine": 19,
+        "startChar": 6,
+        "endLine": 19,
+        "endChar": 29
+      },
+      "revId": "cefcf90e5d43eb6357f2b67a9be6f813bd468d6c",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "cccd4574_13560dae",
         "filename": "dual-primary/cf-cluster.yml",
         "patchSetId": 2
@@ -37,6 +61,30 @@
       "writtenOn": "2021-10-06T09:01:30Z",
       "side": 1,
       "message": "Similarly to the comment above, can it just be PrimariesLoadBalancerScheme ?",
+      "range": {
+        "startLine": 158,
+        "startChar": 2,
+        "endLine": 158,
+        "endChar": 32
+      },
+      "revId": "cefcf90e5d43eb6357f2b67a9be6f813bd468d6c",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "31bfab5a_d4e7614f",
+        "filename": "dual-primary/cf-cluster.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-10-06T09:31:16Z",
+      "side": 1,
+      "message": "See above.",
+      "parentUuid": "cccd4574_13560dae",
       "range": {
         "startLine": 158,
         "startChar": 2,
