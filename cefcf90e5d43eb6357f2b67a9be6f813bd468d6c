@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b581500b_ebfe448f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2021-10-06T09:33:40Z",
+      "side": 1,
+      "message": "\u003e We decided not to do that.\n\u003e The plan is to have a global-refdb and to configure the high-availability plugin to use it.\n\u003e\n\nCool, makes sense. I didn\u0027t miss anything then :P\n \n\u003e I will go with PRIMARIES_GERRIT_SUBDOMAIN (and related resource names).\n\u003e \n\u003e Do you think that\u0027s better?\n\nyep, looks good.",
+      "parentUuid": "b021736f_526cfcaa",
+      "range": {
+        "startLine": 19,
+        "startChar": 6,
+        "endLine": 19,
+        "endChar": 29
+      },
+      "revId": "cefcf90e5d43eb6357f2b67a9be6f813bd468d6c",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "cccd4574_13560dae",
         "filename": "dual-primary/cf-cluster.yml",
         "patchSetId": 2
