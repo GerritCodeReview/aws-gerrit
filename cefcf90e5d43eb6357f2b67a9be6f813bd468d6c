@@ -3,6 +3,52 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2ac7d5a0_226825f3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2021-10-06T09:01:30Z",
+      "side": 1,
+      "message": "Are we going to give the user the possibility of choosing between Active/Active and Active/Passive?\n\n* If yes, I thought we were going for active/active only, as show-case of the best you can get from Gerrit.\n* If not, why do we need to specify the architecture in the variable name?\n\nThe same comments applies to the prefix used in most of the new variables introduced.",
+      "range": {
+        "startLine": 19,
+        "startChar": 6,
+        "endLine": 19,
+        "endChar": 29
+      },
+      "revId": "cefcf90e5d43eb6357f2b67a9be6f813bd468d6c",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cccd4574_13560dae",
+        "filename": "dual-primary/cf-cluster.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2021-10-06T09:01:30Z",
+      "side": 1,
+      "message": "Similarly to the comment above, can it just be PrimariesLoadBalancerScheme ?",
+      "range": {
+        "startLine": 158,
+        "startChar": 2,
+        "endLine": 158,
+        "endChar": 32
+      },
+      "revId": "cefcf90e5d43eb6357f2b67a9be6f813bd468d6c",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "278875b4_ca06c281",
         "filename": "dual-primary/cf-cluster.yml",
         "patchSetId": 2
@@ -42,6 +88,29 @@
         "startChar": 23,
         "endLine": 327,
         "endChar": 27
+      },
+      "revId": "cefcf90e5d43eb6357f2b67a9be6f813bd468d6c",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "05836d00_c7cf1614",
+        "filename": "dual-primary/cf-cluster.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2021-10-06T09:01:30Z",
+      "side": 1,
+      "message": "HTTPS ?",
+      "range": {
+        "startLine": 332,
+        "startChar": 14,
+        "endLine": 332,
+        "endChar": 18
       },
       "revId": "cefcf90e5d43eb6357f2b67a9be6f813bd468d6c",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
