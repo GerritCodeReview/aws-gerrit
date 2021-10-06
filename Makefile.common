@@ -23,6 +23,7 @@ endif
 	aws s3 cp ../common-templates/cf-primary-asg.yml s3://$(TEMPLATE_BUCKET_NAME)/
 	aws s3 cp ../common-templates/cf-efs-stack.yml s3://$(TEMPLATE_BUCKET_NAME)/
 	aws s3 cp ../common-templates/cf-ecs-service-cpu-autoscaling.yml s3://$(TEMPLATE_BUCKET_NAME)/
+	aws s3 cp ../common-templates/cf-dynamodb-stack.yml s3://$(TEMPLATE_BUCKET_NAME)/
 
 set-optional-params-metrics-cloudwatch:
 ifdef METRICS_CLOUDWATCH_ENABLED
@@ -62,10 +63,6 @@ set-optional-params-multisite:
 ifdef MULTISITE_ENABLED
 		$(eval MULTISITE_OPTIONAL_PARAMS := ParameterKey=MultiSiteEnabled,ParameterValue=$(MULTISITE_ENABLED))
 		$(eval MULTISITE_OPTIONAL_PARAMS := $(MULTISITE_OPTIONAL_PARAMS) ParameterKey=MultiSiteKafkaBrokers,ParameterValue=\"$(MULTISITE_KAFKA_BROKERS)\")
-		$(eval MULTISITE_OPTIONAL_PARAMS := $(MULTISITE_OPTIONAL_PARAMS) ParameterKey=MultiSiteZookeeperConnectString,ParameterValue=$(MULTISITE_ZOOKEEPER_CONNECT_STRING))
-endif
-ifdef MULTISITE_ZOOKEEPER_ROOT_NODE
-		$(eval MULTISITE_OPTIONAL_PARAMS := $(MULTISITE_OPTIONAL_PARAMS) ParameterKey=MultiSiteZookeeperRootNode,ParameterValue=$(MULTISITE_ZOOKEEPER_ROOT_NODE))
 endif
 
 set-ldap-account-pattern:

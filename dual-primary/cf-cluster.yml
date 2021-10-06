@@ -163,8 +163,22 @@ Parameters:
   PrimariesGerritCertificateArn:
     Description: SSL Certificates ARN for the load balancer serving requests to the primary gerrit instances
     Type: String
+  DynamoDBLocksTableName:
+    Description: The name of the DynamoDB locks table
+    Type: String
+    Default: 'locksTable'
+  DynamoDBRefsTableName:
+    Description: The name of the DynamoDB refs table
+    Type: String
+    Default: 'refsDb'
+  CreateRefsDBTables:
+    Description: Whether to create DynamoDB tables for refs-db
+    Type: String
+    Default: false
+    AllowedValues: [true, false]
 
 Conditions:
+  ShouldCreateDynamoDBTables: !Equals [!Ref CreateRefsDBTables, "true"]
   isProvisionedThroughput: !Equals [!Ref PrimaryFileSystemThroughputMode, "provisioned"]
   CreatePrimaryEFS: !Equals [!Ref PrimaryFileSystemID, ""]
   CreateReplicaEFS: !Equals [!Ref ReplicaFileSystemID, ""]
@@ -459,6 +473,9 @@ Resources:
               - 'ecr:GetDownloadUrlForLayer'
               - 'ec2:AttachVolume'
               - 'ec2:DescribeVolumes'
+              - "dynamodb:CreateTable"
+              - "dynamodb:DeleteTable"
+              - "dynamodb:ListTables"
             Resource: '*'
 
   PrimaryGitFileSystemPermanentStack:
@@ -512,6 +529,17 @@ Resources:
         Subnet2IdProp: !Ref 'Subnet2IdProp'
         Subnet2CIDR: !Ref 'Subnet2CIDR'
         Subnet2AZProp: !Ref 'Subnet2AZProp'
+
+  DynamoDBPersistentStack:
+    Type: AWS::CloudFormation::Stack
+    DeletionPolicy: Retain
+    Condition: ShouldCreateDynamoDBTables
+    Properties:
+      TemplateURL: !Join [ '', ['https://', !Ref TemplateBucketName, '.s3.amazonaws.com/cf-dynamodb-stack.yml'] ]
+      TimeoutInMinutes: '25'
+      Parameters:
+        DynamoDBRefsTableName: !Ref DynamoDBRefsTableName
+        DynamoDBLocksTableName: !Ref DynamoDBLocksTableName
 
 Outputs:
   ClusterName:
