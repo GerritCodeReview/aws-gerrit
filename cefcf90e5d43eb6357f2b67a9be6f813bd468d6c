@@ -68,6 +68,30 @@
       },
       "revId": "cefcf90e5d43eb6357f2b67a9be6f813bd468d6c",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8f22d597_135926bf",
+        "filename": "dual-primary/setup.env.template",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-10-06T08:54:35Z",
+      "side": 1,
+      "message": "At the moment haproxy and active/active LB co-exist.\nso we have to give them distinct DNS names.\n\nWhen we remove haproxy, then we could just use LB_SUBDOMAIN for active/active LB.\n\nWDYT?",
+      "parentUuid": "10443a40_46c174f5",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 23
+      },
+      "revId": "cefcf90e5d43eb6357f2b67a9be6f813bd468d6c",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
