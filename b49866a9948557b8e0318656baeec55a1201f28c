@@ -16,6 +16,24 @@
       "message": "We also use the NLB for communicating within the internal components: would source_ip balancing stickiness create problems?\n\nP.S. We do not need stickiness for Git/SSH because the sessions are already stateful.",
       "revId": "b49866a9948557b8e0318656baeec55a1201f28c",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c08c5d44_d173ced4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-10-06T08:51:59Z",
+      "side": 1,
+      "message": "\u003e We also use the NLB for communicating within the internal components: would source_ip balancing stickiness create problems?\n\n- gerrit-1 and gerrit-2 are in a target group of 1 target only, so stickiness should just not be a problem there anyway.\n\n- haproxy is bound to be removed soon. Moreover, requests are not routed to haproxy when coming from active/active LB)\n\n- replicas have no other internal components\n\nWere you thinking of other internal components not listed above?\n\n\u003e \n\u003e P.S. We do not need stickiness for Git/SSH because the sessions are already stateful.\n\ngood point, if unneeded I will remove it.",
+      "parentUuid": "af1ba472_901afd3c",
+      "revId": "b49866a9948557b8e0318656baeec55a1201f28c",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
