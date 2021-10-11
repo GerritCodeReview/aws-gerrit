@@ -89,7 +89,7 @@ Parameters:
     Default: 2
   PrimaryMaxCount:
     Description: The maximum number of EC2 instances in the primary autoscaling group
-    ConstraintDescription: number of haproxy must be at least 2
+    ConstraintDescription: number of primary instances in the primary autoscaling group. Must be at least 2
     Type: Number
     Default: 2
     MinValue: 2
