@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fd742169_71aa50d8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2021-10-11T23:18:08Z",
+      "side": 1,
+      "message": "Just remove \"the need of an\"",
+      "range": {
+        "startLine": 10,
+        "startChar": 39,
+        "endLine": 10,
+        "endChar": 54
+      },
+      "revId": "c026a93d67345cae89e2ec76097001b10fd4ab47",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4677848a_5e0e81a9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2021-10-11T23:18:08Z",
+      "side": 1,
+      "message": "Rely",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 20
+      },
+      "revId": "c026a93d67345cae89e2ec76097001b10fd4ab47",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c74a9a73_f34dceef",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2021-10-11T23:18:08Z",
+      "side": 1,
+      "message": "removing",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 7
+      },
+      "revId": "c026a93d67345cae89e2ec76097001b10fd4ab47",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c1b077f1_9607aa30",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2021-10-11T23:18:08Z",
+      "side": 1,
+      "message": "Good stuff !",
+      "revId": "c026a93d67345cae89e2ec76097001b10fd4ab47",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
