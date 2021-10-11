@@ -22,15 +22,13 @@ You might want to do this to test building phase without deploying a new cluster
 publishing a new docker image will _not_ make it available to ECS, so it cannot be used for upgrading running instances.
 
 Note that you will need to _cd_ to the recipe directory before running any of the following and that the relevant image
-needs to exist for that specific recipe (for example you can't publish HAProxy from the single-primary recipe).
+needs to exist for that specific recipe.
 
 * Gerrit: `make gerrit-publish`
 * SSH Agent: `make git-ssh-publish`
 * Gerrit Daemon: `make git-daemon-publish`
 * Grafana: `make grafana-publish`
 * Prometheus: `make prometheus-publish`
-* HAProxy: `make haproxy-publish`
-* Syslog sidecar: `make syslog-sidecar-publish`
 
 
 

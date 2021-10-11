@@ -10,7 +10,6 @@ The following templates are provided in this example:
 * `cf-service-primary`: define the service stack running the gerrit primary
 * `cf-dns-route`: define the DNS routing for the service
 * `cf-service-replica`: define the service stack running the gerrit replica
-* `cf-service-lb`: define the LBs in front of gerrit primaries (this includes haproxy as well as NLB)
 * `cf-dashboard`: define the CloudWatch dashboard for the services
 
 When the recipe enables the replication_service (see [docs](#replication-service))
@@ -165,7 +164,6 @@ Configuration values affecting deployment environment and cluster properties
 * `PRIMARY1_SUBDOMAIN`: Optional. Name of the primary 1 sub domain. `gerrit-primary-1-demo` by default.
 * `PRIMARY2_SUBDOMAIN`: Optional. Name of the primary 2 sub domain. `gerrit-primary-2-demo` by default.
 * `REPLICA_SUBDOMAIN`: Mandatory. The subdomain of the Gerrit replica. For example: `<AWS_PREFIX>-replica`
-* `LB_SUBDOMAIN`: Mandatory. The subdomain of the Gerrit load balancer. For example: `<AWS_PREFIX>-dual-primary`
 * `PRIMARIES_GERRIT_SUBDOMAIN`: Mandatory. The subdomain of the lb serving traffic to both primary gerrit instances.
    For example: `<AWS_PREFIX>-primaries`
 * `PRIMARY_FILESYSTEM_THROUGHPUT_MODE`: Optional. The throughput mode for the primary file system to be created.
@@ -179,17 +177,6 @@ default: `256`.
 "gerrit-dual-primary-PRIMARY1" by default.
 * `GERRIT_PRIMARY2_INSTANCE_ID`: Optional. Identifier for the Gerrit primary2 instance.
 "gerrit-dual-primary-PRIMARY2" by default.
-
-* `HA_PROXY_DESIRED_COUNT`: Optional. Desired number of haproxy services.
-"2" by default. Minimum: "2".
-
-*Note* ha-proxies are running on ec2 instances with a ratio of 1 to 1: each
-ec2 node hosts one and only one ha-proxy. By increasing the number of desired
-ha-proxies then, the size of the autoscaling group hosting them also increases
-accordingly.
-
-* `HA_PROXY_MAX_COUNT`: Optional. Maximum number of EC2 instances in the haproxy autoscaling group.
-"2" by default. Minimum: "2".
 
 * `PRIMARY_MAX_COUNT`: Optional. Maximum number of EC2 instances in the primary autoscaling group.
 "2" by default. Minimum: "2".
