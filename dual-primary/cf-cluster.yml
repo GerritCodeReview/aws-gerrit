@@ -77,16 +77,6 @@ Parameters:
     Description: Gerrit primary filesystem throughput, measured in MiB/s. Valid values are 1-1024.
     Type: Number
     Default: 256
-  HAProxyMaxCount:
-    Description: The maximum number of EC2 instances in the haproxy autoscaling group
-    Type: Number
-    Default: 2
-  HAProxyDesiredCount:
-    Description: The desired number of haproxy instances
-    ConstraintDescription: number of haproxy must be at least 2
-    Type: Number
-    MinValue: 2
-    Default: 2
   PrimaryMaxCount:
     Description: The maximum number of EC2 instances in the primary autoscaling group
     ConstraintDescription: number of haproxy must be at least 2
@@ -275,48 +265,6 @@ Resources:
           /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -s
 
           /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource ReplicaECSAutoScalingGroup --region ${AWS::Region}
-
-  HAProxyECSAutoScalingGroup:
-    Type: AWS::AutoScaling::AutoScalingGroup
-    Properties:
-      VPCZoneIdentifier:
-        - !If [NetworkStackNeeded, !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneRef, !Ref Subnet1IdProp]
-        - !If [NetworkStackNeeded, !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetTwoRef, !Ref Subnet2IdProp]
-      LaunchConfigurationName: !Ref 'HAProxyLaunchConfiguration'
-      MinSize: '2'
-      MaxSize: !Ref HAProxyMaxCount
-      DesiredCapacity: !Ref HAProxyDesiredCount
-    CreationPolicy:
-      ResourceSignal:
-        Timeout: PT15M
-    UpdatePolicy:
-      AutoScalingReplacingUpdate:
-        WillReplace: 'true'
-
-  HAProxyLaunchConfiguration:
-    Type: AWS::AutoScaling::LaunchConfiguration
-    Properties:
-      ImageId: !Ref 'ECSAMI'
-      SecurityGroups: [!Ref 'EcsHostSecurityGroup']
-      InstanceType: !Ref 'InstanceType'
-      IamInstanceProfile: !Ref 'EC2InstanceProfile'
-      KeyName: !Ref ECSKeyName
-      UserData:
-        Fn::Base64: !Sub |
-          #!/bin/bash -xe
-          echo ECS_CLUSTER=${AWS::StackName}-ECSCluster >> /etc/ecs/ecs.config
-          echo ECS_INSTANCE_ATTRIBUTES={\"target_group\":\"haproxy\"} >> /etc/ecs/ecs.config
-
-          # Make sure latest version of the helper scripts are installed as per recommendation:
-          # https://github.com/awsdocs/aws-cloudformation-user-guide/blob/master/doc_source/cfn-helper-scripts-reference.md#using-the-latest-version
-          yum install -y aws-cfn-bootstrap wget
-
-          # Install the CloudWatch Logs agent
-          wget https://s3.amazonaws.com/amazoncloudwatch-agent/centos/amd64/latest/amazon-cloudwatch-agent.rpm
-          rpm -U ./amazon-cloudwatch-agent.rpm
-          /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -s
-
-          /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource HAProxyECSAutoScalingGroup --region ${AWS::Region}
 
   PrimariesGerritLoadBalancer:
     Type: AWS::ElasticLoadBalancingV2::LoadBalancer

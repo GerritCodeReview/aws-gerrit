@@ -36,8 +36,8 @@ Parameters:
   ReplicaSubdomain:
         Description: The subdomain of the Gerrit replica
         Type: String
-  LBSubdomain:
-        Description: The subdomain of the Gerrit load balancer
+  PrimariesGerritSubdomain:
+        Description: The subdomain of the load balancer fronting both gerrit-1 and gerrit-2
         Type: String
   LoadBalancerScheme:
         Description: Load Balancer scheme, the nodes of an internet-facing load balancer have public IP addresses.
@@ -251,7 +251,7 @@ Resources:
                   Image: !Sub '${DockerRegistryUrl}/${DockerImage}'
                   Environment:
                     - Name: CANONICAL_WEB_URL
-                      Value: !Sub 'https://${LBSubdomain}.${HostedZoneName}'
+                      Value: !Sub 'https://${PrimariesGerritSubdomain}.${HostedZoneName}'
                     - Name: HTTPD_LISTEN_URL
                       Value: !Sub
                         - 'proxy-https://*:${HTTPContainerPort}/'

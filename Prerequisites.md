@@ -13,8 +13,6 @@ The prerequisites to run this stack are:
 aws ecr create-repository --repository-name aws-gerrit/gerrit
 aws ecr create-repository --repository-name aws-gerrit/git-ssh
 aws ecr create-repository --repository-name aws-gerrit/git-daemon
-aws ecr create-repository --repository-name aws-gerrit/haproxy
-aws ecr create-repository --repository-name aws-gerrit/syslog-sidecar
 aws ecr create-repository --repository-name aws-gerrit/prometheus
 aws ecr create-repository --repository-name aws-gerrit/grafana
 aws ecr create-repository --repository-name aws-gerrit/git-gc
