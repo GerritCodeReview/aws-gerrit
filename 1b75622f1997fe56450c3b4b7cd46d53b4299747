@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "047e4967_fee46894",
+        "filename": "common-templates/cf-dynamodb-stack.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-10-12T08:48:26Z",
+      "side": 1,
+      "message": "These represent the Read Capacity Units[1] and the Write Capacity Units[2], respectively.\n\n10 units allow up to:\n\n- 10 writes per second\n- 10 strongly consistent reads per second, or 20 eventually consistent reads per second\n\nAs a blueprint of a Gerrit installation, I believe this is a fair default.\nWe could make it configurable as follow up change if you think this has enough priority?\n\n[1]https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ProvisionedThroughput.html#ProvisionedThroughput.CapacityUnits.Read\n\n[2]https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ProvisionedThroughput.html#ProvisionedThroughput.CapacityUnits.Write",
+      "parentUuid": "6cf862d9_b98e6827",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 15
+      },
+      "revId": "1b75622f1997fe56450c3b4b7cd46d53b4299747",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9f2660d3_dce92d33",
         "filename": "gerrit/entrypoint.sh",
         "patchSetId": 3
@@ -37,6 +61,30 @@
       "writtenOn": "2021-10-11T22:57:58Z",
       "side": 1,
       "message": "Is this related to DynamoDb?",
+      "range": {
+        "startLine": 14,
+        "startChar": 67,
+        "endLine": 14,
+        "endChar": 95
+      },
+      "revId": "1b75622f1997fe56450c3b4b7cd46d53b4299747",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "275d1a64_910791ef",
+        "filename": "gerrit/entrypoint.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-10-12T08:48:26Z",
+      "side": 1,
+      "message": "In order to use dynamodb as ref-db from the high-availability, the high-availability plugin needs to be loaded as a library, as explained [1].\n\n\n[1] https://gerrit.googlesource.com/plugins/high-availability/+/refs/heads/stable-3.3/src/main/resources/Documentation/about.md",
+      "parentUuid": "9f2660d3_dce92d33",
       "range": {
         "startLine": 14,
         "startChar": 67,
