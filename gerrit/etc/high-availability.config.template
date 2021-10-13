@@ -14,5 +14,7 @@
 {% if MULTISITE_ENABLED is defined and MULTISITE_ENABLED == "true" %}
 [websession]
   synchronize = false
+{% elif REFS_DB_ENABLED is defined and REFS_DB_ENABLED == "true" %}
+[ref-database]
+  enabled = true
 {% endif %}
-

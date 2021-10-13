@@ -10,7 +10,6 @@ The following templates are provided in this example:
 * `cf-service-primary`: define the service stack running the gerrit primary
 * `cf-dns-route`: define the DNS routing for the service
 * `cf-service-replica`: define the service stack running the gerrit replica
-* `cf-service-lb`: define the LBs in front of gerrit primaries (this includes haproxy as well as NLB)
 * `cf-dashboard`: define the CloudWatch dashboard for the services
 
 When the recipe enables the replication_service (see [docs](#replication-service))
@@ -98,6 +97,10 @@ SUBNET2_AZ=us-east-1b
 SUBNET2_CIDR=10.0.32.0/24
 ```
 
+Note that if the refs-db dynamodb tables were created as part of the initial
+stack (`CREATE_REFS_DB_TABLES` was set to `true`), you will need to explicitly
+set it to `false` to avoid attempting to create the same tables again.
+
 3. Deploy the *green* stack:
 
 ```bash
@@ -161,7 +164,6 @@ Configuration values affecting deployment environment and cluster properties
 * `PRIMARY1_SUBDOMAIN`: Optional. Name of the primary 1 sub domain. `gerrit-primary-1-demo` by default.
 * `PRIMARY2_SUBDOMAIN`: Optional. Name of the primary 2 sub domain. `gerrit-primary-2-demo` by default.
 * `REPLICA_SUBDOMAIN`: Mandatory. The subdomain of the Gerrit replica. For example: `<AWS_PREFIX>-replica`
-* `LB_SUBDOMAIN`: Mandatory. The subdomain of the Gerrit load balancer. For example: `<AWS_PREFIX>-dual-primary`
 * `PRIMARIES_GERRIT_SUBDOMAIN`: Mandatory. The subdomain of the lb serving traffic to both primary gerrit instances.
    For example: `<AWS_PREFIX>-primaries`
 * `PRIMARY_FILESYSTEM_THROUGHPUT_MODE`: Optional. The throughput mode for the primary file system to be created.
@@ -175,17 +177,6 @@ default: `256`.
 "gerrit-dual-primary-PRIMARY1" by default.
 * `GERRIT_PRIMARY2_INSTANCE_ID`: Optional. Identifier for the Gerrit primary2 instance.
 "gerrit-dual-primary-PRIMARY2" by default.
-
-* `HA_PROXY_DESIRED_COUNT`: Optional. Desired number of haproxy services.
-"2" by default. Minimum: "2".
-
-*Note* ha-proxies are running on ec2 instances with a ratio of 1 to 1: each
-ec2 node hosts one and only one ha-proxy. By increasing the number of desired
-ha-proxies then, the size of the autoscaling group hosting them also increases
-accordingly.
-
-* `HA_PROXY_MAX_COUNT`: Optional. Maximum number of EC2 instances in the haproxy autoscaling group.
-"2" by default. Minimum: "2".
 
 * `PRIMARY_MAX_COUNT`: Optional. Maximum number of EC2 instances in the primary autoscaling group.
 "2" by default. Minimum: "2".
@@ -210,6 +201,19 @@ EBS on multiple EC2 instances.
 * `AUTOREINDEX_POLL_INTERVAL`. Optional. Interval between reindexing of all changes, accounts and groups.
 Default: `10m`
 high-availability docs [here](https://gerrit.googlesource.com/plugins/high-availability/+/refs/heads/master/src/main/resources/Documentation/config.md)
+
+* `DYNAMODB_LOCKS_TABLE_NAME`. Optional. The name of the dynamoDB table used to
+  store distribute locking.
+  Default: `locksTable`
+  See DynamoDB lock client [here](https://github.com/awslabs/amazon-dynamodb-lock-client)
+
+* `DYNAMODB_REFS_TABLE_NAME`. Optional. The name of the dynamoDB table used to
+  store git refs and their associated sha1.
+  Default: `refsDb`
+
+* `CREATE_REFS_DB_TABLES`. Optional. Whether to create the DynamoDB refs and
+  lock tables.
+  Default: `false`
 
 ##### Shared filesystem for replicas
 
@@ -356,7 +360,7 @@ of gerrit specific events that are produced and consumed by the members of the m
 for more information on this.
 
 ##### Requirements
-* Kafka brokers and Zookeeper are required by this recipe and are expected to exist
+* Kafka brokers and DynamoDB are required by this recipe and are expected to exist
 and accessible with server-side TLS security enabled by the primary instances
 resulting from the deployment of this recipe.
 * Replication service must be enabled to allow syncing of Git data.
@@ -365,15 +369,9 @@ These are the parameters that can be specified to enable/disable multi-site:
 
 * `MULTISITE_ENABLED`: Optional. Whether this Gerrit is part of a multi-site
 cluster deployment. "false" by default.
-* `MULTISITE_ZOOKEEPER_CONNECT_STRING`: Required when "MULTISITE_ENABLED=true".
-Connection string to Zookeeper.
 * `MULTISITE_KAFKA_BROKERS`: Required when "MULTISITE_ENABLED=true".
 Comma separated list of Kafka broker hosts (host:port)
 to use for publishing events to the message broker.
-* `MULTISITE_ZOOKEEPER_ROOT_NODE` Optional. Root node to use in Zookeeper to
-store/retrieve information.
-Constraint: a slash-separated ('/') string not starting with a slash ('/')
-"gerrit/multi-site" by default.
 * `MULTISITE_GLOBAL_PROJECTS`: Optional. Comma separated list of patterns (see [projects.pattern](https://gerrit.googlesource.com/plugins/multi-site/+/refs/heads/stable-3.2/src/main/resources/Documentation/config.md))
 to specify which projects are available across all sites. This parametes applies to both multi-site
 and replication service remote destinations.
@@ -433,10 +431,12 @@ Note that this will *not* delete:
 * EFS stack
 * VPC and subnets (if created as part of this deployment, rather than externally
 provided)
+* Refs-DB DynamoDB stack (if created as part of this deployment, rather than
+  externally provided))
 
 Note that you can completely delete the stack, including explicitly retained
-resources such as the EFS Git filesystem, VPC and subnets, by issuing the more
-aggressive command:
+resources such as the EFS Git filesystem, VPC and subnets and DynamoDB stack by
+issuing the more aggressive command:
 
 ```
 make [AWS_REGION=a-valid-aws-region] [AWS_PREFIX=some-cluster-prefix] delete-all-including-retained-stack

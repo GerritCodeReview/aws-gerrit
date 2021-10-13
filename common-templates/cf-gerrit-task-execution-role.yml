@@ -31,6 +31,17 @@ Resources:
                   - 'logs:PutLogEvents'
                   # Allow the ECS tasks to push metrics to CloudWatch
                   - 'cloudwatch:PutMetricData'
+                  # Allow the ECS tasks to perform CRUD actions to dynamodb table:
+                  # Used for global refs-db operations.
+                  - 'dynamodb:DeleteItem'
+                  - 'dynamodb:CreateTable'
+                  - 'dynamodb:DescribeTable'
+                  - 'dynamodb:GetItem'
+                  - 'dynamodb:ListTables'
+                  - 'dynamodb:PutItem'
+                  - 'dynamodb:Query'
+                  - 'dynamodb:Scan'
+                  - 'dynamodb:UpdateItem'
                 Resource: '*'
           - PolicyName: AmazonECSTaskSecretManagerRolePolicy
             PolicyDocument:

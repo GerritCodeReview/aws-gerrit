@@ -8,14 +8,16 @@ SERVICE_PRIMARY_TEMPLATE:=cf-service-primary.yml
 SERVICE_REPLICA_TEMPLATE:=cf-service-replica.yml
 DNS_ROUTING_TEMPLATE:=cf-dns-route.yml
 CLOUDWATCH_DASHBOARD_TEMPLATE:=cf-dashboard.yml
-LOAD_BALANCER_TEMPLATE:=cf-service-lb.yml
 SERVICE_REPLICATION_TEMPLATE:=cf-service-replication.yml
 AWS_FC_COMMAND=export AWS_PAGER=;aws cloudformation
 GIT_GC_SOURCE_PATH=/mnt/efs/gerrit-shared/git
 
 SINGLE_SITE_PLUGINS=javamelody high-availability healthcheck metrics-reporter-cloudwatch
 
-MULTI_SITE_PLUGINS=$(SINGLE_SITE_PLUGINS) multi-site kafka-events websession-broker zookeeper-refdb~zk-3.5
+HA_SITE_PLUGINS=$(SINGLE_SITE_PLUGINS) aws-dynamodb-refdb
+HA_SITE_PLUGINS_LIBS_LINKS=high-availability
+
+MULTI_SITE_PLUGINS=$(SINGLE_SITE_PLUGINS) multi-site kafka-events websession-broker
 MULTI_SITE_PLUGINS_LIBS_LINKS=multi-site replication
 MULTI_SITE_MAVEN_LIBS=events-broker~$(EVENTSBROKER_LIB_VER)
 
@@ -24,8 +26,7 @@ MULTI_SITE_MAVEN_LIBS=events-broker~$(EVENTSBROKER_LIB_VER)
 				cluster cluster-keys service-primary-1 service-primary-2 service-replica dns-routing dashboard delete-dashboard\
 				wait-for-cluster-creation wait-for-service-primary-1-creation wait-for-service-primary-2-creation wait-for-service-replica-creation wait-for-dns-routing-creation wait-for-dashboard-creation \
 				wait-for-cluster-deletion wait-for-service-primary-1-deletion wait-for-service-primary-2-deletion wait-for-service-replica-deletion wait-for-dns-routing-deletion wait-for-dashboard-deletion \
-				service-lb wait-for-service-lb-deletion wait-for-service-lb-creation \
-				gerrit-build gerrit-publish haproxy-publish syslog-sidecar-publish
+				gerrit-build gerrit-publish
 
 ifeq ($(REPLICATION_SERVICE_ENABLED),true)
 optional_replication_targets_creation=service-replication wait-for-service-replication-creation
@@ -39,14 +40,13 @@ endif
 
 create-all: upload-common-templates \
 						git-daemon-publish git-ssh-publish \
-						gerrit-publish haproxy-publish syslog-sidecar-publish \
+						gerrit-publish \
 						cluster wait-for-cluster-creation \
 						$(optional_replication_targets_creation) \
 						service-replica service-primary-1 \
 						wait-for-service-primary-1-creation wait-for-service-replica-creation \
 						service-primary-2 wait-for-service-primary-2-creation \
 						$(optional_dashboard_targets_creation) \
-						service-lb wait-for-service-lb-creation \
 						$(optional_git_gc_targets_creation) \
 						dns-routing wait-for-dns-routing-creation
 
@@ -54,7 +54,8 @@ cluster: cluster-keys set-optional-gerrit-primary-volume \
 			set-optional-params-for-replica-filesystem \
 			set-optional-params-for-replica-auto-scaling-capacity \
 			set-optional-params-for-replica-capacity-provider \
-			set-optional-network-params
+			set-optional-network-params \
+			set-optional-refs-db-params
 ifdef CLUSTER_INSTANCE_TYPE
 		$(eval CLUSTER_OPTIONAL_PARAMS := $(CLUSTER_OPTIONAL_PARAMS) ParameterKey=InstanceType,ParameterValue=$(CLUSTER_INSTANCE_TYPE))
 endif
@@ -67,17 +68,14 @@ endif
 ifdef PRIMARY_FILESYSTEM_ID
 		$(eval CLUSTER_OPTIONAL_PARAMS := $(CLUSTER_OPTIONAL_PARAMS) ParameterKey=PrimaryFileSystemID,ParameterValue=$(PRIMARY_FILESYSTEM_ID))
 endif
-ifdef HA_PROXY_MAX_COUNT
-		$(eval CLUSTER_OPTIONAL_PARAMS := $(CLUSTER_OPTIONAL_PARAMS) ParameterKey=HAProxyMaxCount,ParameterValue=$(HA_PROXY_MAX_COUNT))
-endif
-ifdef HA_PROXY_DESIRED_COUNT
-		$(eval CLUSTER_OPTIONAL_PARAMS := $(CLUSTER_OPTIONAL_PARAMS) ParameterKey=HAProxyDesiredCount,ParameterValue=$(HA_PROXY_DESIRED_COUNT))
-endif
 ifdef PRIMARY_MAX_COUNT
 		$(eval CLUSTER_OPTIONAL_PARAMS := $(CLUSTER_OPTIONAL_PARAMS) ParameterKey=PrimaryMaxCount,ParameterValue=$(PRIMARY_MAX_COUNT))
 endif
 ifdef LOAD_BALANCER_SCHEME
 		$(eval CLUSTER_OPTIONAL_PARAMS := $(CLUSTER_OPTIONAL_PARAMS) ParameterKey=PrimariesGerritLoadBalancerScheme,ParameterValue=$(LOAD_BALANCER_SCHEME))
+endif
+ifdef CREATE_REFS_DB_TABLES
+		$(eval CLUSTER_OPTIONAL_PARAMS := $(CLUSTER_OPTIONAL_PARAMS) ParameterKey=CreateRefsDBTables,ParameterValue=$(CREATE_REFS_DB_TABLES))
 endif
 
 	$(AWS_FC_COMMAND) create-stack \
@@ -94,12 +92,14 @@ endif
 		$(GERRIT_OPTIONAL_PRIMARY_VOLUME) \
 		$(GERRIT_OPTIONAL_PARAMS_REPLICA_FILESYSTEM) \
 		$(GERRIT_OPTIONAL_PARAMS_REPLICA_AUTO_SCALING_CAPACITY) \
-		$(GERRIT_OPTIONAL_PARAMS_REPLICA_CAPACITY_PROVIDER)
+		$(GERRIT_OPTIONAL_PARAMS_REPLICA_CAPACITY_PROVIDER) \
+		$(REFS_DB_OPTIONAL_PARAMS)
 
 service-primary-1: set-optional-params-metrics-cloudwatch set-optional-params-smtp \
 					set-optional-params-multisite set-ldap-account-pattern \
 					set-optional-gerrit-ulimits set-optional-jgit-conf \
-					set-high-availability-optional-params
+					set-high-availability-optional-params \
+					set-optional-refs-db-params
 ifdef GERRIT_PRIMARY1_INSTANCE_ID
 		$(eval PRIMARY1_SERVICE_OPTIONAL_PARAMS := $(PRIMARY1_SERVICE_OPTIONAL_PARAMS) ParameterKey=InstanceId,ParameterValue=$(GERRIT_PRIMARY1_INSTANCE_ID))
 endif
@@ -137,7 +137,7 @@ endif
 		ParameterKey=GerritKeyPrefix,ParameterValue=$(GERRIT_KEY_PREFIX)\
 		ParameterKey=DockerImage,ParameterValue=aws-gerrit/gerrit:$(IMAGE_TAG) \
 		ParameterKey=PeerSubdomain,ParameterValue=$(PRIMARY2_SUBDOMAIN) \
-		ParameterKey=LBSubdomain,ParameterValue=$(LB_SUBDOMAIN) \
+		ParameterKey=PrimariesGerritSubdomain,ParameterValue=$(PRIMARIES_GERRIT_SUBDOMAIN) \
 		ParameterKey=GerritRAM,ParameterValue=$(GERRIT_RAM) \
 		ParameterKey=GerritCPU,ParameterValue=$(GERRIT_CPU) \
 		ParameterKey=GerritHeapLimit,ParameterValue=$(GERRIT_HEAP_LIMIT) \
@@ -150,12 +150,14 @@ endif
 		$(LDAP_ACCOUNT_PATTERN_PARAM) \
 		$(METRICS_CW_OPTIONAL_PARAMS) \
 		$(SMTP_OPTIONAL_PARAMS) \
-		$(GERRIT_ULIMITS)
+		$(GERRIT_ULIMITS) \
+		$(REFS_DB_OPTIONAL_PARAMS)
 
 service-primary-2: set-optional-params-metrics-cloudwatch set-optional-params-smtp \
 					set-optional-params-multisite set-ldap-account-pattern \
 					set-optional-gerrit-ulimits set-optional-jgit-conf \
-					set-high-availability-optional-params
+					set-high-availability-optional-params \
+					set-optional-refs-db-params
 ifdef GERRIT_PRIMARY2_INSTANCE_ID
 		$(eval PRIMARY2_SERVICE_OPTIONAL_PARAMS := $(PRIMARY2_SERVICE_OPTIONAL_PARAMS) ParameterKey=InstanceId,ParameterValue=$(GERRIT_PRIMARY2_INSTANCE_ID))
 endif
@@ -193,7 +195,7 @@ endif
 		ParameterKey=GerritKeyPrefix,ParameterValue=$(GERRIT_KEY_PREFIX)\
 		ParameterKey=DockerImage,ParameterValue=aws-gerrit/gerrit:$(IMAGE_TAG) \
 		ParameterKey=PeerSubdomain,ParameterValue=$(PRIMARY1_SUBDOMAIN) \
-		ParameterKey=LBSubdomain,ParameterValue=$(LB_SUBDOMAIN) \
+		ParameterKey=PrimariesGerritSubdomain,ParameterValue=$(PRIMARIES_GERRIT_SUBDOMAIN) \
 		ParameterKey=ReindexAtSartup,ParameterValue=true \
 		ParameterKey=GerritRAM,ParameterValue=$(GERRIT_RAM) \
 		ParameterKey=GerritCPU,ParameterValue=$(GERRIT_CPU) \
@@ -207,7 +209,8 @@ endif
 		$(LDAP_ACCOUNT_PATTERN_PARAM) \
 		$(METRICS_CW_OPTIONAL_PARAMS) \
 		$(SMTP_OPTIONAL_PARAMS) \
-		$(GERRIT_ULIMITS)
+		$(GERRIT_ULIMITS) \
+		$(REFS_DB_OPTIONAL_PARAMS)
 
 service-replication:
 	$(AWS_FC_COMMAND) create-stack \
@@ -269,33 +272,6 @@ endif
 		$(GERRIT_OPTIONAL_PARAMS_REPLICA_AUTO_SCALING_CAPACITY) \
 		$(GERRIT_OPTIONAL_PARAMS_REPLICA_AUTO_SCALING_POLICY)
 
-service-lb:
-ifdef LOAD_BALANCER_SCHEME
-		$(eval SERVICE_OPTIONAL_PARAMS := $(SERVICE_OPTIONAL_PARAMS) ParameterKey=LoadBalancerScheme,ParameterValue=$(LOAD_BALANCER_SCHEME))
-endif
-ifdef HA_PROXY_DESIRED_COUNT
-		$(eval SERVICE_OPTIONAL_PARAMS := $(SERVICE_OPTIONAL_PARAMS) ParameterKey=DesiredCount,ParameterValue=$(HA_PROXY_DESIRED_COUNT))
-endif
-
-	$(AWS_FC_COMMAND) create-stack \
-		--stack-name $(LOAD_BALANCER_STACK_NAME) \
-		--capabilities CAPABILITY_IAM  \
-		--template-body file://`pwd`/$(LOAD_BALANCER_TEMPLATE) \
-		--region $(AWS_REGION) \
-		--parameters \
-		ParameterKey=ClusterStackName,ParameterValue=$(CLUSTER_STACK_NAME) \
-		ParameterKey=Primary1ServiceStackName,ParameterValue=$(SERVICE_PRIMARY1_STACK_NAME) \
-		ParameterKey=Primary2ServiceStackName,ParameterValue=$(SERVICE_PRIMARY2_STACK_NAME) \
-		ParameterKey=HostedZoneName,ParameterValue=$(HOSTED_ZONE_NAME) \
-		ParameterKey=DockerRegistryUrl,ParameterValue=$(DOCKER_REGISTRY_URI) \
-		ParameterKey=GerritKeyPrefix,ParameterValue=$(GERRIT_KEY_PREFIX)\
-		ParameterKey=CertificateArn,ParameterValue=$(SSL_CERTIFICATE_ARN) \
-		ParameterKey=Subdomain,ParameterValue=$(LB_SUBDOMAIN) \
-		ParameterKey=TemplateBucketName,ParameterValue=$(TEMPLATE_BUCKET_NAME) \
-		ParameterKey=HAProxyDockerImage,ParameterValue=aws-gerrit/haproxy:$(HAPROXY_HEAD_SHA1) \
-		ParameterKey=SidecarDockerImage,ParameterValue=aws-gerrit/syslog-sidecar:$(SYSLOG_HEAD_SHA1) \
-		$(SERVICE_OPTIONAL_PARAMS)
-
 dns-routing:
 	$(AWS_FC_COMMAND) create-stack \
 		--stack-name $(DNS_ROUTING_STACK_NAME) \
@@ -305,7 +281,6 @@ dns-routing:
 		--parameters \
 		ParameterKey=Primary1ServiceStackName,ParameterValue=$(SERVICE_PRIMARY1_STACK_NAME) \
 		ParameterKey=Primary2ServiceStackName,ParameterValue=$(SERVICE_PRIMARY2_STACK_NAME) \
-		ParameterKey=LBServiceStackName,ParameterValue=$(LOAD_BALANCER_STACK_NAME) \
 		ParameterKey=ClusterStackName,ParameterValue=$(CLUSTER_STACK_NAME) \
 		ParameterKey=PrimariesGerritHostedZoneName,ParameterValue=$(HOSTED_ZONE_NAME) \
 		ParameterKey=PrimariesGerritSubdomain,ParameterValue=$(PRIMARIES_GERRIT_SUBDOMAIN)
@@ -372,13 +347,6 @@ wait-for-service-replica-creation:
 	--region $(AWS_REGION)
 	@echo "*** Service stack '$(SERVICE_REPLICA_STACK_NAME)' created"
 
-wait-for-service-lb-creation:
-	@echo "*** Wait for service lb stack '$(LOAD_BALANCER_STACK_NAME)' creation"
-	$(AWS_FC_COMMAND) wait stack-create-complete \
-	--stack-name $(LOAD_BALANCER_STACK_NAME) \
-	--region $(AWS_REGION)
-	@echo "*** Service stack '$(LOAD_BALANCER_STACK_NAME)' created"
-
 wait-for-dns-routing-creation:
 	@echo "*** Wait for DNS routing stack '$(DNS_ROUTING_STACK_NAME)' creation"
 	$(AWS_FC_COMMAND) wait stack-create-complete \
@@ -421,13 +389,6 @@ wait-for-service-replica-deletion:
 	--region $(AWS_REGION)
 	@echo "*** Service stack replica '$(SERVICE_REPLICA_STACK_NAME)' deleted"
 
-wait-for-service-lb-deletion:
-	@echo "*** Wait for service lb stack '$(LOAD_BALANCER_STACK_NAME)' deletion"
-	$(AWS_FC_COMMAND) wait stack-delete-complete \
-	--stack-name $(LOAD_BALANCER_STACK_NAME) \
-	--region $(AWS_REGION)
-	@echo "*** Service stack '$(LOAD_BALANCER_STACK_NAME)' deleted"
-
 wait-for-dns-routing-deletion:
 	@echo "*** Wait for DNS routing stack '$(DNS_ROUTING_STACK_NAME)' deletion"
 	$(AWS_FC_COMMAND) wait stack-delete-complete \
@@ -469,11 +430,6 @@ delete-service-replica:
 	--stack-name $(SERVICE_REPLICA_STACK_NAME) \
 	--region $(AWS_REGION)
 
-delete-service-lb:
-	$(AWS_FC_COMMAND) delete-stack \
-	--stack-name $(LOAD_BALANCER_STACK_NAME) \
-	--region $(AWS_REGION)
-
 delete-service-replication:
 	$(AWS_FC_COMMAND) delete-stack \
 	--stack-name $(SERVICE_REPLICATION_STACK_NAME) \
@@ -490,7 +446,6 @@ delete-dashboard:
 	--region $(AWS_REGION)
 
 delete-all: delete-dns-routing wait-for-dns-routing-deletion \
-						delete-service-lb wait-for-service-lb-deletion \
 						delete-service-primary-1 delete-service-primary-2 delete-service-replica \
 						wait-for-service-primary-1-deletion wait-for-service-primary-2-deletion wait-for-service-replica-deletion \
 						$(optional_dashboard_targets_deletion) \
@@ -498,7 +453,7 @@ delete-all: delete-dns-routing wait-for-dns-routing-deletion \
 						$(optional_git_gc_targets_deletion) \
 						delete-cluster wait-for-cluster-deletion
 
-delete-all-including-retained-stack: confirm-persistent-stack-deletion delete-all delete-git-primary-persistent-stack delete-git-replica-persistent-stack delete-network-persistent-stack
+delete-all-including-retained-stack: confirm-persistent-stack-deletion delete-all delete-git-primary-persistent-stack delete-git-replica-persistent-stack delete-network-persistent-stack delete-dynamodb-persistent-stack
 
 delete-git-primary-persistent-stack:
 
@@ -521,14 +476,8 @@ gerrit-publish:
 ifeq ($(MULTISITE_ENABLED),true)
 	$(MAKE) -C ../gerrit gerrit-publish RECIPE=dual-primary PLUGINS="$(MULTI_SITE_PLUGINS)" PLUGINS_LIBS_LINKS="$(MULTI_SITE_PLUGINS_LIBS_LINKS)" MAVEN_LIBS="$(MULTI_SITE_MAVEN_LIBS)"
 else
-	$(MAKE) -C ../gerrit gerrit-publish RECIPE=dual-primary PLUGINS="$(SINGLE_SITE_PLUGINS)"
+	$(MAKE) -C ../gerrit gerrit-publish RECIPE=dual-primary PLUGINS="$(HA_SITE_PLUGINS)" PLUGINS_LIBS_LINKS="$(HA_SITE_PLUGINS_LIBS_LINKS)"
 endif
-
-haproxy-publish:
-	$(MAKE) -C haproxy haproxy-publish
-
-syslog-sidecar-publish:
-	$(MAKE) -C syslog-sidecar syslog-sidecar-publish
 
 git-daemon-publish:
 	$(MAKE) -C ../primary-replica/git-daemon git-daemon-publish
@@ -541,3 +490,28 @@ set-high-availability-optional-params:
 ifdef AUTOREINDEX_POLL_INTERVAL
 		$(eval HA_OPTIONAL_PARAMS := ParameterKey=AutoReindexPollInterval,ParameterValue=$(AUTOREINDEX_POLL_INTERVAL))
 endif
+
+set-optional-refs-db-params:
+	$(eval REFS_DB_OPTIONAL_PARAMS=)
+ifdef DYNAMODB_LOCKS_TABLE_NAME
+		$(eval REFS_DB_OPTIONAL_PARAMS := $(REFS_DB_OPTIONAL_PARAMS) ParameterKey=DynamoDBLocksTableName,ParameterValue=$(DYNAMODB_LOCKS_TABLE_NAME))
+endif
+ifdef DYNAMODB_REFS_TABLE_NAME
+		$(eval REFS_DB_OPTIONAL_PARAMS := $(REFS_DB_OPTIONAL_PARAMS) ParameterKey=DynamoDBRefsTableName,ParameterValue=$(DYNAMODB_REFS_TABLE_NAME))
+endif
+
+delete-dynamodb-persistent-stack:
+	$(eval DYNAMODB_STACK_NAME=$(shell $(AWS_FC_COMMAND) list-stacks --stack-status-filter CREATE_COMPLETE --query "StackSummaries[*].StackName" | jq -r '.[]| select(startswith("$(CLUSTER_STACK_NAME)-DynamoDBPersistentStack"))'))
+
+	$(if $(DYNAMODB_STACK_NAME), \
+		$(AWS_FC_COMMAND) delete-stack \
+			--stack-name $(DYNAMODB_STACK_NAME) \
+			--region $(AWS_REGION) && \
+		echo "*** Wait for DynamoDB stack '$(DYNAMODB_STACK_NAME)' deletion" && \
+		$(AWS_FC_COMMAND) wait stack-delete-complete \
+			--stack-name $(DYNAMODB_STACK_NAME) \
+			--region $(AWS_REGION) && \
+		echo "*** DynamoDB stack '$(DYNAMODB_STACK_NAME)' deleted" \
+		, \
+		echo "No DynamoDB stack found. Nothing to do." \
+	)

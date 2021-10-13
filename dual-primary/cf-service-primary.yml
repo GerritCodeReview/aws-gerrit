@@ -36,8 +36,8 @@ Parameters:
   ReplicaSubdomain:
         Description: The subdomain of the Gerrit replica
         Type: String
-  LBSubdomain:
-        Description: The subdomain of the Gerrit load balancer
+  PrimariesGerritSubdomain:
+        Description: The subdomain of the load balancer fronting both gerrit-1 and gerrit-2
         Type: String
   LoadBalancerScheme:
         Description: Load Balancer scheme, the nodes of an internet-facing load balancer have public IP addresses.
@@ -172,16 +172,14 @@ Parameters:
     Description: Comma separated list of Kafka broker hosts (host:port) to use for publishing events to the message broker
     Type: CommaDelimitedList
     Default: ''
-  MultiSiteZookeeperConnectString:
-    Description: Connection string to Zookeeper
+  DynamoDBLocksTableName:
+    Description: The name of the DynamoDB locks table
     Type: String
-    Default: ''
-  MultiSiteZookeeperRootNode:
-    Description: Root node to use in Zookeeper to store/retrieve information
+    Default: 'locksTable'
+  DynamoDBRefsTableName:
+    Description: The name of the DynamoDB refs table
     Type: String
-    ConstraintDescription: Choose a slash-separated ('/') string not starting with a slash ('/')
-    AllowedPattern: '^[^\/].*'
-    Default: 'gerrit/multi-site'
+    Default: 'refsDb'
   AutoReindexPollInterval:
     Description: Interval between reindexing of all changes, accounts and groups.
     Type: String
@@ -253,7 +251,7 @@ Resources:
                   Image: !Sub '${DockerRegistryUrl}/${DockerImage}'
                   Environment:
                     - Name: CANONICAL_WEB_URL
-                      Value: !Sub 'https://${LBSubdomain}.${HostedZoneName}'
+                      Value: !Sub 'https://${PrimariesGerritSubdomain}.${HostedZoneName}'
                     - Name: HTTPD_LISTEN_URL
                       Value: !Sub
                         - 'proxy-https://*:${HTTPContainerPort}/'
@@ -334,10 +332,12 @@ Resources:
                       Value: !Ref MultiSiteEnabled
                     - Name: MULTISITE_KAFKA_BROKERS
                       Value: !Join [',', !Ref MultiSiteKafkaBrokers]
-                    - Name: MULTISITE_ZOOKEEPER_CONNECT_STRING
-                      Value: !Ref MultiSiteZookeeperConnectString
-                    - Name: MULTISITE_ZOOKEEPER_ROOT_NODE
-                      Value: !Ref MultiSiteZookeeperRootNode
+                    - Name: REFS_DB_ENABLED
+                      Value: true
+                    - Name: DYNAMODB_LOCKS_TABLE_NAME
+                      Value: !Ref DynamoDBLocksTableName
+                    - Name: DYNAMODB_REFS_TABLE_NAME
+                      Value: !Ref DynamoDBRefsTableName
                   Ulimits:
                     - Name: nofile
                       HardLimit: !Ref FileDescriptorsHardLimit

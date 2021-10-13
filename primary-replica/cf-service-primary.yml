@@ -22,10 +22,6 @@ Parameters:
         Description: Gerrit official Docker image
         Type: String
         Default: aws-gerrit/gerrit:latest
-  GerritLBDockerImage:
-        Description: Load Balancer official Docker image
-        Type: String
-        Default: haproxy:1.7
   DockerRegistryUrl:
         Description: Docker registry URL
         Type: String
