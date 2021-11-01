@@ -173,6 +173,7 @@ with open(GERRIT_CONFIG_DIRECTORY + "gerrit.config", 'w',
         'REFS_DB_ENABLED': os.getenv('REFS_DB_ENABLED'),
         'DYNAMODB_LOCKS_TABLE_NAME': os.getenv('DYNAMODB_LOCKS_TABLE_NAME'),
         'DYNAMODB_REFS_TABLE_NAME': os.getenv('DYNAMODB_REFS_TABLE_NAME'),
+        'SSHD_ADVERTISED_ADDRESS': os.getenv('SSHD_ADVERTISED_ADDRESS'),
     })
     f.write(template.render(config_for_template))
 
