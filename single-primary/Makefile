@@ -63,7 +63,8 @@ endif
 		ParameterKey=ClusterStackName,ParameterValue=$(CLUSTER_STACK_NAME) \
 		ParameterKey=TemplateBucketName,ParameterValue=$(TEMPLATE_BUCKET_NAME) \
 		ParameterKey=HostedZoneName,ParameterValue=$(HOSTED_ZONE_NAME) \
-		ParameterKey=Subdomain,ParameterValue=$(SUBDOMAIN) \
+		ParameterKey=HttpSubdomain,ParameterValue=$(HTTP_SUBDOMAIN) \
+		ParameterKey=SshSubdomain,ParameterValue=$(SSH_SUBDOMAIN) \
 		ParameterKey=DockerRegistryUrl,ParameterValue=$(DOCKER_REGISTRY_URI) \
 		ParameterKey=CertificateArn,ParameterValue=$(SSL_CERTIFICATE_ARN) \
 		ParameterKey=GerritKeyPrefix,ParameterValue=$(GERRIT_KEY_PREFIX) \
