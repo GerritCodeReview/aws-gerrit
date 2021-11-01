@@ -7,26 +7,56 @@ Parameters:
       Default: gerrit-service
 
 Resources:
-  DnsRecord:
+  GerritSSHDnsRecord:
       Type: AWS::Route53::RecordSet
       Properties:
         Name:
           !Join
-            - '.'
-            - - Fn::ImportValue: !Join [':', [!Ref 'ServiceStackName', 'Subdomain']]
-              - Fn::ImportValue: !Join [':', [!Ref 'ServiceStackName', 'HostedZoneName']]
+          - '.'
+          - - !Join
+              - '-'
+              - - 'ssh'
+                - Fn::ImportValue: !Join [ ':', [ !Ref 'ServiceStackName', 'Subdomain' ] ]
+            - Fn::ImportValue: !Join [':', [!Ref 'ServiceStackName', 'HostedZoneName']]
         HostedZoneName:
           !Join
             - ''
             - - Fn::ImportValue: !Join [':', [!Ref 'ServiceStackName', 'HostedZoneName']]
               - '.'
-        Comment: DNS name for Gerrit Primary.
+        Comment: DNS name for Load Balancer serving SSH requests to primary gerrit
         Type: A
         AliasTarget:
           DNSName:
             Fn::ImportValue:
-              !Join [':', [!Ref 'ServiceStackName', 'PublicLoadBalancerDNSName']]
+              !Join [':', [!Ref 'ServiceStackName', 'GerritSSHLoadBalancerDNSName']]
           HostedZoneId:
             Fn::ImportValue:
-              !Join [':', [!Ref 'ServiceStackName', 'CanonicalHostedZoneID']]
+              !Join [':', [!Ref 'ServiceStackName', 'GerritSSHCanonicalHostedZoneID']]
           EvaluateTargetHealth: False
+
+  GerritHTTPDnsRecord:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      Name:
+        !Join
+        - '.'
+        - - !Join
+            - '-'
+            - - 'http'
+              - Fn::ImportValue: !Join [ ':', [ !Ref 'ServiceStackName', 'Subdomain' ] ]
+          - Fn::ImportValue: !Join [':', [!Ref 'ServiceStackName', 'HostedZoneName']]
+      HostedZoneName:
+        !Join
+        - ''
+        - - Fn::ImportValue: !Join [':', [!Ref 'ServiceStackName', 'HostedZoneName']]
+          - '.'
+      Comment: DNS name for Load Balancer serving HTTP requests to primary gerrit
+      Type: A
+      AliasTarget:
+        DNSName:
+          Fn::ImportValue:
+            !Join [':', [!Ref 'ServiceStackName', 'GerritHTTPLoadBalancerDNSName']]
+        HostedZoneId:
+          Fn::ImportValue:
+            !Join [':', [!Ref 'ServiceStackName', 'GerritHTTPCanonicalHostedZoneID']]
+        EvaluateTargetHealth: False
