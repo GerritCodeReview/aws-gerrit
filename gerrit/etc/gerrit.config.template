@@ -51,6 +51,9 @@
 
 [sshd]
 	listenAddress = *:29418
+{% if SSHD_ADVERTISED_ADDRESS %}
+    advertisedAddress = {{ SSHD_ADVERTISED_ADDRESS }}
+{% endif %}
 [httpd]
 	listenUrl = http://*:8080/
 	requestLog = true
