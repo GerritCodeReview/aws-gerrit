@@ -424,7 +424,7 @@ Resources:
             HealthCheckPort: !FindInMap ['Gerrit', 'Port', 'HTTP']
             HealthCheckProtocol: HTTP
             HealthCheckPath: '/config/server/healthcheck~status'
-            Name: !Sub 'gerrit-${GerritInstanceNumber}-primary-http'
+            Name: !Sub '${AWS::StackName}-primary${GerritInstanceNumber}-http'
 
     HTTPListener:
         Type: AWS::ElasticLoadBalancingV2::Listener
@@ -449,7 +449,7 @@ Resources:
             HealthCheckPort: !FindInMap ['Gerrit', 'Port', 'HTTP']
             HealthCheckProtocol: HTTP
             HealthCheckPath: '/config/server/healthcheck~status'
-            Name: !Sub 'gerrit-${GerritInstanceNumber}-primary-ssh'
+            Name: !Sub '${AWS::StackName}-primary${GerritInstanceNumber}-ssh'
 
     SSHListener:
         Type: AWS::ElasticLoadBalancingV2::Listener
