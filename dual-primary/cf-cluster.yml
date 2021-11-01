@@ -271,7 +271,7 @@ Resources:
     Properties:
       Type: network
       Scheme: !Ref PrimariesGerritLoadBalancerScheme
-      Name: 'primary-gerrit-instances'
+      Name: !Sub '${AWS::StackName}-primaries'
       LoadBalancerAttributes:
         - Key: 'load_balancing.cross_zone.enabled'
           Value: true
@@ -289,7 +289,7 @@ Resources:
       HealthCheckPort: !FindInMap ['Gerrit', 'Port', 'HTTP']
       HealthCheckProtocol: HTTP
       HealthCheckPath: '/config/server/healthcheck~status'
-      Name: 'primaries-gerrit-http'
+      Name: !Sub '${AWS::StackName}-primaries-http'
       TargetGroupAttributes:
         - Key: 'stickiness.enabled'
           Value: true
@@ -320,7 +320,7 @@ Resources:
       HealthCheckPort: !FindInMap ['Gerrit', 'Port', 'HTTP']
       HealthCheckProtocol: HTTP
       HealthCheckPath: '/config/server/healthcheck~status'
-      Name: 'primaries-gerrit-ssh'
+      Name: !Sub '${AWS::StackName}-primaries-ssh'
 
   PrimariesGerritSSHListener:
     Type: AWS::ElasticLoadBalancingV2::Listener

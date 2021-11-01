@@ -363,7 +363,7 @@ Resources:
             HealthCheckProtocol: HTTP
             HealthCheckPort: !Ref HTTPPort
             HealthCheckPath: '/config/server/healthcheck~status'
-            Name: 'gerrit-primary-http'
+            Name: !Sub '${ClusterStackName}-primary-http'
 
     HTTPListener:
         Type: AWS::ElasticLoadBalancingV2::Listener
@@ -390,7 +390,7 @@ Resources:
             HealthCheckProtocol: HTTP
             HealthCheckPort: !Ref HTTPPort
             HealthCheckPath: '/config/server/healthcheck~status'
-            Name: 'gerrit-primary-ssh'
+            Name: !Sub '${ClusterStackName}-primary-ssh'
 
     SSHListener:
         Type: AWS::ElasticLoadBalancingV2::Listener
