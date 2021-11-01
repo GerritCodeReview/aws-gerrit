@@ -103,9 +103,10 @@ Note that this will *not* delete:
 
 ### Access your Gerrit
 
-You Gerrit instance will be available at this URL: `http://<HOSTED_ZONE_NAME>.<SUBDOMAIN>`.
+You Gerrit instance will be available at two different URLs, to handle HTTP and SSH traffic respectively:
 
-The available ports are `8080` for HTTP and `29418` for SSH.
+* HTTP traffic: `https://http-<SUBDOMAIN>.<HOSTED_ZONE_NAME>:443`
+* SSH traffic: `https://ssh-<SUBDOMAIN>.<HOSTED_ZONE_NAME>:29418`
 
 ### External Services
 
