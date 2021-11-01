@@ -457,7 +457,7 @@ Resources:
             HealthCheckPort: !Ref HTTPHostPort
             HealthCheckProtocol: HTTP
             HealthCheckPath: '/config/server/healthcheck~status'
-            Name: 'gerrit-replica-http'
+            Name: !Sub '${ClusterStackName}-replica-http'
             TargetGroupAttributes:
               - Key: 'stickiness.enabled'
                 Value: true
@@ -491,7 +491,7 @@ Resources:
             HealthCheckPort: !Ref HTTPHostPort
             HealthCheckProtocol: HTTP
             HealthCheckPath: '/config/server/healthcheck~status'
-            Name: 'gerrit-replica-ssh'
+            Name: !Sub '${ClusterStackName}-replica-ssh'
 
     SSHListener:
         Type: AWS::ElasticLoadBalancingV2::Listener

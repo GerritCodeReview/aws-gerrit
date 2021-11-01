@@ -457,7 +457,7 @@ Resources:
             HealthCheckPort: !Ref HTTPHostPort
             HealthCheckProtocol: HTTP
             HealthCheckPath: '/config/server/healthcheck~status'
-            Name: 'gerrit-replica-http'
+            Name: !Sub '${AWS::StackName}-replica-http'
             TargetGroupAttributes:
               - Key: 'stickiness.enabled'
                 Value: true
@@ -491,7 +491,7 @@ Resources:
             HealthCheckPort: !Ref HTTPHostPort
             HealthCheckProtocol: HTTP
             HealthCheckPath: '/config/server/healthcheck~status'
-            Name: 'gerrit-replica-ssh'
+            Name: !Sub '${AWS::StackName}-replica-ssh'
 
     SSHListener:
         Type: AWS::ElasticLoadBalancingV2::Listener
@@ -513,7 +513,7 @@ Resources:
                   !Join [':', [!Ref 'ClusterStackName', 'VPCId']]
             Port: !Ref GitPort
             Protocol: TCP
-            Name: 'gerrit-replica-git'
+            Name: !Sub '${AWS::StackName}-gerrit-replica-git'
 
     GitListener:
         Type: AWS::ElasticLoadBalancingV2::Listener
@@ -535,7 +535,7 @@ Resources:
                   !Join [':', [!Ref 'ClusterStackName', 'VPCId']]
             Port: !Ref GitSSHPort
             Protocol: TCP
-            Name: 'gerrit-replica-git-ssh'
+            Name: !Sub '${AWS::StackName}-gerrit-replica-git-ssh'
 
     GitSSHListener:
         Type: AWS::ElasticLoadBalancingV2::Listener
