@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "69d4c278_1777f7f5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1025452
+      },
+      "writtenOn": "2021-11-02T12:50:30Z",
+      "side": 1,
+      "message": "Just to make sure if I understood it properly ;) in order to split the HTTP and SSH traffic to different load balancers (application and transport level correspondingly) one needs to create different DNS entries? I was hoping that it could be achieved by having different ports only but it is not an option, right?",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 40
+      },
+      "revId": "944be6cb63e7cb310a66010b369a3d2cb0a141ab",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
