@@ -22,6 +22,30 @@
       },
       "revId": "944be6cb63e7cb310a66010b369a3d2cb0a141ab",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ea03e007_667e79ec",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-11-02T16:04:59Z",
+      "side": 1,
+      "message": "\u003e Just to make sure if I understood it properly ;) in order to split the HTTP and SSH traffic to different load balancers (application and transport level correspondingly) one needs to create different DNS entries?\n\nYes, now there are 2 LBs at play, so we need a DNS name for both.\n\n I was hoping that it could be achieved by having different ports only but it is not an option, right?\n \nDifferent ports _within_ the same load balancer is what we had before.\nThe problem is that Application Load Balancers cannot do TCP listening, whilst Networking Load Balancer cannot do HTTP(S) listening.\n\nSo yeah, we need two LBs to listen to the two different ports, because they need to be of different types.\n\nHope it makes sense.",
+      "parentUuid": "69d4c278_1777f7f5",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 40
+      },
+      "revId": "944be6cb63e7cb310a66010b369a3d2cb0a141ab",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
