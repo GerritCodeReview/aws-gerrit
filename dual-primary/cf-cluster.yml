@@ -266,12 +266,42 @@ Resources:
 
           /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource ReplicaECSAutoScalingGroup --region ${AWS::Region}
 
-  PrimariesGerritLoadBalancer:
+  PrimariesHTTPGerritLoadBalancerSG:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      VpcId: !If [NetworkStackNeeded, !GetAtt ECSTaskNetworkStack.Outputs.VPCRef, !Ref VPCIdProp]
+      GroupDescription: "Allow public HTTPS traffic to primaries gerrit"
+      GroupName: !Sub '${AWS::StackName}-primaries-http-sg'
+      SecurityGroupIngress:
+        - IpProtocol: 'tcp'
+          FromPort: !FindInMap ['Gerrit', 'Port', 'HTTPS']
+          ToPort: !FindInMap ['Gerrit', 'Port', 'HTTPS']
+          CidrIp: '0.0.0.0/0'
+          Description: "HTTPS connections from everywhere (IPv4)"
+        - IpProtocol: 'tcp'
+          FromPort: !FindInMap ['Gerrit', 'Port', 'HTTPS']
+          ToPort: !FindInMap ['Gerrit', 'Port', 'HTTPS']
+          CidrIpv6: '::/0'
+          Description: "HTTPS connections from everywhere (IPv6)"
+
+  PrimariesHTTPGerritLoadBalancer:
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+    Properties:
+      Name: !Sub '${AWS::StackName}-http-primaries'
+      Type: application
+      Scheme: !Ref PrimariesGerritLoadBalancerScheme
+      SecurityGroups:
+        - !Ref PrimariesHTTPGerritLoadBalancerSG
+      Subnets:
+        - !If [NetworkStackNeeded, !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneRef, !Ref Subnet1IdProp]
+        - !If [NetworkStackNeeded, !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetTwoRef, !Ref Subnet2IdProp]
+
+  PrimariesSSHGerritLoadBalancer:
     Type: AWS::ElasticLoadBalancingV2::LoadBalancer
     Properties:
       Type: network
       Scheme: !Ref PrimariesGerritLoadBalancerScheme
-      Name: !Sub '${AWS::StackName}-primaries'
+      Name: !Sub '${AWS::StackName}-ssh-primaries'
       LoadBalancerAttributes:
         - Key: 'load_balancing.cross_zone.enabled'
           Value: true
@@ -281,11 +311,11 @@ Resources:
 
   PrimariesGerritHTTPTargetGroup:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
-    DependsOn: PrimariesGerritLoadBalancer
+    DependsOn: PrimariesHTTPGerritLoadBalancer
     Properties:
       VpcId: !If [NetworkStackNeeded, !GetAtt ECSTaskNetworkStack.Outputs.VPCRef, !Ref VPCIdProp]
       Port: !FindInMap ['Gerrit', 'Port', 'HTTP']
-      Protocol: TCP
+      Protocol: HTTP
       HealthCheckPort: !FindInMap ['Gerrit', 'Port', 'HTTP']
       HealthCheckProtocol: HTTP
       HealthCheckPath: '/config/server/healthcheck~status'
@@ -293,10 +323,8 @@ Resources:
       TargetGroupAttributes:
         - Key: 'stickiness.enabled'
           Value: true
-        # NLB only supports source_ip. Move this to `lb_cookie` or `app_cookie`
-        # when this target group is moved behind an ALB
         - Key: 'stickiness.type'
-          Value: 'source_ip'
+          Value: 'lb_cookie'
 
   PrimariesGerritHTTPSListener:
     Type: AWS::ElasticLoadBalancingV2::Listener
@@ -306,13 +334,13 @@ Resources:
       DefaultActions:
         - Type: forward
           TargetGroupArn: !Ref PrimariesGerritHTTPTargetGroup
-      LoadBalancerArn: !Ref PrimariesGerritLoadBalancer
+      LoadBalancerArn: !Ref PrimariesHTTPGerritLoadBalancer
       Port: !FindInMap ['Gerrit', 'Port', 'HTTPS']
-      Protocol: TLS
+      Protocol: HTTPS
 
   PrimariesGerritSSHTargetGroup:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
-    DependsOn: PrimariesGerritLoadBalancer
+    DependsOn: PrimariesSSHGerritLoadBalancer
     Properties:
       VpcId: !If [NetworkStackNeeded, !GetAtt ECSTaskNetworkStack.Outputs.VPCRef, !Ref VPCIdProp]
       Port: !FindInMap ['Gerrit', 'Port', 'SSH']
@@ -328,7 +356,7 @@ Resources:
       DefaultActions:
         - Type: forward
           TargetGroupArn: !Ref PrimariesGerritSSHTargetGroup
-      LoadBalancerArn: !Ref PrimariesGerritLoadBalancer
+      LoadBalancerArn: !Ref PrimariesSSHGerritLoadBalancer
       Port: !FindInMap ['Gerrit', 'Port', 'SSH']
       Protocol: TCP
 
@@ -540,13 +568,23 @@ Outputs:
     Value: !Ref 'PrimariesGerritSSHTargetGroup'
     Export:
       Name: !Join [ ':', [ !Ref 'AWS::StackName', 'PrimariesGerritSSHTargetGroup' ] ]
-  PrimariesGerritLoadBalancerDNSName:
-    Description: The DNS name of the load balancer serving requests to both gerrit1 and gerrit2
-    Value: !GetAtt 'PrimariesGerritLoadBalancer.DNSName'
+  PrimariesHTTPGerritLoadBalancerDNSName:
+    Description: The DNS name of the load balancer serving HTTP requests to both gerrit1 and gerrit2
+    Value: !GetAtt 'PrimariesHTTPGerritLoadBalancer.DNSName'
     Export:
-      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'PrimariesGerritLoadBalancerDNSName' ] ]
-  PrimariesGerritCanonicalHostedZoneID:
-    Description: Canonical Hosted Zone ID of the load balancer serving requests to both gerrit1 and gerrit2
-    Value: !GetAtt 'PrimariesGerritLoadBalancer.CanonicalHostedZoneID'
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'PrimariesHTTPGerritLoadBalancerDNSName' ] ]
+  PrimariesSSHGerritLoadBalancerDNSName:
+    Description: The DNS name of the load balancer serving SSH requests to both gerrit1 and gerrit2
+    Value: !GetAtt 'PrimariesSSHGerritLoadBalancer.DNSName'
     Export:
-      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'PrimariesGerritCanonicalHostedZoneID' ] ]
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'PrimariesSSHGerritLoadBalancerDNSName' ] ]
+  PrimariesHTTPGerritCanonicalHostedZoneID:
+    Description: Canonical Hosted Zone ID of the load balancer serving HTTP requests to both gerrit1 and gerrit2
+    Value: !GetAtt 'PrimariesHTTPGerritLoadBalancer.CanonicalHostedZoneID'
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'PrimariesHTTPGerritCanonicalHostedZoneID' ] ]
+  PrimariesSSHGerritCanonicalHostedZoneID:
+    Description: Canonical Hosted Zone ID of the load balancer serving SSH requests to both gerrit1 and gerrit2
+    Value: !GetAtt 'PrimariesSSHGerritLoadBalancer.CanonicalHostedZoneID'
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'PrimariesSSHGerritCanonicalHostedZoneID' ] ]
