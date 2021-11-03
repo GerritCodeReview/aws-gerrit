@@ -56,8 +56,10 @@ Configuration values affecting deployment environment and cluster properties
 * `SERVICE_PRIMARY_STACK_NAME`: Optional. Name of the primary service stack. `gerrit-service-primary` by default.
 * `SERVICE_REPLICA_STACK_NAME`: Optional. Name of the replica service stack. `gerrit-service-replica` by default.
 * `DASHBOARD_STACK_NAME` : Optional. Name of the dashboard stack. `gerrit-dashboard` by default.
-* `PRIMARY_SUBDOMAIN`: Optional. Name of the primary sub domain. `gerrit-primary-demo` by default.
-* `REPLICA_SUBDOMAIN`: Optional. Name of the replica sub domain. `gerrit-replica-demo` by default.
+* `HTTP_PRIMARY_SUBDOMAIN`: Optional. Name of the primary sub domain for HTTP traffic. `gerrit-http-primary-demo` by default.
+* `SSH_PRIMARY_SUBDOMAIN`: Optional. Name of the primary sub domain for SSH traffic. `gerrit-ssh-primary-demo` by default.
+* `HTTP_REPLICA_SUBDOMAIN`: Optional. Name of the replica sub domain for HTTP traffic. `gerrit-http-replica-demo` by default.
+* `SSH_REPLICA_SUBDOMAIN`: Optional. Name of the replica sub domain for SSH traffic. `gerrit-ssh-replica-demo` by default.
 * `GERRIT_PRIMARY_INSTANCE_ID`: Optional. Identifier for the Gerrit primary instance.
 "gerrit-primary-replica-PRIMARY" by default.
 * `GERRIT_REPLICA_INSTANCE_ID`: Optional. Identifier for the Gerrit replica instance.
