@@ -13,81 +13,157 @@ Parameters:
       Description: Stack name of the ECS Primary Gerrit service
       Type: String
       Default: gerrit-service-primary-2
-  PrimariesGerritSubdomain:
-    Description: The subdomain of the load balancer serving requests to primary gerrit instances
+  HttpPrimariesGerritSubdomain:
+    Description: The subdomain of the load balancer serving HTTP traffic to both gerrit instances
+    Type: String
+  SshPrimariesGerritSubdomain:
+    Description: The subdomain of the load balancer serving SSH traffic to both gerrit instances
     Type: String
   PrimariesGerritHostedZoneName:
     Description: The zone name of the load balancer serving requests to primary gerrit instances
     Type: String
 
 Resources:
-  Primary1DnsRecord:
+  Primary1HTTPDnsRecord:
       Type: AWS::Route53::RecordSet
       Properties:
         Name:
           !Join
             - '.'
-            - - Fn::ImportValue: !Join [':', [!Ref 'Primary1ServiceStackName', 'Subdomain']]
+            - - Fn::ImportValue: !Join [':', [!Ref 'Primary1ServiceStackName', 'HttpSubdomain']]
               - Fn::ImportValue: !Join [':', [!Ref 'Primary1ServiceStackName', 'HostedZoneName']]
         HostedZoneName:
           !Join
             - ''
             - - Fn::ImportValue: !Join [':', [!Ref 'Primary1ServiceStackName', 'HostedZoneName']]
               - '.'
-        Comment: DNS name for Gerrit Primary.
+        Comment: DNS name for Load Balancer serving HTTP requests to primary gerrit-1
         Type: A
         AliasTarget:
           DNSName:
             Fn::ImportValue:
-              !Join [':', [!Ref 'Primary1ServiceStackName', 'PublicLoadBalancerDNSName']]
+              !Join [':', [!Ref 'Primary1ServiceStackName', 'GerritHTTPLoadBalancerDNSName']]
           HostedZoneId:
             Fn::ImportValue:
-              !Join [':', [!Ref 'Primary1ServiceStackName', 'CanonicalHostedZoneID']]
+              !Join [':', [!Ref 'Primary1ServiceStackName', 'GerritHTTPCanonicalHostedZoneID']]
           EvaluateTargetHealth: False
-  Primary2DnsRecord:
+
+  Primary1SSHDnsRecord:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      Name:
+        !Join
+        - '.'
+        - - Fn::ImportValue: !Join [':', [!Ref 'Primary1ServiceStackName', 'SshSubdomain']]
+          - Fn::ImportValue: !Join [':', [!Ref 'Primary1ServiceStackName', 'HostedZoneName']]
+      HostedZoneName:
+        !Join
+        - ''
+        - - Fn::ImportValue: !Join [':', [!Ref 'Primary1ServiceStackName', 'HostedZoneName']]
+          - '.'
+      Comment: DNS name for Load Balancer serving SSH requests to primary gerrit-1
+      Type: A
+      AliasTarget:
+        DNSName:
+          Fn::ImportValue:
+            !Join [':', [!Ref 'Primary1ServiceStackName', 'GerritSSHLoadBalancerDNSName']]
+        HostedZoneId:
+          Fn::ImportValue:
+            !Join [':', [!Ref 'Primary1ServiceStackName', 'GerritSSHCanonicalHostedZoneID']]
+        EvaluateTargetHealth: False
+
+  Primary2HTTPDnsRecord:
       Type: AWS::Route53::RecordSet
       Properties:
         Name:
           !Join
             - '.'
-            - - Fn::ImportValue: !Join [':', [!Ref 'Primary2ServiceStackName', 'Subdomain']]
+            - - Fn::ImportValue: !Join [':', [!Ref 'Primary2ServiceStackName', 'HttpSubdomain']]
               - Fn::ImportValue: !Join [':', [!Ref 'Primary2ServiceStackName', 'HostedZoneName']]
         HostedZoneName:
           !Join
             - ''
             - - Fn::ImportValue: !Join [':', [!Ref 'Primary2ServiceStackName', 'HostedZoneName']]
               - '.'
-        Comment: DNS name for Gerrit Primary.
+        Comment: DNS name for Load Balancer serving HTTP requests to primary gerrit-2
         Type: A
         AliasTarget:
           DNSName:
             Fn::ImportValue:
-              !Join [':', [!Ref 'Primary2ServiceStackName', 'PublicLoadBalancerDNSName']]
+              !Join [':', [!Ref 'Primary2ServiceStackName', 'GerritHTTPLoadBalancerDNSName']]
           HostedZoneId:
             Fn::ImportValue:
-              !Join [':', [!Ref 'Primary2ServiceStackName', 'CanonicalHostedZoneID']]
+              !Join [':', [!Ref 'Primary2ServiceStackName', 'GerritHTTPCanonicalHostedZoneID']]
           EvaluateTargetHealth: False
 
-  PrimariesGerritDnsRecord:
+  Primary2SSHDnsRecord:
     Type: AWS::Route53::RecordSet
     Properties:
       Name:
         !Join
         - '.'
-        - - !Ref PrimariesGerritSubdomain
+        - - Fn::ImportValue: !Join [':', [!Ref 'Primary2ServiceStackName', 'SshSubdomain']]
+          - Fn::ImportValue: !Join [':', [!Ref 'Primary2ServiceStackName', 'HostedZoneName']]
+      HostedZoneName:
+        !Join
+        - ''
+        - - Fn::ImportValue: !Join [':', [!Ref 'Primary2ServiceStackName', 'HostedZoneName']]
+          - '.'
+      Comment: DNS name for Load Balancer serving SSH requests to primary gerrit-2
+      Type: A
+      AliasTarget:
+        DNSName:
+          Fn::ImportValue:
+            !Join [':', [!Ref 'Primary2ServiceStackName', 'GerritSSHLoadBalancerDNSName']]
+        HostedZoneId:
+          Fn::ImportValue:
+            !Join [':', [!Ref 'Primary2ServiceStackName', 'GerritSSHCanonicalHostedZoneID']]
+        EvaluateTargetHealth: False
+
+  PrimariesHTTPGerritDnsRecord:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      Name:
+        !Join
+        - '.'
+        - - !Ref HttpPrimariesGerritSubdomain
           - !Ref PrimariesGerritHostedZoneName
       HostedZoneName:
         !Join
         - ''
         - - !Ref PrimariesGerritHostedZoneName
           - '.'
-      Comment: DNS name for the load balancer serving requests to primary gerrit instances
+      Comment: DNS name for the load balancer serving HTTP requests to primary gerrit instances
       Type: A
       AliasTarget:
         DNSName:
           Fn::ImportValue:
-            !Join [':', [!Ref 'ClusterStackName', 'PrimariesGerritLoadBalancerDNSName']]
+            !Join [':', [!Ref 'ClusterStackName', 'PrimariesHTTPGerritLoadBalancerDNSName']]
         HostedZoneId:
           Fn::ImportValue:
-            !Join [':', [!Ref 'ClusterStackName', 'PrimariesGerritCanonicalHostedZoneID']]
+            !Join [':', [!Ref 'ClusterStackName', 'PrimariesHTTPGerritCanonicalHostedZoneID']]
+        EvaluateTargetHealth: False
+
+  PrimariesSSHGerritDnsRecord:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      Name:
+        !Join
+        - '.'
+        - - !Ref SshPrimariesGerritSubdomain
+          - !Ref PrimariesGerritHostedZoneName
+      HostedZoneName:
+        !Join
+        - ''
+        - - !Ref PrimariesGerritHostedZoneName
+          - '.'
+      Comment: DNS name for the load balancer serving SSH requests to primary gerrit instances
+      Type: A
+      AliasTarget:
+        DNSName:
+          Fn::ImportValue:
+            !Join [':', [!Ref 'ClusterStackName', 'PrimariesSSHGerritLoadBalancerDNSName']]
+        HostedZoneId:
+          Fn::ImportValue:
+            !Join [':', [!Ref 'ClusterStackName', 'PrimariesSSHGerritCanonicalHostedZoneID']]
         EvaluateTargetHealth: False
