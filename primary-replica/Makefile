@@ -153,8 +153,7 @@ dns-routing:
 		--template-body file://`pwd`/$(DNS_ROUTING_TEMPLATE) \
 		--region $(AWS_REGION) \
 		--parameters \
-		ParameterKey=PrimaryServiceStackName,ParameterValue=$(SERVICE_PRIMARY_STACK_NAME) \
-		ParameterKey=ReplicaServiceStackName,ParameterValue=$(SERVICE_REPLICA_STACK_NAME)
+		ParameterKey=PrimaryServiceStackName,ParameterValue=$(SERVICE_PRIMARY_STACK_NAME)
 
 dashboard:
 ifeq ($(METRICS_CLOUDWATCH_ENABLED),true)
