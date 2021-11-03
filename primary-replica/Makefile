@@ -82,8 +82,9 @@ endif
 		ParameterKey=ClusterStackName,ParameterValue=$(CLUSTER_STACK_NAME) \
 		ParameterKey=TemplateBucketName,ParameterValue=$(TEMPLATE_BUCKET_NAME) \
 		ParameterKey=HostedZoneName,ParameterValue=$(HOSTED_ZONE_NAME) \
-		ParameterKey=Subdomain,ParameterValue=$(PRIMARY_SUBDOMAIN) \
-		ParameterKey=ReplicaSubdomain,ParameterValue=$(REPLICA_SUBDOMAIN) \
+		ParameterKey=HttpSubdomain,ParameterValue=$(HTTP_PRIMARY_SUBDOMAIN) \
+		ParameterKey=SshSubdomain,ParameterValue=$(SSH_PRIMARY_SUBDOMAIN) \
+		ParameterKey=SshReplicaSubdomain,ParameterValue=$(SSH_REPLICA_SUBDOMAIN) \
 		ParameterKey=DockerRegistryUrl,ParameterValue=$(DOCKER_REGISTRY_URI) \
 		ParameterKey=CertificateArn,ParameterValue=$(SSL_CERTIFICATE_ARN) \
 		ParameterKey=ReplicaServiceStackName,ParameterValue=$(SERVICE_REPLICA_STACK_NAME) \
@@ -127,7 +128,8 @@ endif
 		ParameterKey=ClusterStackName,ParameterValue=$(CLUSTER_STACK_NAME) \
 		ParameterKey=TemplateBucketName,ParameterValue=$(TEMPLATE_BUCKET_NAME) \
 		ParameterKey=HostedZoneName,ParameterValue=$(HOSTED_ZONE_NAME) \
-		ParameterKey=Subdomain,ParameterValue=$(REPLICA_SUBDOMAIN) \
+		ParameterKey=HttpSubdomain,ParameterValue=$(HTTP_REPLICA_SUBDOMAIN) \
+		ParameterKey=SshSubdomain,ParameterValue=$(SSH_REPLICA_SUBDOMAIN) \
 		ParameterKey=DockerRegistryUrl,ParameterValue=$(DOCKER_REGISTRY_URI) \
 		ParameterKey=CertificateArn,ParameterValue=$(SSL_CERTIFICATE_ARN) \
 		ParameterKey=GerritKeyPrefix,ParameterValue=$(GERRIT_KEY_PREFIX)\
