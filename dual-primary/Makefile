@@ -130,14 +130,16 @@ endif
 		ParameterKey=ClusterStackName,ParameterValue=$(CLUSTER_STACK_NAME) \
 		ParameterKey=TemplateBucketName,ParameterValue=$(TEMPLATE_BUCKET_NAME) \
 		ParameterKey=HostedZoneName,ParameterValue=$(HOSTED_ZONE_NAME) \
-		ParameterKey=Subdomain,ParameterValue=$(PRIMARY1_SUBDOMAIN) \
-		ParameterKey=ReplicaSubdomain,ParameterValue=$(REPLICA_SUBDOMAIN) \
+		ParameterKey=HttpSubdomain,ParameterValue=$(HTTP_PRIMARY1_SUBDOMAIN) \
+		ParameterKey=SshSubdomain,ParameterValue=$(SSH_PRIMARY1_SUBDOMAIN) \
+		ParameterKey=SshReplicaSubdomain,ParameterValue=$(SSH_REPLICA_SUBDOMAIN) \
 		ParameterKey=DockerRegistryUrl,ParameterValue=$(DOCKER_REGISTRY_URI) \
 		ParameterKey=CertificateArn,ParameterValue=$(SSL_CERTIFICATE_ARN) \
 		ParameterKey=GerritKeyPrefix,ParameterValue=$(GERRIT_KEY_PREFIX)\
 		ParameterKey=DockerImage,ParameterValue=aws-gerrit/gerrit:$(IMAGE_TAG) \
-		ParameterKey=PeerSubdomain,ParameterValue=$(PRIMARY2_SUBDOMAIN) \
-		ParameterKey=PrimariesGerritSubdomain,ParameterValue=$(PRIMARIES_GERRIT_SUBDOMAIN) \
+		ParameterKey=PeerSubdomain,ParameterValue=$(HTTP_PRIMARY2_SUBDOMAIN) \
+		ParameterKey=HttpPrimariesGerritSubdomain,ParameterValue=$(HTTP_PRIMARIES_GERRIT_SUBDOMAIN) \
+		ParameterKey=SshPrimariesGerritSubdomain,ParameterValue=$(SSH_PRIMARIES_GERRIT_SUBDOMAIN) \
 		ParameterKey=GerritRAM,ParameterValue=$(GERRIT_RAM) \
 		ParameterKey=GerritCPU,ParameterValue=$(GERRIT_CPU) \
 		ParameterKey=GerritHeapLimit,ParameterValue=$(GERRIT_HEAP_LIMIT) \
@@ -188,14 +190,16 @@ endif
 		ParameterKey=ClusterStackName,ParameterValue=$(CLUSTER_STACK_NAME) \
 		ParameterKey=TemplateBucketName,ParameterValue=$(TEMPLATE_BUCKET_NAME) \
 		ParameterKey=HostedZoneName,ParameterValue=$(HOSTED_ZONE_NAME) \
-		ParameterKey=Subdomain,ParameterValue=$(PRIMARY2_SUBDOMAIN) \
-		ParameterKey=ReplicaSubdomain,ParameterValue=$(REPLICA_SUBDOMAIN) \
+		ParameterKey=HttpSubdomain,ParameterValue=$(HTTP_PRIMARY2_SUBDOMAIN) \
+		ParameterKey=SshSubdomain,ParameterValue=$(SSH_PRIMARY2_SUBDOMAIN) \
+		ParameterKey=SshReplicaSubdomain,ParameterValue=$(SSH_REPLICA_SUBDOMAIN) \
 		ParameterKey=DockerRegistryUrl,ParameterValue=$(DOCKER_REGISTRY_URI) \
 		ParameterKey=CertificateArn,ParameterValue=$(SSL_CERTIFICATE_ARN) \
 		ParameterKey=GerritKeyPrefix,ParameterValue=$(GERRIT_KEY_PREFIX)\
 		ParameterKey=DockerImage,ParameterValue=aws-gerrit/gerrit:$(IMAGE_TAG) \
-		ParameterKey=PeerSubdomain,ParameterValue=$(PRIMARY1_SUBDOMAIN) \
-		ParameterKey=PrimariesGerritSubdomain,ParameterValue=$(PRIMARIES_GERRIT_SUBDOMAIN) \
+		ParameterKey=PeerSubdomain,ParameterValue=$(HTTP_PRIMARY1_SUBDOMAIN) \
+		ParameterKey=HttpPrimariesGerritSubdomain,ParameterValue=$(HTTP_PRIMARIES_GERRIT_SUBDOMAIN) \
+		ParameterKey=SshPrimariesGerritSubdomain,ParameterValue=$(SSH_PRIMARIES_GERRIT_SUBDOMAIN) \
 		ParameterKey=ReindexAtSartup,ParameterValue=true \
 		ParameterKey=GerritRAM,ParameterValue=$(GERRIT_RAM) \
 		ParameterKey=GerritCPU,ParameterValue=$(GERRIT_CPU) \
@@ -255,7 +259,8 @@ endif
 		ParameterKey=ClusterStackName,ParameterValue=$(CLUSTER_STACK_NAME) \
 		ParameterKey=TemplateBucketName,ParameterValue=$(TEMPLATE_BUCKET_NAME) \
 		ParameterKey=HostedZoneName,ParameterValue=$(HOSTED_ZONE_NAME) \
-		ParameterKey=Subdomain,ParameterValue=$(REPLICA_SUBDOMAIN) \
+		ParameterKey=HttpSubdomain,ParameterValue=$(HTTP_REPLICA_SUBDOMAIN) \
+		ParameterKey=SshSubdomain,ParameterValue=$(SSH_REPLICA_SUBDOMAIN) \
 		ParameterKey=DockerRegistryUrl,ParameterValue=$(DOCKER_REGISTRY_URI) \
 		ParameterKey=CertificateArn,ParameterValue=$(SSL_CERTIFICATE_ARN) \
 		ParameterKey=GerritKeyPrefix,ParameterValue=$(GERRIT_KEY_PREFIX)\
@@ -283,7 +288,8 @@ dns-routing:
 		ParameterKey=Primary2ServiceStackName,ParameterValue=$(SERVICE_PRIMARY2_STACK_NAME) \
 		ParameterKey=ClusterStackName,ParameterValue=$(CLUSTER_STACK_NAME) \
 		ParameterKey=PrimariesGerritHostedZoneName,ParameterValue=$(HOSTED_ZONE_NAME) \
-		ParameterKey=PrimariesGerritSubdomain,ParameterValue=$(PRIMARIES_GERRIT_SUBDOMAIN)
+		ParameterKey=HttpPrimariesGerritSubdomain,ParameterValue=$(HTTP_PRIMARIES_GERRIT_SUBDOMAIN) \
+		ParameterKey=SshPrimariesGerritSubdomain,ParameterValue=$(SSH_PRIMARIES_GERRIT_SUBDOMAIN)
 
 dashboard:
 ifeq ($(METRICS_CLOUDWATCH_ENABLED),true)

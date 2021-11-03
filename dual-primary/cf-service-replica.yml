@@ -74,10 +74,14 @@ Parameters:
   HostedZoneName:
       Description: The route53 HostedZoneName.
       Type: String
-  Subdomain:
-      Description: The subdomain of the Gerrit cluster
+  HttpSubdomain:
+      Description: The subdomain of the Gerrit loadbalancer serving HTTP traffic for replicas
       Type: String
-      Default: gerrit-replica-demo
+      Default: gerrit-http-replica-demo
+  SshSubdomain:
+      Description: The subdomain of the Gerrit loadbalancer serving SSH traffic for replicas
+      Type: String
+      Default: gerrit-ssh-replica-demo
   LoadBalancerScheme:
         Description: Load Balancer schema, The nodes of an Internet-facing load balancer have public IP addresses.
         Type: String
@@ -257,7 +261,9 @@ Resources:
                   Image: !Sub '${DockerRegistryUrl}/${GerritDockerImage}'
                   Environment:
                     - Name: CANONICAL_WEB_URL
-                      Value: !Sub 'https://${Subdomain}.${HostedZoneName}'
+                      Value: !Sub 'https://${HttpSubdomain}.${HostedZoneName}'
+                    - Name: SSHD_ADVERTISED_ADDRESS
+                      Value: !Sub '${SshSubdomain}.${HostedZoneName}:${SSHHostPort}'
                     - Name: HTTPD_LISTEN_URL
                       Value: !Sub 'proxy-https://*:${HTTPContainePort}/'
                     - Name: CONTAINER_REPLICA
@@ -428,9 +434,47 @@ Resources:
               - '/'
               - !GetAtt GerritService.Name
 
-    LoadBalancer:
+    ReplicaHTTPLoadBalancerSG:
+      Type: AWS::EC2::SecurityGroup
+      Properties:
+        VpcId:
+          Fn::ImportValue:
+            !Join [':', [!Ref 'ClusterStackName', 'VPCId']]
+        GroupDescription: "Allow public HTTPS traffic to replicas"
+        GroupName: !Sub '${ClusterStackName}-replica-http-sg'
+        SecurityGroupIngress:
+          - IpProtocol: 'tcp'
+            FromPort: !Ref HTTPSPort
+            ToPort: !Ref HTTPSPort
+            CidrIp: '0.0.0.0/0'
+            Description: "HTTPS connections from everywhere (IPv4)"
+          - IpProtocol: 'tcp'
+            FromPort: !Ref HTTPSPort
+            ToPort: !Ref HTTPSPort
+            CidrIpv6: '::/0'
+            Description: "HTTPS connections from everywhere (IPv6)"
+
+    ReplicaHTTPLoadBalancer:
+      Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+      Properties:
+        Name: !Sub '${ClusterStackName}-r-http'
+        Type: application
+        Scheme: !Ref 'LoadBalancerScheme'
+        SecurityGroups:
+          - !Ref ReplicaHTTPLoadBalancerSG
+        Subnets:
+          - Fn::ImportValue:
+              !Join [':', [!Ref 'ClusterStackName', 'PublicSubnetOne']]
+          - Fn::ImportValue:
+              !Join [':', [!Ref 'ClusterStackName', 'PublicSubnetTwo']]
+        Tags:
+          - Key: Name
+            Value: !Join ['-', [!Ref 'EnvironmentName', !Ref 'GerritServiceName', 'alb']]
+
+    ReplicaSSHLoadBalancer:
         Type: AWS::ElasticLoadBalancingV2::LoadBalancer
         Properties:
+            Name: !Sub '${ClusterStackName}-r-ssh'
             Type: network
             Scheme: !Ref 'LoadBalancerScheme'
             LoadBalancerAttributes:
@@ -447,41 +491,38 @@ Resources:
 
     HTTPTargetGroup:
         Type: AWS::ElasticLoadBalancingV2::TargetGroup
-        DependsOn: LoadBalancer
+        DependsOn: ReplicaHTTPLoadBalancer
         Properties:
             VpcId:
               Fn::ImportValue:
                   !Join [':', [!Ref 'ClusterStackName', 'VPCId']]
             Port: !Ref HTTPHostPort
-            Protocol: TCP
+            Protocol: HTTP
             HealthCheckPort: !Ref HTTPHostPort
             HealthCheckProtocol: HTTP
             HealthCheckPath: '/config/server/healthcheck~status'
-            Name: !Sub '${AWS::StackName}-replica-http'
+            Name: !Sub '${AWS::StackName}-r-http'
             TargetGroupAttributes:
               - Key: 'stickiness.enabled'
                 Value: true
-              # NLB only supports source_ip. Move this to `lb_cookie` or `app_cookie`
-              # when this target group is moved behind an ALB
               - Key: 'stickiness.type'
-                Value: 'source_ip'
+                Value: 'lb_cookie'
 
     HTTPListener:
         Type: AWS::ElasticLoadBalancingV2::Listener
-        DependsOn: LoadBalancer
         Properties:
             Certificates:
               - CertificateArn: !Ref CertificateArn
             DefaultActions:
             - Type: forward
               TargetGroupArn: !Ref HTTPTargetGroup
-            LoadBalancerArn: !Ref LoadBalancer
+            LoadBalancerArn: !Ref ReplicaHTTPLoadBalancer
             Port: !Ref HTTPSPort
-            Protocol: TLS
+            Protocol: HTTPS
 
     SSHTargetGroup:
         Type: AWS::ElasticLoadBalancingV2::TargetGroup
-        DependsOn: LoadBalancer
+        DependsOn: ReplicaSSHLoadBalancer
         Properties:
             VpcId:
               Fn::ImportValue:
@@ -491,22 +532,21 @@ Resources:
             HealthCheckPort: !Ref HTTPHostPort
             HealthCheckProtocol: HTTP
             HealthCheckPath: '/config/server/healthcheck~status'
-            Name: !Sub '${AWS::StackName}-replica-ssh'
+            Name: !Sub '${AWS::StackName}-r-ssh'
 
     SSHListener:
         Type: AWS::ElasticLoadBalancingV2::Listener
-        DependsOn: LoadBalancer
         Properties:
             DefaultActions:
             - Type: forward
               TargetGroupArn: !Ref SSHTargetGroup
-            LoadBalancerArn: !Ref LoadBalancer
+            LoadBalancerArn: !Ref ReplicaSSHLoadBalancer
             Port: !Ref SSHHostPort
             Protocol: TCP
 
     GitTargetGroup:
         Type: AWS::ElasticLoadBalancingV2::TargetGroup
-        DependsOn: LoadBalancer
+        DependsOn: ReplicaSSHLoadBalancer
         Properties:
             VpcId:
               Fn::ImportValue:
@@ -517,18 +557,17 @@ Resources:
 
     GitListener:
         Type: AWS::ElasticLoadBalancingV2::Listener
-        DependsOn: LoadBalancer
         Properties:
             DefaultActions:
             - Type: forward
               TargetGroupArn: !Ref GitTargetGroup
-            LoadBalancerArn: !Ref LoadBalancer
+            LoadBalancerArn: !Ref ReplicaSSHLoadBalancer
             Port: !Ref GitPort
             Protocol: TCP
 
     GitSSHTargetGroup:
         Type: AWS::ElasticLoadBalancingV2::TargetGroup
-        DependsOn: LoadBalancer
+        DependsOn: ReplicaSSHLoadBalancer
         Properties:
             VpcId:
               Fn::ImportValue:
@@ -539,26 +578,37 @@ Resources:
 
     GitSSHListener:
         Type: AWS::ElasticLoadBalancingV2::Listener
-        DependsOn: LoadBalancer
         Properties:
             DefaultActions:
             - Type: forward
               TargetGroupArn: !Ref GitSSHTargetGroup
-            LoadBalancerArn: !Ref LoadBalancer
+            LoadBalancerArn: !Ref ReplicaSSHLoadBalancer
             Port: !Ref GitSSHPort
             Protocol: TCP
 
-    ReplicaDnsRecord:
-        Type: AWS::Route53::RecordSet
-        Properties:
-          Name: !Sub '${Subdomain}.${HostedZoneName}'
-          HostedZoneName: !Sub '${HostedZoneName}.'
-          Comment: DNS name for Gerrit Replica.
-          Type: A
-          AliasTarget:
-            DNSName: !GetAtt 'LoadBalancer.DNSName'
-            HostedZoneId: !GetAtt 'LoadBalancer.CanonicalHostedZoneID'
-            EvaluateTargetHealth: False
+    ReplicaSSHDnsRecord:
+      Type: AWS::Route53::RecordSet
+      Properties:
+        Name: !Sub '${SshSubdomain}.${HostedZoneName}'
+        HostedZoneName: !Sub '${HostedZoneName}.'
+        Comment: DNS name for Load Balancer serving SSH requests to gerrit replicas
+        Type: A
+        AliasTarget:
+          DNSName: !GetAtt 'ReplicaSSHLoadBalancer.DNSName'
+          HostedZoneId: !GetAtt 'ReplicaSSHLoadBalancer.CanonicalHostedZoneID'
+          EvaluateTargetHealth: False
+
+    ReplicaHTTPDnsRecord:
+      Type: AWS::Route53::RecordSet
+      Properties:
+        Name: !Sub '${HttpSubdomain}.${HostedZoneName}'
+        HostedZoneName: !Sub '${HostedZoneName}.'
+        Comment: DNS name for Load Balancer serving HTTP requests to gerrit replicas
+        Type: A
+        AliasTarget:
+          DNSName: !GetAtt 'ReplicaHTTPLoadBalancer.DNSName'
+          HostedZoneId: !GetAtt 'ReplicaHTTPLoadBalancer.CanonicalHostedZoneID'
+          EvaluateTargetHealth: False
 
     ECSTaskExecutionRoleStack:
       Type: AWS::CloudFormation::Stack
@@ -567,33 +617,62 @@ Resources:
         TimeoutInMinutes: '5'
 
 Outputs:
-  PublicLoadBalancerDNSName:
-    Description: The DNS name of the external load balancer
-    Value: !GetAtt 'LoadBalancer.DNSName'
+  ########
+  # HTTP #
+  ########
+  ReplicaHTTPLoadBalancerDNSName:
+    Description: The DNS name of the replica HTTP load balancer
+    Value: !GetAtt 'ReplicaHTTPLoadBalancer.DNSName'
     Export:
-      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'PublicLoadBalancerDNSName' ] ]
-  CanonicalHostedZoneID:
-    Description: Canonical Hosted Zone ID
-    Value: !GetAtt 'LoadBalancer.CanonicalHostedZoneID'
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'ReplicaHTTPLoadBalancerDNSName' ] ]
+  ReplicaHTTPCanonicalHostedZoneID:
+    Description: Canonical Hosted Zone ID of the replica HTTP load balancer
+    Value: !GetAtt 'ReplicaHTTPLoadBalancer.CanonicalHostedZoneID'
     Export:
-      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'CanonicalHostedZoneID' ] ]
-  PublicLoadBalancerUrl:
-    Description: The url of the external load balancer
-    Value: !Join ['', ['http://', !GetAtt 'LoadBalancer.DNSName']]
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'ReplicaHTTPCanonicalHostedZoneID' ] ]
+  ReplicaHTTPLoadBalancerUrl:
+    Description: The url of the replica HTTP load balancer
+    Value: !Join ['', ['http://', !GetAtt 'ReplicaHTTPLoadBalancer.DNSName']]
     Export:
-      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'PublicLoadBalancerUrl' ] ]
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'ReplicaHTTPLoadBalancerUrl' ] ]
+  #######
+  # SSH #
+  #######
+  ReplicaSSHLoadBalancerDNSName:
+    Description: The DNS name of the replica SSH load balancer
+    Value: !GetAtt 'ReplicaSSHLoadBalancer.DNSName'
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'ReplicaSSHLoadBalancerDNSName' ] ]
+  ReplicaSSHCanonicalHostedZoneID:
+    Description: Canonical Hosted Zone ID of the replica SSH load balancer
+    Value: !GetAtt 'ReplicaSSHLoadBalancer.CanonicalHostedZoneID'
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'ReplicaSSHCanonicalHostedZoneID' ] ]
+  ReplicaSSHLoadBalancerUrl:
+    Description: The url of the replica SSH load balancer
+    Value: !Join ['', ['http://', !GetAtt 'ReplicaSSHLoadBalancer.DNSName']]
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'ReplicaSSHLoadBalancerUrl' ] ]
+  #######
+  # DNS #
+  #######
   HostedZoneName:
     Description: Route53 Hosted Zone name
     Value: !Ref HostedZoneName
     Export:
       Name: !Join [ ':', [ !Ref 'AWS::StackName', 'HostedZoneName' ] ]
-  Subdomain:
-    Description: Service DNS subdomain
-    Value: !Ref Subdomain
+  HttpSubdomain:
+    Description: Service DNS subdomain for replicas HTTP traffic
+    Value: !Ref HttpSubdomain
     Export:
-      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'Subdomain' ] ]
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'HttpSubdomain' ] ]
+  SshSubdomain:
+    Description: Service DNS subdomain for replicas SSH traffic
+    Value: !Ref SshSubdomain
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'SshSubdomain' ] ]
   CanonicalWebUrl:
     Description: Canonical Web URL
-    Value: !Sub 'https://${Subdomain}.${HostedZoneName}'
+    Value: !Sub 'https://${HttpSubdomain}.${HostedZoneName}'
     Export:
       Name: !Join [ ':', [ !Ref 'AWS::StackName', 'CanonicalWebUrl' ] ]

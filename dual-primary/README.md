@@ -161,11 +161,16 @@ Configuration values affecting deployment environment and cluster properties
 * `SERVICE_PRIMARY1_STACK_NAME`: Optional. Name of the primary 1 service stack. `gerrit-service-primary-1` by default.
 * `SERVICE_PRIMARY2_STACK_NAME`: Optional. Name of the primary 2 service stack. `gerrit-service-primary-2` by default.
 * `DASHBOARD_STACK_NAME` : Optional. Name of the dashboard stack. `gerrit-dashboard` by default.
-* `PRIMARY1_SUBDOMAIN`: Optional. Name of the primary 1 sub domain. `gerrit-primary-1-demo` by default.
-* `PRIMARY2_SUBDOMAIN`: Optional. Name of the primary 2 sub domain. `gerrit-primary-2-demo` by default.
-* `REPLICA_SUBDOMAIN`: Mandatory. The subdomain of the Gerrit replica. For example: `<AWS_PREFIX>-replica`
-* `PRIMARIES_GERRIT_SUBDOMAIN`: Mandatory. The subdomain of the lb serving traffic to both primary gerrit instances.
-   For example: `<AWS_PREFIX>-primaries`
+* `HTTP_PRIMARY1_SUBDOMAIN`: Optional. Name of the primary 1 sub domain for HTTP traffic. `gerrit-http-primary-1-demo` by default.
+* `SSH_PRIMARY1_SUBDOMAIN`: Optional. Name of the primary 1 sub domain for SSH traffic. `gerrit-ssh-primary-1-demo` by default.
+* `HTTP_PRIMARY2_SUBDOMAIN`: Optional. Name of the primary 2 sub domain for HTTP traffic. `gerrit-http-primary-2-demo` by default.
+* `SSH_PRIMARY2_SUBDOMAIN`: Optional. Name of the primary 2 sub domain for SSH traffic. `gerrit-ssh-primary-2-demo` by default.
+* `HTTP_REPLICA_SUBDOMAIN`: Mandatory. The subdomain of the Gerrit replica for HTTP traffic. For example: `<AWS_PREFIX>-http-replica`
+* `SSH_REPLICA_SUBDOMAIN`: Mandatory. The subdomain of the Gerrit replica for SSH traffic. For example: `<AWS_PREFIX>-ssh-replica`
+* `HTTP_PRIMARIES_GERRIT_SUBDOMAIN`: Mandatory. The subdomain of the lb serving HTTP traffic to both primary gerrit instances.
+   For example: `<AWS_PREFIX>-http-primaries`
+* `SSH_PRIMARIES_GERRIT_SUBDOMAIN`: Mandatory. The subdomain of the lb serving SSH traffic to both primary gerrit instances.
+  For example: `<AWS_PREFIX>-ssh-primaries`
 * `PRIMARY_FILESYSTEM_THROUGHPUT_MODE`: Optional. The throughput mode for the primary file system to be created.
 default: `bursting`. More info [here](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-efs-filesystem.html)
 * `PRIMARY_FILESYSTEM_PROVISIONED_THROUGHPUT_IN_MIBPS`: Optional. Only used when `PRIMARY_FILESYSTEM_THROUGHPUT_MODE` is set to `provisioned`.
