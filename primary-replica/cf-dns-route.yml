@@ -5,10 +5,6 @@ Parameters:
       Description: Stack name of the ECS Primary Gerrit service
       Type: String
       Default: gerrit-service-primary
-  ReplicaServiceStackName:
-      Description: Stack name of the ECS Replica Gerrit service
-      Type: String
-      Default: gerrit-service-replica
 
 Resources:
   PrimaryHTTPDnsRecord:
