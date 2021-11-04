@@ -154,7 +154,7 @@ Resources:
   ReplicaCapacityProvider:
     Type: AWS::ECS::CapacityProvider
     Properties:
-      Name: !Sub '${AWS::StackName}-ReplicaCapacityProvider'
+      Name: !Sub '${AWS::StackName}-R'
       AutoScalingGroupProvider:
         AutoScalingGroupArn: !Ref ReplicaASG
         ManagedTerminationProtection: ENABLED
