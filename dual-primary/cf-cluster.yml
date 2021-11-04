@@ -197,7 +197,7 @@ Resources:
   ReplicaCapacityProvider:
     Type: AWS::ECS::CapacityProvider
     Properties:
-      Name: !Sub '${AWS::StackName}-ReplicaCapacityProvider'
+      Name: !Sub '${AWS::StackName}-R'
       AutoScalingGroupProvider:
         AutoScalingGroupArn: !Ref ReplicaECSAutoScalingGroup
         ManagedTerminationProtection: ENABLED
@@ -271,7 +271,7 @@ Resources:
     Properties:
       VpcId: !If [NetworkStackNeeded, !GetAtt ECSTaskNetworkStack.Outputs.VPCRef, !Ref VPCIdProp]
       GroupDescription: "Allow public HTTPS traffic to primaries gerrit"
-      GroupName: !Sub '${AWS::StackName}-primaries-http'
+      GroupName: !Sub '${AWS::StackName}-Ps-H'
       SecurityGroupIngress:
         - IpProtocol: 'tcp'
           FromPort: !FindInMap ['Gerrit', 'Port', 'HTTPS']
@@ -287,7 +287,7 @@ Resources:
   PrimariesHTTPGerritLoadBalancer:
     Type: AWS::ElasticLoadBalancingV2::LoadBalancer
     Properties:
-      Name: !Sub '${AWS::StackName}-http-primaries'
+      Name: !Sub '${AWS::StackName}-P-H'
       Type: application
       Scheme: !Ref PrimariesGerritLoadBalancerScheme
       SecurityGroups:
@@ -301,7 +301,7 @@ Resources:
     Properties:
       Type: network
       Scheme: !Ref PrimariesGerritLoadBalancerScheme
-      Name: !Sub '${AWS::StackName}-ssh-primaries'
+      Name: !Sub '${AWS::StackName}-Ps-S'
       LoadBalancerAttributes:
         - Key: 'load_balancing.cross_zone.enabled'
           Value: true
@@ -319,7 +319,7 @@ Resources:
       HealthCheckPort: !FindInMap ['Gerrit', 'Port', 'HTTP']
       HealthCheckProtocol: HTTP
       HealthCheckPath: '/config/server/healthcheck~status'
-      Name: !Sub '${AWS::StackName}-primaries-http'
+      Name: !Sub '${AWS::StackName}-Ps-H'
       TargetGroupAttributes:
         - Key: 'stickiness.enabled'
           Value: true
@@ -348,7 +348,7 @@ Resources:
       HealthCheckPort: !FindInMap ['Gerrit', 'Port', 'HTTP']
       HealthCheckProtocol: HTTP
       HealthCheckPath: '/config/server/healthcheck~status'
-      Name: !Sub '${AWS::StackName}-primaries-ssh'
+      Name: !Sub '${AWS::StackName}-Ps-S'
 
   PrimariesGerritSSHListener:
     Type: AWS::ElasticLoadBalancingV2::Listener
