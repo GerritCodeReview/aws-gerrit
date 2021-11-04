@@ -347,7 +347,7 @@ Resources:
           Fn::ImportValue:
             !Join [':', [!Ref 'ClusterStackName', 'VPCId']]
         GroupDescription: "Allow public HTTPS traffic to primary Gerrit"
-        GroupName: !Sub '${ClusterStackName}-gerrit-http-sg'
+        GroupName: !Sub '${ClusterStackName}-P-H'
         SecurityGroupIngress:
           - IpProtocol: 'tcp'
             FromPort: !Ref HTTPSPort
@@ -363,7 +363,7 @@ Resources:
     GerritHTTPLoadBalancer:
       Type: AWS::ElasticLoadBalancingV2::LoadBalancer
       Properties:
-        Name: !Sub '${ClusterStackName}-primary-http'
+        Name: !Sub '${ClusterStackName}-P-H'
         Type: application
         Scheme: !Ref 'LoadBalancerScheme'
         SecurityGroups:
@@ -380,7 +380,7 @@ Resources:
     GerritSSHLoadBalancer:
         Type: AWS::ElasticLoadBalancingV2::LoadBalancer
         Properties:
-            Name: !Sub '${ClusterStackName}-primary-ssh'
+            Name: !Sub '${ClusterStackName}-P-S'
             Type: network
             Scheme: !Ref 'LoadBalancerScheme'
             LoadBalancerAttributes:
@@ -407,7 +407,7 @@ Resources:
             HealthCheckProtocol: HTTP
             HealthCheckPort: !Ref HTTPPort
             HealthCheckPath: '/config/server/healthcheck~status'
-            Name: !Sub '${ClusterStackName}-primary-http'
+            Name: !Sub '${ClusterStackName}-P-H'
 
     HTTPListener:
         Type: AWS::ElasticLoadBalancingV2::Listener
@@ -433,7 +433,7 @@ Resources:
             HealthCheckProtocol: HTTP
             HealthCheckPort: !Ref HTTPPort
             HealthCheckPath: '/config/server/healthcheck~status'
-            Name: !Sub '${ClusterStackName}-primary-ssh'
+            Name: !Sub '${ClusterStackName}-P-S'
 
     SSHListener:
         Type: AWS::ElasticLoadBalancingV2::Listener
