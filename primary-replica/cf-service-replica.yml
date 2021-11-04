@@ -227,7 +227,7 @@ Resources:
               Fn::ImportValue:
                   !Join [':', [!Ref 'ClusterStackName', 'ClusterName']]
             CapacityProviderStrategy:
-              - CapacityProvider: !Sub '${ClusterStackName}-ReplicaCapacityProvider'
+              - CapacityProvider: !Sub '${ClusterStackName}-R'
                 Weight: 100
             DesiredCount: !Ref ReplicaAutoScalingDesiredCapacity
             TaskDefinition: !Ref GerritTaskDefinition
@@ -441,7 +441,7 @@ Resources:
           Fn::ImportValue:
             !Join [':', [!Ref 'ClusterStackName', 'VPCId']]
         GroupDescription: "Allow public HTTPS traffic to replicas"
-        GroupName: !Sub '${ClusterStackName}-replica-http-sg'
+        GroupName: !Sub '${ClusterStackName}-R-H'
         SecurityGroupIngress:
           - IpProtocol: 'tcp'
             FromPort: !Ref HTTPSPort
@@ -457,7 +457,7 @@ Resources:
     ReplicaHTTPLoadBalancer:
       Type: AWS::ElasticLoadBalancingV2::LoadBalancer
       Properties:
-        Name: !Sub '${ClusterStackName}-replica-http'
+        Name: !Sub '${ClusterStackName}-R-H'
         Type: application
         Scheme: !Ref 'LoadBalancerScheme'
         SecurityGroups:
@@ -474,7 +474,7 @@ Resources:
     ReplicaSSHLoadBalancer:
         Type: AWS::ElasticLoadBalancingV2::LoadBalancer
         Properties:
-            Name: !Sub '${ClusterStackName}-replica-ssh'
+            Name: !Sub '${ClusterStackName}-R-S'
             Type: network
             Scheme: !Ref 'LoadBalancerScheme'
             LoadBalancerAttributes:
@@ -501,7 +501,7 @@ Resources:
             HealthCheckPort: !Ref HTTPHostPort
             HealthCheckProtocol: HTTP
             HealthCheckPath: '/config/server/healthcheck~status'
-            Name: !Sub '${ClusterStackName}-replica-http'
+            Name: !Sub '${ClusterStackName}-R-H'
             TargetGroupAttributes:
               - Key: 'stickiness.enabled'
                 Value: true
@@ -532,7 +532,7 @@ Resources:
             HealthCheckPort: !Ref HTTPHostPort
             HealthCheckProtocol: HTTP
             HealthCheckPath: '/config/server/healthcheck~status'
-            Name: !Sub '${ClusterStackName}-replica-ssh'
+            Name: !Sub '${ClusterStackName}-R-S'
 
     SSHListener:
         Type: AWS::ElasticLoadBalancingV2::Listener
