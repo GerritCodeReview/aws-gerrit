@@ -413,7 +413,7 @@ Resources:
           Fn::ImportValue:
             !Join [':', [!Ref 'ClusterStackName', 'VPCId']]
         GroupDescription: "Allow public HTTP traffic to primary Gerrit"
-        GroupName: !Sub '${ClusterStackName}-primary${GerritInstanceNumber}-http'
+        GroupName: !Sub '${ClusterStackName}-P${GerritInstanceNumber}-H'
         SecurityGroupIngress:
           - IpProtocol: 'tcp'
             FromPort: !FindInMap ['Gerrit', 'Port', 'HTTP']
@@ -429,7 +429,7 @@ Resources:
     GerritHTTPLoadBalancer:
       Type: AWS::ElasticLoadBalancingV2::LoadBalancer
       Properties:
-        Name: !Sub '${ClusterStackName}-primary${GerritInstanceNumber}-http'
+        Name: !Sub '${ClusterStackName}-P${GerritInstanceNumber}-H'
         Type: application
         Scheme: !Ref 'LoadBalancerScheme'
         SecurityGroups:
@@ -446,7 +446,7 @@ Resources:
     GerritSSHLoadBalancer:
         Type: AWS::ElasticLoadBalancingV2::LoadBalancer
         Properties:
-            Name: !Sub '${AWS::StackName}-primary${GerritInstanceNumber}-ssh'
+            Name: !Sub '${AWS::StackName}-P${GerritInstanceNumber}-S'
             Type: network
             Scheme: !Ref 'LoadBalancerScheme'
             LoadBalancerAttributes:
@@ -473,7 +473,7 @@ Resources:
             HealthCheckPort: !FindInMap ['Gerrit', 'Port', 'HTTP']
             HealthCheckProtocol: HTTP
             HealthCheckPath: '/config/server/healthcheck~status'
-            Name: !Sub '${AWS::StackName}-primary${GerritInstanceNumber}-http'
+            Name: !Sub '${AWS::StackName}-P${GerritInstanceNumber}-H'
 
     HTTPListener:
         Type: AWS::ElasticLoadBalancingV2::Listener
@@ -498,7 +498,7 @@ Resources:
             HealthCheckPort: !FindInMap ['Gerrit', 'Port', 'HTTP']
             HealthCheckProtocol: HTTP
             HealthCheckPath: '/config/server/healthcheck~status'
-            Name: !Sub '${AWS::StackName}-primary${GerritInstanceNumber}-ssh'
+            Name: !Sub '${AWS::StackName}-P${GerritInstanceNumber}-S'
 
     SSHListener:
         Type: AWS::ElasticLoadBalancingV2::Listener
