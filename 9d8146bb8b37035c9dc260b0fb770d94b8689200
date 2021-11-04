@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c286431d_c615a44d",
+        "filename": "single-primary/cf-dns-route.yml",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2021-11-04T10:34:02Z",
+      "side": 1,
+      "message": "we are not setting this since we don\u0027t do any fancy routing at DNS level for now, right?",
+      "range": {
+        "startLine": 32,
+        "startChar": 10,
+        "endLine": 32,
+        "endChar": 30
+      },
+      "revId": "9d8146bb8b37035c9dc260b0fb770d94b8689200",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
