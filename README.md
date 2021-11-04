@@ -65,6 +65,36 @@ create one in the [LDAP folder](ldap/README.md).
 All recipes stream every log to CloudWatch. This always includes `sshd_log`,
 `httpd_log` and `gc_log`.
 
+## Resource names
+
+When possible AWS resources are explicitly named so that they can be easily
+distinguished when querying them via the aws-cli, or the AWS UI console, so that
+their intent is clear.
+
+However, AWS requires that resource names be no longer than 32 characters. For
+this reason we adopt a naming-convention that trades off a bit of clarity in
+favour of a more economical usage of characters.
+
+* R - Replica
+* P - Primary
+* H - HTTP protocol
+* S - SSH protocol
+* G - GIT protocol
+
+Some examples:
+
+* In the `Load Balancers` section:
+    - `production-P-H` stands
+      for `Load Balancer serving HTTP traffic to the Primary Gerrit`
+    - `production-R-S` stands
+      for `Load Balancer serving SSH traffic to the Gerrit Replica`
+
+* In the `Target Groups` section:
+    - `production-P1-H` stands
+      for `Target Group registering the Primary1 Gerrit instance listening over HTTP`
+    - `production-R-GS` stands
+      for `Target Group registering the Replica Gerrit instances listening over Git and SSH`
+
 #### error_log
 The 'error_log' might or might not be available depending on which version of
 gerrit is being deployed.
