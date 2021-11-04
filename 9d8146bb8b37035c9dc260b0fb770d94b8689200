@@ -22,6 +22,30 @@
       },
       "revId": "9d8146bb8b37035c9dc260b0fb770d94b8689200",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3a00fb0e_04a902be",
+        "filename": "single-primary/cf-dns-route.yml",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-11-04T14:19:22Z",
+      "side": 1,
+      "message": "exactly",
+      "parentUuid": "c286431d_c615a44d",
+      "range": {
+        "startLine": 32,
+        "startChar": 10,
+        "endLine": 32,
+        "endChar": 30
+      },
+      "revId": "9d8146bb8b37035c9dc260b0fb770d94b8689200",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
