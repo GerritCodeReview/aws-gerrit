@@ -44,10 +44,14 @@ Parameters:
   HostedZoneName:
         Description: The route53 HostedZoneName.
         Type: String
-  Subdomain:
-        Description: The subdomain of the Gerrit cluster
+  HttpSubdomain:
+        Description: The HTTP subdomain of the Gerrit cluster
         Type: String
-        Default: gerrit-primary-demo
+        Default: gerrit-http-primary-demo
+  SshSubdomain:
+    Description: The SSH subdomain of the Gerrit cluster
+    Type: String
+    Default: gerrit-ssh-primary-demo
   LoadBalancerScheme:
         Description: Load Balancer schema, The nodes of an Internet-facing load balancer have public IP addresses.
         Type: String
@@ -207,7 +211,9 @@ Resources:
                   Image: !Sub '${DockerRegistryUrl}/${DockerImage}'
                   Environment:
                     - Name: CANONICAL_WEB_URL
-                      Value: !Sub 'https://${Subdomain}.${HostedZoneName}'
+                      Value: !Sub 'https://${HttpSubdomain}.${HostedZoneName}'
+                    - Name: SSHD_ADVERTISED_ADDRESS
+                      Value: !Sub '${SshSubdomain}.${HostedZoneName}:${SSHPort}'
                     - Name: HTTPD_LISTEN_URL
                       Value: !Sub 'proxy-https://*:${HTTPPort}/'
                     - Name: AWS_REGION
@@ -312,9 +318,48 @@ Resources:
                 Host:
                   SourcePath: !Join ['/', ["/gerrit-mount-point", !FindInMap ['Gerrit', 'Volume', 'Logs']]]
 
-    LoadBalancer:
+    GerritHTTPLoadBalancerSG:
+      Type: AWS::EC2::SecurityGroup
+      Properties:
+        VpcId:
+          Fn::ImportValue:
+            !Join [':', [!Ref 'ClusterStackName', 'VPCId']]
+        GroupDescription: "Allow public HTTPS traffic"
+        GroupName: !Sub '${ClusterStackName}-primary-http'
+        SecurityGroupIngress:
+          - IpProtocol: 'tcp'
+            FromPort: !Ref HTTPSPort
+            ToPort: !Ref HTTPSPort
+            CidrIp: '0.0.0.0/0'
+            Description: "HTTPS connections from everywhere (IPv4)"
+          - IpProtocol: 'tcp'
+            FromPort: !Ref HTTPSPort
+            ToPort: !Ref HTTPSPort
+            CidrIpv6: '::/0'
+            Description: "HTTPS connections from everywhere (IPv6)"
+
+
+    GerritHTTPLoadBalancer:
+      Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+      Properties:
+        Name: !Sub '${ClusterStackName}-primary-http'
+        Type: application
+        Scheme: !Ref 'LoadBalancerScheme'
+        SecurityGroups:
+          - !Ref GerritHTTPLoadBalancerSG
+        Subnets:
+          - Fn::ImportValue:
+              !Join [':', [!Ref 'ClusterStackName', 'PublicSubnetOne']]
+          - Fn::ImportValue:
+              !Join [':', [!Ref 'ClusterStackName', 'PublicSubnetTwo']]
+        Tags:
+          - Key: Name
+            Value: !Join ['-', [!Ref 'EnvironmentName', !Ref 'GerritServiceName', 'alb']]
+
+    GerritSSHLoadBalancer:
         Type: AWS::ElasticLoadBalancingV2::LoadBalancer
         Properties:
+            Name: !Sub '${ClusterStackName}-primary-ssh'
             Type: network
             Scheme: !Ref 'LoadBalancerScheme'
             LoadBalancerAttributes:
@@ -331,34 +376,33 @@ Resources:
 
     HTTPTargetGroup:
         Type: AWS::ElasticLoadBalancingV2::TargetGroup
-        DependsOn: LoadBalancer
+        DependsOn: GerritHTTPLoadBalancer
         Properties:
             VpcId:
               Fn::ImportValue:
-                  !Join [':', [!Ref 'ClusterStackName', 'VPCId']]
+                !Join [':', [!Ref 'ClusterStackName', 'VPCId']]
             Port: !Ref HTTPPort
-            Protocol: TCP
+            Protocol: HTTP
             HealthCheckProtocol: HTTP
             HealthCheckPort: !Ref HTTPPort
             HealthCheckPath: '/config/server/healthcheck~status'
-            Name: 'gerrit-primary-http'
+            Name: !Sub '${ClusterStackName}-primary-http'
 
     HTTPListener:
         Type: AWS::ElasticLoadBalancingV2::Listener
-        DependsOn: LoadBalancer
         Properties:
             Certificates:
               - CertificateArn: !Ref CertificateArn
             DefaultActions:
             - Type: forward
               TargetGroupArn: !Ref HTTPTargetGroup
-            LoadBalancerArn: !Ref LoadBalancer
+            LoadBalancerArn: !Ref GerritHTTPLoadBalancer
             Port: !Ref HTTPSPort
-            Protocol: TLS
+            Protocol: HTTPS
 
     SSHTargetGroup:
         Type: AWS::ElasticLoadBalancingV2::TargetGroup
-        DependsOn: LoadBalancer
+        DependsOn: GerritSSHLoadBalancer
         Properties:
             VpcId:
               Fn::ImportValue:
@@ -368,16 +412,15 @@ Resources:
             HealthCheckProtocol: HTTP
             HealthCheckPort: !Ref HTTPPort
             HealthCheckPath: '/config/server/healthcheck~status'
-            Name: 'gerrit-primary-ssh'
+            Name: !Sub '${ClusterStackName}-primary-ssh'
 
     SSHListener:
         Type: AWS::ElasticLoadBalancingV2::Listener
-        DependsOn: LoadBalancer
         Properties:
             DefaultActions:
             - Type: forward
               TargetGroupArn: !Ref SSHTargetGroup
-            LoadBalancerArn: !Ref LoadBalancer
+            LoadBalancerArn: !Ref GerritSSHLoadBalancer
             Port: !Ref SSHPort
             Protocol: TCP
 
@@ -757,33 +800,62 @@ Resources:
                 }
 
 Outputs:
-  PublicLoadBalancerDNSName:
-    Description: The DNS name of the external load balancer
-    Value: !GetAtt 'LoadBalancer.DNSName'
+  ########
+  # HTTP #
+  ########
+  GerritHTTPLoadBalancerDNSName:
+    Description: The DNS name of the Gerrit HTTP load balancer
+    Value: !GetAtt 'GerritHTTPLoadBalancer.DNSName'
     Export:
-      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'PublicLoadBalancerDNSName' ] ]
-  CanonicalHostedZoneID:
-    Description: Canonical Hosted Zone ID
-    Value: !GetAtt 'LoadBalancer.CanonicalHostedZoneID'
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'GerritHTTPLoadBalancerDNSName' ] ]
+  GerritHTTPCanonicalHostedZoneID:
+    Description: Canonical Hosted Zone ID of the Gerrit HTTP load balancer
+    Value: !GetAtt 'GerritHTTPLoadBalancer.CanonicalHostedZoneID'
     Export:
-      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'CanonicalHostedZoneID' ] ]
-  PublicLoadBalancerUrl:
-    Description: The url of the external load balancer
-    Value: !Join ['', ['http://', !GetAtt 'LoadBalancer.DNSName']]
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'GerritHTTPCanonicalHostedZoneID' ] ]
+  GerritHTTPLoadBalancerUrl:
+    Description: The url of the Gerrit HTTP load balancer
+    Value: !Join ['', ['http://', !GetAtt 'GerritHTTPLoadBalancer.DNSName']]
     Export:
-      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'PublicLoadBalancerUrl' ] ]
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'GerritHTTPLoadBalancerUrl' ] ]
+  #######
+  # SSH #
+  #######
+  GerritSSHLoadBalancerDNSName:
+    Description: The DNS name of the Gerrit SSH load balancer
+    Value: !GetAtt 'GerritSSHLoadBalancer.DNSName'
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'GerritSSHLoadBalancerDNSName' ] ]
+  GerritSSHCanonicalHostedZoneID:
+    Description: Canonical Hosted Zone ID of the Gerrit SSH load balancer
+    Value: !GetAtt 'GerritSSHLoadBalancer.CanonicalHostedZoneID'
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'GerritSSHCanonicalHostedZoneID' ] ]
+  GerritSSHLoadBalancerUrl:
+    Description: The url of the Gerrit SSH load balancer
+    Value: !Join ['', ['http://', !GetAtt 'GerritSSHLoadBalancer.DNSName']]
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'GerritSSHLoadBalancerUrl' ] ]
+  #######
+  # DNS #
+  #######
   HostedZoneName:
     Description: Route53 Hosted Zone name
     Value: !Ref HostedZoneName
     Export:
       Name: !Join [ ':', [ !Ref 'AWS::StackName', 'HostedZoneName' ] ]
-  Subdomain:
-    Description: Service DNS subdomain
-    Value: !Ref Subdomain
+  HttpSubdomain:
+    Description: Service DNS subdomain for HTTP traffic
+    Value: !Ref HttpSubdomain
     Export:
-      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'Subdomain' ] ]
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'HttpSubdomain' ] ]
+  SshSubdomain:
+    Description: Service DNS subdomain for SSH traffic
+    Value: !Ref SshSubdomain
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'SshSubdomain' ] ]
   CanonicalWebUrl:
     Description: Canonical Web URL
-    Value: !Sub 'https://${Subdomain}.${HostedZoneName}'
+    Value: !Sub 'https://${HttpSubdomain}.${HostedZoneName}'
     Export:
       Name: !Join [ ':', [ !Ref 'AWS::StackName', 'CanonicalWebUrl' ] ]
