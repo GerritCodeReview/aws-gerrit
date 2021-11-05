@@ -16,6 +16,24 @@
       "message": "Issue number is missing",
       "revId": "dbaf91fc3d6f09777dad3a489f1f124dadfbb03f",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "354c4ec6_064c17aa",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-11-05T16:44:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "265d232e_d2c01fe6",
+      "revId": "dbaf91fc3d6f09777dad3a489f1f124dadfbb03f",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
