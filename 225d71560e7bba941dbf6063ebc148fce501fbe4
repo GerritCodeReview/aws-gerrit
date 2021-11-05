@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "177f554a_47cb5c6a",
+        "filename": "primary-replica/cf-service-primary.yml",
+        "patchSetId": 5
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2021-11-05T12:30:24Z",
+      "side": 0,
+      "message": "should we also depends on DependsOn: GerritHTTPLoadBalancer?",
+      "range": {
+        "startLine": 370,
+        "startChar": 8,
+        "endLine": 370,
+        "endChar": 31
+      },
+      "revId": "225d71560e7bba941dbf6063ebc148fce501fbe4",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "89bd709f_27a5427d",
+        "filename": "primary-replica/cf-service-primary.yml",
+        "patchSetId": 5
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2021-11-05T12:30:24Z",
+      "side": 0,
+      "message": "same as above",
+      "range": {
+        "startLine": 397,
+        "startChar": 7,
+        "endLine": 397,
+        "endChar": 31
+      },
+      "revId": "225d71560e7bba941dbf6063ebc148fce501fbe4",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a094185e_d5540805",
+        "filename": "primary-replica/cf-service-replica.yml",
+        "patchSetId": 5
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2021-11-05T12:30:24Z",
+      "side": 0,
+      "message": "same should we depend on ReplicaHTTPLoadBalancer",
+      "range": {
+        "startLine": 471,
+        "startChar": 7,
+        "endLine": 471,
+        "endChar": 31
+      },
+      "revId": "225d71560e7bba941dbf6063ebc148fce501fbe4",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca87d107_81d5cd90",
+        "filename": "primary-replica/cf-service-replica.yml",
+        "patchSetId": 5
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2021-11-05T12:30:24Z",
+      "side": 0,
+      "message": "same as above",
+      "range": {
+        "startLine": 498,
+        "startChar": 19,
+        "endLine": 498,
+        "endChar": 31
+      },
+      "revId": "225d71560e7bba941dbf6063ebc148fce501fbe4",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
