@@ -3,6 +3,40 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8bc21b49_3d0c6f90",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2021-11-05T12:41:49Z",
+      "side": 1,
+      "message": "Missing Issue id",
+      "revId": "3c99a328515e557cf633c7fbbdd7b7eae12b3ab8",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "869d1798_9dc803f4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2021-11-05T12:41:49Z",
+      "side": 1,
+      "message": "Is this fixing the issue, still I can create stack with name longer than 32 characters and it will cause the same issue",
+      "revId": "3c99a328515e557cf633c7fbbdd7b7eae12b3ab8",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fedc809d_4a5acc38",
         "filename": "README.md",
         "patchSetId": 4
