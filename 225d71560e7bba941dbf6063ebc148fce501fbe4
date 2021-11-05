@@ -16,6 +16,29 @@
       "message": "NOTE: before merging this one we need to update the `gatling-gerrit-test` to use the new variable names for the domain.",
       "revId": "225d71560e7bba941dbf6063ebc148fce501fbe4",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2298bab9_997ce0bb",
+        "filename": "single-primary/README.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2021-11-05T12:20:35Z",
+      "side": 1,
+      "message": "nit: Yours",
+      "range": {
+        "startLine": 106,
+        "startChar": 0,
+        "endLine": 106,
+        "endChar": 3
+      },
+      "revId": "225d71560e7bba941dbf6063ebc148fce501fbe4",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
