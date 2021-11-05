@@ -35,6 +35,24 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1bc5ee12_d32ecdf6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-11-05T16:40:47Z",
+      "side": 1,
+      "message": "The issue is not that we cannot create a stack with names longer than 32 characters: that\u0027s not an issue we can fix, but rather, an AWS requirement.\n\nThis change is to continue with explicit naming (we already do, because it is useful), but in a more economical way, by removing unneeded suffixes and minimizing characters by using a naming convention.\n\nHope it makes sense",
+      "parentUuid": "869d1798_9dc803f4",
+      "revId": "3c99a328515e557cf633c7fbbdd7b7eae12b3ab8",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fedc809d_4a5acc38",
