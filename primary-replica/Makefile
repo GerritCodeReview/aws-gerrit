@@ -58,7 +58,8 @@ endif
 		$(GERRIT_OPTIONAL_PARAMS_REPLICA_AUTO_SCALING_CAPACITY) \
 		$(GERRIT_OPTIONAL_PARAMS_REPLICA_CAPACITY_PROVIDER)
 
-service-primary: set-optional-params-metrics-cloudwatch set-optional-params-smtp set-ldap-account-pattern set-optional-gerrit-ulimits set-optional-jgit-conf
+service-primary: set-optional-params-metrics-cloudwatch set-optional-params-smtp set-ldap-account-pattern set-optional-gerrit-ulimits set-optional-jgit-conf \
+					set-optional-x-ray
 ifdef LOAD_BALANCER_SCHEME
 		$(eval PRIMARY_SERVICE_OPTIONAL_PARAMS := $(PRIMARY_SERVICE_OPTIONAL_PARAMS) ParameterKey=LoadBalancerScheme,ParameterValue=$(LOAD_BALANCER_SCHEME))
 endif
@@ -99,14 +100,16 @@ endif
 		$(PRIMARY_SERVICE_OPTIONAL_PARAMS) \
 		$(METRICS_CW_OPTIONAL_PARAMS) \
 		$(SMTP_OPTIONAL_PARAMS) \
-		$(GERRIT_ULIMITS)
+		$(GERRIT_ULIMITS) \
+		$(XRAY_OPTIONAL_PARAMS)
 
 
 service-replica: set-optional-params-metrics-cloudwatch \
 					set-ldap-account-pattern \
 					set-optional-gerrit-ulimits set-optional-jgit-conf \
 					set-optional-params-for-replica-auto-scaling-capacity \
-					set-optional-params-for-replica-auto-scaling-policy
+					set-optional-params-for-replica-auto-scaling-policy \
+					set-optional-x-ray
 
 ifdef LOAD_BALANCER_SCHEME
 		$(eval REPLICA_SERVICE_OPTIONAL_PARAMS := $(REPLICA_SERVICE_OPTIONAL_PARAMS) ParameterKey=LoadBalancerScheme,ParameterValue=$(LOAD_BALANCER_SCHEME))
@@ -144,7 +147,8 @@ endif
 		$(METRICS_CW_OPTIONAL_PARAMS) \
 		$(GERRIT_ULIMITS) \
 		$(GERRIT_OPTIONAL_PARAMS_REPLICA_AUTO_SCALING_CAPACITY) \
-		$(GERRIT_OPTIONAL_PARAMS_REPLICA_AUTO_SCALING_POLICY)
+		$(GERRIT_OPTIONAL_PARAMS_REPLICA_AUTO_SCALING_POLICY) \
+		$(XRAY_OPTIONAL_PARAMS)
 
 dns-routing:
 	$(AWS_FC_COMMAND) create-stack \
