@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e3561fc0_ac48d1b5",
+        "filename": "single-primary/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2021-11-05T08:50:57Z",
+      "side": 1,
+      "message": "nit: Gerrit",
+      "range": {
+        "startLine": 44,
+        "startChar": 11,
+        "endLine": 44,
+        "endChar": 17
+      },
+      "revId": "be9d0f9715ba3d4f86b4b7cf14cdc3be8b5b1048",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6b19d6d1_40e5a2f8",
+        "filename": "single-primary/cf-service.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2021-11-05T08:50:57Z",
+      "side": 1,
+      "message": "nit: Gerrit",
+      "range": {
+        "startLine": 166,
+        "startChar": 53,
+        "endLine": 166,
+        "endChar": 59
+      },
+      "revId": "be9d0f9715ba3d4f86b4b7cf14cdc3be8b5b1048",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}

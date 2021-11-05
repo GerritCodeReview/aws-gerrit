@@ -84,6 +84,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "bf2cad6d_b0c8d0a3",
+        "filename": "gerrit/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2021-11-05T08:50:57Z",
+      "side": 1,
+      "message": "Looking at the releases [1] they did since 2019 it seems like there are no major ones, hence I agree with tony the chances of having issues because, for example, of breaking changes in the API are lower than going out of sync between agent and the service. \n\n[1]: https://github.com/aws/aws-xray-java-agent/releases",
+      "parentUuid": "79ee4110_c894c0bd",
+      "range": {
+        "startLine": 28,
+        "startChar": 70,
+        "endLine": 28,
+        "endChar": 76
+      },
+      "revId": "ab0a7c1853061ed170aaa2e59e71f73ca4dbbcfa",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "96c37a13_2e0dfeb6",
         "filename": "gerrit/Dockerfile",
         "patchSetId": 1
