@@ -24,6 +24,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9120f52f_c6f9f1ec",
+        "filename": "dual-primary/cf-service-replica.yml",
+        "patchSetId": 4
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-11-05T16:40:52Z",
+      "side": 0,
+      "message": "Nope, the dependency is already inferred by the LoadBalancerArn",
+      "parentUuid": "a75a42f4_9e18d36e",
+      "range": {
+        "startLine": 471,
+        "startChar": 7,
+        "endLine": 471,
+        "endChar": 31
+      },
+      "revId": "81c91cd13fb9ecabd9698c65f07bebaba8f20519",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1a287b72_5577d3bf",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-11-05T12:37:55Z",
       "side": 0,
       "message": "same as above",
+      "range": {
+        "startLine": 498,
+        "startChar": 19,
+        "endLine": 498,
+        "endChar": 31
+      },
+      "revId": "81c91cd13fb9ecabd9698c65f07bebaba8f20519",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "76c65328_749fa957",
+        "filename": "dual-primary/cf-service-replica.yml",
+        "patchSetId": 4
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-11-05T16:40:52Z",
+      "side": 0,
+      "message": "Nope, the dependency is already inferred by the LoadBalancerArn",
+      "parentUuid": "1a287b72_5577d3bf",
       "range": {
         "startLine": 498,
         "startChar": 19,
@@ -70,6 +118,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7742efc0_1f11c578",
+        "filename": "dual-primary/cf-service-replica.yml",
+        "patchSetId": 4
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-11-05T16:40:52Z",
+      "side": 0,
+      "message": "Nope, the dependency is already inferred by the LoadBalancerArn",
+      "parentUuid": "69266be3_52284335",
+      "range": {
+        "startLine": 520,
+        "startChar": 19,
+        "endLine": 520,
+        "endChar": 31
+      },
+      "revId": "81c91cd13fb9ecabd9698c65f07bebaba8f20519",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "eab4e633_996deadd",
@@ -83,6 +155,30 @@
       "writtenOn": "2021-11-05T12:37:55Z",
       "side": 0,
       "message": "same as above",
+      "range": {
+        "startLine": 542,
+        "startChar": 19,
+        "endLine": 542,
+        "endChar": 31
+      },
+      "revId": "81c91cd13fb9ecabd9698c65f07bebaba8f20519",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "168253bd_73424a1e",
+        "filename": "dual-primary/cf-service-replica.yml",
+        "patchSetId": 4
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-11-05T16:40:52Z",
+      "side": 0,
+      "message": "Nope, the dependency is already inferred by the LoadBalancerArn",
+      "parentUuid": "eab4e633_996deadd",
       "range": {
         "startLine": 542,
         "startChar": 19,
