@@ -402,7 +402,11 @@ Resources:
                         awslogs-region: !Ref AWS::Region
                         awslogs-stream-prefix: !Ref EnvironmentName
                   Links:
-                    - !FindInMap ['XRay', 'Info', 'ContainerName']
+                    Fn::If:
+                      - ShouldEnableXRay
+                      -
+                        - !FindInMap ['XRay', 'Info', 'ContainerName']
+                      - !Ref "AWS::NoValue"
                 - Fn::If:
                     - ShouldEnableXRay
                     - Name: !FindInMap ['XRay', 'Info', 'ContainerName']
@@ -414,7 +418,7 @@ Resources:
                         - HostPort: 2000
                           ContainerPort: 2000
                           Protocol: "udp"
-                    - AWS::NoValue
+                    - !Ref "AWS::NoValue"
             Volumes:
               - Name: !FindInMap ['Gerrit', 'Volume', 'Git']
                 Host:

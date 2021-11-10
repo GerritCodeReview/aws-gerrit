@@ -364,7 +364,11 @@ Resources:
                         awslogs-region: !Ref AWS::Region
                         awslogs-stream-prefix: !Ref EnvironmentName
                   Links:
-                    - !FindInMap ['XRay', 'Info', 'ContainerName']
+                    Fn::If:
+                      - ShouldEnableXRay
+                      -
+                        - !FindInMap ['XRay', 'Info', 'ContainerName']
+                      - !Ref "AWS::NoValue"
                 - Name: !Ref GitDaemonServiceName
                   Essential: true
                   Image: !Sub '${DockerRegistryUrl}/${GitDaemonDockerImage}'
@@ -421,7 +425,7 @@ Resources:
                         - HostPort: 2000
                           ContainerPort: 2000
                           Protocol: "udp"
-                    - AWS::NoValue
+                    - !Ref "AWS::NoValue"
             Volumes:
               - Name: !Ref 'GerritDbVolume'
                 DockerVolumeConfiguration:
