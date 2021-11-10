@@ -1,0 +1,11 @@
+[replication]
+  lockErrorMaxRetries = 30
+  maxRetries = 30
+
+[remote "{{ PRIMARY_REMOTE_LABEL }}"]
+    url = {{ PRIMARY_URL }}
+    fetch = +refs/*:refs/*
+    mirror = true
+    timeout = 600
+    rescheduleDelay = 15
+    replicationDelay = 5
