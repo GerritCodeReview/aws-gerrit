@@ -68,8 +68,8 @@ Parameters:
         Type: String
         Default: internet-facing
         AllowedValues: [internal, internet-facing]
-  SshReplicaSubdomain:
-    Description: The subdomain of the loadbalancer serving SSH traffic for the replicas
+  HttpReplicaSubdomain:
+    Description: The subdomain of the loadbalancer serving HTTP traffic for the replicas
     Type: String
   GerritKeyPrefix:
         Description: Gerrit credentials keys prefix
@@ -287,7 +287,7 @@ Resources:
                     - Name: GIT_SSH_PORT
                       Value: !Ref GitSSHPort
                     - Name: REPLICA_SUBDOMAIN
-                      Value: !Ref SshReplicaSubdomain
+                      Value: !Ref HttpReplicaSubdomain
                     - Name: HOSTED_ZONE_NAME
                       Value: !Ref HostedZoneName
                     - Name: REINDEX_AT_STARTUP
