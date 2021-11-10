@@ -33,6 +33,7 @@ if [ $CONTAINER_REPLICA ]; then
 
      echo "[REPLICA] Init phase..."
      java -jar /var/gerrit/bin/gerrit.war init --no-auto-start --batch --install-all-plugins -d /var/gerrit
+     java -jar /var/gerrit/bin/gerrit.war reindex --index groups
   else
     echo "Reindexing phase..."
     java -jar /var/gerrit/bin/gerrit.war reindex --index groups
