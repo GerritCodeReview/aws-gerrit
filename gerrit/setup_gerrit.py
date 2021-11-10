@@ -9,6 +9,7 @@ from jinja2 import Environment, FileSystemLoader
 setupReplication = (os.getenv('SETUP_REPLICATION') == 'true')
 setupHA = (os.getenv('SETUP_HA') == 'true')
 setupMultiSite = (os.getenv('MULTISITE_ENABLED') == 'true')
+containerReplica = (os.getenv('CONTAINER_REPLICA') == 'true')
 
 def get_secret(secret_name):
     # Create a Secrets Manager client
@@ -95,7 +96,7 @@ for secretId in secretIds:
     with open(GERRIT_CONFIG_DIRECTORY + secretId, 'w', encoding='utf-8') as f:
         f.write(get_secret(GERRIT_KEY_PREFIX + "_" + secretId))
 
-if setupReplication:
+if setupReplication and (not containerReplica):
     GERRIT_SSH_DIRECTORY = "/var/gerrit/.ssh"
     GERRIT_REPLICATION_SSH_KEYS = GERRIT_SSH_DIRECTORY + "/id_rsa"
 
@@ -124,6 +125,16 @@ set_secure_password(
 set_secure_password(
     "sendemail.smtpPass",
     get_secret(GERRIT_KEY_PREFIX + "_smtpPassword")
+)
+
+set_secure_password(
+    "remote.replica.password",
+    "secret"
+)
+
+set_secure_password(
+    "remote.replica.username",
+    "gerritadmin"
 )
 
 BASE_CONFIG_DIR = "/tmp"
@@ -178,27 +189,44 @@ with open(GERRIT_CONFIG_DIRECTORY + "gerrit.config", 'w',
     })
     f.write(template.render(config_for_template))
 
-containerReplica = (os.getenv('CONTAINER_REPLICA') == 'true')
-if ((not containerReplica) and setupReplication):
-    print("Setting Replication config in '" +
-          GERRIT_CONFIG_DIRECTORY + "replication.config'")
-    template = env.get_template("replication.config.template")
-    with open(GERRIT_CONFIG_DIRECTORY + "replication.config", 'w', encoding='utf-8') as f:
-        REPLICA_FQDN = os.getenv('REPLICA_SUBDOMAIN') + "." + os.getenv('HOSTED_ZONE_NAME')
-        REMOTE_TARGET = os.getenv('REMOTE_REPLICATION_TARGET_HOST', '')
-        # In a multi-site setup, the very first replication needs to be
-        # triggered manually from site-A to site-B, once the latter is ready,
-        # thus "REPLICATE_ON_STARTUP" needs to be disabled
-        REPLICATE_ON_STARTUP = "false" if setupMultiSite else "true"
-        f.write(template.render(
-                REPLICA_1_URL="git://" + REPLICA_FQDN + ":" + os.getenv('GIT_PORT') + "/${name}.git",
-                REPLICA_1_AMDIN_URL="ssh://gerrit@" + REPLICA_FQDN + ":" + os.getenv('GIT_SSH_PORT') + "/var/gerrit/git/${name}.git",
-                REMOTE_TARGET=REMOTE_TARGET,
-                REMOTE_TARGET_URL="git://" + REMOTE_TARGET + ":" + os.getenv('GIT_PORT') + "/${name}.git",
-                REMOTE_ADMIN_TARGET_URL="ssh://gerrit@" + REMOTE_TARGET + ":" + os.getenv('GIT_SSH_PORT') + "/var/gerrit/git/${name}.git",
-                REPLICATE_ON_STARTUP=REPLICATE_ON_STARTUP,
-                MULTISITE_GLOBAL_PROJECTS=os.getenv('MULTISITE_GLOBAL_PROJECTS', '')
-                ))
+if setupReplication:
+    if containerReplica:
+        print("[REPLICA] Setting replication.config in '" +
+              GERRIT_CONFIG_DIRECTORY + "replication.config'")
+
+        template = env.get_template("replication.config.replica.template")
+
+        with open(GERRIT_CONFIG_DIRECTORY + "replication.config", 'w', encoding='utf-8') as f:
+            PRIMARY_FQDN = os.getenv('PRIMARY_SUBDOMAIN') + "." + os.getenv('HOSTED_ZONE_NAME')
+            f.write(template.render(
+                PRIMARY_REMOTE_LABEL="primary",
+                PRIMARY_URL="https://" + PRIMARY_FQDN + ":443/${name}.git"
+            ))
+    else:
+        print("[PRIMARY] Setting replication.config in '" +
+              GERRIT_CONFIG_DIRECTORY + "replication.config'")
+        template = env.get_template("replication.config.primary.template")
+
+        with open(GERRIT_CONFIG_DIRECTORY + "replication.config", 'w', encoding='utf-8') as f:
+            REPLICA_FQDN = os.getenv('REPLICA_SUBDOMAIN') + "." + os.getenv('HOSTED_ZONE_NAME')
+            REMOTE_TARGET = os.getenv('REMOTE_REPLICATION_TARGET_HOST', '')
+            # In a multi-site setup, the very first replication needs to be
+            # triggered manually from site-A to site-B, once the latter is
+            # ready, thus "REPLICATE_ON_STARTUP" needs to be disabled
+            REPLICATE_ON_STARTUP = "false" if setupMultiSite else "true"
+            f.write(template.render(
+                    PRIMARY_INSTANCE_LABEL="primary",
+                    REPLICA_REMOTE_LABEL="replica",
+                    REPLICA_REMOTE_API_URL="https://" + REPLICA_FQDN + ":443",
+                    # TODO: this value is irrelevant from primary instances
+                    #  because they don't fetch anything
+                    REPLICA_1_URL="git://" + REPLICA_FQDN + ":" + os.getenv('GIT_PORT') + "/${name}.git",
+                    REMOTE_TARGET=REMOTE_TARGET,
+                    REMOTE_TARGET_URL="git://" + REMOTE_TARGET + ":" + os.getenv('GIT_PORT') + "/${name}.git",
+                    REMOTE_ADMIN_TARGET_URL="ssh://gerrit@" + REMOTE_TARGET + ":" + os.getenv('GIT_SSH_PORT') + "/var/gerrit/git/${name}.git",
+                    REPLICATE_ON_STARTUP=REPLICATE_ON_STARTUP,
+                    MULTISITE_GLOBAL_PROJECTS=os.getenv('MULTISITE_GLOBAL_PROJECTS', '')
+                    ))
 
 CONFIGURATION_FILE = "jgit.config"
 CONFIGURATION_TARGET = GERRIT_CONFIG_DIRECTORY + CONFIGURATION_FILE
