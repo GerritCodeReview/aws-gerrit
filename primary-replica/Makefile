@@ -11,6 +11,8 @@ CLOUDWATCH_DASHBOARD_TEMPLATE:=cf-dashboard.yml
 AWS_FC_COMMAND=export AWS_PAGER=;aws cloudformation
 GIT_GC_SOURCE_PATH=/gerrit-mount-point/gerrit-git
 
+PRIMARY_REPLICA_PLUGINS=javamelody healthcheck metrics-reporter-cloudwatch pull-replication
+
 .PHONY: create-all delete-all \
 				cluster cluster-keys service-primary service-replica dns-routing dashboard \
 				delete-cluster delete-service-primary delete-service-replica delete-dns-routing delete-dashboard \
@@ -85,7 +87,7 @@ endif
 		ParameterKey=HostedZoneName,ParameterValue=$(HOSTED_ZONE_NAME) \
 		ParameterKey=HttpSubdomain,ParameterValue=$(HTTP_PRIMARY_SUBDOMAIN) \
 		ParameterKey=SshSubdomain,ParameterValue=$(SSH_PRIMARY_SUBDOMAIN) \
-		ParameterKey=SshReplicaSubdomain,ParameterValue=$(SSH_REPLICA_SUBDOMAIN) \
+		ParameterKey=HttpReplicaSubdomain,ParameterValue=$(HTTP_REPLICA_SUBDOMAIN) \
 		ParameterKey=DockerRegistryUrl,ParameterValue=$(DOCKER_REGISTRY_URI) \
 		ParameterKey=CertificateArn,ParameterValue=$(SSL_CERTIFICATE_ARN) \
 		ParameterKey=ReplicaServiceStackName,ParameterValue=$(SERVICE_REPLICA_STACK_NAME) \
@@ -133,6 +135,7 @@ endif
 		ParameterKey=HostedZoneName,ParameterValue=$(HOSTED_ZONE_NAME) \
 		ParameterKey=HttpSubdomain,ParameterValue=$(HTTP_REPLICA_SUBDOMAIN) \
 		ParameterKey=SshSubdomain,ParameterValue=$(SSH_REPLICA_SUBDOMAIN) \
+		ParameterKey=HttpPrimarySubdomain,ParameterValue=$(HTTP_PRIMARY_SUBDOMAIN) \
 		ParameterKey=DockerRegistryUrl,ParameterValue=$(DOCKER_REGISTRY_URI) \
 		ParameterKey=CertificateArn,ParameterValue=$(SSL_CERTIFICATE_ARN) \
 		ParameterKey=GerritKeyPrefix,ParameterValue=$(GERRIT_KEY_PREFIX)\
@@ -288,7 +291,7 @@ delete-all: delete-dns-routing wait-for-dns-routing-deletion \
 						delete-dashboard wait-for-dashboard-deletion
 
 gerrit-publish:
-	$(MAKE) -C ../gerrit gerrit-publish RECIPE=primary-replica
+	$(MAKE) -C ../gerrit gerrit-publish RECIPE=primary-replica PLUGINS="$(PRIMARY_REPLICA_PLUGINS)"
 
 git-daemon-publish:
 	$(MAKE) -C git-daemon git-daemon-publish
