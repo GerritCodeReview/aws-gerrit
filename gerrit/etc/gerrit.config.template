@@ -23,6 +23,7 @@
 [auth]
   type = ldap
   gitBasicAuth = true
+  gitBasicAuthPolicy = HTTP
   {% if COOKIE_DOMAIN is defined %}
     cookiedomain = .{{ COOKIE_DOMAIN }}
   {% endif %}
