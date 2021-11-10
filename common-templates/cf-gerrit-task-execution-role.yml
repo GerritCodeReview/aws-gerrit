@@ -42,6 +42,7 @@ Resources:
                   - 'dynamodb:Query'
                   - 'dynamodb:Scan'
                   - 'dynamodb:UpdateItem'
+                  - 's3:*'
                 Resource: '*'
           - PolicyName: AmazonECSTaskSecretManagerRolePolicy
             PolicyDocument:
