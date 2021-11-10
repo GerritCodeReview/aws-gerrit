@@ -11,6 +11,9 @@
   enabled = true
   pollInterval = {{ HA_AUTOREINDEX_POLL_INTERVAL }}
 
+[http]
+   maxTries = 3
+
 {% if MULTISITE_ENABLED is defined and MULTISITE_ENABLED == "true" %}
 [websession]
   synchronize = false
