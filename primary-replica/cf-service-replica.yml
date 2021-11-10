@@ -82,6 +82,9 @@ Parameters:
     Description: The subdomain of the Gerrit loadbalancer serving SSH traffic for replicas
     Type: String
     Default: gerrit-ssh-replica-demo
+  HttpPrimarySubdomain:
+    Description: The subdomain of the loadbalancer serving HTTP traffic for the primary
+    Type: String
   LoadBalancerScheme:
       Description: Load Balancer schema, The nodes of an Internet-facing load balancer have public IP addresses.
       Type: String
@@ -274,6 +277,12 @@ Resources:
                   Essential: true
                   Image: !Sub '${DockerRegistryUrl}/${GerritDockerImage}'
                   Environment:
+                    - Name: SETUP_REPLICATION
+                      Value: true
+                    - Name: PRIMARY_SUBDOMAIN
+                      Value: !Ref HttpPrimarySubdomain
+                    - Name: HOSTED_ZONE_NAME
+                      Value: !Ref HostedZoneName
                     - Name: XRAY_ENABLED
                       Value: !Ref EnableXray
                     - Name: AWS_XRAY_TRACING_NAME
