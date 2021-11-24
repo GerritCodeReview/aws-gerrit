@@ -216,3 +216,25 @@ delete-git-replica-persistent-stack:
 		, \
 		echo "No Git persistent stack for replicas found. Nothing to do." \
 	)
+
+find-asg:
+	$(eval ASGS := $(shell $(AWS) autoscaling describe-auto-scaling-groups \
+		--query "AutoScalingGroups[? Tags[? (Key=='aws:cloudformation:stack-name') && Value=='$(CLUSTER_STACK_NAME)']]".AutoScalingGroupName  \
+		| jq -r '.[]'))
+
+	@echo "FOUND AUTOSCALING GROUPS in '$(CLUSTER_STACK_NAME)': '$(ASGS)'"
+
+delete-asg: find-asg
+	for asg in $(ASGS); \
+	do \
+		echo "Deleting $$asg Autoscaling group"; \
+		$(AWS) autoscaling delete-auto-scaling-group --force-delete --auto-scaling-group-name "$$asg"; \
+	done
+
+wait_for_asg_deletion: find-asg
+	while [[ $$(aws autoscaling describe-auto-scaling-groups --auto-scaling-group-names $(ASGS) | jq '.AutoScalingGroups[]' | grep '[A-Z]') ]]; do \
+		echo "Wait for ASGs $(ASGS) to be deleted"; \
+		sleep 5; \
+	done;
+
+	@echo "Autoscaling groups $(ASGS) have been terminated."

@@ -463,6 +463,7 @@ delete-all: delete-dns-routing wait-for-dns-routing-deletion \
 						$(optional_dashboard_targets_deletion) \
 						$(optional_replication_targets_deletion) \
 						$(optional_git_gc_targets_deletion) \
+						delete-asg wait_for_asg_deletion \
 						delete-cluster wait-for-cluster-deletion
 
 delete-all-including-retained-stack: confirm-persistent-stack-deletion delete-all delete-git-primary-persistent-stack delete-git-replica-persistent-stack delete-network-persistent-stack delete-dynamodb-persistent-stack

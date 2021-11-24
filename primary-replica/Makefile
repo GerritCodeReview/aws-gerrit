@@ -283,6 +283,7 @@ delete-dashboard:
 delete-all: delete-dns-routing wait-for-dns-routing-deletion \
 						delete-service-replica wait-for-service-replica-deletion \
 						delete-service-primary wait-for-service-primary-deletion \
+						delete-asg wait_for_asg_deletion \
 						delete-cluster wait-for-cluster-deletion \
 						$(optional_git_gc_targets_deletion) \
 						delete-dashboard wait-for-dashboard-deletion
