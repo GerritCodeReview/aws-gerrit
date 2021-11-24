@@ -283,9 +283,24 @@ delete-dashboard:
 delete-all: delete-dns-routing wait-for-dns-routing-deletion \
 						delete-service-replica wait-for-service-replica-deletion \
 						delete-service-primary wait-for-service-primary-deletion \
+						delete-asg \
 						delete-cluster wait-for-cluster-deletion \
 						$(optional_git_gc_targets_deletion) \
 						delete-dashboard wait-for-dashboard-deletion
+
+find-asg:
+	$(eval ASGS := $(shell $(AWS) autoscaling describe-auto-scaling-groups \
+		--query "AutoScalingGroups[? Tags[? (Key=='aws:cloudformation:stack-name') && Value=='$(CLUSTER_STACK_NAME)']]".AutoScalingGroupName  \
+		| jq -r '.[]'))
+
+	@echo "FOUND AUTOSCALING GROUPS $(ASGS)"
+
+delete-asg: find-asg
+	for asg in $(ASGS); \
+	do \
+		echo "Deleting $$asg Autoscaling group"; \
+		$(AWS) autoscaling delete-auto-scaling-group --force-delete--auto-scaling-group-name "$$asg"; \
+	done
 
 gerrit-publish:
 	$(MAKE) -C ../gerrit gerrit-publish RECIPE=primary-replica
