@@ -157,7 +157,7 @@ Resources:
       Name: !Sub '${AWS::StackName}-R'
       AutoScalingGroupProvider:
         AutoScalingGroupArn: !Ref ReplicaASG
-        ManagedTerminationProtection: ENABLED
+        ManagedTerminationProtection: DISABLED
         ManagedScaling:
           MaximumScalingStepSize: !Ref ReplicaCapacityProviderMaxStepSize
           MinimumScalingStepSize: !Ref ReplicaCapacityProviderMinStepSize
@@ -313,7 +313,6 @@ Resources:
       MinSize: !Ref ReplicaAutoScalingMinCapacity
       MaxSize: !Ref ReplicaAutoScalingMaxCapacity
       DesiredCapacity: !Ref ReplicaAutoScalingDesiredCapacity
-      NewInstancesProtectedFromScaleIn: true
     CreationPolicy:
       ResourceSignal:
         Timeout: PT15M
