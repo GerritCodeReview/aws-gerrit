@@ -33,6 +33,52 @@
       "message": "I have very little knowledge about the subject hence CR+1 only ;)",
       "revId": "fd1bbc3127c6d7969da1b82277ad7ee6fd079cd4",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aeb462e8_452834f9",
+        "filename": "dual-primary/cf-cluster.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2021-11-26T18:38:32Z",
+      "side": 1,
+      "message": "It would be useful to explain in the commit message why the managed termination protection needs to be turned off",
+      "range": {
+        "startLine": 203,
+        "startChar": 8,
+        "endLine": 203,
+        "endChar": 46
+      },
+      "revId": "fd1bbc3127c6d7969da1b82277ad7ee6fd079cd4",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2e32d01a_25cf0085",
+        "filename": "primary-replica/Makefile",
+        "patchSetId": 2
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2021-11-26T18:38:32Z",
+      "side": 1,
+      "message": "Can you explain as a comment the reason why the ASGs needs to explicitly removed?",
+      "range": {
+        "startLine": 297,
+        "startChar": 0,
+        "endLine": 303,
+        "endChar": 5
+      },
+      "revId": "fd1bbc3127c6d7969da1b82277ad7ee6fd079cd4",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
