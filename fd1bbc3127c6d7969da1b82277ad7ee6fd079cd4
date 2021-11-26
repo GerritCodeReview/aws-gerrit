@@ -16,6 +16,23 @@
       "message": "Verified for both dual-primary and primary-replica",
       "revId": "fd1bbc3127c6d7969da1b82277ad7ee6fd079cd4",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "77eec593_40d1c53b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1025452
+      },
+      "writtenOn": "2021-11-26T17:41:46Z",
+      "side": 1,
+      "message": "I have very little knowledge about the subject hence CR+1 only ;)",
+      "revId": "fd1bbc3127c6d7969da1b82277ad7ee6fd079cd4",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
