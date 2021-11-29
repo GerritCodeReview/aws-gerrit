@@ -22,6 +22,52 @@
       },
       "revId": "598e29d2118d18af44291327843429c49ec59a0d",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33841e99_00ffe1d4",
+        "filename": "Makefile.common",
+        "patchSetId": 1
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2021-11-29T09:50:01Z",
+      "side": 1,
+      "message": "what\u0027s this for ?",
+      "range": {
+        "startLine": 235,
+        "startChar": 123,
+        "endLine": 235,
+        "endChar": 135
+      },
+      "revId": "598e29d2118d18af44291327843429c49ec59a0d",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1d530880_ab5e3967",
+        "filename": "Makefile.common",
+        "patchSetId": 1
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2021-11-29T09:50:01Z",
+      "side": 1,
+      "message": "$(AWS)",
+      "range": {
+        "startLine": 235,
+        "startChar": 13,
+        "endLine": 235,
+        "endChar": 16
+      },
+      "revId": "598e29d2118d18af44291327843429c49ec59a0d",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
