@@ -24,6 +24,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8185b3e7_023e7f68",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-11-29T13:47:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a35a1123_1b15baf0",
+      "range": {
+        "startLine": 20,
+        "startChar": 9,
+        "endLine": 20,
+        "endChar": 27
+      },
+      "revId": "598e29d2118d18af44291327843429c49ec59a0d",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "33841e99_00ffe1d4",
@@ -65,6 +89,54 @@
         "startChar": 13,
         "endLine": 235,
         "endChar": 16
+      },
+      "revId": "598e29d2118d18af44291327843429c49ec59a0d",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e676eede_e8a75737",
+        "filename": "Makefile.common",
+        "patchSetId": 1
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-11-29T13:47:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d530880_ab5e3967",
+      "range": {
+        "startLine": 235,
+        "startChar": 13,
+        "endLine": 235,
+        "endChar": 16
+      },
+      "revId": "598e29d2118d18af44291327843429c49ec59a0d",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f8263f5f_c94899ee",
+        "filename": "Makefile.common",
+        "patchSetId": 1
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-11-29T13:47:40Z",
+      "side": 1,
+      "message": "using `describe-auto-scaling-groups always returns an object, as\"\n\n```\n{\n \"AutoscalingGroups\": []\n}\n```\nAutoscaling groups when present, will have a name like:\n\ntony-cluster-ReplicaASG-MZP19M67R3DA\n\nTo make sure we actually have _some_ results, we grep for everything that has a letter.\n\nDoes it make sense?",
+      "parentUuid": "33841e99_00ffe1d4",
+      "range": {
+        "startLine": 235,
+        "startChar": 123,
+        "endLine": 235,
+        "endChar": 135
       },
       "revId": "598e29d2118d18af44291327843429c49ec59a0d",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
