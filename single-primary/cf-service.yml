@@ -668,7 +668,7 @@ Resources:
                             "height": 6,
                             "properties": {
                                 "metrics": [
-                                    [ { "expression": "m1+m2", "label": "HTTP hits per second", "id": "e2", "region": "${AWS::Region}" } ],
+                                    [ { "expression": "RATE(m1+m2)", "label": "HTTP hits per second", "id": "e2", "region": "${AWS::Region}" } ],
                                     [ "${MetricsCloudwatchNamespace}", "http/server/success_count_total", "InstanceId", "${InstanceId}", "Type", "count", { "id": "m2", "visible": false } ],
                                     [ ".", "http/server/error_count_total", ".", ".", ".", ".", { "id": "m1", "visible": false } ]
                                 ],
