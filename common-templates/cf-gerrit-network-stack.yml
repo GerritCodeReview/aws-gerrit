@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: Deploy a service into an ECS cluster behind a public load balancer.
+Description: Deploy Gerrit network stack
 
 Parameters:
   InternetGatewayIdProp:

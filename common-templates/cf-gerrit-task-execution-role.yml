@@ -1,6 +1,6 @@
 
 AWSTemplateFormatVersion: '2010-09-09'
-Description: Deploy a service into an ECS cluster behind a public load balancer.
+Description: Deploy execution role for the Gerrit task
 
 Resources:
     # This is a role which is used by the ECS tasks themselves.
