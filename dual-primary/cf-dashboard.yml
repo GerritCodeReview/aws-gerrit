@@ -237,8 +237,8 @@ Resources:
                             "height": 6,
                             "properties": {
                                 "metrics": [
-                                    [ { "expression": "m1+m2", "label": "Primary 1 HTTP hits per second", "id": "e2", "region": "${AWS::Region}" } ],
-                                    [ { "expression": "m3+m4", "label": "Primary 2 HTTP hits per second", "id": "e1", "region": "${AWS::Region}" } ],
+                                    [ { "expression": "RATE(m1+m2)", "label": "Primary 1 HTTP hits per second", "id": "e2", "region": "${AWS::Region}" } ],
+                                    [ { "expression": "RATE(m3+m4)", "label": "Primary 2 HTTP hits per second", "id": "e1", "region": "${AWS::Region}" } ],
                                     [ "${MetricsCloudwatchNamespace}", "http/server/success_count_total", "InstanceId", "${Primary1InstanceId}", "Type", "count", { "id": "m2", "visible": false } ],
                                     [ "${MetricsCloudwatchNamespace}", "http/server/error_count_total", "InstanceId", "${Primary1InstanceId}", "Type", "count", { "id": "m1", "visible": false } ],
                                     [ "${MetricsCloudwatchNamespace}", "http/server/success_count_total", "InstanceId", "${Primary2InstanceId}", "Type", "count", { "id": "m3", "visible": false } ],
