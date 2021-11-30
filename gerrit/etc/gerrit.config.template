@@ -104,7 +104,7 @@
 
 {% endif %}
 {% if MULTISITE_ENABLED is defined and MULTISITE_ENABLED == "true" %}
-[plugin "kafka-events"]
+[plugin "events-kafka"]
     sendAsync = true
     bootstrapServers = {{ MULTISITE_KAFKA_BROKERS }}
     groupId = {{ GERRIT_INSTANCE_ID }}
