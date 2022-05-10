@@ -1,4 +1,4 @@
-FROM gerritcodereview/gerrit:$GERRIT_VERSION.$GERRIT_PATCH-centos8
+FROM gerritcodereview/gerrit:$GERRIT_VERSION.$GERRIT_PATCH-almalinux8
 
 ARG withXRay=false
 
