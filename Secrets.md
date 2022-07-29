@@ -7,7 +7,7 @@ required to run gerrit, such as private keys and passwords.
 In order to do that, such secrets must be previously uploaded to the secret manager, so that
 they can be found and used during deployment.
 
-To store the secret you can run the relevant [script](../gerrit/add_secrets_aws_secrets_manager.sh) to
+To store the secret you can run the relevant [script](gerrit/add_secrets_aws_secrets_manager.sh) to
 upload them to AWS Secret Manager:
 `./add_secrets_aws_secrets_manager.sh /path/to/your/keys/directory secret_prefix aws-region-id`
 
@@ -19,7 +19,7 @@ for example:
 
 When `secret_prefix` is omitted, it is set to `gerrit_secret` by default.
 
-The  [script](../gerrit/add_secrets_aws_secrets_manager.sh) expects secrets to be available in a
+The  [script](gerrit/add_secrets_aws_secrets_manager.sh) expects secrets to be available in a
 specified directory (e.g. `/tmp/secrets`).
 
 The expected secrets are the following.

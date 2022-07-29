@@ -1,7 +1,7 @@
 # Prerequisites
 
 Before configuring, setting up and deploying a gerrit stack on AWS, there are some one-off operations
-that are required. These includes key creations, certificates, docker registries etc.
+that are required. These include key creations, certificates, docker registries etc.
 The prerequisites to run this stack are:
 
 * a registered and correctly configured domain in
@@ -25,4 +25,4 @@ aws ecr create-repository --repository-name aws-gerrit/git-gc
 
 * An S3 bucket is required in order to store cloudformation templates that are used to build the stacks.
 You must edit the `common.env` file and set the `TEMPLATE_BUCKET_NAME`. The bucket will then be created
-the first time you run a deployment. Note that the at the moment the bucket accessibility is public.
+the first time you run a deployment. Note that at the moment the bucket accessibility is public.
