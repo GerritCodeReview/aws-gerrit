@@ -17,6 +17,17 @@
   replicateHiddenProjects = true
   timeout = 60
 
+[remote "pull-replica"]
+  url = {{ REPLICA_1_URL }}
+  adminUrl = {{ REPLICA_1_AMDIN_URL }}
+  apiUrl = {{ REPLICA_1_API_URL }}
+  mirror = true
+  push = +refs/*:refs/*
+  threads = 10
+  createMissingRepositories = true
+  replicateProjectDeletions = true
+  replicateHiddenProjects = true
+  timeout = 60
 
 {% if REMOTE_TARGET %}
 [remote "{{REMOTE_TARGET_URL}}"]
