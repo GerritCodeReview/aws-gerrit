@@ -17,7 +17,7 @@ SINGLE_SITE_PLUGINS=javamelody high-availability healthcheck metrics-reporter-cl
 HA_SITE_PLUGINS=$(SINGLE_SITE_PLUGINS) aws-dynamodb-refdb
 HA_SITE_PLUGINS_LIBS_LINKS=high-availability
 
-MULTI_SITE_PLUGINS=$(SINGLE_SITE_PLUGINS) multi-site events-kafka websession-broker aws-dynamodb-refdb
+MULTI_SITE_PLUGINS=$(SINGLE_SITE_PLUGINS) multi-site events-kafka websession-broker aws-dynamodb-refdb pull-replication
 MULTI_SITE_PLUGINS_LIBS_LINKS=multi-site replication
 MULTI_SITE_MAVEN_LIBS=events-broker~$(EVENTSBROKER_LIB_VER) global-refdb~${GLOBALREFDB_LIB_VER}
 
@@ -113,6 +113,9 @@ endif
 ifdef MULTISITE_GLOBAL_PROJECTS
 		$(eval REMOTE_OPTIONAL_PARAMS := $(REMOTE_OPTIONAL_PARAMS) ParameterKey=MultiSiteGlobalProjects,ParameterValue=\"$(MULTISITE_GLOBAL_PROJECTS)\")
 endif
+ifdef BEARER_TOKEN
+		$(eval REMOTE_OPTIONAL_PARAMS := $(REMOTE_OPTIONAL_PARAMS) ParameterKey=BearerToken,ParameterValue=\"$(BEARER_TOKEN)\")
+endif
 
 	$(AWS_FC_COMMAND) create-stack \
 		--stack-name $(SERVICE_PRIMARY1_STACK_NAME) \
@@ -134,6 +137,7 @@ endif
 		ParameterKey=HttpSubdomain,ParameterValue=$(HTTP_PRIMARY1_SUBDOMAIN) \
 		ParameterKey=SshSubdomain,ParameterValue=$(SSH_PRIMARY1_SUBDOMAIN) \
 		ParameterKey=SshReplicaSubdomain,ParameterValue=$(SSH_REPLICA_SUBDOMAIN) \
+		ParameterKey=HttpReplicaSubdomain,ParameterValue=$(HTTP_REPLICA_SUBDOMAIN) \
 		ParameterKey=DockerRegistryUrl,ParameterValue=$(DOCKER_REGISTRY_URI) \
 		ParameterKey=CertificateArn,ParameterValue=$(SSL_CERTIFICATE_ARN) \
 		ParameterKey=GerritKeyPrefix,ParameterValue=$(GERRIT_KEY_PREFIX)\
@@ -175,6 +179,9 @@ endif
 ifdef MULTISITE_GLOBAL_PROJECTS
 		$(eval REMOTE_OPTIONAL_PARAMS := $(REMOTE_OPTIONAL_PARAMS) ParameterKey=MultiSiteGlobalProjects,ParameterValue=\"$(MULTISITE_GLOBAL_PROJECTS)\")
 endif
+ifdef BEARER_TOKEN
+		$(eval REMOTE_OPTIONAL_PARAMS := $(REMOTE_OPTIONAL_PARAMS) ParameterKey=BearerToken,ParameterValue=\"$(BEARER_TOKEN)\")
+endif
 
 	$(AWS_FC_COMMAND) create-stack \
 		--stack-name $(SERVICE_PRIMARY2_STACK_NAME) \
@@ -196,6 +203,7 @@ endif
 		ParameterKey=HttpSubdomain,ParameterValue=$(HTTP_PRIMARY2_SUBDOMAIN) \
 		ParameterKey=SshSubdomain,ParameterValue=$(SSH_PRIMARY2_SUBDOMAIN) \
 		ParameterKey=SshReplicaSubdomain,ParameterValue=$(SSH_REPLICA_SUBDOMAIN) \
+		ParameterKey=HttpReplicaSubdomain,ParameterValue=$(HTTP_REPLICA_SUBDOMAIN) \
 		ParameterKey=DockerRegistryUrl,ParameterValue=$(DOCKER_REGISTRY_URI) \
 		ParameterKey=CertificateArn,ParameterValue=$(SSL_CERTIFICATE_ARN) \
 		ParameterKey=GerritKeyPrefix,ParameterValue=$(GERRIT_KEY_PREFIX)\
@@ -250,6 +258,9 @@ endif
 ifdef LOAD_BALANCER_SCHEME
 		$(eval REPLICA_SERVICE_OPTIONAL_PARAMS := $(REPLICA_SERVICE_OPTIONAL_PARAMS) ParameterKey=LoadBalancerScheme,ParameterValue=$(LOAD_BALANCER_SCHEME))
 endif
+ifdef BEARER_TOKEN
+		$(eval REPLICA_SERVICE_OPTIONAL_PARAMS := $(REPLICA_SERVICE_OPTIONAL_PARAMS) ParameterKey=BearerToken,ParameterValue=\"$(BEARER_TOKEN)\")
+endif
 
 	$(AWS_FC_COMMAND) create-stack \
 		--stack-name $(SERVICE_REPLICA_STACK_NAME) \
@@ -274,6 +285,9 @@ endif
 		ParameterKey=GerritCPU,ParameterValue=$(GERRIT_CPU) \
 		ParameterKey=GerritHeapLimit,ParameterValue=$(GERRIT_HEAP_LIMIT) \
 		ParameterKey=JgitCacheSize,ParameterValue=$(JGIT_CACHE_SIZE) \
+		ParameterKey=HttpPrimariesGerritSubdomain,ParameterValue=$(HTTP_PRIMARIES_GERRIT_SUBDOMAIN) \
+		ParameterKey=GerritPrimary1InstanceId,ParameterValue=$(GERRIT_PRIMARY1_INSTANCE_ID) \
+		ParameterKey=GerritPrimary2InstanceId,ParameterValue=$(GERRIT_PRIMARY2_INSTANCE_ID) \
 		$(JGIT_OPTIONAL_PARAMS) \
 		$(LDAP_ACCOUNT_PATTERN_PARAM) \
 		$(REPLICA_SERVICE_OPTIONAL_PARAMS) \
