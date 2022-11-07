@@ -180,7 +180,7 @@ with open(GERRIT_CONFIG_DIRECTORY + "gerrit.config", 'w',
 
 containerReplica = (os.getenv('CONTAINER_REPLICA') == 'true')
 if ((not containerReplica) and setupReplication):
-    print("Setting Replication config in '" +
+    print("Setting Primary Replication config in '" +
           GERRIT_CONFIG_DIRECTORY + "replication.config'")
     template = env.get_template("replication.config.template")
     with open(GERRIT_CONFIG_DIRECTORY + "replication.config", 'w', encoding='utf-8') as f:
@@ -193,11 +193,23 @@ if ((not containerReplica) and setupReplication):
         f.write(template.render(
                 REPLICA_1_URL="git://" + REPLICA_FQDN + ":" + os.getenv('GIT_PORT') + "/${name}.git",
                 REPLICA_1_AMDIN_URL="ssh://gerrit@" + REPLICA_FQDN + ":" + os.getenv('GIT_SSH_PORT') + "/var/gerrit/git/${name}.git",
+                REPLICA_1_API_URL="https://" + REPLICA_FQDN",
                 REMOTE_TARGET=REMOTE_TARGET,
                 REMOTE_TARGET_URL="git://" + REMOTE_TARGET + ":" + os.getenv('GIT_PORT') + "/${name}.git",
                 REMOTE_ADMIN_TARGET_URL="ssh://gerrit@" + REMOTE_TARGET + ":" + os.getenv('GIT_SSH_PORT') + "/var/gerrit/git/${name}.git",
                 REPLICATE_ON_STARTUP=REPLICATE_ON_STARTUP,
                 MULTISITE_GLOBAL_PROJECTS=os.getenv('MULTISITE_GLOBAL_PROJECTS', '')
+                ))
+else if (containerReplica and setupReplication):
+    print("Setting Replica Replication config in '" +
+          GERRIT_CONFIG_DIRECTORY + "replication.config'")
+    template = env.get_template("replication_replica.config.template")
+    with open(GERRIT_CONFIG_DIRECTORY + "replication.config", 'w', encoding='utf-8') as f:
+        REPLICA_FQDN = os.getenv('HTTP_PRIMARIES_GERRIT_SUBDOMAIN') + "." + os.getenv('HOSTED_ZONE_NAME')
+        REPLICATE_ON_STARTUP = "false"
+        f.write(template.render(
+                REPLICA_1_URL="https://" + REPLICA_FQDN + ":" + os.getenv('GIT_PORT') + "/${name}.git",
+                REPLICATE_ON_STARTUP=REPLICATE_ON_STARTUP
                 ))
 
 CONFIGURATION_FILE = "jgit.config"
