@@ -1,0 +1,29 @@
+[replication]
+  lockErrorMaxRetries = 30
+  maxRetries = 30
+
+[gerrit]
+  autoReload = true
+  replicateOnStartup = {{ REPLICATE_ON_STARTUP }}
+
+[remote {{GERRIT_PRIMARY1_INSTANCE_ID}}]
+  url = {{ HTTP_PRIMARY_LB }}
+  mirror = true
+  fetch = +refs/*:refs/*
+  threads = 10
+  createMissingRepositories = true
+  replicateProjectDeletions = true
+  replicateHiddenProjects = true
+  timeout = 60
+  tagopt= --no-tags
+
+[remote {{GERRIT_PRIMARY2_INSTANCE_ID}}]
+  url = {{ HTTP_PRIMARY_LB }}
+  mirror = true
+  fetch = +refs/*:refs/*
+  threads = 10
+  createMissingRepositories = true
+  replicateProjectDeletions = true
+  replicateHiddenProjects = true
+  timeout = 60
+  tagopt= --no-tags
