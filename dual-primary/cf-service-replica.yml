@@ -218,7 +218,19 @@ Parameters:
     Type: String
     Default: false
     AllowedValues: [true, false]
-
+  HttpPrimariesGerritSubdomain:
+    Description: The subdomain of the loadbalancer serving HTTP traffic to the primaries
+    Type: String
+  GerritPrimary1InstanceId:
+    Description: Gerrit InstanceId of the Primary 1
+    Type: String
+  GerritPrimary2InstanceId:
+    Description: Gerrit InstanceId of the Primary 2
+    Type: String
+  BearerToken:
+    Description: Bearer token used in the case of Bearer Token Http Authentication
+    Type: String
+    Default: secret
 Mappings:
   XRay:
     Info:
@@ -288,6 +300,8 @@ Resources:
                       Value: !Sub 'proxy-https://*:${HTTPContainePort}/'
                     - Name: CONTAINER_REPLICA
                       Value: true
+                    - Name: SETUP_REPLICATION
+                      Value: true
                     - Name: GERRIT_KEY_PREFIX
                       Value: !Ref GerritKeyPrefix
                     - Name: AWS_REGION
@@ -324,6 +338,16 @@ Resources:
                       Value: !Ref MetricsCloudwatchDryRun
                     - Name: METRICS_CLOUDWATCH_EXCLUDE_METRICS_LIST
                       Value: !Join [',', !Ref MetricsCloudwatchExcludeMetrics]
+                    - Name: HOSTED_ZONE_NAME
+                      Value: !Ref HostedZoneName
+                    - Name: HTTP_PRIMARIES_GERRIT_SUBDOMAIN
+                      Value: !Ref HttpPrimariesGerritSubdomain
+                    - Name: GERRIT_PRIMARY1_INSTANCE_ID
+                      Value: !Ref GerritPrimary1InstanceId
+                    - Name: GERRIT_PRIMARY2_INSTANCE_ID
+                      Value: !Ref GerritPrimary2InstanceId
+                    - Name: BEARER_TOKEN
+                      Value: !Ref BearerToken
                   Ulimits:
                     - Name: nofile
                       HardLimit: !Ref FileDescriptorsHardLimit
