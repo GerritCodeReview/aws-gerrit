@@ -40,6 +40,9 @@ Parameters:
   SshReplicaSubdomain:
         Description: The subdomain of the loadbalancer serving SSH traffic to the replicas
         Type: String
+  HttpReplicaSubdomain:
+        Description: The subdomain of the loadbalancer serving HTTP traffic to the replicas
+        Type: String
   HttpPrimariesGerritSubdomain:
         Description: The subdomain of the load balancer serving HTTP traffic to both gerrit-1 and gerrit-2
         Type: String
@@ -196,6 +199,10 @@ Parameters:
     Type: String
     Default: false
     AllowedValues: [true, false]
+  BearerToken:
+    Description: Bearer token used in the case of Bearer Token Http Authentication
+    Type: String
+    Default: secret
 
 Mappings:
   XRay:
@@ -337,6 +344,8 @@ Resources:
                       Value: !FindInMap ['Git', 'SSH', 'Port']
                     - Name: REPLICA_SUBDOMAIN
                       Value: !Ref SshReplicaSubdomain
+                    - Name: HTTP_REPLICA_SUBDOMAIN
+                      Value: !Ref HttpReplicaSubdomain
                     - Name: GERRIT_INSTANCE_ID
                       Value: !Ref InstanceId
                     - Name: METRICS_CLOUDWATCH_ENABLED
@@ -367,6 +376,8 @@ Resources:
                       Value: !Ref DynamoDBLocksTableName
                     - Name: DYNAMODB_REFS_TABLE_NAME
                       Value: !Ref DynamoDBRefsTableName
+                    - Name: BEARER_TOKEN
+                      Value: !Ref BearerToken
                   Ulimits:
                     - Name: nofile
                       HardLimit: !Ref FileDescriptorsHardLimit
