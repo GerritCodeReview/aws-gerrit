@@ -218,6 +218,15 @@ Parameters:
     Type: String
     Default: false
     AllowedValues: [true, false]
+  HttpPrimaryGerritSubdomain:
+    Description: The subdomain of the loadbalancer serving HTTP traffic to the primary
+    Type: String
+  GerritPrimary1nstanceId:
+    Description: Gerrit InstanceId of the Primary 1
+    Type: String
+  GerritPrimary2nstanceId:
+    Description: Gerrit InstanceId of the Primary 2
+    Type: String
 
 Mappings:
   XRay:
@@ -324,6 +333,16 @@ Resources:
                       Value: !Ref MetricsCloudwatchDryRun
                     - Name: METRICS_CLOUDWATCH_EXCLUDE_METRICS_LIST
                       Value: !Join [',', !Ref MetricsCloudwatchExcludeMetrics]
+                    - Name: HTTP_PRIMARIES_GERRIT_SUBDOMAIN
+                      Value: !Ref HttpPrimaryGerritSubdomain
+                    - Name: GERRIT_PRIMARY1_INSTANCE_ID
+                      Value: !Ref GerritPrimary1nstanceId
+                    - Name: GERRIT_PRIMARY2_INSTANCE_ID
+                      Value: !Ref GerritPrimary2nstanceId
+                    - Name: SETUP_REPLICATION
+                      Value: true
+                    - Name: HOSTED_ZONE_NAME
+                      Value: !Ref HostedZoneName
                   Ulimits:
                     - Name: nofile
                       HardLimit: !Ref FileDescriptorsHardLimit
