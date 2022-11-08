@@ -19,7 +19,7 @@ HA_SITE_PLUGINS_LIBS_LINKS=high-availability
 
 MULTI_SITE_PLUGINS=$(SINGLE_SITE_PLUGINS) multi-site events-kafka websession-broker aws-dynamodb-refdb
 MULTI_SITE_PLUGINS_LIBS_LINKS=multi-site replication
-MULTI_SITE_MAVEN_LIBS=events-broker~$(EVENTSBROKER_LIB_VER)
+MULTI_SITE_MAVEN_LIBS=events-broker~$(EVENTSBROKER_LIB_VER) global-refdb~${GLOBALREFDB_LIB_VER}
 
 .PHONY: create-all delete-all \
 				wait-for-replication-creation wait-for-service-replication-deletion service-replication delete-service-replication \
