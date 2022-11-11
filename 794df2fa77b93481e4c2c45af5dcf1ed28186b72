@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d9e04869_d26b8cac",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1025452
+      },
+      "writtenOn": "2022-11-11T14:04:00Z",
+      "side": 1,
+      "message": "there is version `3.4.8` available ;)",
+      "range": {
+        "startLine": 7,
+        "startChar": 36,
+        "endLine": 7,
+        "endChar": 42
+      },
+      "revId": "794df2fa77b93481e4c2c45af5dcf1ed28186b72",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "935e1ece_a95376ac",
+        "filename": "common.env",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1025452
+      },
+      "writtenOn": "2022-11-11T14:04:00Z",
+      "side": 1,
+      "message": "patch release `8` is already available",
+      "range": {
+        "startLine": 8,
+        "startChar": 13,
+        "endLine": 8,
+        "endChar": 14
+      },
+      "revId": "794df2fa77b93481e4c2c45af5dcf1ed28186b72",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
