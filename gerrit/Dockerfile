@@ -17,7 +17,7 @@ COPY setup_gerrit.py /tmp
 RUN chown gerrit:gerrit /tmp/setup_gerrit.py
 
 RUN chmod +x /tmp/setup_gerrit.py \
-    && pip3 install -r /tmp/requirements.txt
+    && pip3 install --require-hashes --upgrade -r /tmp/requirements.txt
 
 COPY plugins /var/gerrit/plugins
 COPY lib /var/gerrit/lib
@@ -38,8 +38,6 @@ USER gerrit
 
 RUN bash -c '[ "$GERRIT_WAR_URL" == "" ] || curl $GERRIT_WAR_URL > /var/gerrit/bin/gerrit.war'
 
-# Install AWS cli
-RUN pip3 install awscli --upgrade --user
 ENV PATH ${PATH}:/var/gerrit/.local/bin
 
 WORKDIR /var/gerrit
