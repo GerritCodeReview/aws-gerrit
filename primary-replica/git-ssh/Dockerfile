@@ -13,7 +13,6 @@ RUN echo "**** install Python ****" && \
     echo "**** install pip ****" && \
     python3 -m ensurepip && \
     rm -r /usr/lib/python*/ensurepip && \
-    pip3 install --no-cache --upgrade pip setuptools wheel && \
     if [ ! -e /usr/bin/pip ]; then ln -s pip3 /usr/bin/pip ; fi
 
 RUN adduser --h /home/gerrit -D gerrit && \
@@ -26,7 +25,7 @@ COPY setup_ssh.py /tmp
 RUN chown gerrit:gerrit /tmp/setup_ssh.py
 
 RUN chmod +x /tmp/setup_ssh.py \
-    && pip3 install -r /tmp/requirements.txt
+    && pip3 install --require-hashes --no-cache --upgrade -r /tmp/requirements.txt
 
 COPY ./entrypoint.sh /bin
 
