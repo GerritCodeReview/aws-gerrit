@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fcae2dad_deecbe92",
+        "filename": "gerrit/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2022-11-25T10:21:04Z",
+      "side": 1,
+      "message": "I cannot see the `--require-hashes` here",
+      "range": {
+        "startLine": 20,
+        "startChar": 20,
+        "endLine": 20,
+        "endChar": 29
+      },
+      "revId": "413c32b657cb47e2a3651bbee2a881a3d39ba7b9",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
