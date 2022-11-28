@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ebf3e073_66eca0e0",
+        "filename": "gerrit/Dockerfile",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2022-11-28T20:57:17Z",
+      "side": 0,
+      "message": "Why is this part of this change?",
+      "revId": "6f5baf2b24fd27dbc3f3da7afd08710019972c7d",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cd5a7117_db9fb480",
+        "filename": "primary-replica/git-ssh/Dockerfile",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2022-11-28T20:57:17Z",
+      "side": 0,
+      "message": "Why is this part of this change?",
+      "revId": "6f5baf2b24fd27dbc3f3da7afd08710019972c7d",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
