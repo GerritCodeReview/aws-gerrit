@@ -36,6 +36,24 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5fcdb479_28ac5528",
+        "filename": "gerrit/Dockerfile",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2022-11-28T22:15:12Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "f6325dcd_bf468a15",
+      "revId": "6f5baf2b24fd27dbc3f3da7afd08710019972c7d",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cd5a7117_db9fb480",
@@ -67,6 +85,24 @@
       "side": 0,
       "message": "every `pip install` command now needs to require hashes, so that means also they need to be passed in a requirements file (where the hashes come from).\n\nInstead of providing two requirements files, I have consolidated all pip installations at L28 and removed this line.",
       "parentUuid": "cd5a7117_db9fb480",
+      "revId": "6f5baf2b24fd27dbc3f3da7afd08710019972c7d",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d792ceb9_f4e02afe",
+        "filename": "primary-replica/git-ssh/Dockerfile",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2022-11-28T22:15:12Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "a3375051_31e2d249",
       "revId": "6f5baf2b24fd27dbc3f3da7afd08710019972c7d",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
