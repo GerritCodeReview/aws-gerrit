@@ -185,7 +185,9 @@ Resources:
     Properties:
       VPCZoneIdentifier:
         - !If [NetworkStackNeeded, !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneRef, !Ref Subnet1IdProp]
-      LaunchConfigurationName: !Ref 'PrimaryLaunchConfiguration'
+      LaunchTemplate:
+        LaunchTemplateId: !Ref 'PrimaryLaunchTemplate'
+        Version: !GetAtt PrimaryLaunchTemplate.LatestVersionNumber
       MinSize: '1'
       MaxSize: !Ref PrimaryMaxCount
       DesiredCapacity: '1'
@@ -196,111 +198,117 @@ Resources:
       AutoScalingReplacingUpdate:
         WillReplace: 'true'
 
-  PrimaryLaunchConfiguration:
-    Type: AWS::AutoScaling::LaunchConfiguration
+  PrimaryLaunchTemplate:
+    Type: AWS::EC2::LaunchTemplate
     Properties:
-      ImageId: !Ref 'ECSAMI'
-      SecurityGroups: [!Ref 'EcsHostSecurityGroup']
-      InstanceType: !Ref 'InstanceType'
-      IamInstanceProfile: !Ref 'EC2InstanceProfile'
-      KeyName: !Ref ECSKeyName
-      UserData:
-        Fn::Base64: !Sub |
-          #!/bin/bash -xe
-          echo ECS_CLUSTER=${AWS::StackName}-ECSCluster >> /etc/ecs/ecs.config
-          echo ECS_INSTANCE_ATTRIBUTES={\"target_group\":\"primary\"} >> /etc/ecs/ecs.config
-          # Make sure latest version of the helper scripts are installed as per recommendation:
-          # https://github.com/awsdocs/aws-cloudformation-user-guide/blob/master/doc_source/cfn-helper-scripts-reference.md#using-the-latest-version
-          yum install -y aws-cfn-bootstrap wget aws-cli xfsprogs
+      LaunchTemplateName: !Sub ${AWS::StackName}-lt-primary
+      LaunchTemplateData:
+        ImageId: !Ref 'ECSAMI'
+        SecurityGroupIds:
+          - !GetAtt EcsHostSecurityGroup.GroupId
+        InstanceType: !Ref 'InstanceType'
+        IamInstanceProfile:
+          Arn: !GetAtt
+            - EC2InstanceProfile
+            - Arn
+        KeyName: !Ref ECSKeyName
+        UserData:
+          Fn::Base64: !Sub |
+            #!/bin/bash -xe
+            echo ECS_CLUSTER=${AWS::StackName}-ECSCluster >> /etc/ecs/ecs.config
+            echo ECS_INSTANCE_ATTRIBUTES={\"target_group\":\"primary\"} >> /etc/ecs/ecs.config
+            # Make sure latest version of the helper scripts are installed as per recommendation:
+            # https://github.com/awsdocs/aws-cloudformation-user-guide/blob/master/doc_source/cfn-helper-scripts-reference.md#using-the-latest-version
+            yum install -y aws-cfn-bootstrap wget aws-cli xfsprogs
 
-          # ATTACH EBS VOLUME
-          EC2_INSTANCE_ID=`curl -s http://169.254.169.254/latest/meta-data/instance-id`
-          VOLUME_ID=${GerritVolumeStack.Outputs.GerritVolumeRef}
-          echo "Volume Id: $VOLUME_ID"
+            # ATTACH EBS VOLUME
+            EC2_INSTANCE_ID=`curl -s http://169.254.169.254/latest/meta-data/instance-id`
+            VOLUME_ID=${GerritVolumeStack.Outputs.GerritVolumeRef}
+            echo "Volume Id: $VOLUME_ID"
 
-          aws ec2 attach-volume --region ${AWS::Region} --volume-id $VOLUME_ID --instance-id $EC2_INSTANCE_ID --device /dev/xvdg
+            aws ec2 attach-volume --region ${AWS::Region} --volume-id $VOLUME_ID --instance-id $EC2_INSTANCE_ID --device /dev/xvdg
 
-          for i in $(seq 1 ${GerritVolumeAttachMaxRetries}); do
-            echo "Waiting for volume $VOLUME_ID to be attached to the instace $EC2_INSTANCE_ID ($i/${GerritVolumeAttachMaxRetries})"
-            volumeStatus=`aws ec2 describe-volumes --region ${AWS::Region} --volume-ids $VOLUME_ID`
-            if [[ $volumeStatus =~ "\"State\": \"attached\"" ]]; then
-              echo "Volume $VOLUME_ID attached to the instace $EC2_INSTANCE_ID"
-              break
-            elif [[ "$i" -eq "${GerritVolumeAttachMaxRetries}" ]]; then
-              echo "Could not attach the volume $VOLUME_ID to the instace $EC2_INSTANCE_ID after ${GerritVolumeAttachMaxRetries} attempts"
-              exit 1
+            for i in $(seq 1 ${GerritVolumeAttachMaxRetries}); do
+              echo "Waiting for volume $VOLUME_ID to be attached to the instace $EC2_INSTANCE_ID ($i/${GerritVolumeAttachMaxRetries})"
+              volumeStatus=`aws ec2 describe-volumes --region ${AWS::Region} --volume-ids $VOLUME_ID`
+              if [[ $volumeStatus =~ "\"State\": \"attached\"" ]]; then
+                echo "Volume $VOLUME_ID attached to the instace $EC2_INSTANCE_ID"
+                break
+              elif [[ "$i" -eq "${GerritVolumeAttachMaxRetries}" ]]; then
+                echo "Could not attach the volume $VOLUME_ID to the instace $EC2_INSTANCE_ID after ${GerritVolumeAttachMaxRetries} attempts"
+                exit 1
+              fi
+              sleep ${GerritVolumeAttachRetryDelay}
+            done
+
+            if [[ "${GerritVolumeId}" = "" && "${GerritVolumeSnapshotId}" = "" ]]; then
+              echo "Create file system for Gerrit volume"
+              mkfs -t xfs /dev/xvdg
             fi
-            sleep ${GerritVolumeAttachRetryDelay}
-          done
 
-          if [[ "${GerritVolumeId}" = "" && "${GerritVolumeSnapshotId}" = "" ]]; then
-            echo "Create file system for Gerrit volume"
-            mkfs -t xfs /dev/xvdg
-          fi
+            mkdir /gerrit-mount-point
+            mount /dev/xvdg /gerrit-mount-point
 
-          mkdir /gerrit-mount-point
-          mount /dev/xvdg /gerrit-mount-point
+            if [[ "${GerritVolumeId}" = "" && "${GerritVolumeSnapshotId}" = "" ]]; then
+              echo "Create Gerrit directories"
+              mkdir -p /gerrit-mount-point/gerrit-logs \
+               /gerrit-mount-point/gerrit-cache \
+               /gerrit-mount-point/gerrit-data \
+               /gerrit-mount-point/gerrit-git \
+               /gerrit-mount-point/gerrit-index \
+               /gerrit-mount-point/gerrit-db
+            fi
 
-          if [[ "${GerritVolumeId}" = "" && "${GerritVolumeSnapshotId}" = "" ]]; then
-            echo "Create Gerrit directories"
-            mkdir -p /gerrit-mount-point/gerrit-logs \
-             /gerrit-mount-point/gerrit-cache \
-             /gerrit-mount-point/gerrit-data \
-             /gerrit-mount-point/gerrit-git \
-             /gerrit-mount-point/gerrit-index \
-             /gerrit-mount-point/gerrit-db
-          fi
+            chown 1000:1000 -R /gerrit-mount-point
 
-          chown 1000:1000 -R /gerrit-mount-point
-
-          # Get the CloudWatch Logs agent
-          echo -e "
-            {\"logs\":
-              {\"logs_collected\":
-                {\"files\":
-                  {\"collect_list\":
-                    [
-                      {\"file_path\": \"/gerrit-mount-point/gerrit-logs/replication_log\",
-                      \"log_group_name\": \"${AWS::StackName}\",
-                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/primary/replication_log\",
-                      \"timezone\": \"UTC\"
-                      },
-                      {\"file_path\": \"/gerrit-mount-point/gerrit-logs/httpd_log\",
-                      \"log_group_name\": \"${AWS::StackName}\",
-                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/primary/httpd_log\",
-                      \"timezone\": \"UTC\"
-                      },
-                      {\"file_path\": \"/gerrit-mount-point/gerrit-logs/error_log\",
-                      \"log_group_name\": \"${AWS::StackName}\",
-                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/error_log\",
-                      \"timezone\": \"UTC\"
-                      },
-                      {\"file_path\": \"/gerrit-mount-point/gerrit-logs/sshd_log\",
-                      \"log_group_name\": \"${AWS::StackName}\",
-                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/primary/sshd_log\",
-                      \"timezone\": \"UTC\"
-                      },
-                      {\"file_path\": \"/gerrit-mount-point/gerrit-logs/gc_log\",
-                      \"log_group_name\": \"${AWS::StackName}\",
-                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/primary/gc_log\",
-                      \"timezone\": \"UTC\"
-                      },
-                      {\"file_path\": \"/gerrit-mount-point/gerrit-logs/audit_log\",
-                      \"log_group_name\": \"${AWS::StackName}\",
-                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/primary/audit_log\",
-                      \"timezone\": \"UTC\"
-                      }
-                    ]
+            # Get the CloudWatch Logs agent
+            echo -e "
+              {\"logs\":
+                {\"logs_collected\":
+                  {\"files\":
+                    {\"collect_list\":
+                      [
+                        {\"file_path\": \"/gerrit-mount-point/gerrit-logs/replication_log\",
+                        \"log_group_name\": \"${AWS::StackName}\",
+                        \"log_stream_name\": \"${EnvironmentName}/{instance_id}/primary/replication_log\",
+                        \"timezone\": \"UTC\"
+                        },
+                        {\"file_path\": \"/gerrit-mount-point/gerrit-logs/httpd_log\",
+                        \"log_group_name\": \"${AWS::StackName}\",
+                        \"log_stream_name\": \"${EnvironmentName}/{instance_id}/primary/httpd_log\",
+                        \"timezone\": \"UTC\"
+                        },
+                        {\"file_path\": \"/gerrit-mount-point/gerrit-logs/error_log\",
+                        \"log_group_name\": \"${AWS::StackName}\",
+                        \"log_stream_name\": \"${EnvironmentName}/{instance_id}/error_log\",
+                        \"timezone\": \"UTC\"
+                        },
+                        {\"file_path\": \"/gerrit-mount-point/gerrit-logs/sshd_log\",
+                        \"log_group_name\": \"${AWS::StackName}\",
+                        \"log_stream_name\": \"${EnvironmentName}/{instance_id}/primary/sshd_log\",
+                        \"timezone\": \"UTC\"
+                        },
+                        {\"file_path\": \"/gerrit-mount-point/gerrit-logs/gc_log\",
+                        \"log_group_name\": \"${AWS::StackName}\",
+                        \"log_stream_name\": \"${EnvironmentName}/{instance_id}/primary/gc_log\",
+                        \"timezone\": \"UTC\"
+                        },
+                        {\"file_path\": \"/gerrit-mount-point/gerrit-logs/audit_log\",
+                        \"log_group_name\": \"${AWS::StackName}\",
+                        \"log_stream_name\": \"${EnvironmentName}/{instance_id}/primary/audit_log\",
+                        \"timezone\": \"UTC\"
+                        }
+                      ]
+                    }
                   }
                 }
-              }
-            }" >> /home/ec2-user/gerritlogsaccess.json
-          # Install the CloudWatch Logs agent
-          wget https://s3.amazonaws.com/amazoncloudwatch-agent/centos/amd64/latest/amazon-cloudwatch-agent.rpm
-          rpm -U ./amazon-cloudwatch-agent.rpm
-          /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -c file:/home/ec2-user/gerritlogsaccess.json -s
-          # Signal to CloudFormation aws-cfn-bootstrap has been correctly updated
-          /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource PrimaryASG --region ${AWS::Region}
+              }" >> /home/ec2-user/gerritlogsaccess.json
+            # Install the CloudWatch Logs agent
+            wget https://s3.amazonaws.com/amazoncloudwatch-agent/centos/amd64/latest/amazon-cloudwatch-agent.rpm
+            rpm -U ./amazon-cloudwatch-agent.rpm
+            /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -c file:/home/ec2-user/gerritlogsaccess.json -s
+            # Signal to CloudFormation aws-cfn-bootstrap has been correctly updated
+            /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource PrimaryASG --region ${AWS::Region}
 
 
   ReplicaASG:
@@ -309,7 +317,9 @@ Resources:
       VPCZoneIdentifier:
         - !If [NetworkStackNeeded, !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneRef, !Ref Subnet1IdProp]
         - !If [NetworkStackNeeded, !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetTwoRef, !Ref Subnet2IdProp]
-      LaunchConfigurationName: !Ref 'ReplicaLaunchConfiguration'
+      LaunchTemplate:
+        LaunchTemplateId: !Ref 'ReplicaLaunchTemplate'
+        Version: !GetAtt ReplicaLaunchTemplate.LatestVersionNumber
       MinSize: !Ref ReplicaAutoScalingMinCapacity
       MaxSize: !Ref ReplicaAutoScalingMaxCapacity
       DesiredCapacity: !Ref ReplicaAutoScalingDesiredCapacity
@@ -321,66 +331,72 @@ Resources:
       AutoScalingReplacingUpdate:
         WillReplace: 'true'
 
-  ReplicaLaunchConfiguration:
-    Type: AWS::AutoScaling::LaunchConfiguration
+  ReplicaLaunchTemplate:
+    Type: AWS::EC2::LaunchTemplate
     Properties:
-      ImageId: !Ref 'ECSAMI'
-      SecurityGroups: [!Ref 'EcsHostSecurityGroup']
-      InstanceType: !Ref 'InstanceType'
-      IamInstanceProfile: !Ref 'EC2InstanceProfile'
-      KeyName: !Ref ECSKeyName
-      UserData:
-        Fn::Base64: !Sub |
-          #!/bin/bash -xe
-          echo ECS_CLUSTER=${AWS::StackName}-ECSCluster >> /etc/ecs/ecs.config
-          echo ECS_INSTANCE_ATTRIBUTES={\"target_group\":\"replica\"} >> /etc/ecs/ecs.config
+      LaunchTemplateName: !Sub ${AWS::StackName}-lt-replica
+      LaunchTemplateData:
+        ImageId: !Ref 'ECSAMI'
+        SecurityGroupIds:
+          - !GetAtt EcsHostSecurityGroup.GroupId
+        InstanceType: !Ref 'InstanceType'
+        IamInstanceProfile:
+          Arn: !GetAtt
+            - EC2InstanceProfile
+            - Arn
+        KeyName: !Ref ECSKeyName
+        UserData:
+          Fn::Base64: !Sub |
+            #!/bin/bash -xe
+            echo ECS_CLUSTER=${AWS::StackName}-ECSCluster >> /etc/ecs/ecs.config
+            echo ECS_INSTANCE_ATTRIBUTES={\"target_group\":\"replica\"} >> /etc/ecs/ecs.config
 
-          # Make sure latest version of the helper scripts are installed as per recommendation:
-          # https://github.com/awsdocs/aws-cloudformation-user-guide/blob/master/doc_source/cfn-helper-scripts-reference.md#using-the-latest-version
-          yum install -y aws-cfn-bootstrap wget
-          # Get the CloudWatch Logs agent
-          echo -e "
-            {\"logs\":
-              {\"logs_collected\":
-                {\"files\":
-                  {\"collect_list\":
-                    [
-                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-replica/_data/replication_log\",
-                      \"log_group_name\": \"${AWS::StackName}\",
-                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/replica/replication_log\",
-                      \"timezone\": \"UTC\"
-                      },
-                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-replica/_data/httpd_log\",
-                      \"log_group_name\": \"${AWS::StackName}\",
-                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/replica/httpd_log\",
-                      \"timezone\": \"UTC\"
-                      },
-                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-replica/_data/sshd_log\",
-                      \"log_group_name\": \"${AWS::StackName}\",
-                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/replica/sshd_log\",
-                      \"timezone\": \"UTC\"
-                      },
-                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-replica/_data/gc_log\",
-                      \"log_group_name\": \"${AWS::StackName}\",
-                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/replica/gc_log\",
-                      \"timezone\": \"UTC\"
-                      },
-                      {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-replica/_data/audit_log\",
-                      \"log_group_name\": \"${AWS::StackName}\",
-                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/replica/audit_log\",
-                      \"timezone\": \"UTC\"
-                      }
-                    ]
+            # Make sure latest version of the helper scripts are installed as per recommendation:
+            # https://github.com/awsdocs/aws-cloudformation-user-guide/blob/master/doc_source/cfn-helper-scripts-reference.md#using-the-latest-version
+            yum install -y aws-cfn-bootstrap wget
+            # Get the CloudWatch Logs agent
+            echo -e "
+              {\"logs\":
+                {\"logs_collected\":
+                  {\"files\":
+                    {\"collect_list\":
+                      [
+                        {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-replica/_data/replication_log\",
+                        \"log_group_name\": \"${AWS::StackName}\",
+                        \"log_stream_name\": \"${EnvironmentName}/{instance_id}/replica/replication_log\",
+                        \"timezone\": \"UTC\"
+                        },
+                        {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-replica/_data/httpd_log\",
+                        \"log_group_name\": \"${AWS::StackName}\",
+                        \"log_stream_name\": \"${EnvironmentName}/{instance_id}/replica/httpd_log\",
+                        \"timezone\": \"UTC\"
+                        },
+                        {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-replica/_data/sshd_log\",
+                        \"log_group_name\": \"${AWS::StackName}\",
+                        \"log_stream_name\": \"${EnvironmentName}/{instance_id}/replica/sshd_log\",
+                        \"timezone\": \"UTC\"
+                        },
+                        {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-replica/_data/gc_log\",
+                        \"log_group_name\": \"${AWS::StackName}\",
+                        \"log_stream_name\": \"${EnvironmentName}/{instance_id}/replica/gc_log\",
+                        \"timezone\": \"UTC\"
+                        },
+                        {\"file_path\": \"/var/lib/docker/volumes/gerrit-logs-replica/_data/audit_log\",
+                        \"log_group_name\": \"${AWS::StackName}\",
+                        \"log_stream_name\": \"${EnvironmentName}/{instance_id}/replica/audit_log\",
+                        \"timezone\": \"UTC\"
+                        }
+                      ]
+                    }
                   }
                 }
-              }
-            }" >> /home/ec2-user/gerritlogsaccess.json
-          # Install the CloudWatch Logs agent
-          wget https://s3.amazonaws.com/amazoncloudwatch-agent/centos/amd64/latest/amazon-cloudwatch-agent.rpm
-          rpm -U ./amazon-cloudwatch-agent.rpm
-          /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -c file:/home/ec2-user/gerritlogsaccess.json -s
-          # Signal to CloudFormation aws-cfn-bootstrap has been correctly updated
-          /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource ReplicaASG --region ${AWS::Region}
+              }" >> /home/ec2-user/gerritlogsaccess.json
+            # Install the CloudWatch Logs agent
+            wget https://s3.amazonaws.com/amazoncloudwatch-agent/centos/amd64/latest/amazon-cloudwatch-agent.rpm
+            rpm -U ./amazon-cloudwatch-agent.rpm
+            /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -c file:/home/ec2-user/gerritlogsaccess.json -s
+            # Signal to CloudFormation aws-cfn-bootstrap has been correctly updated
+            /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource ReplicaASG --region ${AWS::Region}
 
   EC2InstanceProfile:
     Type: AWS::IAM::InstanceProfile
