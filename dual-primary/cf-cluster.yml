@@ -229,7 +229,9 @@ Resources:
       VPCZoneIdentifier:
         - !If [NetworkStackNeeded, !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneRef, !Ref Subnet1IdProp]
         - !If [NetworkStackNeeded, !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetTwoRef, !Ref Subnet2IdProp]
-      LaunchConfigurationName: !Ref 'ReplicaLaunchConfiguration'
+      LaunchTemplate:
+        LaunchTemplateId: !Ref 'ReplicaLaunchTemplate'
+        Version: !GetAtt ReplicaLaunchTemplate.LatestVersionNumber
       MinSize: !Ref ReplicaAutoScalingMinCapacity
       MaxSize: !Ref ReplicaAutoScalingMaxCapacity
       DesiredCapacity: !Ref ReplicaAutoScalingDesiredCapacity
@@ -241,30 +243,36 @@ Resources:
       AutoScalingReplacingUpdate:
         WillReplace: 'true'
 
-  ReplicaLaunchConfiguration:
-    Type: AWS::AutoScaling::LaunchConfiguration
+  ReplicaLaunchTemplate:
+    Type: AWS::EC2::LaunchTemplate
     Properties:
-      ImageId: !Ref 'ECSAMI'
-      SecurityGroups: [!Ref 'EcsHostSecurityGroup']
-      InstanceType: !Ref 'InstanceType'
-      IamInstanceProfile: !Ref 'EC2InstanceProfile'
-      KeyName: !Ref ECSKeyName
-      UserData:
-        Fn::Base64: !Sub |
-          #!/bin/bash -xe
-          echo ECS_CLUSTER=${AWS::StackName}-ECSCluster >> /etc/ecs/ecs.config
-          echo ECS_INSTANCE_ATTRIBUTES={\"target_group\":\"replica\"} >> /etc/ecs/ecs.config
+      LaunchTemplateName: !Sub ${AWS::StackName}-lt-replica
+      LaunchTemplateData:
+        ImageId: !Ref 'ECSAMI'
+        SecurityGroupIds:
+          - !GetAtt EcsHostSecurityGroup.GroupId
+        InstanceType: !Ref 'InstanceType'
+        IamInstanceProfile:
+          Arn: !GetAtt
+            - EC2InstanceProfile
+            - Arn
+        KeyName: !Ref ECSKeyName
+        UserData:
+          Fn::Base64: !Sub |
+            #!/bin/bash -xe
+            echo ECS_CLUSTER=${AWS::StackName}-ECSCluster >> /etc/ecs/ecs.config
+            echo ECS_INSTANCE_ATTRIBUTES={\"target_group\":\"replica\"} >> /etc/ecs/ecs.config
 
-          # Make sure latest version of the helper scripts are installed as per recommendation:
-          # https://github.com/awsdocs/aws-cloudformation-user-guide/blob/master/doc_source/cfn-helper-scripts-reference.md#using-the-latest-version
-          yum install -y aws-cfn-bootstrap wget
+            # Make sure latest version of the helper scripts are installed as per recommendation:
+            # https://github.com/awsdocs/aws-cloudformation-user-guide/blob/master/doc_source/cfn-helper-scripts-reference.md#using-the-latest-version
+            yum install -y aws-cfn-bootstrap wget
 
-          # Install the CloudWatch Logs agent
-          wget https://s3.amazonaws.com/amazoncloudwatch-agent/centos/amd64/latest/amazon-cloudwatch-agent.rpm
-          rpm -U ./amazon-cloudwatch-agent.rpm
-          /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -s
+            # Install the CloudWatch Logs agent
+            wget https://s3.amazonaws.com/amazoncloudwatch-agent/centos/amd64/latest/amazon-cloudwatch-agent.rpm
+            rpm -U ./amazon-cloudwatch-agent.rpm
+            /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -s
 
-          /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource ReplicaECSAutoScalingGroup --region ${AWS::Region}
+            /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource ReplicaECSAutoScalingGroup --region ${AWS::Region}
 
   PrimariesHTTPGerritLoadBalancerSG:
     Type: AWS::EC2::SecurityGroup
@@ -372,8 +380,11 @@ Resources:
         ECSKeyName: !Ref ECSKeyName
         EnvironmentName: !Ref EnvironmentName
         ECSCluster: !Ref ECSCluster
-        EC2SecurityGroup: !Ref EcsHostSecurityGroup
-        EC2InstanceProfile: !Ref EC2InstanceProfile
+        EC2SecurityGroup: !GetAtt EcsHostSecurityGroup.GroupId
+        EC2InstanceProfile:
+          Arn: !GetAtt
+            - EC2InstanceProfile
+            - Arn
         FileSystem: !If [CreatePrimaryEFS, !GetAtt PrimaryGitFileSystemPermanentStack.Outputs.FileSystemID, !Ref PrimaryFileSystemID ]
         SubnetId: !If [NetworkStackNeeded, !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneRef, !Ref Subnet1IdProp]
         AvailabilityZone: !If [NetworkStackNeeded, !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetOneAZ, !Ref Subnet1AZProp]
@@ -397,8 +408,11 @@ Resources:
         ECSKeyName: !Ref ECSKeyName
         EnvironmentName: !Ref EnvironmentName
         ECSCluster: !Ref ECSCluster
-        EC2SecurityGroup: !Ref EcsHostSecurityGroup
-        EC2InstanceProfile: !Ref EC2InstanceProfile
+        EC2SecurityGroup: !GetAtt EcsHostSecurityGroup.GroupId
+        EC2InstanceProfile:
+          Arn: !GetAtt
+            - EC2InstanceProfile
+            - Arn
         FileSystem: !If [CreatePrimaryEFS, !GetAtt PrimaryGitFileSystemPermanentStack.Outputs.FileSystemID, !Ref PrimaryFileSystemID ]
         SubnetId: !If [NetworkStackNeeded, !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetTwoRef, !Ref Subnet2IdProp]
         AvailabilityZone: !If [NetworkStackNeeded, !GetAtt ECSTaskNetworkStack.Outputs.PublicSubnetTwoAZ, !Ref Subnet2AZProp]
