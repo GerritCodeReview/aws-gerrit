@@ -69,7 +69,9 @@ Resources:
     Properties:
       VPCZoneIdentifier:
         - !Ref SubnetId
-      LaunchConfigurationName: !Ref 'PrimaryLaunchConfiguration'
+      LaunchTemplate:
+        LaunchTemplateId: !Ref 'PrimaryLaunchTemplate'
+        Version: !GetAtt PrimaryLaunchTemplate.DefaultVersionNumber
       MinSize: '1'
       MaxSize: !Ref PrimaryMaxCount
       DesiredCapacity: '1'
@@ -80,154 +82,158 @@ Resources:
       AutoScalingReplacingUpdate:
         WillReplace: 'true'
 
-  PrimaryLaunchConfiguration:
-    Type: AWS::AutoScaling::LaunchConfiguration
+  PrimaryLaunchTemplate:
+    Type: AWS::EC2::LaunchTemplate
     Properties:
-      ImageId: !Ref 'EC2AMI'
-      SecurityGroups: [!Ref 'EC2SecurityGroup']
-      InstanceType: !Ref 'InstanceType'
-      IamInstanceProfile: !Ref 'EC2InstanceProfile'
-      KeyName: !Ref ECSKeyName
-      UserData:
-        Fn::Base64: !Sub |
-          #!/bin/bash -xe
-          export PRIMARY_ID=primary-${GerritInstanceNumber}
-          echo ECS_CLUSTER=${ECSCluster} >> /etc/ecs/ecs.config
-          echo ECS_INSTANCE_ATTRIBUTES={\"target_group\":\"$PRIMARY_ID\"} >> /etc/ecs/ecs.config
+      LaunchTemplateName: !Sub ${AWS::StackName}-lt-primary${GerritInstanceNumber}
+      LaunchTemplateData:
+        ImageId: !Ref 'EC2AMI'
+        SecurityGroupIds:
+          - EC2SecurityGroup
+        InstanceType: !Ref 'InstanceType'
+        IamInstanceProfile:
+          Arn: !Ref 'EC2InstanceProfile'
+        KeyName: !Ref ECSKeyName
+        UserData:
+          Fn::Base64: !Sub |
+            #!/bin/bash -xe
+            export PRIMARY_ID=primary-${GerritInstanceNumber}
+            echo ECS_CLUSTER=${ECSCluster} >> /etc/ecs/ecs.config
+            echo ECS_INSTANCE_ATTRIBUTES={\"target_group\":\"$PRIMARY_ID\"} >> /etc/ecs/ecs.config
 
-          yum install -y aws-cfn-bootstrap nfs-utils wget aws-cli xfsprogs
+            yum install -y aws-cfn-bootstrap nfs-utils wget aws-cli xfsprogs
 
-          EC2_INSTANCE_ID=`curl -s http://169.254.169.254/latest/meta-data/instance-id`
-          VOLUME_ID=${GerritVolumeStack.Outputs.GerritVolumeRef}
-          echo "Volume Id: $VOLUME_ID"
+            EC2_INSTANCE_ID=`curl -s http://169.254.169.254/latest/meta-data/instance-id`
+            VOLUME_ID=${GerritVolumeStack.Outputs.GerritVolumeRef}
+            echo "Volume Id: $VOLUME_ID"
 
-          aws ec2 attach-volume --region ${AWS::Region} --volume-id $VOLUME_ID --instance-id $EC2_INSTANCE_ID --device /dev/xvdg
+            aws ec2 attach-volume --region ${AWS::Region} --volume-id $VOLUME_ID --instance-id $EC2_INSTANCE_ID --device /dev/xvdg
 
-          for i in $(seq 1 ${GerritVolumeAttachMaxRetries}); do
-            echo "Waiting for volume $VOLUME_ID to be attached to the instace $EC2_INSTANCE_ID ($i/${GerritVolumeAttachMaxRetries})"
-            volumeStatus=`aws ec2 describe-volumes --region ${AWS::Region} --volume-ids $VOLUME_ID`
-            if [[ $volumeStatus =~ "\"State\": \"attached\"" ]]; then
-              echo "Volume $VOLUME_ID attached to the instace $EC2_INSTANCE_ID"
-              break
-            elif [[ "$i" -eq "${GerritVolumeAttachMaxRetries}" ]]; then
-              echo "Could not attach the volume $VOLUME_ID to the instace $EC2_INSTANCE_ID after ${GerritVolumeAttachMaxRetries} attempts"
-              exit 1
+            for i in $(seq 1 ${GerritVolumeAttachMaxRetries}); do
+              echo "Waiting for volume $VOLUME_ID to be attached to the instace $EC2_INSTANCE_ID ($i/${GerritVolumeAttachMaxRetries})"
+              volumeStatus=`aws ec2 describe-volumes --region ${AWS::Region} --volume-ids $VOLUME_ID`
+              if [[ $volumeStatus =~ "\"State\": \"attached\"" ]]; then
+                echo "Volume $VOLUME_ID attached to the instace $EC2_INSTANCE_ID"
+                break
+              elif [[ "$i" -eq "${GerritVolumeAttachMaxRetries}" ]]; then
+                echo "Could not attach the volume $VOLUME_ID to the instace $EC2_INSTANCE_ID after ${GerritVolumeAttachMaxRetries} attempts"
+                exit 1
+              fi
+              sleep ${GerritVolumeAttachRetryDelay}
+            done
+
+            if [[ "${GerritVolumeSnapshotId}" = "" ]]; then
+              echo "Create file system for Gerrit volume"
+              mkfs -t xfs /dev/xvdg
             fi
-            sleep ${GerritVolumeAttachRetryDelay}
-          done
 
-          if [[ "${GerritVolumeSnapshotId}" = "" ]]; then
-            echo "Create file system for Gerrit volume"
-            mkfs -t xfs /dev/xvdg
-          fi
+            mkdir /gerrit-mount-point
+            mount /dev/xvdg /gerrit-mount-point
 
-          mkdir /gerrit-mount-point
-          mount /dev/xvdg /gerrit-mount-point
+            if [[ "${GerritVolumeSnapshotId}" = "" ]]; then
+              echo "Create Gerrit directories"
+              mkdir -p /gerrit-mount-point/gerrit-logs \
+               /gerrit-mount-point/gerrit-cache \
+               /gerrit-mount-point/gerrit-data \
+               /gerrit-mount-point/gerrit-git \
+               /gerrit-mount-point/gerrit-index \
+               /gerrit-mount-point/gerrit-db
+            fi
 
-          if [[ "${GerritVolumeSnapshotId}" = "" ]]; then
-            echo "Create Gerrit directories"
-            mkdir -p /gerrit-mount-point/gerrit-logs \
-             /gerrit-mount-point/gerrit-cache \
-             /gerrit-mount-point/gerrit-data \
-             /gerrit-mount-point/gerrit-git \
-             /gerrit-mount-point/gerrit-index \
-             /gerrit-mount-point/gerrit-db
-          fi
+            chown 1000:1000 -R /gerrit-mount-point
 
-          chown 1000:1000 -R /gerrit-mount-point
+            # EFS setting
+            DIR_TGT=/mnt/efs/gerrit-shared
+            mkdir -p $DIR_TGT
+            EC2_REGION=${AWS::Region}
+            # 169.254.169.254 link-local address, valid only from the instance, to retrieve meta-data information.
+            EC2_AVAIL_ZONE=`curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone`
+            EFS_FILE_SYSTEM_ID=${FileSystem}
+            DIR_SRC=$EC2_AVAIL_ZONE.$EFS_FILE_SYSTEM_ID.efs.$EC2_REGION.amazonaws.com
 
-          # EFS setting
-          DIR_TGT=/mnt/efs/gerrit-shared
-          mkdir -p $DIR_TGT
-          EC2_REGION=${AWS::Region}
-          # 169.254.169.254 link-local address, valid only from the instance, to retrieve meta-data information.
-          EC2_AVAIL_ZONE=`curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone`
-          EFS_FILE_SYSTEM_ID=${FileSystem}
-          DIR_SRC=$EC2_AVAIL_ZONE.$EFS_FILE_SYSTEM_ID.efs.$EC2_REGION.amazonaws.com
-
-          touch /home/ec2-user/echo.res
-          echo $PRIMARY_ID >> /home/ec2-user/echo.res
-          echo $EFS_FILE_SYSTEM_ID >> /home/ec2-user/echo.res
-          echo $EC2_AVAIL_ZONE >> /home/ec2-user/echo.res
-          echo $EC2_REGION >> /home/ec2-user/echo.res
-          echo $DIR_SRC >> /home/ec2-user/echo.res
-          echo $DIR_TGT >> /home/ec2-user/echo.res
-          MAX_RETRIES=20
-          for i in $(seq 1 $MAX_RETRIES); do
-            echo "Mounting EFS volume ($i/$MAX_RETRIES)..."
-            `mount -t nfs4 -o nfsvers=4.1,hard,timeo=600,retrans=2 $DIR_SRC:/ $DIR_TGT >> /home/ec2-user/echo.res` \
-              && s=0 && break || s=$? && sleep 5;
-          done; (exit $s)
-          mkdir -p $DIR_TGT/git
-          mkdir -p $DIR_TGT/high-availability
-          chown -R 1000:1000 $DIR_TGT
-          cp -p /etc/fstab /etc/fstab.back-$(date +%F)
-          echo -e "$DIR_SRC:/ \t\t $DIR_TGT \t\t nfs \t\t defaults \t\t 0 \t\t 0" | tee -a /etc/fstab
-          # Get the CloudWatch Logs agent
-          echo -e "
-            {\"logs\":
-              {\"logs_collected\":
-                {\"files\":
-                  {\"collect_list\":
-                    [
-                      {\"file_path\": \"/gerrit-mount-point/gerrit-logs/replication_log\",
-                      \"log_group_name\": \"${LogGroupName}\",
-                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/$PRIMARY_ID/replication_log\",
-                      \"timezone\": \"UTC\"
-                      },
-                      {\"file_path\": \"/gerrit-mount-point/gerrit-logs/httpd_log\",
-                      \"log_group_name\": \"${LogGroupName}\",
-                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/$PRIMARY_ID/httpd_log\",
-                      \"timezone\": \"UTC\"
-                      },
-                      {\"file_path\": \"/gerrit-mount-point/gerrit-logs/error_log\",
-                      \"log_group_name\": \"${LogGroupName}\",
-                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/$PRIMARY_ID/error_log\",
-                      \"timezone\": \"UTC\"
-                      },
-                      {\"file_path\": \"/gerrit-mount-point/gerrit-logs/sshd_log\",
-                      \"log_group_name\": \"${LogGroupName}\",
-                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/$PRIMARY_ID/sshd_log\",
-                      \"timezone\": \"UTC\"
-                      },
-                      {\"file_path\": \"/gerrit-mount-point/gerrit-logs/gc_log\",
-                      \"log_group_name\": \"${LogGroupName}\",
-                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/$PRIMARY_ID/gc_log\",
-                      \"timezone\": \"UTC\"
-                      },
-                      {\"file_path\": \"/gerrit-mount-point/gerrit-logs/sharedref_log\",
-                      \"log_group_name\": \"${LogGroupName}\",
-                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/$PRIMARY_ID/sharedref_log\",
-                      \"timezone\": \"UTC\"
-                      },
-                      {\"file_path\": \"/gerrit-mount-point/gerrit-logs/message_log\",
-                      \"log_group_name\": \"${LogGroupName}\",
-                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/$PRIMARY_ID/message_log\",
-                      \"timezone\": \"UTC\"
-                      },
-                      {\"file_path\": \"/gerrit-mount-point/gerrit-logs/websession_log\",
-                      \"log_group_name\": \"${LogGroupName}\",
-                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/$PRIMARY_ID/websession_log\",
-                      \"timezone\": \"UTC\"
-                      },
-                      {\"file_path\": \"/gerrit-mount-point/gerrit-logs/audit_log\",
-                      \"log_group_name\": \"${LogGroupName}\",
-                      \"log_stream_name\": \"${EnvironmentName}/{instance_id}/$PRIMARY_ID/audit_log\",
-                      \"timezone\": \"UTC\"
-                      }
-                    ]
+            touch /home/ec2-user/echo.res
+            echo $PRIMARY_ID >> /home/ec2-user/echo.res
+            echo $EFS_FILE_SYSTEM_ID >> /home/ec2-user/echo.res
+            echo $EC2_AVAIL_ZONE >> /home/ec2-user/echo.res
+            echo $EC2_REGION >> /home/ec2-user/echo.res
+            echo $DIR_SRC >> /home/ec2-user/echo.res
+            echo $DIR_TGT >> /home/ec2-user/echo.res
+            MAX_RETRIES=20
+            for i in $(seq 1 $MAX_RETRIES); do
+              echo "Mounting EFS volume ($i/$MAX_RETRIES)..."
+              `mount -t nfs4 -o nfsvers=4.1,hard,timeo=600,retrans=2 $DIR_SRC:/ $DIR_TGT >> /home/ec2-user/echo.res` \
+                && s=0 && break || s=$? && sleep 5;
+            done; (exit $s)
+            mkdir -p $DIR_TGT/git
+            mkdir -p $DIR_TGT/high-availability
+            chown -R 1000:1000 $DIR_TGT
+            cp -p /etc/fstab /etc/fstab.back-$(date +%F)
+            echo -e "$DIR_SRC:/ \t\t $DIR_TGT \t\t nfs \t\t defaults \t\t 0 \t\t 0" | tee -a /etc/fstab
+            # Get the CloudWatch Logs agent
+            echo -e "
+              {\"logs\":
+                {\"logs_collected\":
+                  {\"files\":
+                    {\"collect_list\":
+                      [
+                        {\"file_path\": \"/gerrit-mount-point/gerrit-logs/replication_log\",
+                        \"log_group_name\": \"${LogGroupName}\",
+                        \"log_stream_name\": \"${EnvironmentName}/{instance_id}/$PRIMARY_ID/replication_log\",
+                        \"timezone\": \"UTC\"
+                        },
+                        {\"file_path\": \"/gerrit-mount-point/gerrit-logs/httpd_log\",
+                        \"log_group_name\": \"${LogGroupName}\",
+                        \"log_stream_name\": \"${EnvironmentName}/{instance_id}/$PRIMARY_ID/httpd_log\",
+                        \"timezone\": \"UTC\"
+                        },
+                        {\"file_path\": \"/gerrit-mount-point/gerrit-logs/error_log\",
+                        \"log_group_name\": \"${LogGroupName}\",
+                        \"log_stream_name\": \"${EnvironmentName}/{instance_id}/$PRIMARY_ID/error_log\",
+                        \"timezone\": \"UTC\"
+                        },
+                        {\"file_path\": \"/gerrit-mount-point/gerrit-logs/sshd_log\",
+                        \"log_group_name\": \"${LogGroupName}\",
+                        \"log_stream_name\": \"${EnvironmentName}/{instance_id}/$PRIMARY_ID/sshd_log\",
+                        \"timezone\": \"UTC\"
+                        },
+                        {\"file_path\": \"/gerrit-mount-point/gerrit-logs/gc_log\",
+                        \"log_group_name\": \"${LogGroupName}\",
+                        \"log_stream_name\": \"${EnvironmentName}/{instance_id}/$PRIMARY_ID/gc_log\",
+                        \"timezone\": \"UTC\"
+                        },
+                        {\"file_path\": \"/gerrit-mount-point/gerrit-logs/sharedref_log\",
+                        \"log_group_name\": \"${LogGroupName}\",
+                        \"log_stream_name\": \"${EnvironmentName}/{instance_id}/$PRIMARY_ID/sharedref_log\",
+                        \"timezone\": \"UTC\"
+                        },
+                        {\"file_path\": \"/gerrit-mount-point/gerrit-logs/message_log\",
+                        \"log_group_name\": \"${LogGroupName}\",
+                        \"log_stream_name\": \"${EnvironmentName}/{instance_id}/$PRIMARY_ID/message_log\",
+                        \"timezone\": \"UTC\"
+                        },
+                        {\"file_path\": \"/gerrit-mount-point/gerrit-logs/websession_log\",
+                        \"log_group_name\": \"${LogGroupName}\",
+                        \"log_stream_name\": \"${EnvironmentName}/{instance_id}/$PRIMARY_ID/websession_log\",
+                        \"timezone\": \"UTC\"
+                        },
+                        {\"file_path\": \"/gerrit-mount-point/gerrit-logs/audit_log\",
+                        \"log_group_name\": \"${LogGroupName}\",
+                        \"log_stream_name\": \"${EnvironmentName}/{instance_id}/$PRIMARY_ID/audit_log\",
+                        \"timezone\": \"UTC\"
+                        }
+                      ]
+                    }
                   }
                 }
-              }
-            }" >> /home/ec2-user/gerritlogsaccess.json
+              }" >> /home/ec2-user/gerritlogsaccess.json
 
-          # Install the CloudWatch Logs agent
-          wget https://s3.amazonaws.com/amazoncloudwatch-agent/centos/amd64/latest/amazon-cloudwatch-agent.rpm
-          rpm -U ./amazon-cloudwatch-agent.rpm
-          /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -c file:/home/ec2-user/gerritlogsaccess.json -s
+            # Install the CloudWatch Logs agent
+            wget https://s3.amazonaws.com/amazoncloudwatch-agent/centos/amd64/latest/amazon-cloudwatch-agent.rpm
+            rpm -U ./amazon-cloudwatch-agent.rpm
+            /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -c file:/home/ec2-user/gerritlogsaccess.json -s
 
-          # Signal to CloudFormation aws-cfn-bootstrap has been correctly updated
-          /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource PrimaryECSAutoScalingGroup --region ${AWS::Region}
+            # Signal to CloudFormation aws-cfn-bootstrap has been correctly updated
+            /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource PrimaryECSAutoScalingGroup --region ${AWS::Region}
 
   GerritVolumeStack:
     Type: AWS::CloudFormation::Stack
@@ -241,10 +247,10 @@ Resources:
         AvailabilityZone: !Ref AvailabilityZone
 
 Outputs:
-  PrimaryLaunchConfiguration:
-    Value: !Ref PrimaryLaunchConfiguration
+  PrimaryLaunchTemplate:
+    Value: !Ref PrimaryLaunchTemplate
     Export:
-      Name: !Join [ '-', [ !Ref 'AWS::StackName', 'PrimaryLaunchConfiguration', !Ref GerritInstanceNumber ] ]
+      Name: !Join [ '-', [ !Ref 'AWS::StackName', 'PrimaryLaunchTemplate', !Ref GerritInstanceNumber ] ]
 
   PrimaryECSAutoScalingGroup:
     Value: !Ref PrimaryECSAutoScalingGroup
