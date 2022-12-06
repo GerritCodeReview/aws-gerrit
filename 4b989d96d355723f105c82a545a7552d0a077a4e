@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "23faa0aa_a8c3573b",
+        "filename": "single-primary/cf-cluster.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2022-12-06T07:36:02Z",
+      "side": 1,
+      "message": "Why the `LatestVersionNumber` and not the `DefaultVersionNumber`?\n\n`DefaultVersionNumber` seems more conservative to me.",
+      "range": {
+        "startLine": 126,
+        "startChar": 46,
+        "endLine": 126,
+        "endChar": 65
+      },
+      "revId": "4b989d96d355723f105c82a545a7552d0a077a4e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
