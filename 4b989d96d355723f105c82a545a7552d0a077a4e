@@ -46,6 +46,30 @@
       },
       "revId": "4b989d96d355723f105c82a545a7552d0a077a4e",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2293ca66_af28eec9",
+        "filename": "single-primary/cf-cluster.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1063024
+      },
+      "writtenOn": "2022-12-09T16:44:55Z",
+      "side": 1,
+      "message": "Won\u0027t this make provisioning new templates more laborious, i.e. we\u0027d do these changes and then have to manually switch the default version to the new template?",
+      "parentUuid": "1701d42f_ce5a2fb0",
+      "range": {
+        "startLine": 126,
+        "startChar": 46,
+        "endLine": 126,
+        "endChar": 65
+      },
+      "revId": "4b989d96d355723f105c82a545a7552d0a077a4e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
