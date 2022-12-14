@@ -34,6 +34,24 @@
       "parentUuid": "e742da93_d1658608",
       "revId": "59fc34b363e7fab621511e46228155df3e7557db",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e80400e1_e2af2fde",
+        "filename": "maintenance/git-gc/scripts/utils.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2022-12-14T15:04:53Z",
+      "side": 1,
+      "message": "👍",
+      "parentUuid": "d9b7c3dc_7fa0f1ad",
+      "revId": "59fc34b363e7fab621511e46228155df3e7557db",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
