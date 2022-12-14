@@ -74,7 +74,7 @@ function count_objects {
 }
 
 function now {
-  date '+%s'
+  TZ=UTC date '+%FT%TZ'
 }
 
 function log_project {
