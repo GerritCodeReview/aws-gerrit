@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "329c13ed_970b9c12",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2022-12-14T15:07:31Z",
+      "side": 1,
+      "message": "`GIT_HOME`",
+      "range": {
+        "startLine": 7,
+        "startChar": 24,
+        "endLine": 7,
+        "endChar": 31
+      },
+      "revId": "9432b3a6d7751b205fbedf6306ba53a9d2f2abff",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e868644f_7f85103a",
+        "filename": "maintenance/git-gc/scripts/utils.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2022-12-14T15:07:31Z",
+      "side": 1,
+      "message": "`GIT_HOME`",
+      "range": {
+        "startLine": 4,
+        "startChar": 11,
+        "endLine": 4,
+        "endChar": 18
+      },
+      "revId": "9432b3a6d7751b205fbedf6306ba53a9d2f2abff",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
