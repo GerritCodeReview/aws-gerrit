@@ -16,6 +16,24 @@
       "message": "Why not `date -u \u0027+%FT%TZ\u0027`? Seems a little cleaner as we don\u0027t need to set the env variable.",
       "revId": "59fc34b363e7fab621511e46228155df3e7557db",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d9b7c3dc_7fa0f1ad",
+        "filename": "maintenance/git-gc/scripts/utils.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1063024
+      },
+      "writtenOn": "2022-12-14T14:30:46Z",
+      "side": 1,
+      "message": "Nit^",
+      "parentUuid": "e742da93_d1658608",
+      "revId": "59fc34b363e7fab621511e46228155df3e7557db",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
