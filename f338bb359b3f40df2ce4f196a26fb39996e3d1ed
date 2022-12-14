@@ -45,6 +45,54 @@
       },
       "revId": "f338bb359b3f40df2ce4f196a26fb39996e3d1ed",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8fc3e417_f3581e17",
+        "filename": "maintenance/git-gc/scripts/utils.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2022-12-14T15:06:44Z",
+      "side": 1,
+      "message": "Yes, exactly.\n\nThere must be an __out of hours__ GC that will set `GIT_GC_OPTION\u003d--prune-preserved` for getting rid of the preserved packfiles.",
+      "parentUuid": "406c15f7_353497c3",
+      "range": {
+        "startLine": 5,
+        "startChar": 34,
+        "endLine": 5,
+        "endChar": 51
+      },
+      "revId": "f338bb359b3f40df2ce4f196a26fb39996e3d1ed",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "985237d1_f7c6b35d",
+        "filename": "maintenance/git-gc/scripts/utils.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2022-12-14T15:06:44Z",
+      "side": 1,
+      "message": "Yes, that\u0027s the default. Bear in mind that defaults should be the safest options, and the `preserve-oldpacks` is definitely the safest ever.",
+      "parentUuid": "845b5e5c_4485d2cf",
+      "range": {
+        "startLine": 5,
+        "startChar": 34,
+        "endLine": 5,
+        "endChar": 51
+      },
+      "revId": "f338bb359b3f40df2ce4f196a26fb39996e3d1ed",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
