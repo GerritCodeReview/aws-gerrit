@@ -16,6 +16,7 @@ SINGLE_SITE_PLUGINS=javamelody high-availability healthcheck metrics-reporter-cl
 
 HA_SITE_PLUGINS=$(SINGLE_SITE_PLUGINS) aws-dynamodb-refdb
 HA_SITE_PLUGINS_LIBS_LINKS=high-availability
+HA_SITE_MAVEN_LIBS=global-refdb~$(GLOBALREFDB_LIB_VER)
 
 MULTI_SITE_PLUGINS=$(SINGLE_SITE_PLUGINS) multi-site events-kafka websession-broker aws-dynamodb-refdb
 MULTI_SITE_PLUGINS_LIBS_LINKS=multi-site replication
@@ -487,9 +488,9 @@ delete-git-primary-persistent-stack:
 
 gerrit-publish:
 ifeq ($(MULTISITE_ENABLED),true)
-	$(MAKE) -C ../gerrit gerrit-publish RECIPE=dual-primary PLUGINS="$(MULTI_SITE_PLUGINS)" PLUGINS_LIBS_LINKS="$(MULTI_SITE_PLUGINS_LIBS_LINKS)" MAVEN_LIBS="$(MULTI_SITE_MAVEN_LIBS)"
+	$(MAKE) -C ../gerrit gerrit-publish RECIPE=dual-primary PLUGINS="$(MULTI_SITE_PLUGINS)" PLUGINS_LIBS_LINKS="$(MULTI_SITE_PLUGINS_LIBS_LINKS)" MAVEN_LIBS="$(HA_SITE_MAVEN_LIBS) $(MULTI_SITE_MAVEN_LIBS)"
 else
-	$(MAKE) -C ../gerrit gerrit-publish RECIPE=dual-primary PLUGINS="$(HA_SITE_PLUGINS)" PLUGINS_LIBS_LINKS="$(HA_SITE_PLUGINS_LIBS_LINKS)"
+	$(MAKE) -C ../gerrit gerrit-publish RECIPE=dual-primary PLUGINS="$(HA_SITE_PLUGINS)" PLUGINS_LIBS_LINKS="$(HA_SITE_PLUGINS_LIBS_LINKS)" MAVEN_LIBS="$(HA_SITE_MAVEN_LIBS)"
 endif
 
 git-daemon-publish:
