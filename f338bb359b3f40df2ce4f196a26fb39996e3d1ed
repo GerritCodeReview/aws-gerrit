@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "406c15f7_353497c3",
+        "filename": "maintenance/git-gc/scripts/utils.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2022-12-14T14:35:26Z",
+      "side": 1,
+      "message": "If we preserve the old packfiles, later on, we will have to prune the preserved pack, right?\n\nHow are we going to handle it?",
+      "range": {
+        "startLine": 5,
+        "startChar": 34,
+        "endLine": 5,
+        "endChar": 51
+      },
+      "revId": "f338bb359b3f40df2ce4f196a26fb39996e3d1ed",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
