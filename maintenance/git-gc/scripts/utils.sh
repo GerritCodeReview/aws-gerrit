@@ -1,7 +1,8 @@
 #!/bin/bash
 
-JGIT="/bin/jgit"
-GIT_HOME="/git"
+JGIT=${JGIT:-"/bin/jgit"}
+GIT_HOME=${GIT_DIR:-"/git"}
+GIT_GC_OPTION=${GIT_GC_OPTION:-"--preserve-oldpacks"}
 
 function gc_project {
   proj=$1
@@ -30,7 +31,8 @@ function gc_project {
 
 function do_gc() {
     start=$SECONDS
-    $JGIT gc || {
+    log_project "$proj" "Running $JGIT gc $GIT_GC_OPTION ..."
+    $JGIT gc $GIT_GC_OPTION || {
       status_code=$?
       err_proj "$proj" "Could not GC $proj ($status_code)."
       return 1
