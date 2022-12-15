@@ -30,8 +30,8 @@ function gc_project {
 }
 
 function do_gc() {
-    start=$SECONDS
     log_project "$proj" "Running $JGIT gc $GIT_GC_OPTION ..."
+    start=$SECONDS
     $JGIT gc $GIT_GC_OPTION || {
       status_code=$?
       err_proj "$proj" "Could not GC $proj ($status_code)."
