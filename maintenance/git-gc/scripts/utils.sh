@@ -1,8 +1,11 @@
 #!/bin/bash
 
 JGIT=${JGIT:-"/bin/jgit"}
+GIT=${GIT:-"/bin/git"}
 GIT_HOME=${GIT_HOME:-"/git"}
 GIT_GC_OPTION=${GIT_GC_OPTION:-"--preserve-oldpacks"}
+PACK_THREADS=${PACK_THREADS:-"0"}
+PRUNE_EXPIRE=${PRUNE_EXPIRE:-"1.day.ago"}
 
 function gc_project {
   proj=$1
@@ -29,10 +32,21 @@ function gc_project {
   }
 }
 
+function java_heap_for_repo() {
+  MIN_SIZE=1048576
+  REPO_SIZE_X2=$(expr $(du -s -k . | cut -f 1) '*' 2)
+  [ $REPO_SIZE_X2 -gt $MIN_SIZE ] && echo $REPO_SIZE_X2 || echo $MIN_SIZE
+}
+
 function do_gc() {
-    log_project "$proj" "Running $JGIT gc $GIT_GC_OPTION ..."
+    git config gc.prunePackExpire now
+    git config gc.pruneExpire $PRUNE_EXPIRE
+    git config gc.packThreads $PACK_THREADS
+
+    JAVA_ARGS="$JAVA_ARGS -Xmx$(java_heap_for_repo)k"
+    log_project "$proj" "Running java_args=\"$JAVA_ARGS\" $JGIT gc $GIT_GC_OPTION ..."
     start=$SECONDS
-    $JGIT gc $GIT_GC_OPTION || {
+    java_args=$JAVA_ARGS $JGIT gc $GIT_GC_OPTION || {
       status_code=$?
       err_proj "$proj" "Could not GC $proj ($status_code)."
       return 1
