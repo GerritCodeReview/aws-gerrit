@@ -48,6 +48,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6971291e_7c401d88",
+        "filename": "maintenance/git-gc/scripts/utils.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2022-12-16T11:06:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "409f1f2c_21cd11f8",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 22
+      },
+      "revId": "bcbfab4012cecd855076e089f5ad084903b1b7b1",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d03ade5b_9021f7cf",
@@ -71,6 +95,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d72afb6f_1eeeb21b",
+        "filename": "maintenance/git-gc/scripts/utils.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2022-12-16T11:06:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d03ade5b_9021f7cf",
+      "range": {
+        "startLine": 8,
+        "startChar": 30,
+        "endLine": 8,
+        "endChar": 39
+      },
+      "revId": "bcbfab4012cecd855076e089f5ad084903b1b7b1",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "244d0913_685344af",
@@ -84,6 +132,30 @@
       "writtenOn": "2022-12-16T10:51:00Z",
       "side": 1,
       "message": "This need to be configurable as well",
+      "range": {
+        "startLine": 42,
+        "startChar": 34,
+        "endLine": 42,
+        "endChar": 37
+      },
+      "revId": "bcbfab4012cecd855076e089f5ad084903b1b7b1",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca0381c4_83023f7b",
+        "filename": "maintenance/git-gc/scripts/utils.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2022-12-16T11:06:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "244d0913_685344af",
       "range": {
         "startLine": 42,
         "startChar": 34,
