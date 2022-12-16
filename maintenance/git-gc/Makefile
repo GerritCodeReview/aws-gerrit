@@ -40,7 +40,12 @@ service-git-gc: git-gc-publish
 		ParameterKey=DockerImageFQN,ParameterValue="$(GIT_GC_IMAGE_FQDN)" \
 		ParameterKey=ProjectList,ParameterValue=\"$(GIT_GC_PROJECT_LIST)\" \
 		ParameterKey=ScheduleCronExpression,ParameterValue=$(GIT_GC_CRON_EXPRESSION) \
-		ParameterKey=GitSourcePath,ParameterValue=$(GIT_GC_SOURCE_PATH)
+		ParameterKey=GitSourcePath,ParameterValue=$(GIT_GC_SOURCE_PATH) \
+		ParameterKey=GitGCOptions,ParameterValue=$(GIT_GC_OPTION) \
+		ParameterKey=PackThreads,ParameterValue=$(GIT_GC_PACK_THREADS) \
+		ParameterKey=PruneExpire,ParameterValue=$(GIT_GC_PRUNE_EXPIRE) \
+		ParameterKey=PrunePackExpire,ParameterValue=$(GIT_GC_PRUNE_PACK_EXPIRE) \
+		ParameterKey=JavaArgs,ParameterValue=$(GIT_GC_JAVA_ARGS)
 
 wait-for-service-git-gc-creation:
 	@echo "*** Wait for service-git-gc stack '$(SERVICE_GIT_GC_STACK_NAME)' creation"

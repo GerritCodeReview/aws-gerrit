@@ -25,6 +25,26 @@ Parameters:
   GitSourcePath:
     Description: The absolute path storing git data
     Type: String
+  GitGCOptions:
+    Description: Options to pass to the JGit GC command line
+    Type: String
+    Default: ''
+  PackThreads:
+    Description: Number of threads for packing concurrently
+    Type: String
+    Default: ''
+  PruneExpire:
+    Description: Grace period after which unreachable objects will be pruned
+    Type: String
+    Default: ''
+  PrunePackExpire:
+    Description: Grace period after which packfiles only containing unreachable objects will be pruned
+    Type: String
+    Default: ''
+  JavaArgs:
+    Description: extra JVM options to pass to the JGit JVM
+    Type: String
+    Default: ''
 
 Mappings:
   Gerrit:
@@ -52,6 +72,16 @@ Resources:
                   Environment:
                     - Name: GC_PROJECT_LIST
                       Value: !Join [',', !Ref ProjectList]
+                    - Name: GIT_GC_OPTION
+                      Value: !Ref GitGCOptions
+                    - Name: PACK_THREADS
+                      Value: !Ref PackThreads
+                    - Name: PRUNE_EXPIRE
+                      Value: !Ref PruneExpire
+                    - Name: PRUNE_PACK_EXPIRE
+                      Value: !Ref PrunePackExpire
+                    - Name: JAVA_ARGS
+                      Value: !Ref JavaArgs
                   MountPoints:
                     - SourceVolume: !FindInMap ['Gerrit', 'Volume', 'Git']
                       ContainerPath: /git

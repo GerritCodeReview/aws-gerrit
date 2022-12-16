@@ -36,6 +36,16 @@ of the garbage collection. More information
 [here](https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html#CronExpressions)
 * `GIT_GC_PROJECT_LIST`. Required. A comma separated list of projects to run GC
 against.
+* `GIT_GC_OPTION`. Optional. Options to pass to the JGit GC command line. "" by
+  default.
+* `GIT_GC_PACK_THREADS`. Optional. Number of threads for packing
+  concurrently. When not provided jgit defaults will be used.
+* `GIT_GC_PRUNE_EXPIRE`. Optional. Grace period after which unreachable objects
+  will be pruned. When not provided jgit defaults will be used.
+* `GIT_GC_PRUNE_PACK_EXPIRE`. Optional. Grace period after which packfiles only
+  containing unreachable objects will be pruned. When not provided jgit defaults will be used.
+* `GIT_GC_JAVA_ARGS`. Optional. extra JVM options to pass to the JGit JVM. "" by
+  default.
 
 #### SPECS
 
