@@ -21,7 +21,7 @@ function gc_project {
   log_project "$proj" "stats before GC"
   print_stats "$proj" "before"
 
-  do_gc
+  do_gc "$proj"
 
   log_project "$proj" "stats after GC"
   print_stats "$proj" "after"
@@ -40,6 +40,7 @@ function java_heap_for_repo() {
 }
 
 function do_gc() {
+    proj=$1
     [ -z "$PRUNE_PACK_EXPIRE" ] || $GIT config gc.prunePackExpire $PRUNE_PACK_EXPIRE
     [ -z "$PRUNE_EXPIRE" ] || $GIT config gc.pruneExpire $PRUNE_EXPIRE
     [ -z "$PACK_THREADS" ] || $GIT config gc.packThreads $PACK_THREADS
@@ -47,14 +48,14 @@ function do_gc() {
     JAVA_ARGS="$JAVA_ARGS -Xmx$(java_heap_for_repo)k"
     log_project "$proj" "Running java_args=\"$JAVA_ARGS\" $JGIT gc $GIT_GC_OPTION ..."
     start=$SECONDS
-    java_args=$JAVA_ARGS $JGIT gc $GIT_GC_OPTION || {
+    (java_args=$JAVA_ARGS $JGIT gc $GIT_GC_OPTION 2>&1 | tr '\r' '\n' | grep -v "^$" | cut -d ':' -f 1 | uniq | while read line; do log_project "$proj" "GC|$line"; done) || {
       status_code=$?
       err_proj "$proj" "Could not GC $proj ($status_code)."
       return 1
     }
     end=$SECONDS
     duration=$(( end - start ))
-    log_project "$proj" "GC took $duration seconds"
+    log_project "$proj" "GC|took $duration seconds"
     return 0
 }
 
