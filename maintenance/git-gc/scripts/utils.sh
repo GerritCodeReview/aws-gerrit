@@ -18,12 +18,12 @@ function gc_project {
   }
 
   log_project "$proj" "stats before GC"
-  print_stats "$proj"
+  print_stats "$proj" "before"
 
   do_gc
 
   log_project "$proj" "stats after GC"
-  print_stats "$proj"
+  print_stats "$proj" "after"
 
   popd || {
     status_code=$?
@@ -59,13 +59,14 @@ function do_gc() {
 
 function print_stats {
    proj=$1
+   phase=$2
 
-   log_project "$proj" "#num_objects: $(count_objects)"
+   log_project "$proj" "$phase|#num_objects: $(count_objects)"
 
    for ext in "pack" "bitmap" "idx" "keep"; do
-    log_project "$proj" "#num_$ext: $(count_pack_objects $ext) files"
-    log_project "$proj" "#size_$ext: $(size_pack_objects $ext) Kb"
-    log_project "$proj" "#oldest_$ext: $(oldest_pack_object $ext)"
+    log_project "$proj" "$phase|#num_$ext: $(count_pack_objects $ext) files"
+    log_project "$proj" "$phase|#size_$ext: $(size_pack_objects $ext) Kb"
+    log_project "$proj" "$phase|#oldest_$ext: $(oldest_pack_object $ext)"
   done
 }
 
