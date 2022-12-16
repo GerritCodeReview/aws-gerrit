@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5eaf6d47_09f0a154",
+        "filename": "maintenance/git-gc/scripts/utils.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1025452
+      },
+      "writtenOn": "2022-12-16T09:15:54Z",
+      "side": 1,
+      "message": "to consider in the follow up, I wonder if `which git` should be used so that no assumptions on default locations are made...",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 22
+      },
+      "revId": "bcbfab4012cecd855076e089f5ad084903b1b7b1",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
