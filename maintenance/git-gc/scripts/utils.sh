@@ -11,7 +11,7 @@ function gc_project {
   proj=$1
 
   PROJECT_PATH=$GIT_HOME/"$proj".git
-  pushd "$PROJECT_PATH" || {
+  pushd "$PROJECT_PATH" > /dev/null || {
     status_code=$?
     err_proj "$proj" "Could not move into $PROJECT_PATH ($status_code). Skipping."
     return 1
@@ -21,7 +21,7 @@ function gc_project {
   do_gc "$proj"
   print_stats "$proj" "after"
 
-  popd || {
+  popd > /dev/null || {
     status_code=$?
     err_proj "$proj" "Could not step out of $PROJECT_PATH ($status_code). Aborting"
     exit 1
