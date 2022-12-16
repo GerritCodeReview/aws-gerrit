@@ -17,12 +17,8 @@ function gc_project {
     return 1
   }
 
-  log_project "$proj" "stats before GC"
   print_stats "$proj" "before"
-
   do_gc "$proj"
-
-  log_project "$proj" "stats after GC"
   print_stats "$proj" "after"
 
   popd || {
