@@ -58,33 +58,46 @@ function print_stats {
    proj=$1
    phase=$2
 
-   log_project "$proj" "$phase|#num_objects: $(count_objects)"
+   $GIT count-objects -v | while read line; do log_project "$proj" "$phase|#$line"; done
+   log_project "$proj" "$phase|#oldest_pack: $(oldest_pack_object pack)"
 
-   for ext in "pack" "bitmap" "idx" "keep"; do
+   for ext in "bitmap" "idx" "keep"; do
     log_project "$proj" "$phase|#num_$ext: $(count_pack_objects $ext) files"
     log_project "$proj" "$phase|#size_$ext: $(size_pack_objects $ext) Kb"
     log_project "$proj" "$phase|#oldest_$ext: $(oldest_pack_object $ext)"
-  done
+   done
+
+   if [ -d "objects/pack/preserved" ]
+   then
+     for ext in "old-pack" "old-idx"; do
+      log_project "$proj" "$phase|#num_$ext: $(count_pack_objects $ext "/preserved") preserved files"
+      log_project "$proj" "$phase|#size_$ext: $(size_pack_objects $ext "/preserved") Kb preserved"
+      log_project "$proj" "$phase|#oldest_$ext: $(oldest_pack_object $ext "/preserved") preserved"
+     done
+   fi
+
+   log_project "$proj" "$phase|#size_packed-refs: $(du -k packed-refs | cut -f 1) Kb"
+   log_project "$proj" "$phase|#num_packed-refs: $(wc -l packed-refs | cut -d ' ' -f 1) refs"
+   log_project "$proj" "$phase|#num_loose-refs: $(find refs -type f | wc -l) refs"
+
+   log_project "$proj" "$phase|#empty_dirs: $(find . -type d -empty | wc -l)"
 }
 
 function count_pack_objects {
-   find objects/pack -type f -name "*.$1" | wc -l | sed 's/\ //g'
+
+   find objects/pack$2 -type f -name "*.$1" | wc -l | sed 's/\ //g'
 }
 
 function size_pack_objects {
-   out=$(find objects/pack -type f -name "*.$1" -exec du -ck {} + | grep total$ | cut -d$'\t' -f1)
+   out=$(find objects/pack$2 -type f -name "*.$1" -exec du -ck {} + | grep total$ | cut -d$'\t' -f1)
    out="${out:-0}"
    echo "$out"
 }
 
 function oldest_pack_object {
-   out=$(find objects/pack -type f -name "*.$1" -print0 | xargs -0 ls -tl | tail -1)
+   out=$(find objects/pack$2 -type f -name "*.$1" -print0 | xargs -0 ls -tl | tail -1)
    out="${out:-NONE}"
    echo "$out"
-}
-
-function count_objects {
-  git count-objects  | awk '{print $1}'
 }
 
 function now {
