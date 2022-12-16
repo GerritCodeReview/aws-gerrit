@@ -39,7 +39,7 @@ function do_gc() {
     proj=$1
     [ -z "$PRUNE_PACK_EXPIRE" ] || $GIT config gc.prunePackExpire $PRUNE_PACK_EXPIRE
     [ -z "$PRUNE_EXPIRE" ] || $GIT config gc.pruneExpire $PRUNE_EXPIRE
-    [ -z "$PACK_THREADS" ] || $GIT config gc.packThreads $PACK_THREADS
+    [ -z "$PACK_THREADS" ] || $GIT config pack.threads $PACK_THREADS
 
     JAVA_ARGS="$JAVA_ARGS -Xmx$(java_heap_for_repo)k"
     log_project "$proj" "Running java_args=\"$JAVA_ARGS\" $JGIT gc $GIT_GC_OPTION ..."
