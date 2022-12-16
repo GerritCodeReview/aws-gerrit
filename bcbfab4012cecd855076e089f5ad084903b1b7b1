@@ -22,6 +22,76 @@
       },
       "revId": "bcbfab4012cecd855076e089f5ad084903b1b7b1",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "409f1f2c_21cd11f8",
+        "filename": "maintenance/git-gc/scripts/utils.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2022-12-16T10:51:00Z",
+      "side": 1,
+      "message": "True, but bear in mind that this is designed to run through crontab where the paths may not be effectively set. So, `which git` could be the default?\n\nSame can be said for the `jgit` command.",
+      "parentUuid": "5eaf6d47_09f0a154",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 22
+      },
+      "revId": "bcbfab4012cecd855076e089f5ad084903b1b7b1",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d03ade5b_9021f7cf",
+        "filename": "maintenance/git-gc/scripts/utils.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2022-12-16T10:51:00Z",
+      "side": 1,
+      "message": "This could be set to empty and, if not set, we won\u0027t run the `git config`",
+      "range": {
+        "startLine": 8,
+        "startChar": 30,
+        "endLine": 8,
+        "endChar": 39
+      },
+      "revId": "bcbfab4012cecd855076e089f5ad084903b1b7b1",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "244d0913_685344af",
+        "filename": "maintenance/git-gc/scripts/utils.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2022-12-16T10:51:00Z",
+      "side": 1,
+      "message": "This need to be configurable as well",
+      "range": {
+        "startLine": 42,
+        "startChar": 34,
+        "endLine": 42,
+        "endChar": 37
+      },
+      "revId": "bcbfab4012cecd855076e089f5ad084903b1b7b1",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
