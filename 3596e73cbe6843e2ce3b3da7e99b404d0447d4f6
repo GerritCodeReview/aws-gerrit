@@ -16,6 +16,23 @@
       "message": "/COMMIT_MSG",
       "revId": "3596e73cbe6843e2ce3b3da7e99b404d0447d4f6",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be71f5f2_ecc60dd1",
+        "filename": "single-primary/resources/permission.policy.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1063024
+      },
+      "writtenOn": "2022-12-19T09:11:14Z",
+      "side": 1,
+      "message": "This list looks like it should be in alphabetical order - can you move this below the next line?",
+      "revId": "3596e73cbe6843e2ce3b3da7e99b404d0447d4f6",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
