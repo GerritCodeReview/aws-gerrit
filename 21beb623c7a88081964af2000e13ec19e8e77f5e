@@ -16,6 +16,24 @@
       "message": "JAVA_ARGS ?",
       "revId": "21beb623c7a88081964af2000e13ec19e8e77f5e",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "45427667_6c587f36",
+        "filename": "maintenance/git-gc/scripts/utils.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2022-12-20T16:02:58Z",
+      "side": 1,
+      "message": "JAVA_ARGS is different _per project_.\nSo if we wanted to include JAVA_ARGS we\u0027d need to print the environment variables over and over again, for each `do_gc()` call.\n\nGiven that JAVA_ARGS is already printed at L47, I thought not to include it in this, generic, header.\n\nWDYT?",
+      "parentUuid": "369a8d10_fc70a73b",
+      "revId": "21beb623c7a88081964af2000e13ec19e8e77f5e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
