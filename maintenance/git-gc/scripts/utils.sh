@@ -18,6 +18,8 @@ function gc_project {
     return 1
   }
 
+  log_env
+
   print_stats "$proj" "before"
   do_gc "$proj"
   print_stats "$proj" "after"
@@ -99,6 +101,18 @@ function oldest_pack_object {
    out=$(find objects/pack$2 -type f -name "*.$1" -print0 | xargs -0 ls -tl | tail -1)
    out="${out:-NONE}"
    echo "$out"
+}
+
+function log_env() {
+  log "######## ENVIRONMENT ########"
+  log "# JGIT=${JGIT}"
+  log "# GIT=${GIT}"
+  log "# GIT_HOME=${GIT_HOME}"
+  log "# GIT_GC_OPTION=${GIT_GC_OPTION}"
+  log "# PACK_THREADS=${PACK_THREADS}"
+  log "# PRUNE_EXPIRE=${PRUNE_EXPIRE}"
+  log "# PRUNE_PACK_EXPIRE=${PRUNE_PACK_EXPIRE}"
+  log "############################"
 }
 
 function now {
