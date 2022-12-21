@@ -35,7 +35,7 @@ function gc_project {
 
 function java_heap_for_repo() {
   MIN_SIZE=1048576
-  REPO_SIZE_X2=$(expr $(du -s -k . | cut -f 1) '*' 2)
+  REPO_SIZE_X2=$(expr $(du -s --exclude=preserved -k . | cut -f 1) '*' 2)
   [ $REPO_SIZE_X2 -gt $MIN_SIZE ] && echo $REPO_SIZE_X2 || echo $MIN_SIZE
 }
 
