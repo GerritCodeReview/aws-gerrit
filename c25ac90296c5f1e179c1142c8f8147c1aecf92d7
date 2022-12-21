@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b3ac292f_54228828",
+        "filename": "dual-primary/Makefile",
+        "patchSetId": 13
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2022-12-21T17:44:32Z",
+      "side": 1,
+      "message": "because global-refdb is not a part of multi-site.jar anymore",
+      "parentUuid": "b1df788d_5379cefb",
+      "revId": "c25ac90296c5f1e179c1142c8f8147c1aecf92d7",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ca327cd4_69e9e04b",
         "filename": "gerrit/entrypoint.sh",
         "patchSetId": 13
@@ -48,6 +66,24 @@
       "writtenOn": "2022-12-21T17:08:00Z",
       "side": 1,
       "message": "I dont remember why we added this",
+      "revId": "c25ac90296c5f1e179c1142c8f8147c1aecf92d7",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "32788375_9c51cbec",
+        "filename": "gerrit/entrypoint.sh",
+        "patchSetId": 13
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2022-12-21T17:44:32Z",
+      "side": 1,
+      "message": "because before global-refdb code was included in multi-site.jar but it was a bug",
+      "parentUuid": "ca327cd4_69e9e04b",
       "revId": "c25ac90296c5f1e179c1142c8f8147c1aecf92d7",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
