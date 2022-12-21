@@ -22,6 +22,30 @@
       },
       "revId": "768bb71a6ca73b8b46decd8d6d370b3a4daa7435",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "26cd55e2_be77f3f7",
+        "filename": "maintenance/git-gc/scripts/utils.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2022-12-21T18:43:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c905331_532ed148",
+      "range": {
+        "startLine": 186,
+        "startChar": 73,
+        "endLine": 186,
+        "endChar": 95
+      },
+      "revId": "768bb71a6ca73b8b46decd8d6d370b3a4daa7435",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
