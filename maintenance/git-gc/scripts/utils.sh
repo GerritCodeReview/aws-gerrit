@@ -62,7 +62,7 @@ function do_gc() {
     JAVA_ARGS="$JAVA_ARGS -Xmx$(java_heap_for_repo)k"
     log_project "$proj" "Running java_args=\"$JAVA_ARGS\" $JGIT gc $GIT_GC_OPTION ..."
     start=$SECONDS
-    (java_args=$JAVA_ARGS $JGIT gc $GIT_GC_OPTION 2>&1 | tr '\r' '\n' | grep -v "^$" | cut -d ':' -f 1 | uniq | while read line; do log_project "$proj" "GC|$line"; done) || {
+    (java_args=$JAVA_ARGS $JGIT gc $GIT_GC_OPTION 2>&1) || {
       status_code=$?
       err_proj "$proj" "Could not GC $proj ($status_code)."
       return 1
