@@ -68,6 +68,30 @@
       },
       "revId": "fd3faad5805802436aa79a1b18105796755b62d3",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a7583b71_0df31211",
+        "filename": "maintenance/git-gc/scripts/utils.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2022-12-21T15:15:11Z",
+      "side": 1,
+      "message": "Our initial discussion was to check if there are gc locks older than Y (Y \u003d longest time that a GC cycle can take) need to be removed. If it is younger, then log and go to the next repo.\n\nThat\u0027s why I decided to express this in _seconds_.\n\nExpressing the GC_LOCK expire in _days_ unit could mean that GC might not be able to run for 24 hours, This might be fine for some repos, but not for others.\n\nI thought 12 hours would be a good default (definitely enough to run GC) without necessarily having to wait twice that amount of time needlessly.\n\nWDYT?",
+      "parentUuid": "ae8e1269_592acd88",
+      "range": {
+        "startLine": 117,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 88
+      },
+      "revId": "fd3faad5805802436aa79a1b18105796755b62d3",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
