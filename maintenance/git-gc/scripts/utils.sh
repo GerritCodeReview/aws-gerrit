@@ -8,6 +8,7 @@ PACK_THREADS=${PACK_THREADS:-""}
 PRUNE_EXPIRE=${PRUNE_EXPIRE:-""}
 PRUNE_PACK_EXPIRE=${PRUNE_PACK_EXPIRE:-""}
 GC_LOCK_EXPIRE_SECONDS=${GC_LOCK_EXPIRE_SECONDS:-"43200"} # 12 hours
+MAX_HEADS_FOR_BITMAPS=${MAX_HEADS_FOR_BITMAPS:-"300"}
 
 function gc_project {
   proj=$1
@@ -46,6 +47,13 @@ function do_gc() {
       err_proj "$proj" "Could not GC $proj ($status_code)."
       return 1
     }
+
+    if should_create_bitmaps "$proj"
+    then
+      $GIT config pack.buildBitmaps true
+    else
+      $GIT config pack.buildBitmaps false
+    fi
 
     [ -z "$PRUNE_PACK_EXPIRE" ] || $GIT config gc.prunePackExpire $PRUNE_PACK_EXPIRE
     [ -z "$PRUNE_EXPIRE" ] || $GIT config gc.pruneExpire $PRUNE_EXPIRE
@@ -136,6 +144,26 @@ function should_continue_GC() {
 
 }
 
+function count_heads() {
+  out=$(git show-ref --heads | wc -l | xargs)
+
+  echo "${out:-0}"
+}
+
+function should_create_bitmaps() {
+  proj=$1
+  numberOfHeads=$(count_heads)
+
+ if (( numberOfHeads < MAX_HEADS_FOR_BITMAPS ))
+     then
+       log_project "$proj" "Number of heads $numberOfHeads is < than the configured threshold $MAX_HEADS_FOR_BITMAPS, WILL create bitmap"
+       return 0 # true
+     else
+       log_project "$proj" "Number of heads $numberOfHeads is >= than the configured threshold $MAX_HEADS_FOR_BITMAPS, WILL NOT create bitmap"
+       return 1 # false
+     fi
+}
+
 function log_env() {
   log "######## ENVIRONMENT ########"
   log "# JGIT=${JGIT}"
@@ -147,6 +175,7 @@ function log_env() {
   log "# PRUNE_PACK_EXPIRE=${PRUNE_PACK_EXPIRE}"
   log "# JAVA_ARGS=${JAVA_ARGS}"
   log "# GC_LOCK_EXPIRE_SECONDS=${GC_LOCK_EXPIRE_SECONDS}"
+  log "# MAX_HEADS_FOR_BITMAPS=${MAX_HEADS_FOR_BITMAPS}"
   log "############################"
 }
 
