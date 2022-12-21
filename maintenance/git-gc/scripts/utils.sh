@@ -8,6 +8,9 @@ PACK_THREADS=${PACK_THREADS:-""}
 PRUNE_EXPIRE=${PRUNE_EXPIRE:-""}
 PRUNE_PACK_EXPIRE=${PRUNE_PACK_EXPIRE:-""}
 GC_LOCK_EXPIRE_SECONDS=${GC_LOCK_EXPIRE_SECONDS:-"43200"} # 12 hours
+INCOMING_EXPIRE_SECONDS=${INCOMING_EXPIRE_SECONDS:-"43200"} # 12 hours
+KEEP_EXPIRE_SECONDS=${KEEP_EXPIRE_SECONDS:-"43200"} # 12 hours
+TMP_EXPIRE_SECONDS=${TMP_EXPIRE_SECONDS:-"43200"} # 12 hours
 MAX_HEADS_FOR_BITMAPS=${MAX_HEADS_FOR_BITMAPS:-"300"}
 
 function gc_project {
@@ -23,6 +26,7 @@ function gc_project {
   log_env
 
   print_stats "$proj" "before"
+  do_clean_up "$proj"
   do_gc "$proj"
   print_stats "$proj" "after"
 
@@ -164,6 +168,24 @@ function should_create_bitmaps() {
      fi
 }
 
+function do_clean_up() {
+  proj=$1
+  log_project "$proj" "Checking incoming files older than $INCOMING_EXPIRE_SECONDS seconds"
+  delete_if_older_than "$INCOMING_EXPIRE_SECONDS" "incoming_*"
+
+  log_project "$proj" "Checking keep files older than $KEEP_EXPIRE_SECONDS seconds"
+  delete_if_older_than "$KEEP_EXPIRE_SECONDS" "*.keep"
+
+  log_project "$proj" "Checking tmp files older than $TMP_EXPIRE_SECONDS seconds"
+  delete_if_older_than "$TMP_EXPIRE_SECONDS" "*_tmp"
+}
+
+function delete_if_older_than() {
+  secondsAgo=$1
+  matchName=$2
+  find . -type f -name "$matchName" -not -newermt "-$secondsAgo seconds" -execdir rm -v -- '{}' \;
+}
+
 function log_env() {
   log "######## ENVIRONMENT ########"
   log "# GC_PROJECT_LIST=${GC_PROJECT_LIST}"
@@ -177,6 +199,9 @@ function log_env() {
   log "# JAVA_ARGS=${JAVA_ARGS}"
   log "# GC_LOCK_EXPIRE_SECONDS=${GC_LOCK_EXPIRE_SECONDS}"
   log "# MAX_HEADS_FOR_BITMAPS=${MAX_HEADS_FOR_BITMAPS}"
+  log "# INCOMING_EXPIRE_SECONDS=${INCOMING_EXPIRE_SECONDS}"
+  log "# KEEP_EXPIRE_SECONDS=${KEEP_EXPIRE_SECONDS}"
+  log "# TMP_EXPIRE_SECONDS=${TMP_EXPIRE_SECONDS}"
   log "############################"
 }
 
