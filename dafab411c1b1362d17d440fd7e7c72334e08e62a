@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2d324e94_26932681",
+        "filename": "maintenance/git-gc/scripts/utils.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2022-12-21T15:57:52Z",
+      "side": 1,
+      "message": "`wc -l` adds some tabs spaces that would be part of the output string, whilst I just wanted to return the string representation of the count.\n\n`xargs` is commonly used for trimming too.\n\n### With xargs\n\n```\nexport OUT\u003d$(git show-ref --heads | wc -l | xargs) \u0026\u0026 echo \"OUTPUT IS: $OUT\"\nOUTPUT IS: 54\n```\n\n### Without xargs\n```\nexport OUT\u003d$(git show-ref --heads | wc -l) \u0026\u0026 echo \"OUTPUT IS: $OUT\"\nOUTPUT IS:       54\n```",
+      "parentUuid": "c6d33dca_38707b43",
+      "range": {
+        "startLine": 148,
+        "startChar": 39,
+        "endLine": 148,
+        "endChar": 44
+      },
+      "revId": "dafab411c1b1362d17d440fd7e7c72334e08e62a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a7daab15_46a4ecfb",
         "filename": "maintenance/git-gc/scripts/utils.sh",
         "patchSetId": 1
@@ -54,6 +78,30 @@
       "writtenOn": "2022-12-21T15:47:29Z",
       "side": 1,
       "message": "Just do `echo ${out:-0}`",
+      "range": {
+        "startLine": 149,
+        "startChar": 2,
+        "endLine": 151,
+        "endChar": 13
+      },
+      "revId": "dafab411c1b1362d17d440fd7e7c72334e08e62a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "52d3aa3f_0e50b38c",
+        "filename": "maintenance/git-gc/scripts/utils.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2022-12-21T15:57:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7daab15_46a4ecfb",
       "range": {
         "startLine": 149,
         "startChar": 2,
