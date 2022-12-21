@@ -166,6 +166,7 @@ function should_create_bitmaps() {
 
 function log_env() {
   log "######## ENVIRONMENT ########"
+  log "# GC_PROJECT_LIST=${GC_PROJECT_LIST}"
   log "# JGIT=${JGIT}"
   log "# GIT=${GIT}"
   log "# GIT_HOME=${GIT_HOME}"
