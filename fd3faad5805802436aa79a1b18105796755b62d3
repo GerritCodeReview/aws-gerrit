@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8aeddd77_8dae6f3f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2022-12-21T14:59:55Z",
+      "side": 1,
+      "message": "I would just stick to what `mtime` supports and use the days.",
+      "range": {
+        "startLine": 13,
+        "startChar": 13,
+        "endLine": 13,
+        "endChar": 35
+      },
+      "revId": "fd3faad5805802436aa79a1b18105796755b62d3",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f49f6a7_3e0b5a06",
+        "filename": "maintenance/git-gc/scripts/utils.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2022-12-21T14:59:55Z",
+      "side": 1,
+      "message": "nit: wrong indentation",
+      "range": {
+        "startLine": 44,
+        "startChar": 1,
+        "endLine": 48,
+        "endChar": 6
+      },
+      "revId": "fd3faad5805802436aa79a1b18105796755b62d3",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ae8e1269_592acd88",
+        "filename": "maintenance/git-gc/scripts/utils.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2022-12-21T14:59:55Z",
+      "side": 1,
+      "message": "Why not simply: `stat -f \"%m\" $(find . -type f -name $gc_log_lock -mtime +$GC_LOCK_EXPIRE)`?\n\nP.S. There isn\u0027t so much value in having a fine-grained expire by seconds, also using `days` and mtime it would be good enough.",
+      "range": {
+        "startLine": 117,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 88
+      },
+      "revId": "fd3faad5805802436aa79a1b18105796755b62d3",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
