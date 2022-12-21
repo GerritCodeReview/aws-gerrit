@@ -7,6 +7,7 @@ GIT_GC_OPTION=${GIT_GC_OPTION:-""}
 PACK_THREADS=${PACK_THREADS:-""}
 PRUNE_EXPIRE=${PRUNE_EXPIRE:-""}
 PRUNE_PACK_EXPIRE=${PRUNE_PACK_EXPIRE:-""}
+GC_LOCK_EXPIRE_SECONDS=${GC_LOCK_EXPIRE_SECONDS:-"43200"} # 12 hours
 
 function gc_project {
   proj=$1
@@ -39,6 +40,13 @@ function java_heap_for_repo() {
 
 function do_gc() {
     proj=$1
+
+    should_continue_GC "$proj" || {
+      status_code=$?
+      err_proj "$proj" "Could not GC $proj ($status_code)."
+      return 1
+    }
+
     [ -z "$PRUNE_PACK_EXPIRE" ] || $GIT config gc.prunePackExpire $PRUNE_PACK_EXPIRE
     [ -z "$PRUNE_EXPIRE" ] || $GIT config gc.pruneExpire $PRUNE_EXPIRE
     [ -z "$PACK_THREADS" ] || $GIT config gc.packThreads $PACK_THREADS
@@ -103,6 +111,31 @@ function oldest_pack_object {
    echo "$out"
 }
 
+function should_continue_GC() {
+  proj=$1
+  gc_log_lock="gc.log.lock"
+  lockTime=$(find . -maxdepth 1 -name $gc_log_lock -type f | grep -q . && stat -c "%Z" $gc_log_lock)
+
+  if [ -n "$lockTime" ]
+  then
+    log_project "$proj" "'$gc_log_lock' exists with stats: [$(stat $gc_log_lock)]"
+    now=$(date +%s)
+    lockFileAgeSeconds="$((now-lockTime))"
+    if (( lockFileAgeSeconds > GC_LOCK_EXPIRE_SECONDS ))
+    then
+      log_project "$proj" "Consider '$gc_log_lock' stale since its age ($lockFileAgeSeconds secs) is older than the configured threshold ($GC_LOCK_EXPIRE_SECONDS secs). Removing it and and continuing."
+      rm -vf $gc_log_lock
+      # 0 = true
+      return 0
+    else
+      log_project "$proj" "Consider '$gc_log_lock' still relevant since its age ($lockFileAgeSeconds secs) is younger than the configured threshold ($GC_LOCK_EXPIRE_SECONDS secs). Possibly another GC process is still running? Skipping GC for project $proj."
+      # 1 = false
+      return 1
+    fi
+  fi
+
+}
+
 function log_env() {
   log "######## ENVIRONMENT ########"
   log "# JGIT=${JGIT}"
@@ -113,6 +146,7 @@ function log_env() {
   log "# PRUNE_EXPIRE=${PRUNE_EXPIRE}"
   log "# PRUNE_PACK_EXPIRE=${PRUNE_PACK_EXPIRE}"
   log "# JAVA_ARGS=${JAVA_ARGS}"
+  log "# GC_LOCK_EXPIRE_SECONDS=${GC_LOCK_EXPIRE_SECONDS}"
   log "############################"
 }
 
