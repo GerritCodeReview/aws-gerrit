@@ -52,6 +52,10 @@ function do_gc() {
       return 1
     }
 
+    log_project "$proj" "Disable JGit automatic GC (gc.auto=0; gc.autoPackLimit=0)"
+    $GIT config gc.auto 0
+    $GIT config gc.autoPackLimit 0
+
     if should_create_bitmaps "$proj"
     then
       $GIT config pack.buildBitmaps true
