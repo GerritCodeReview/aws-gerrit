@@ -18,6 +18,23 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a00beeba_561dd573",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2022-12-22T12:27:40Z",
+      "side": 1,
+      "message": "Tony, let me know your thoughts.",
+      "revId": "c25ac90296c5f1e179c1142c8f8147c1aecf92d7",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b1df788d_5379cefb",
@@ -95,6 +112,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "eeabefc5_27129771",
+        "filename": "dual-primary/cf-service-primary.yml",
+        "patchSetId": 13
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2022-12-22T12:27:40Z",
+      "side": 1,
+      "message": "Indeed, but we decided to keep it simple at the beginning and introduce that once we have everything working for dual primary.",
+      "parentUuid": "589117af_696ed2c4",
+      "range": {
+        "startLine": 202,
+        "startChar": 0,
+        "endLine": 205,
+        "endChar": 19
+      },
+      "revId": "c25ac90296c5f1e179c1142c8f8147c1aecf92d7",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6bea1e63_de990dc9",
         "filename": "dual-primary/cf-service-replica.yml",
         "patchSetId": 13
@@ -106,6 +147,30 @@
       "writtenOn": "2022-12-22T09:23:42Z",
       "side": 1,
       "message": "as above, shouldn\u0027t this come from secret manager, like we do for all other secrets?",
+      "range": {
+        "startLine": 230,
+        "startChar": 0,
+        "endLine": 233,
+        "endChar": 19
+      },
+      "revId": "c25ac90296c5f1e179c1142c8f8147c1aecf92d7",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cbf336c6_0f4a5c3b",
+        "filename": "dual-primary/cf-service-replica.yml",
+        "patchSetId": 13
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2022-12-22T12:27:40Z",
+      "side": 1,
+      "message": "the same answer as above",
+      "parentUuid": "6bea1e63_de990dc9",
       "range": {
         "startLine": 230,
         "startChar": 0,
@@ -164,6 +229,24 @@
       "writtenOn": "2022-12-22T09:23:42Z",
       "side": 1,
       "message": "Regardless which instanceId triggered the pull-replication we always get from the primaries load balancer?\n\nShouldn\u0027t we get primary1 instance requests from primary1 LB and primary2 instance requests from primary2 instead?",
+      "revId": "c25ac90296c5f1e179c1142c8f8147c1aecf92d7",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e2898aa_593b1665",
+        "filename": "gerrit/etc/replication_replica.config.template",
+        "patchSetId": 13
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2022-12-22T12:27:40Z",
+      "side": 1,
+      "message": "\u003e Shouldn\u0027t we get primary1 instance requests from primary1 LB and primary2 instance requests from primary2 instead?\n\nif primary1 and primary2 share the data via AWS EBS Elastic Volumes, do we care who serve the data? it looks more scalable and resilient to have a LB that serves data from both.",
+      "parentUuid": "3fcccfd1_c83eb64d",
       "revId": "c25ac90296c5f1e179c1142c8f8147c1aecf92d7",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
