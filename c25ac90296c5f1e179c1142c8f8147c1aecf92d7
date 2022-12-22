@@ -55,6 +55,69 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "03d3eaf9_9c397164",
+        "filename": "dual-primary/Makefile",
+        "patchSetId": 13
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2022-12-22T09:23:42Z",
+      "side": 1,
+      "message": "nit: unrelated new line",
+      "revId": "c25ac90296c5f1e179c1142c8f8147c1aecf92d7",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "589117af_696ed2c4",
+        "filename": "dual-primary/cf-service-primary.yml",
+        "patchSetId": 13
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2022-12-22T09:23:42Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this come as a secret rather than being passed as parameter?",
+      "range": {
+        "startLine": 202,
+        "startChar": 0,
+        "endLine": 205,
+        "endChar": 19
+      },
+      "revId": "c25ac90296c5f1e179c1142c8f8147c1aecf92d7",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6bea1e63_de990dc9",
+        "filename": "dual-primary/cf-service-replica.yml",
+        "patchSetId": 13
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2022-12-22T09:23:42Z",
+      "side": 1,
+      "message": "as above, shouldn\u0027t this come from secret manager, like we do for all other secrets?",
+      "range": {
+        "startLine": 230,
+        "startChar": 0,
+        "endLine": 233,
+        "endChar": 19
+      },
+      "revId": "c25ac90296c5f1e179c1142c8f8147c1aecf92d7",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ca327cd4_69e9e04b",
         "filename": "gerrit/entrypoint.sh",
         "patchSetId": 13
@@ -84,6 +147,23 @@
       "side": 1,
       "message": "because before global-refdb code was included in multi-site.jar but it was a bug",
       "parentUuid": "ca327cd4_69e9e04b",
+      "revId": "c25ac90296c5f1e179c1142c8f8147c1aecf92d7",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3fcccfd1_c83eb64d",
+        "filename": "gerrit/etc/replication_replica.config.template",
+        "patchSetId": 13
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2022-12-22T09:23:42Z",
+      "side": 1,
+      "message": "Regardless which instanceId triggered the pull-replication we always get from the primaries load balancer?\n\nShouldn\u0027t we get primary1 instance requests from primary1 LB and primary2 instance requests from primary2 instead?",
       "revId": "c25ac90296c5f1e179c1142c8f8147c1aecf92d7",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
