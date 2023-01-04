@@ -74,6 +74,8 @@ in the same directory of the SSH keys (e.g. `/tmp/secrets`).
 
 ### Prometheus Bearer Token
 
+*Optional*. This is only needed if you are setting up a monitoring stack as
+described [here](monitoring/README.md)
 Generate a bearer token to be used for monitoring with Prometheus:
 
 ```bash
