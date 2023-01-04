@@ -74,11 +74,13 @@ in the same directory of the SSH keys (e.g. `/tmp/secrets`).
 
 ### Prometheus Bearer Token
 
+*Optional*. This is only needed if you are setting up a monitoring stack.
 Generate a bearer token to be used for monitoring with Prometheus:
 
 ```bash
 openssl rand -hex 20 > /tmp/secrets/prometheus_bearer_token
 ```
+
 
 ### Private/public SSH key for replication (required only for recipes involving replicas)
 
