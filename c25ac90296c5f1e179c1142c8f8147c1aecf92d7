@@ -608,6 +608,24 @@
       },
       "revId": "c25ac90296c5f1e179c1142c8f8147c1aecf92d7",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "278571a5_89effffb",
+        "filename": "gerrit/etc/replication_replica.config.template",
+        "patchSetId": 13
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2023-01-04T12:55:54Z",
+      "side": 1,
+      "message": "Regarding AWS EFS, according the documentation:\n\n\u003e Up until today, EFS latency for read operations (both data and metadata) was typically in the low single-digit milliseconds. Effective today, new and existing EFS file systems now provide average latency as low as 600 microseconds for the majority of read operations on data and metadata.\n\nRegarding `trustFolderStat`, I have no knowledge and maybe we can have a discussion about that.",
+      "parentUuid": "d6996d6f_b8fc517d",
+      "revId": "c25ac90296c5f1e179c1142c8f8147c1aecf92d7",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
