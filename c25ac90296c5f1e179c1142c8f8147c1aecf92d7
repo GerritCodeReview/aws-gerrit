@@ -104,6 +104,23 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "679faab3_c61059e2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2023-01-04T12:25:19Z",
+      "side": 1,
+      "message": "Addressing some comments from Tony",
+      "revId": "c25ac90296c5f1e179c1142c8f8147c1aecf92d7",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b1df788d_5379cefb",
@@ -135,6 +152,24 @@
       "side": 1,
       "message": "because global-refdb is not a part of multi-site.jar anymore",
       "parentUuid": "b1df788d_5379cefb",
+      "revId": "c25ac90296c5f1e179c1142c8f8147c1aecf92d7",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "50beedc6_bdb3142f",
+        "filename": "dual-primary/Makefile",
+        "patchSetId": 13
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2023-01-04T12:25:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b3ac292f_54228828",
       "revId": "c25ac90296c5f1e179c1142c8f8147c1aecf92d7",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
@@ -173,6 +208,24 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bf7cf0cf_dc625041",
+        "filename": "dual-primary/cf-service-primary.yml",
+        "patchSetId": 13
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2023-01-04T12:25:19Z",
+      "side": 1,
+      "message": "Apart from BEARER_TOKEN (to be loaded from secrets) they are in both files.",
+      "parentUuid": "558ecc52_fcb19855",
+      "revId": "c25ac90296c5f1e179c1142c8f8147c1aecf92d7",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d28c237e_6d91b154",
@@ -186,6 +239,30 @@
       "writtenOn": "2022-12-22T21:12:34Z",
       "side": 1,
       "message": "This is used only for pull-replication, consider renaming the description (and perhaps the parameter) accordingly to its purpose.",
+      "range": {
+        "startLine": 203,
+        "startChar": 35,
+        "endLine": 203,
+        "endChar": 82
+      },
+      "revId": "c25ac90296c5f1e179c1142c8f8147c1aecf92d7",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9b83f3b4_7889643e",
+        "filename": "dual-primary/cf-service-primary.yml",
+        "patchSetId": 13
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2023-01-04T12:25:19Z",
+      "side": 1,
+      "message": "This will be loaded from secrets so I understand that this will be removed.",
+      "parentUuid": "d28c237e_6d91b154",
       "range": {
         "startLine": 203,
         "startChar": 35,
@@ -257,6 +334,30 @@
       "side": 1,
       "message": "\u003e Indeed, but we decided to keep it simple at the beginning and introduce that once we have everything working for dual primary.\n\nTo be honest, I think this way is more involved because the variable has to be set in the setup.env, in the Makefile, in the cloudformation, in the python script etc.\n\nIf the variable was coming from the secret manager directly all of this could be avoided.\n\nAnyway, up to you we can do this as a follow up change if you prefer",
       "parentUuid": "eeabefc5_27129771",
+      "range": {
+        "startLine": 202,
+        "startChar": 0,
+        "endLine": 205,
+        "endChar": 19
+      },
+      "revId": "c25ac90296c5f1e179c1142c8f8147c1aecf92d7",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "24ed01b7_f310c2cb",
+        "filename": "dual-primary/cf-service-primary.yml",
+        "patchSetId": 13
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2023-01-04T12:25:19Z",
+      "side": 1,
+      "message": "We agreed that It will be loaded from secrets.",
+      "parentUuid": "b3cabf62_942495cf",
       "range": {
         "startLine": 202,
         "startChar": 0,
@@ -373,6 +474,24 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "49496bc0_eed9569f",
+        "filename": "gerrit/entrypoint.sh",
+        "patchSetId": 13
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2023-01-04T12:25:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "32788375_9c51cbec",
+      "revId": "c25ac90296c5f1e179c1142c8f8147c1aecf92d7",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3fcccfd1_c83eb64d",
@@ -445,6 +564,30 @@
       "side": 1,
       "message": "\u003e \u003e Shouldn\u0027t we get primary1 instance requests from primary1 LB and primary2 instance requests from primary2 instead?\n\u003e \n\u003e if primary1 and primary2 share the data via AWS EBS Elastic Volumes, do we care who serve the data? it looks more scalable and resilient to have a LB that serves data from both.\n\nYou\u0027re right, primary1 and primary2 share _git_ data via EFS (note not EBS), so perhaps it makes no difference.\n\nDo you guys know if it\u0027s guaranteed that git data is immediately available through the _other_ gerri in _every_ case? I am thinking for example `trustFolderStats`.",
       "parentUuid": "7e2898aa_593b1665",
+      "revId": "c25ac90296c5f1e179c1142c8f8147c1aecf92d7",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff9eb687_f6880f3d",
+        "filename": "gerrit/etc/replication_replica.config.template",
+        "patchSetId": 13
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2023-01-04T12:25:19Z",
+      "side": 1,
+      "message": "makes sense to me.",
+      "parentUuid": "dc528050_de0976e9",
+      "range": {
+        "startLine": 10,
+        "startChar": 11,
+        "endLine": 10,
+        "endChar": 26
+      },
       "revId": "c25ac90296c5f1e179c1142c8f8147c1aecf92d7",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
