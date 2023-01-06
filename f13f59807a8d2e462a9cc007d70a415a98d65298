@@ -24,6 +24,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dfcbfed6_041309fa",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 26
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2023-01-06T17:01:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b4d34d49_d34a699a",
+      "range": {
+        "startLine": 7,
+        "startChar": 69,
+        "endLine": 7,
+        "endChar": 70
+      },
+      "revId": "f13f59807a8d2e462a9cc007d70a415a98d65298",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5d7d1b29_bae51358",
@@ -43,6 +67,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "79197365_63aea5d7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 26
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2023-01-06T17:01:50Z",
+      "side": 1,
+      "message": "you mean new line?",
+      "parentUuid": "5d7d1b29_bae51358",
+      "revId": "f13f59807a8d2e462a9cc007d70a415a98d65298",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "48135926_1fd56b08",
         "filename": "Secrets.md",
         "patchSetId": 26
@@ -54,6 +96,30 @@
       "writtenOn": "2023-01-06T16:34:25Z",
       "side": 1,
       "message": "I think this could be phrased as:\n\n```\nThis is only needed if you are setting up a recipe that requires replication (i.e. primary-replica or dual-primary)`",
+      "range": {
+        "startLine": 99,
+        "startChar": 80,
+        "endLine": 99,
+        "endChar": 104
+      },
+      "revId": "f13f59807a8d2e462a9cc007d70a415a98d65298",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "db9cab13_776dc89c",
+        "filename": "Secrets.md",
+        "patchSetId": 26
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2023-01-06T17:01:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "48135926_1fd56b08",
       "range": {
         "startLine": 99,
         "startChar": 80,
@@ -87,6 +153,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5b79210d_5e98e799",
+        "filename": "dual-primary/Makefile",
+        "patchSetId": 26
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2023-01-06T17:01:50Z",
+      "side": 1,
+      "message": "I take note about this to discuss later.",
+      "parentUuid": "afad3a8f_8fa66ca4",
+      "range": {
+        "startLine": 281,
+        "startChar": 57,
+        "endLine": 281,
+        "endChar": 84
+      },
+      "revId": "f13f59807a8d2e462a9cc007d70a415a98d65298",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e2f7db13_02c9e565",
@@ -100,6 +190,24 @@
       "writtenOn": "2023-01-06T16:34:25Z",
       "side": 1,
       "message": "pull-replication does not need adminUrl.\nIf we remove push replication completely this needs to go as well",
+      "revId": "f13f59807a8d2e462a9cc007d70a415a98d65298",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb29e14c_5efa8959",
+        "filename": "gerrit/etc/replication.config.template",
+        "patchSetId": 26
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2023-01-06T17:01:50Z",
+      "side": 1,
+      "message": "does it need url?",
+      "parentUuid": "e2f7db13_02c9e565",
       "revId": "f13f59807a8d2e462a9cc007d70a415a98d65298",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
@@ -121,6 +229,24 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "82e3cd78_db947a1a",
+        "filename": "gerrit/etc/replication_replica.config.template",
+        "patchSetId": 26
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2023-01-06T17:01:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c5e1a170_68fa66db",
+      "revId": "f13f59807a8d2e462a9cc007d70a415a98d65298",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "09a4eccc_c4579a34",
@@ -138,6 +264,24 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "aeb3247a_091c94d0",
+        "filename": "gerrit/setup_gerrit.py",
+        "patchSetId": 26
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2023-01-06T17:01:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "09a4eccc_c4579a34",
+      "revId": "f13f59807a8d2e462a9cc007d70a415a98d65298",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "574ad7ea_8ca65c90",
@@ -151,6 +295,24 @@
       "writtenOn": "2023-01-06T16:34:25Z",
       "side": 1,
       "message": "this comment needs to be removed",
+      "revId": "f13f59807a8d2e462a9cc007d70a415a98d65298",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "10db1958_f476b381",
+        "filename": "gerrit/setup_gerrit.py",
+        "patchSetId": 26
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2023-01-06T17:01:50Z",
+      "side": 1,
+      "message": "This has been fix in the latest patchset.",
+      "parentUuid": "574ad7ea_8ca65c90",
       "revId": "f13f59807a8d2e462a9cc007d70a415a98d65298",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
@@ -178,6 +340,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fca0835b_3bc7316f",
+        "filename": "gerrit/setup_gerrit.py",
+        "patchSetId": 26
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2023-01-06T17:01:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0e3eeca_9f563d3e",
+      "range": {
+        "startLine": 199,
+        "startChar": 14,
+        "endLine": 199,
+        "endChar": 59
+      },
+      "revId": "f13f59807a8d2e462a9cc007d70a415a98d65298",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1ccccccd_a7e91f83",
@@ -191,6 +377,24 @@
       "writtenOn": "2023-01-06T16:34:25Z",
       "side": 1,
       "message": "this is not a replica FQDN right? this is the primaries one",
+      "revId": "f13f59807a8d2e462a9cc007d70a415a98d65298",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a2fa1c3_fe90660e",
+        "filename": "gerrit/setup_gerrit.py",
+        "patchSetId": 26
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2023-01-06T17:01:50Z",
+      "side": 1,
+      "message": "good catch",
+      "parentUuid": "1ccccccd_a7e91f83",
       "revId": "f13f59807a8d2e462a9cc007d70a415a98d65298",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
@@ -212,6 +416,24 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b739c153_75a88b74",
+        "filename": "gerrit/setup_gerrit.py",
+        "patchSetId": 26
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2023-01-06T17:01:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "108f7e0e_0ac41898",
+      "revId": "f13f59807a8d2e462a9cc007d70a415a98d65298",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ef758b3f_dda3ab8f",
@@ -225,6 +447,24 @@
       "writtenOn": "2023-01-06T16:34:25Z",
       "side": 1,
       "message": "I think we need to have a conversation with the team.\nIf push replication needs to go completely, then there is some clean up that needs to be done here, as some documentation is redundant.\n\nAls, if we remove push-replication completely, then some _components_ need to go.\nfor example the git-daemon can be removed completely from the code-base, as well as the replication ssh keys secrets",
+      "revId": "f13f59807a8d2e462a9cc007d70a415a98d65298",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6183b684_f41e8252",
+        "filename": "gerrit/setup_gerrit.py",
+        "patchSetId": 26
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2023-01-06T17:01:50Z",
+      "side": 1,
+      "message": "I will add push replication back and in the next follow-up we could remove it.",
+      "parentUuid": "ef758b3f_dda3ab8f",
       "revId": "f13f59807a8d2e462a9cc007d70a415a98d65298",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }

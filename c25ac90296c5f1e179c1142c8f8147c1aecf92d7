@@ -644,6 +644,24 @@
       "parentUuid": "278571a5_89effffb",
       "revId": "c25ac90296c5f1e179c1142c8f8147c1aecf92d7",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b268590_ce019e4d",
+        "filename": "gerrit/etc/replication_replica.config.template",
+        "patchSetId": 13
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2023-01-06T17:01:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cf867065_d7912b92",
+      "revId": "c25ac90296c5f1e179c1142c8f8147c1aecf92d7",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
