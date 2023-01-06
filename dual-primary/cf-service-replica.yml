@@ -218,7 +218,12 @@ Parameters:
     Type: String
     Default: false
     AllowedValues: [true, false]
-
+  HttpPrimariesGerritSubdomain:
+    Description: The subdomain of the loadbalancer serving HTTP traffic to the primaries
+    Type: String
+  GerritPrimaryInstanceId:
+    Description: Gerrit InstanceId shared for all primaries in the same HA
+    Type: String
 Mappings:
   XRay:
     Info:
@@ -288,6 +293,8 @@ Resources:
                       Value: !Sub 'proxy-https://*:${HTTPContainePort}/'
                     - Name: CONTAINER_REPLICA
                       Value: true
+                    - Name: SETUP_REPLICATION
+                      Value: true
                     - Name: GERRIT_KEY_PREFIX
                       Value: !Ref GerritKeyPrefix
                     - Name: AWS_REGION
@@ -324,6 +331,12 @@ Resources:
                       Value: !Ref MetricsCloudwatchDryRun
                     - Name: METRICS_CLOUDWATCH_EXCLUDE_METRICS_LIST
                       Value: !Join [',', !Ref MetricsCloudwatchExcludeMetrics]
+                    - Name: HOSTED_ZONE_NAME
+                      Value: !Ref HostedZoneName
+                    - Name: HTTP_PRIMARIES_GERRIT_SUBDOMAIN
+                      Value: !Ref HttpPrimariesGerritSubdomain
+                    - Name: GERRIT_PRIMARY_INSTANCE_ID
+                      Value: !Ref GerritPrimaryInstanceId
                   Ulimits:
                     - Name: nofile
                       HardLimit: !Ref FileDescriptorsHardLimit
