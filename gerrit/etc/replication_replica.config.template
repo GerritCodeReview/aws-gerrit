@@ -17,6 +17,7 @@
   timeout = 60
   tagopt= --no-tags
 
+{% if GERRIT_PRIMARY2_INSTANCE_ID %}
 [remote "{{GERRIT_PRIMARY2_INSTANCE_ID}}"]
   url = {{ HTTP_PRIMARIES_LB }}
   mirror = true
@@ -27,3 +28,4 @@
   replicateHiddenProjects = true
   timeout = 60
   tagopt= --no-tags
+{% endif %}
