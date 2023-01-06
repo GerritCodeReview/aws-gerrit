@@ -192,12 +192,22 @@ if setupReplication:
     if containerReplica:
         print("Setting replica Replication config in " + str(replication_config_path))
         template = env.get_template("replication_replica.config.template")
+<<<<<<< PATCH SET (190557 Add pull-replication plugin in primary-replica topology : - )
+        with open(GERRIT_CONFIG_DIRECTORY + "replication.config", 'w', encoding='utf-8') as f:
+            REPLICA_FQDN = os.getenv('HTTP_PRIMARIES_GERRIT_SUBDOMAIN') + "." + os.getenv('HOSTED_ZONE_NAME')
+=======
         with open(replication_config_path, 'w', encoding='utf-8') as f:
             PRIMARIES_FQDN = os.getenv('HTTP_PRIMARIES_GERRIT_SUBDOMAIN') + "." + os.getenv('HOSTED_ZONE_NAME')
+>>>>>>> BASE      (793acc Add pull-replication plugin in `dual-primary`(no multi-site))
             REPLICATE_ON_STARTUP = "false"
             f.write(template.render(
                     GERRIT_PRIMARY_INSTANCE_ID=os.getenv('GERRIT_PRIMARY_INSTANCE_ID'),
+<<<<<<< PATCH SET (190557 Add pull-replication plugin in primary-replica topology : - )
+                    HTTP_PRIMARIES_LB="https://" + REPLICA_FQDN + "/${name}",
+                    REPLICATE_ON_STARTUP=REPLICATE_ON_STARTUP
+=======
                     HTTP_PRIMARIES_LB="https://" + PRIMARIES_FQDN + "/${name}"
+>>>>>>> BASE      (793acc Add pull-replication plugin in `dual-primary`(no multi-site))
                     ))
     else:
         print("Setting primary Replication config in " + str(replication_config_path))
