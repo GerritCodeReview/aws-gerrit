@@ -93,3 +93,12 @@ ssh-keygen -b 2048 -m PEM -t rsa -f /tmp/secrets/replication_user_id_rsa -q -N "
 
 * replication_user_id_rsa
 * replication_user_id_rsa.pub
+
+### Pull-Replication Bearer Token Authentication
+
+*Optional*. This is only needed if you are setting up a recipe that requires replication 
+(i.e. primary-replica or dual-primary)`
+
+```bash
+openssl rand -hex 20 > /tmp/secrets/pull_replication_bearer_token
+```
