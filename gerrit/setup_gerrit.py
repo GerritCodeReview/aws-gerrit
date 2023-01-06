@@ -203,7 +203,7 @@ if setupReplication:
             REPLICATE_ON_STARTUP = "true"
             f.write(template.render(
                     GERRIT_PRIMARY1_INSTANCE_ID=os.getenv('GERRIT_PRIMARY1_INSTANCE_ID'),
-                    GERRIT_PRIMARY2_INSTANCE_ID=os.getenv('GERRIT_PRIMARY2_INSTANCE_ID'),
+                    GERRIT_PRIMARY2_INSTANCE_ID=os.getenv('GERRIT_PRIMARY2_INSTANCE_ID', ''),
                     HTTP_PRIMARIES_LB="https://" + REPLICA_FQDN + "/${name}",
                     REPLICATE_ON_STARTUP=REPLICATE_ON_STARTUP
                     ))
