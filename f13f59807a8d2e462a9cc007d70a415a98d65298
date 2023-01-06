@@ -1,0 +1,232 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b4d34d49_d34a699a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 26
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-01-06T16:34:25Z",
+      "side": 1,
+      "message": "nit: remove colon simbol",
+      "range": {
+        "startLine": 7,
+        "startChar": 69,
+        "endLine": 7,
+        "endChar": 70
+      },
+      "revId": "f13f59807a8d2e462a9cc007d70a415a98d65298",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5d7d1b29_bae51358",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 26
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-01-06T16:34:25Z",
+      "side": 1,
+      "message": "nit: add a space here to separate summary from description.",
+      "revId": "f13f59807a8d2e462a9cc007d70a415a98d65298",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "48135926_1fd56b08",
+        "filename": "Secrets.md",
+        "patchSetId": 26
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-01-06T16:34:25Z",
+      "side": 1,
+      "message": "I think this could be phrased as:\n\n```\nThis is only needed if you are setting up a recipe that requires replication (i.e. primary-replica or dual-primary)`",
+      "range": {
+        "startLine": 99,
+        "startChar": 80,
+        "endLine": 99,
+        "endChar": 104
+      },
+      "revId": "f13f59807a8d2e462a9cc007d70a415a98d65298",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "afad3a8f_8fa66ca4",
+        "filename": "dual-primary/Makefile",
+        "patchSetId": 26
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-01-06T16:34:25Z",
+      "side": 1,
+      "message": "`GERRIT_PRIMARY1_INSTANCE_ID` and `GERRIT_PRIMARY2_INSTANCE_ID` are optional (as per documentation) and should be passed only when defined, however the cloudformation templates has no defaults.\n\nThis is not a problem just with this snippet of code, but a problem that exists even before that.\nAs a separate change we should either make these required or to update the documentation.",
+      "range": {
+        "startLine": 281,
+        "startChar": 57,
+        "endLine": 281,
+        "endChar": 84
+      },
+      "revId": "f13f59807a8d2e462a9cc007d70a415a98d65298",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e2f7db13_02c9e565",
+        "filename": "gerrit/etc/replication.config.template",
+        "patchSetId": 26
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-01-06T16:34:25Z",
+      "side": 1,
+      "message": "pull-replication does not need adminUrl.\nIf we remove push replication completely this needs to go as well",
+      "revId": "f13f59807a8d2e462a9cc007d70a415a98d65298",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c5e1a170_68fa66db",
+        "filename": "gerrit/etc/replication_replica.config.template",
+        "patchSetId": 26
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-01-06T16:34:25Z",
+      "side": 1,
+      "message": "Since we have a separate replication config template from primary and replica and we always want to replicate on start up for replicas, perhaps we can loose the variable and hardcode `true` here?",
+      "revId": "f13f59807a8d2e462a9cc007d70a415a98d65298",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "09a4eccc_c4579a34",
+        "filename": "gerrit/setup_gerrit.py",
+        "patchSetId": 26
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-01-06T16:34:25Z",
+      "side": 1,
+      "message": "This line could be moved to L197",
+      "revId": "f13f59807a8d2e462a9cc007d70a415a98d65298",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "574ad7ea_8ca65c90",
+        "filename": "gerrit/setup_gerrit.py",
+        "patchSetId": 26
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-01-06T16:34:25Z",
+      "side": 1,
+      "message": "this comment needs to be removed",
+      "revId": "f13f59807a8d2e462a9cc007d70a415a98d65298",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e0e3eeca_9f563d3e",
+        "filename": "gerrit/setup_gerrit.py",
+        "patchSetId": 26
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-01-06T16:34:25Z",
+      "side": 1,
+      "message": "nit: this concatenation now exists 4 times in this file.\nConsider having one single:\n\n```\nreplication_config_path \u003d GERRIT_CONFIG_DIRECTORY + \"replication.config\n```",
+      "range": {
+        "startLine": 199,
+        "startChar": 14,
+        "endLine": 199,
+        "endChar": 59
+      },
+      "revId": "f13f59807a8d2e462a9cc007d70a415a98d65298",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ccccccd_a7e91f83",
+        "filename": "gerrit/setup_gerrit.py",
+        "patchSetId": 26
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-01-06T16:34:25Z",
+      "side": 1,
+      "message": "this is not a replica FQDN right? this is the primaries one",
+      "revId": "f13f59807a8d2e462a9cc007d70a415a98d65298",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "108f7e0e_0ac41898",
+        "filename": "gerrit/setup_gerrit.py",
+        "patchSetId": 26
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-01-06T16:34:25Z",
+      "side": 1,
+      "message": "as my previous comment, `REPLICATE_ON_STARTUP` is always true in `replication_replica.config.template, we could loose this variable and hardcode it to true in the template",
+      "revId": "f13f59807a8d2e462a9cc007d70a415a98d65298",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef758b3f_dda3ab8f",
+        "filename": "gerrit/setup_gerrit.py",
+        "patchSetId": 26
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-01-06T16:34:25Z",
+      "side": 1,
+      "message": "I think we need to have a conversation with the team.\nIf push replication needs to go completely, then there is some clean up that needs to be done here, as some documentation is redundant.\n\nAls, if we remove push-replication completely, then some _components_ need to go.\nfor example the git-daemon can be removed completely from the code-base, as well as the replication ssh keys secrets",
+      "revId": "f13f59807a8d2e462a9cc007d70a415a98d65298",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}

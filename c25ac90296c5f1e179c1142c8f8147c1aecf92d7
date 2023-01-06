@@ -626,6 +626,24 @@
       "parentUuid": "d6996d6f_b8fc517d",
       "revId": "c25ac90296c5f1e179c1142c8f8147c1aecf92d7",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cf867065_d7912b92",
+        "filename": "gerrit/etc/replication_replica.config.template",
+        "patchSetId": 13
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-01-06T16:34:25Z",
+      "side": 1,
+      "message": "As discussed this is not an issue as for now.\nIf any optimization is required we will address it separately.",
+      "parentUuid": "278571a5_89effffb",
+      "revId": "c25ac90296c5f1e179c1142c8f8147c1aecf92d7",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
