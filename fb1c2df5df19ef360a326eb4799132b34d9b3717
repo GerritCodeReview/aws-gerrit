@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9189358b_d034f598",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 31
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-01-06T17:13:42Z",
+      "side": 1,
+      "message": "@maczech@gmail.com @luca.milanesio@gmail.com, this LGTM, do you mind doing a sanity check, as you are mostly expert with pull-replication?",
+      "revId": "fb1c2df5df19ef360a326eb4799132b34d9b3717",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
