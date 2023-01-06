@@ -97,6 +97,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "36f8f821_917162ea",
+        "filename": "Secrets.md",
+        "patchSetId": 22
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-01-06T10:27:11Z",
+      "side": 1,
+      "message": "actually, I think the `Optional` should stay, because if you setup `single-primary` you don\u0027t need any replication, so this bearer token would be unnecessary.\n\nHowever, if you use `primary-replica` or `dual-primary` you _do_ need to set it.\nSo my comment was about this sentence:\n\n\u003e This is only needed if you are setting up a pull-replication plugin to use Http Bearer Token Authentication.\n\nBecause it reads so that you have a choice if you want to set pull-replication to use HTTP bearer token (as opposed to basic auth), when in fact you don\u0027t have that choice.\n\nHope it makes sense",
+      "parentUuid": "57578f0d_25d682c4",
+      "range": {
+        "startLine": 97,
+        "startChar": 80,
+        "endLine": 98,
+        "endChar": 15
+      },
+      "revId": "67e9c500f49a85c90ae1b5b9ee9bfeead5ae2ee4",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "16e4de37_90284d3d",
         "filename": "gerrit/setup_gerrit.py",
         "patchSetId": 22
@@ -126,6 +150,24 @@
       "side": 1,
       "message": "I guess that you mean that the comment \n` # If we don\u0027t need the monitoring stack we can avoid to set this token\n `\n  should go",
       "parentUuid": "16e4de37_90284d3d",
+      "revId": "67e9c500f49a85c90ae1b5b9ee9bfeead5ae2ee4",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a41bcf1_ce68dbfc",
+        "filename": "gerrit/setup_gerrit.py",
+        "patchSetId": 22
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-01-06T10:27:11Z",
+      "side": 1,
+      "message": "yes exactly",
+      "parentUuid": "cc3a4d52_345f62eb",
       "revId": "67e9c500f49a85c90ae1b5b9ee9bfeead5ae2ee4",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
