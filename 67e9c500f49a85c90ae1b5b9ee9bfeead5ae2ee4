@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4e413cdf_44e50fd4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 22
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-01-06T10:06:46Z",
+      "side": 1,
+      "message": "I think these should probably be two different CRs, stuck in a chain, where each one is addressing one topology only.\nIt will make it easier to review and the commit will atomically address one issue only.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 65
+      },
+      "revId": "67e9c500f49a85c90ae1b5b9ee9bfeead5ae2ee4",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "96032ac8_64d0d9ab",
+        "filename": "Secrets.md",
+        "patchSetId": 22
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-01-06T10:06:46Z",
+      "side": 1,
+      "message": "is there a way to use pull-replication _without_ using the bearer token?\nMy understanding is that if you use `primary-replica` or `dual-primary` this is always needed right?",
+      "range": {
+        "startLine": 97,
+        "startChar": 80,
+        "endLine": 98,
+        "endChar": 15
+      },
+      "revId": "67e9c500f49a85c90ae1b5b9ee9bfeead5ae2ee4",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "16e4de37_90284d3d",
+        "filename": "gerrit/setup_gerrit.py",
+        "patchSetId": 22
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-01-06T10:06:46Z",
+      "side": 1,
+      "message": "nit: this commit does not apply to this section",
+      "revId": "67e9c500f49a85c90ae1b5b9ee9bfeead5ae2ee4",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eeadc91b_d090bcb9",
+        "filename": "gerrit/setup_gerrit.py",
+        "patchSetId": 22
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-01-06T10:06:46Z",
+      "side": 1,
+      "message": "We are not setting the environment variable anymore, possibly we should mention that one needs to set the secret.",
+      "range": {
+        "startLine": 193,
+        "startChar": 27,
+        "endLine": 193,
+        "endChar": 56
+      },
+      "revId": "67e9c500f49a85c90ae1b5b9ee9bfeead5ae2ee4",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
