@@ -181,6 +181,9 @@ Parameters:
     Type: String
     Default: false
     AllowedValues: [true, false]
+  HttpReplicaSubdomain:
+    Description: The subdomain of the loadbalancer serving HTTP traffic to the replicas
+    Type: String
 
 Mappings:
   XRay:
@@ -306,6 +309,8 @@ Resources:
                       Value: !Ref MetricsCloudwatchDryRun
                     - Name: METRICS_CLOUDWATCH_EXCLUDE_METRICS_LIST
                       Value: !Join [',', !Ref MetricsCloudwatchExcludeMetrics]
+                    - Name: HTTP_REPLICA_SUBDOMAIN
+                      Value: !Ref HttpReplicaSubdomain
                   Ulimits:
                     - Name: nofile
                       HardLimit: !Ref FileDescriptorsHardLimit
