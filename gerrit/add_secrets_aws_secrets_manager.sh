@@ -76,3 +76,8 @@ if [ -f "$SECRETS_DIRECTORY/prometheus_bearer_token" ]; then
   echo "Adding Prometheus bearer token..."
   set-secret-string prometheus_bearer_token
 fi
+
+if [ -f "$SECRETS_DIRECTORY/pull_replication_bearer_token" ]; then
+  echo "Adding Pull-Replication Bearer Token..."
+  set-secret-string pull_replication_bearer_token
+fi

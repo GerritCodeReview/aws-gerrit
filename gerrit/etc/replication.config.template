@@ -17,6 +17,18 @@
   replicateHiddenProjects = true
   timeout = 60
 
+[remote "replica-1-pull"]
+  # Issue 16694: pull-replication: Do not force configuration of `url` in remotes
+  url = {{ REPLICA_1_URL }}
+  apiUrl = {{ REPLICA_1_API_URL }}
+  mirror = true
+  # Issue 16577: pull-replication: Do not force configuration of `fetch` in remotes
+  fetch = +refs/*:refs/*
+  threads = 10
+  createMissingRepositories = true
+  replicateProjectDeletions = true
+  replicateHiddenProjects = true
+  timeout = 60
 
 {% if REMOTE_TARGET %}
 [remote "{{REMOTE_TARGET_URL}}"]
