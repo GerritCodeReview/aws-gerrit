@@ -10,6 +10,8 @@ DNS_ROUTING_TEMPLATE:=cf-dns-route.yml
 CLOUDWATCH_DASHBOARD_TEMPLATE:=cf-dashboard.yml
 AWS_FC_COMMAND=export AWS_PAGER=;aws cloudformation
 GIT_GC_SOURCE_PATH=/gerrit-mount-point/gerrit-git
+PLUGINS=javamelody healthcheck metrics-reporter-cloudwatch pull-replication
+PLUGINS_LIBS_LINKS=pull-replication
 
 .PHONY: create-all delete-all \
 				cluster cluster-keys service-primary service-replica dns-routing dashboard \
@@ -95,6 +97,7 @@ endif
 		ParameterKey=GerritCPU,ParameterValue=$(GERRIT_CPU) \
 		ParameterKey=GerritHeapLimit,ParameterValue=$(GERRIT_HEAP_LIMIT) \
 		ParameterKey=JgitCacheSize,ParameterValue=$(JGIT_CACHE_SIZE) \
+		ParameterKey=HttpReplicaSubdomain,ParameterValue=$(HTTP_REPLICA_SUBDOMAIN) \
 		$(JGIT_OPTIONAL_PARAMS) \
 		$(LDAP_ACCOUNT_PATTERN_PARAM) \
 		$(PRIMARY_SERVICE_OPTIONAL_PARAMS) \
@@ -114,6 +117,7 @@ service-replica: set-optional-params-metrics-cloudwatch \
 ifdef LOAD_BALANCER_SCHEME
 		$(eval REPLICA_SERVICE_OPTIONAL_PARAMS := $(REPLICA_SERVICE_OPTIONAL_PARAMS) ParameterKey=LoadBalancerScheme,ParameterValue=$(LOAD_BALANCER_SCHEME))
 endif
+
 ifdef GERRIT_REPLICA_INSTANCE_ID
 		$(eval REPLICA_SERVICE_OPTIONAL_PARAMS := $(REPLICA_SERVICE_OPTIONAL_PARAMS) ParameterKey=InstanceId,ParameterValue=$(GERRIT_REPLICA_INSTANCE_ID))
 endif
@@ -141,6 +145,8 @@ endif
 		ParameterKey=GerritCPU,ParameterValue=$(GERRIT_CPU) \
 		ParameterKey=GerritHeapLimit,ParameterValue=$(GERRIT_HEAP_LIMIT) \
 		ParameterKey=JgitCacheSize,ParameterValue=$(JGIT_CACHE_SIZE) \
+		ParameterKey=HttpPrimaryGerritSubdomain,ParameterValue=$(HTTP_PRIMARY_SUBDOMAIN) \
+		ParameterKey=GerritPrimarynstanceId,ParameterValue=$(GERRIT_PRIMARY_INSTANCE_ID) \
 		$(JGIT_OPTIONAL_PARAMS) \
 		$(LDAP_ACCOUNT_PATTERN_PARAM) \
 		$(REPLICA_SERVICE_OPTIONAL_PARAMS) \
@@ -289,7 +295,7 @@ delete-all: delete-dns-routing wait-for-dns-routing-deletion \
 						delete-dashboard wait-for-dashboard-deletion
 
 gerrit-publish:
-	$(MAKE) -C ../gerrit gerrit-publish RECIPE=primary-replica
+	$(MAKE) -C ../gerrit gerrit-publish RECIPE=primary-replica PLUGINS="$(PLUGINS)" PLUGINS_LIBS_LINKS="$(PLUGINS_LIBS_LINKS)"
 
 git-daemon-publish:
 	$(MAKE) -C git-daemon git-daemon-publish

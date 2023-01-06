@@ -197,7 +197,8 @@ if setupReplication:
             REPLICATE_ON_STARTUP = "false"
             f.write(template.render(
                     GERRIT_PRIMARY_INSTANCE_ID=os.getenv('GERRIT_PRIMARY_INSTANCE_ID'),
-                    HTTP_PRIMARIES_LB="https://" + PRIMARIES_FQDN + "/${name}"
+                    HTTP_PRIMARIES_LB="https://" + PRIMARIES_FQDN + "/${name}",
+                    REPLICATE_ON_STARTUP=REPLICATE_ON_STARTUP
                     ))
     else:
         print("Setting primary Replication config in " + str(replication_config_path))
