@@ -12,15 +12,15 @@ SERVICE_REPLICATION_TEMPLATE:=cf-service-replication.yml
 AWS_FC_COMMAND=export AWS_PAGER=;aws cloudformation
 GIT_GC_SOURCE_PATH=/mnt/efs/gerrit-shared/git
 
-SINGLE_SITE_PLUGINS=javamelody high-availability healthcheck metrics-reporter-cloudwatch
+SINGLE_SITE_PLUGINS=javamelody high-availability healthcheck metrics-reporter-cloudwatch pull-replication
 
 HA_SITE_PLUGINS=$(SINGLE_SITE_PLUGINS) aws-dynamodb-refdb
-HA_SITE_PLUGINS_LIBS_LINKS=high-availability
+HA_SITE_PLUGINS_LIBS_LINKS=high-availability pull-replication
 HA_SITE_MAVEN_LIBS=global-refdb~$(GLOBALREFDB_LIB_VER)
 
 MULTI_SITE_PLUGINS=$(SINGLE_SITE_PLUGINS) multi-site events-kafka websession-broker aws-dynamodb-refdb
-MULTI_SITE_PLUGINS_LIBS_LINKS=multi-site replication
-MULTI_SITE_MAVEN_LIBS=events-broker~$(EVENTSBROKER_LIB_VER)
+MULTI_SITE_PLUGINS_LIBS_LINKS=multi-site replication pull-replication
+MULTI_SITE_MAVEN_LIBS=events-broker~$(EVENTSBROKER_LIB_VER) global-refdb~${GLOBALREFDB_LIB_VER}
 
 .PHONY: create-all delete-all \
 				wait-for-replication-creation wait-for-service-replication-deletion service-replication delete-service-replication \
@@ -135,6 +135,7 @@ endif
 		ParameterKey=HttpSubdomain,ParameterValue=$(HTTP_PRIMARY1_SUBDOMAIN) \
 		ParameterKey=SshSubdomain,ParameterValue=$(SSH_PRIMARY1_SUBDOMAIN) \
 		ParameterKey=SshReplicaSubdomain,ParameterValue=$(SSH_REPLICA_SUBDOMAIN) \
+		ParameterKey=HttpReplicaSubdomain,ParameterValue=$(HTTP_REPLICA_SUBDOMAIN) \
 		ParameterKey=DockerRegistryUrl,ParameterValue=$(DOCKER_REGISTRY_URI) \
 		ParameterKey=CertificateArn,ParameterValue=$(SSL_CERTIFICATE_ARN) \
 		ParameterKey=GerritKeyPrefix,ParameterValue=$(GERRIT_KEY_PREFIX)\
@@ -197,6 +198,7 @@ endif
 		ParameterKey=HttpSubdomain,ParameterValue=$(HTTP_PRIMARY2_SUBDOMAIN) \
 		ParameterKey=SshSubdomain,ParameterValue=$(SSH_PRIMARY2_SUBDOMAIN) \
 		ParameterKey=SshReplicaSubdomain,ParameterValue=$(SSH_REPLICA_SUBDOMAIN) \
+		ParameterKey=HttpReplicaSubdomain,ParameterValue=$(HTTP_REPLICA_SUBDOMAIN) \
 		ParameterKey=DockerRegistryUrl,ParameterValue=$(DOCKER_REGISTRY_URI) \
 		ParameterKey=CertificateArn,ParameterValue=$(SSL_CERTIFICATE_ARN) \
 		ParameterKey=GerritKeyPrefix,ParameterValue=$(GERRIT_KEY_PREFIX)\
@@ -275,6 +277,9 @@ endif
 		ParameterKey=GerritCPU,ParameterValue=$(GERRIT_CPU) \
 		ParameterKey=GerritHeapLimit,ParameterValue=$(GERRIT_HEAP_LIMIT) \
 		ParameterKey=JgitCacheSize,ParameterValue=$(JGIT_CACHE_SIZE) \
+		ParameterKey=HttpPrimariesGerritSubdomain,ParameterValue=$(HTTP_PRIMARIES_GERRIT_SUBDOMAIN) \
+		ParameterKey=GerritPrimary1InstanceId,ParameterValue=$(GERRIT_PRIMARY1_INSTANCE_ID) \
+		ParameterKey=GerritPrimary2InstanceId,ParameterValue=$(GERRIT_PRIMARY2_INSTANCE_ID) \
 		$(JGIT_OPTIONAL_PARAMS) \
 		$(LDAP_ACCOUNT_PATTERN_PARAM) \
 		$(REPLICA_SERVICE_OPTIONAL_PARAMS) \
