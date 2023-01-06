@@ -272,6 +272,24 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9b8efa21_58cc468b",
+        "filename": "gerrit/etc/replication.config.template",
+        "patchSetId": 26
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2023-01-06T17:21:09Z",
+      "side": 1,
+      "message": "I added a note in the file `replication.config.template`",
+      "parentUuid": "7ec015bf_1699135c",
+      "revId": "f13f59807a8d2e462a9cc007d70a415a98d65298",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c5e1a170_68fa66db",
