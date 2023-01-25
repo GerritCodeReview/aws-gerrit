@@ -1,5 +1,7 @@
 #!/bin/bash
 
+THIS_SCRIPT_LOCKFILE="git-gc-script.lock"
+
 JGIT=${JGIT:-$(which jgit)}
 GIT=${GIT:-$(which git)}
 GIT_HOME=${GIT_HOME:-"/git"}
@@ -12,16 +14,24 @@ INCOMING_EXPIRE_SECONDS=${INCOMING_EXPIRE_SECONDS:-"43200"} # 12 hours
 KEEP_EXPIRE_SECONDS=${KEEP_EXPIRE_SECONDS:-"43200"} # 12 hours
 TMP_EXPIRE_SECONDS=${TMP_EXPIRE_SECONDS:-"43200"} # 12 hours
 MAX_HEADS_FOR_BITMAPS=${MAX_HEADS_FOR_BITMAPS:-"300"}
+EXTRA_GC_LOCK_FILES=${EXTRA_GC_LOCK_FILES:-""}
 
 function gc_project {
   proj=$1
-
-  PROJECT_PATH=$GIT_HOME/"$proj".git
+  PROJECT_PATH=$(projectPath "$proj")
   pushd "$PROJECT_PATH" > /dev/null || {
     status_code=$?
     err_proj "$proj" "Could not move into $PROJECT_PATH ($status_code). Skipping."
     return 1
   }
+
+  hasNoLockFiles "$proj" || {
+    status_code=$?
+    err_proj "$proj" "Could not GC $proj ($status_code)."
+    return 1
+  }
+
+  lock "$proj" "$PROJECT_PATH"
 
   log_env
 
@@ -45,12 +55,7 @@ function java_heap_for_repo() {
 
 function do_gc() {
     proj=$1
-
-    should_continue_GC "$proj" || {
-      status_code=$?
-      err_proj "$proj" "Could not GC $proj ($status_code)."
-      return 1
-    }
+    PROJECT_PATH=$(projectPath "$proj")
 
     log_project "$proj" "Disable JGit automatic GC (gc.auto=0; gc.autoPackLimit=0)"
     $GIT config gc.auto 0
@@ -73,11 +78,13 @@ function do_gc() {
     (java_args=$JAVA_ARGS $JGIT gc $GIT_GC_OPTION 2>&1) || {
       status_code=$?
       err_proj "$proj" "Could not GC $proj ($status_code)."
+      unlock "$proj" "$PROJECT_PATH"
       return 1
     }
     end=$SECONDS
     duration=$(( end - start ))
     log_project "$proj" "GC|took $duration seconds"
+    unlock "$proj" "$PROJECT_PATH"
     return 0
 }
 
@@ -127,24 +134,34 @@ function oldest_pack_object {
    echo "$out"
 }
 
-function should_continue_GC() {
+function hasNoLockFiles() {
   proj=$1
-  gc_log_lock="gc.log.lock"
-  lockTime=$(find . -maxdepth 1 -name $gc_log_lock -type f | grep -q . && stat -c "%Z" $gc_log_lock)
+  jgit_lock_file="gc.log.lock"
+
+  for lockfile in $(echo "$jgit_lock_file,$THIS_SCRIPT_LOCKFILE,$EXTRA_GC_LOCK_FILES" | sed "s/,/ /g"); do
+    noLockFile "$proj" "$lockfile" || return 1
+  done
+  return 0
+}
+
+function noLockFile() {
+  proj=$1
+  lockfile=$2
+  lockTime=$(find . -maxdepth 1 -name "$lockfile" -type f | grep -q . && stat -c "%Z" "$lockfile")
 
   if [ -n "$lockTime" ]
   then
-    log_project "$proj" "'$gc_log_lock' exists with stats: [$(stat $gc_log_lock)]"
+    log_project "$proj" "'$lockfile' exists with stats: [$(stat "$lockfile")]"
     now=$(date +%s)
     lockFileAgeSeconds="$((now-lockTime))"
     if (( lockFileAgeSeconds > GC_LOCK_EXPIRE_SECONDS ))
     then
-      log_project "$proj" "Consider '$gc_log_lock' stale since its age ($lockFileAgeSeconds secs) is older than the configured threshold ($GC_LOCK_EXPIRE_SECONDS secs). Removing it and and continuing."
-      rm -vf $gc_log_lock
+      log_project "$proj" "Consider '$lockfile' stale since its age ($lockFileAgeSeconds secs) is older than the configured threshold ($GC_LOCK_EXPIRE_SECONDS secs). Removing it and and continuing."
+      rm -vf "$lockfile"
       # 0 = true
       return 0
     else
-      log_project "$proj" "Consider '$gc_log_lock' still relevant since its age ($lockFileAgeSeconds secs) is younger than the configured threshold ($GC_LOCK_EXPIRE_SECONDS secs). Possibly another GC process is still running? Skipping GC for project $proj."
+      log_project "$proj" "Consider '$lockfile' still relevant since its age ($lockFileAgeSeconds secs) is younger than the configured threshold ($GC_LOCK_EXPIRE_SECONDS secs). Possibly another GC process is still running? Skipping GC for project $proj."
       # 1 = false
       return 1
     fi
@@ -190,6 +207,29 @@ function delete_if_older_than() {
   find . -type f -name "$matchName" -not -newermt "-$secondsAgo seconds" -print -delete
 }
 
+function lock() {
+  proj=$1
+  lockfile_path="$2/$THIS_SCRIPT_LOCKFILE"
+
+   if { set -C; touch "$lockfile_path"; }
+    then
+      log_project "$proj" "Create lockfile: $lockfile_path"
+      trap "rm -f '${lockfile_path}'" EXIT
+      return 0
+    else
+      err_proj "$proj" "Cannot create lockfile: $lockfile_path. file exists."
+      return 1
+   fi
+}
+
+function unlock() {
+  proj=$1
+  lockfile_path="$2/$THIS_SCRIPT_LOCKFILE"
+  log_project "$proj" "Remove lockfile: $lockfile_path"
+  rm -f "$lockfile_path"
+}
+
+
 function log_env() {
   log "######## ENVIRONMENT ########"
   log "# GC_PROJECT_LIST=${GC_PROJECT_LIST}"
@@ -206,6 +246,7 @@ function log_env() {
   log "# INCOMING_EXPIRE_SECONDS=${INCOMING_EXPIRE_SECONDS}"
   log "# KEEP_EXPIRE_SECONDS=${KEEP_EXPIRE_SECONDS}"
   log "# TMP_EXPIRE_SECONDS=${TMP_EXPIRE_SECONDS}"
+  log "# EXTRA_GC_LOCK_FILES=${EXTRA_GC_LOCK_FILES}"
   log "############################"
 }
 
@@ -223,4 +264,9 @@ function log {
 
 function err_proj {
   >&2 echo "$(now)|ERROR|$1|$2"
+}
+
+function projectPath() {
+  proj=$1
+  echo "$GIT_HOME"/"$proj".git
 }
