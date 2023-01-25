@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "718ab4cb_f13d5e50",
+        "filename": "maintenance/git-gc/scripts/utils.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-01-25T16:27:01Z",
+      "side": 1,
+      "message": "Just for consistency with other list based environment variables (i.e. PROJECT_LIST)",
+      "parentUuid": "526f8338_3fc2cfab",
+      "range": {
+        "startLine": 141,
+        "startChar": 26,
+        "endLine": 141,
+        "endChar": 100
+      },
+      "revId": "516df746a84acd97467e72efd0e544182f5b685f",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8d0d88b0_a64a373a",
         "filename": "maintenance/git-gc/scripts/utils.sh",
         "patchSetId": 1
@@ -37,6 +61,30 @@
       "writtenOn": "2023-01-25T15:57:14Z",
       "side": 1,
       "message": "Is this related?",
+      "range": {
+        "startLine": 269,
+        "startChar": 0,
+        "endLine": 272,
+        "endChar": 1
+      },
+      "revId": "516df746a84acd97467e72efd0e544182f5b685f",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3db5c125_8a790ab3",
+        "filename": "maintenance/git-gc/scripts/utils.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-01-25T16:27:01Z",
+      "side": 1,
+      "message": "Yes, we need to be able to construct the path in multiple places now, so I have created a function to DRY how this is done.",
+      "parentUuid": "8d0d88b0_a64a373a",
       "range": {
         "startLine": 269,
         "startChar": 0,
