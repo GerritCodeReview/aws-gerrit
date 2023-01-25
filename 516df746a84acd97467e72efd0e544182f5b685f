@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "526f8338_3fc2cfab",
+        "filename": "maintenance/git-gc/scripts/utils.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2023-01-25T15:57:14Z",
+      "side": 1,
+      "message": "Why not simply using ` ` as delimiters in the first place?",
+      "range": {
+        "startLine": 141,
+        "startChar": 26,
+        "endLine": 141,
+        "endChar": 100
+      },
+      "revId": "516df746a84acd97467e72efd0e544182f5b685f",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8d0d88b0_a64a373a",
+        "filename": "maintenance/git-gc/scripts/utils.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2023-01-25T15:57:14Z",
+      "side": 1,
+      "message": "Is this related?",
+      "range": {
+        "startLine": 269,
+        "startChar": 0,
+        "endLine": 272,
+        "endChar": 1
+      },
+      "revId": "516df746a84acd97467e72efd0e544182f5b685f",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
