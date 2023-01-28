@@ -65,6 +65,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c3c4d9dc_addc8d91",
+        "filename": "maintenance/git-gc/scripts/utils.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2023-01-28T00:11:09Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "718ab4cb_f13d5e50",
+      "range": {
+        "startLine": 141,
+        "startChar": 26,
+        "endLine": 141,
+        "endChar": 100
+      },
+      "revId": "516df746a84acd97467e72efd0e544182f5b685f",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8d0d88b0_a64a373a",
@@ -102,6 +126,30 @@
       "side": 1,
       "message": "Yes, we need to be able to construct the path in multiple places now, so I have created a function to DRY how this is done.",
       "parentUuid": "8d0d88b0_a64a373a",
+      "range": {
+        "startLine": 269,
+        "startChar": 0,
+        "endLine": 272,
+        "endChar": 1
+      },
+      "revId": "516df746a84acd97467e72efd0e544182f5b685f",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9dfd12a7_17cc14c3",
+        "filename": "maintenance/git-gc/scripts/utils.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2023-01-28T00:11:09Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3db5c125_8a790ab3",
       "range": {
         "startLine": 269,
         "startChar": 0,
