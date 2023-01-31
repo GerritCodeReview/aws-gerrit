@@ -221,6 +221,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "82365770_a318372f",
+        "filename": "dual-primary/Makefile",
+        "patchSetId": 26
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2023-01-31T08:52:56Z",
+      "side": 1,
+      "message": "See my comment above: all nodes in HA are balancing, hence they need to share the same instanceId.",
+      "parentUuid": "97000b65_ee3e1c98",
+      "range": {
+        "startLine": 281,
+        "startChar": 57,
+        "endLine": 281,
+        "endChar": 84
+      },
+      "revId": "f13f59807a8d2e462a9cc007d70a415a98d65298",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e2f7db13_02c9e565",
         "filename": "gerrit/etc/replication.config.template",
         "patchSetId": 26

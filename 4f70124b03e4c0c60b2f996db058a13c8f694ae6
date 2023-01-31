@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d1a99d65_d0955e30",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 35
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2023-01-31T08:52:56Z",
+      "side": 1,
+      "message": "Is this related to the pull-replication plugin?",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 29
+      },
+      "revId": "4f70124b03e4c0c60b2f996db058a13c8f694ae6",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "626812ca_b4a10c39",
+        "filename": "dual-primary/Makefile",
+        "patchSetId": 35
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2023-01-31T08:52:56Z",
+      "side": 1,
+      "message": "Is this related to pull-replication?",
+      "range": {
+        "startLine": 23,
+        "startChar": 59,
+        "endLine": 23,
+        "endChar": 95
+      },
+      "revId": "4f70124b03e4c0c60b2f996db058a13c8f694ae6",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c1b93f80_319e77a5",
+        "filename": "dual-primary/cf-service-replica.yml",
+        "patchSetId": 35
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2023-01-31T08:52:56Z",
+      "side": 1,
+      "message": "My understanding of HA is that both have the same instance-id, otherwise you will receive the notifications twice and duplicate events.\n\nThe nodes in HA are load-balancing, therefore they need to balancing also the consumption of messages.",
+      "range": {
+        "startLine": 224,
+        "startChar": 0,
+        "endLine": 228,
+        "endChar": 51
+      },
+      "revId": "4f70124b03e4c0c60b2f996db058a13c8f694ae6",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7532e644_cfc311e2",
+        "filename": "dual-primary/cf-service-replica.yml",
+        "patchSetId": 35
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2023-01-31T08:52:56Z",
+      "side": 1,
+      "message": "See my earlier comment above.",
+      "range": {
+        "startLine": 341,
+        "startChar": 0,
+        "endLine": 344,
+        "endChar": 58
+      },
+      "revId": "4f70124b03e4c0c60b2f996db058a13c8f694ae6",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a5f22d3_734d2eee",
+        "filename": "gerrit/entrypoint.sh",
+        "patchSetId": 35
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2023-01-31T08:52:56Z",
+      "side": 1,
+      "message": "Is this related to pull-replication?",
+      "range": {
+        "startLine": 14,
+        "startChar": 4,
+        "endLine": 14,
+        "endChar": 28
+      },
+      "revId": "4f70124b03e4c0c60b2f996db058a13c8f694ae6",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "64823559_7f6244d1",
+        "filename": "gerrit/etc/replication.config.template",
+        "patchSetId": 35
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2023-01-31T08:52:56Z",
+      "side": 1,
+      "message": "Should add a note that this is unused, but *needed* (unfortunately)",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 27
+      },
+      "revId": "4f70124b03e4c0c60b2f996db058a13c8f694ae6",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "286068c3_f4ce301c",
+        "filename": "gerrit/etc/replication.config.template",
+        "patchSetId": 35
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2023-01-31T08:52:56Z",
+      "side": 1,
+      "message": "Should add a note that this is unused, but *needed* (unfortunately)",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 24
+      },
+      "revId": "4f70124b03e4c0c60b2f996db058a13c8f694ae6",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2248b377_3ca82cc6",
+        "filename": "gerrit/etc/replication_replica.config.template",
+        "patchSetId": 35
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2023-01-31T08:52:56Z",
+      "side": 1,
+      "message": "I don\u0027t believe this is correct: all the nodes in HA are \"logically\" a single site and therefore you need to fetch from only one remote, not from two.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 19
+      },
+      "revId": "4f70124b03e4c0c60b2f996db058a13c8f694ae6",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "339c3761_7f82a984",
+        "filename": "gerrit/setup_gerrit.py",
+        "patchSetId": 35
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2023-01-31T08:52:56Z",
+      "side": 1,
+      "message": "nit: empty space",
+      "range": {
+        "startLine": 188,
+        "startChar": 0,
+        "endLine": 188,
+        "endChar": 4
+      },
+      "revId": "4f70124b03e4c0c60b2f996db058a13c8f694ae6",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d108cd1b_cf2cf7f2",
+        "filename": "gerrit/setup_gerrit.py",
+        "patchSetId": 35
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2023-01-31T08:52:56Z",
+      "side": 1,
+      "message": "Why do we still use __ssh__ and __git__ protocol with pull-replication plugin?",
+      "range": {
+        "startLine": 216,
+        "startChar": 0,
+        "endLine": 218,
+        "endChar": 69
+      },
+      "revId": "4f70124b03e4c0c60b2f996db058a13c8f694ae6",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
