@@ -26,6 +26,52 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d29b0f1d_64c63324",
+        "filename": "dual-primary/Makefile",
+        "patchSetId": 35
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2023-02-14T13:18:32Z",
+      "side": 1,
+      "message": "not needed",
+      "range": {
+        "startLine": 15,
+        "startChar": 89,
+        "endLine": 15,
+        "endChar": 105
+      },
+      "revId": "4f70124b03e4c0c60b2f996db058a13c8f694ae6",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ee93c79_650faed3",
+        "filename": "dual-primary/Makefile",
+        "patchSetId": 35
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2023-02-14T13:18:32Z",
+      "side": 1,
+      "message": "not needed for that change",
+      "range": {
+        "startLine": 22,
+        "startChar": 53,
+        "endLine": 22,
+        "endChar": 69
+      },
+      "revId": "4f70124b03e4c0c60b2f996db058a13c8f694ae6",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "626812ca_b4a10c39",
         "filename": "dual-primary/Makefile",
         "patchSetId": 35
@@ -49,6 +95,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f3d2ec80_9f9497af",
+        "filename": "dual-primary/Makefile",
+        "patchSetId": 35
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2023-02-14T13:18:32Z",
+      "side": 1,
+      "message": "isn\u0027t hat the multi-site is active-active so we need global-refdb? But you are right should be a separate change",
+      "parentUuid": "626812ca_b4a10c39",
+      "range": {
+        "startLine": 23,
+        "startChar": 59,
+        "endLine": 23,
+        "endChar": 95
+      },
+      "revId": "4f70124b03e4c0c60b2f996db058a13c8f694ae6",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c1b93f80_319e77a5",
         "filename": "dual-primary/cf-service-replica.yml",
         "patchSetId": 35
@@ -60,6 +130,30 @@
       "writtenOn": "2023-01-31T08:52:56Z",
       "side": 1,
       "message": "My understanding of HA is that both have the same instance-id, otherwise you will receive the notifications twice and duplicate events.\n\nThe nodes in HA are load-balancing, therefore they need to balancing also the consumption of messages.",
+      "range": {
+        "startLine": 224,
+        "startChar": 0,
+        "endLine": 228,
+        "endChar": 51
+      },
+      "revId": "4f70124b03e4c0c60b2f996db058a13c8f694ae6",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "37b73c7f_77beafbe",
+        "filename": "dual-primary/cf-service-replica.yml",
+        "patchSetId": 35
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2023-02-14T13:18:32Z",
+      "side": 1,
+      "message": "+1. We need just GerritPrimaryInstanceId because we are still HA so we need just one instanceId",
+      "parentUuid": "c1b93f80_319e77a5",
       "range": {
         "startLine": 224,
         "startChar": 0,
@@ -106,6 +200,30 @@
       "writtenOn": "2023-01-31T08:52:56Z",
       "side": 1,
       "message": "Is this related to pull-replication?",
+      "range": {
+        "startLine": 14,
+        "startChar": 4,
+        "endLine": 14,
+        "endChar": 28
+      },
+      "revId": "4f70124b03e4c0c60b2f996db058a13c8f694ae6",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "58a6c8b9_e69a6525",
+        "filename": "gerrit/entrypoint.sh",
+        "patchSetId": 35
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2023-02-14T13:18:32Z",
+      "side": 1,
+      "message": "if they are active-active they need global-refdb but I agree this should go to separate change",
+      "parentUuid": "2a5f22d3_734d2eee",
       "range": {
         "startLine": 14,
         "startChar": 4,
@@ -177,6 +295,53 @@
       "message": "I don\u0027t believe this is correct: all the nodes in HA are \"logically\" a single site and therefore you need to fetch from only one remote, not from two.",
       "range": {
         "startLine": 9,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 19
+      },
+      "revId": "4f70124b03e4c0c60b2f996db058a13c8f694ae6",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b7cc6b2f_7c7bb1c7",
+        "filename": "gerrit/etc/replication_replica.config.template",
+        "patchSetId": 35
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2023-02-14T13:18:32Z",
+      "side": 1,
+      "message": "Yes we need just one gerrit instance id",
+      "parentUuid": "2248b377_3ca82cc6",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 19
+      },
+      "revId": "4f70124b03e4c0c60b2f996db058a13c8f694ae6",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3bac72e7_5d724883",
+        "filename": "gerrit/etc/replication_replica.config.template",
+        "patchSetId": 35
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2023-02-14T13:18:32Z",
+      "side": 1,
+      "message": "remove because we need just one instance id",
+      "range": {
+        "startLine": 19,
         "startChar": 0,
         "endLine": 29,
         "endChar": 19
