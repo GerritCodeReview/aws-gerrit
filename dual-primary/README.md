@@ -176,12 +176,10 @@ default: `bursting`. More info [here](https://docs.aws.amazon.com/AWSCloudFormat
 * `PRIMARY_FILESYSTEM_PROVISIONED_THROUGHPUT_IN_MIBPS`: Optional. Only used when `PRIMARY_FILESYSTEM_THROUGHPUT_MODE` is set to `provisioned`.
 default: `256`.
 
+* `GERRIT_PRIMARY_INSTANCE_ID`: Optional. Identifier for the ALL Gerrit primaries instance.
+  "gerrit-dual-primary-PRIMARY" by default.
 * `GERRIT_REPLICA_INSTANCE_ID`: Optional. Identifier for the Gerrit replica instance.
 "gerrit-dual-primary-REPLICA" by default.
-* `GERRIT_PRIMARY1_INSTANCE_ID`: Optional. Identifier for the Gerrit primary1 instance.
-"gerrit-dual-primary-PRIMARY1" by default.
-* `GERRIT_PRIMARY2_INSTANCE_ID`: Optional. Identifier for the Gerrit primary2 instance.
-"gerrit-dual-primary-PRIMARY2" by default.
 
 * `PRIMARY_MAX_COUNT`: Optional. Maximum number of EC2 instances in the primary autoscaling group.
 "2" by default. Minimum: "2".

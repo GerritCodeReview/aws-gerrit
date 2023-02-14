@@ -102,8 +102,8 @@ service-primary-1: set-optional-params-metrics-cloudwatch set-optional-params-sm
 					set-high-availability-optional-params \
 					set-optional-refs-db-params \
 					set-optional-x-ray
-ifdef GERRIT_PRIMARY1_INSTANCE_ID
-		$(eval PRIMARY1_SERVICE_OPTIONAL_PARAMS := $(PRIMARY1_SERVICE_OPTIONAL_PARAMS) ParameterKey=InstanceId,ParameterValue=$(GERRIT_PRIMARY1_INSTANCE_ID))
+ifdef GERRIT_PRIMARY_INSTANCE_ID
+		$(eval PRIMARY1_SERVICE_OPTIONAL_PARAMS := $(PRIMARY1_SERVICE_OPTIONAL_PARAMS) ParameterKey=InstanceId,ParameterValue=$(GERRIT_PRIMARY_INSTANCE_ID))
 endif
 ifdef LOAD_BALANCER_SCHEME
 		$(eval PRIMARY1_SERVICE_OPTIONAL_PARAMS := $(PRIMARY1_SERVICE_OPTIONAL_PARAMS) ParameterKey=LoadBalancerScheme,ParameterValue=$(LOAD_BALANCER_SCHEME))
@@ -164,8 +164,8 @@ service-primary-2: set-optional-params-metrics-cloudwatch set-optional-params-sm
 					set-high-availability-optional-params \
 					set-optional-refs-db-params \
 					set-optional-x-ray
-ifdef GERRIT_PRIMARY2_INSTANCE_ID
-		$(eval PRIMARY2_SERVICE_OPTIONAL_PARAMS := $(PRIMARY2_SERVICE_OPTIONAL_PARAMS) ParameterKey=InstanceId,ParameterValue=$(GERRIT_PRIMARY2_INSTANCE_ID))
+ifdef GERRIT_PRIMARY_INSTANCE_ID
+		$(eval PRIMARY2_SERVICE_OPTIONAL_PARAMS := $(PRIMARY2_SERVICE_OPTIONAL_PARAMS) ParameterKey=InstanceId,ParameterValue=$(GERRIT_PRIMARY_INSTANCE_ID))
 endif
 ifdef LOAD_BALANCER_SCHEME
 		$(eval PRIMARY2_SERVICE_OPTIONAL_PARAMS := $(PRIMARY2_SERVICE_OPTIONAL_PARAMS) ParameterKey=LoadBalancerScheme,ParameterValue=$(LOAD_BALANCER_SCHEME))
@@ -300,11 +300,9 @@ dns-routing:
 
 dashboard:
 ifeq ($(METRICS_CLOUDWATCH_ENABLED),true)
-ifdef GERRIT_PRIMARY1_INSTANCE_ID
-		$(eval DASHBOARD_OPTIONAL_PARAMS := $(DASHBOARD_OPTIONAL_PARAMS) ParameterKey=Primary1InstanceId,ParameterValue=$(GERRIT_PRIMARY1_INSTANCE_ID))
-endif
-ifdef GERRIT_PRIMARY2_INSTANCE_ID
-		$(eval DASHBOARD_OPTIONAL_PARAMS := $(DASHBOARD_OPTIONAL_PARAMS) ParameterKey=Primary2InstanceId,ParameterValue=$(GERRIT_PRIMARY2_INSTANCE_ID))
+ifdef GERRIT_PRIMARY_INSTANCE_ID
+        $(eval DASHBOARD_OPTIONAL_PARAMS := $(DASHBOARD_OPTIONAL_PARAMS) ParameterKey=Primary1InstanceId,ParameterValue=$(GERRIT_PRIMARY_INSTANCE_ID))
+        $(eval DASHBOARD_OPTIONAL_PARAMS := $(DASHBOARD_OPTIONAL_PARAMS) ParameterKey=Primary2InstanceId,ParameterValue=$(GERRIT_PRIMARY_INSTANCE_ID))
 endif
 ifdef GERRIT_REPLICA_INSTANCE_ID
 		$(eval DASHBOARD_OPTIONAL_PARAMS := $(DASHBOARD_OPTIONAL_PARAMS) ParameterKey=ReplicaInstanceId,ParameterValue=$(GERRIT_REPLICA_INSTANCE_ID))
