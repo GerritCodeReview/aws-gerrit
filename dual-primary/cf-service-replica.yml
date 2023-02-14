@@ -157,7 +157,7 @@ Parameters:
   InstanceId:
     Description: Optional identifier for the Gerrit instance
     Type: String
-    Default: gerrit-dual-primary-REPLICA
+    Default: gerrit-dual-primary
   MetricsCloudwatchEnabled:
     Description: Whether gerrit metrics should be published to cloudwatch
     Type: String
