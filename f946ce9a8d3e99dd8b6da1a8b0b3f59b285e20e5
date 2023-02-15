@@ -22,6 +22,76 @@
       },
       "revId": "f946ce9a8d3e99dd8b6da1a8b0b3f59b285e20e5",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "69d6802d_c1afb342",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2023-02-15T14:05:02Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "96d0e5c2_2ede669d",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 64
+      },
+      "revId": "f946ce9a8d3e99dd8b6da1a8b0b3f59b285e20e5",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "03b42d75_bc2af699",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2023-02-15T14:05:02Z",
+      "side": 1,
+      "message": "super nit: extra space",
+      "range": {
+        "startLine": 12,
+        "startChar": 27,
+        "endLine": 12,
+        "endChar": 28
+      },
+      "revId": "f946ce9a8d3e99dd8b6da1a8b0b3f59b285e20e5",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "114743b4_1db8422b",
+        "filename": "dual-primary/Makefile",
+        "patchSetId": 3
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2023-02-15T14:05:02Z",
+      "side": 1,
+      "message": "Will the same instanceID on the replica allow the triggering group changes reindexing?\n\nI have seen the pull-replication does reindexing of changes only at the moment, but not groups. Is this a bug or I am missing something?\n\nSorry if this comment might bring us a bit out of topic.",
+      "range": {
+        "startLine": 248,
+        "startChar": 6,
+        "endLine": 248,
+        "endChar": 24
+      },
+      "revId": "f946ce9a8d3e99dd8b6da1a8b0b3f59b285e20e5",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
