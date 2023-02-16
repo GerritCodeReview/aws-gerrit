@@ -24,6 +24,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "702d1586_bc338c10",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 35
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2023-02-16T14:17:37Z",
+      "side": 1,
+      "message": "no it is not.",
+      "parentUuid": "d1a99d65_d0955e30",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 29
+      },
+      "revId": "4f70124b03e4c0c60b2f996db058a13c8f694ae6",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d29b0f1d_64c63324",
@@ -47,6 +71,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1596b926_29fa726f",
+        "filename": "dual-primary/Makefile",
+        "patchSetId": 35
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2023-02-16T14:17:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d29b0f1d_64c63324",
+      "range": {
+        "startLine": 15,
+        "startChar": 89,
+        "endLine": 15,
+        "endChar": 105
+      },
+      "revId": "4f70124b03e4c0c60b2f996db058a13c8f694ae6",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8ee93c79_650faed3",
@@ -60,6 +108,30 @@
       "writtenOn": "2023-02-14T13:18:32Z",
       "side": 1,
       "message": "not needed for that change",
+      "range": {
+        "startLine": 22,
+        "startChar": 53,
+        "endLine": 22,
+        "endChar": 69
+      },
+      "revId": "4f70124b03e4c0c60b2f996db058a13c8f694ae6",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "02c99063_e9f3e21c",
+        "filename": "dual-primary/Makefile",
+        "patchSetId": 35
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2023-02-16T14:17:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ee93c79_650faed3",
       "range": {
         "startLine": 22,
         "startChar": 53,
@@ -141,6 +213,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2afef488_ce9f7168",
+        "filename": "dual-primary/Makefile",
+        "patchSetId": 35
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2023-02-16T14:17:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49a99cd7_0d883ac7",
+      "range": {
+        "startLine": 23,
+        "startChar": 59,
+        "endLine": 23,
+        "endChar": 95
+      },
+      "revId": "4f70124b03e4c0c60b2f996db058a13c8f694ae6",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c1b93f80_319e77a5",
@@ -188,6 +284,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f256a00b_95b2f31e",
+        "filename": "dual-primary/cf-service-replica.yml",
+        "patchSetId": 35
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2023-02-16T14:17:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37b73c7f_77beafbe",
+      "range": {
+        "startLine": 224,
+        "startChar": 0,
+        "endLine": 228,
+        "endChar": 51
+      },
+      "revId": "4f70124b03e4c0c60b2f996db058a13c8f694ae6",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7532e644_cfc311e2",
@@ -201,6 +321,30 @@
       "writtenOn": "2023-01-31T08:52:56Z",
       "side": 1,
       "message": "See my earlier comment above.",
+      "range": {
+        "startLine": 341,
+        "startChar": 0,
+        "endLine": 344,
+        "endChar": 58
+      },
+      "revId": "4f70124b03e4c0c60b2f996db058a13c8f694ae6",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c7e558b_f61cd4c9",
+        "filename": "dual-primary/cf-service-replica.yml",
+        "patchSetId": 35
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2023-02-16T14:17:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7532e644_cfc311e2",
       "range": {
         "startLine": 341,
         "startChar": 0,
@@ -258,6 +402,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "af29a066_17dfc842",
+        "filename": "gerrit/entrypoint.sh",
+        "patchSetId": 35
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2023-02-16T14:17:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58a6c8b9_e69a6525",
+      "range": {
+        "startLine": 14,
+        "startChar": 4,
+        "endLine": 14,
+        "endChar": 28
+      },
+      "revId": "4f70124b03e4c0c60b2f996db058a13c8f694ae6",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "64823559_7f6244d1",
@@ -281,6 +449,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c299b255_f9e87398",
+        "filename": "gerrit/etc/replication.config.template",
+        "patchSetId": 35
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2023-02-16T14:17:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64823559_7f6244d1",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 27
+      },
+      "revId": "4f70124b03e4c0c60b2f996db058a13c8f694ae6",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "286068c3_f4ce301c",
@@ -294,6 +486,30 @@
       "writtenOn": "2023-01-31T08:52:56Z",
       "side": 1,
       "message": "Should add a note that this is unused, but *needed* (unfortunately)",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 24
+      },
+      "revId": "4f70124b03e4c0c60b2f996db058a13c8f694ae6",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "03efe17a_2e9aeaf9",
+        "filename": "gerrit/etc/replication.config.template",
+        "patchSetId": 35
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2023-02-16T14:17:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "286068c3_f4ce301c",
       "range": {
         "startLine": 25,
         "startChar": 0,
@@ -374,6 +590,54 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ddd980b_ec4b4fde",
+        "filename": "gerrit/etc/replication_replica.config.template",
+        "patchSetId": 35
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2023-02-16T14:17:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3bac72e7_5d724883",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 19
+      },
+      "revId": "4f70124b03e4c0c60b2f996db058a13c8f694ae6",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6866a6d7_a63e1d81",
+        "filename": "gerrit/etc/replication_replica.config.template",
+        "patchSetId": 35
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2023-02-16T14:17:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7cc6b2f_7c7bb1c7",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 19
+      },
+      "revId": "4f70124b03e4c0c60b2f996db058a13c8f694ae6",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "339c3761_7f82a984",
@@ -397,6 +661,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7e5a658b_472b05df",
+        "filename": "gerrit/setup_gerrit.py",
+        "patchSetId": 35
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2023-02-16T14:17:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "339c3761_7f82a984",
+      "range": {
+        "startLine": 188,
+        "startChar": 0,
+        "endLine": 188,
+        "endChar": 4
+      },
+      "revId": "4f70124b03e4c0c60b2f996db058a13c8f694ae6",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d108cd1b_cf2cf7f2",
@@ -410,6 +698,30 @@
       "writtenOn": "2023-01-31T08:52:56Z",
       "side": 1,
       "message": "Why do we still use __ssh__ and __git__ protocol with pull-replication plugin?",
+      "range": {
+        "startLine": 216,
+        "startChar": 0,
+        "endLine": 218,
+        "endChar": 69
+      },
+      "revId": "4f70124b03e4c0c60b2f996db058a13c8f694ae6",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eae72c05_8189beec",
+        "filename": "gerrit/setup_gerrit.py",
+        "patchSetId": 35
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2023-02-16T14:17:37Z",
+      "side": 1,
+      "message": "`REPLICA_1_URL` and `REPLICA_1_AMDIN_URL` are used in the push replication.\n`REPLICA_1_API_URL` is used in the pull replication.",
+      "parentUuid": "d108cd1b_cf2cf7f2",
       "range": {
         "startLine": 216,
         "startChar": 0,
