@@ -48,6 +48,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "adc63816_508c7753",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2023-02-16T14:20:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69d6802d_c1afb342",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 64
+      },
+      "revId": "f946ce9a8d3e99dd8b6da1a8b0b3f59b285e20e5",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "03b42d75_bc2af699",
@@ -61,6 +85,30 @@
       "writtenOn": "2023-02-15T14:05:02Z",
       "side": 1,
       "message": "super nit: extra space",
+      "range": {
+        "startLine": 12,
+        "startChar": 27,
+        "endLine": 12,
+        "endChar": 28
+      },
+      "revId": "f946ce9a8d3e99dd8b6da1a8b0b3f59b285e20e5",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ebc8760_d28c246f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2023-02-16T14:20:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03b42d75_bc2af699",
       "range": {
         "startLine": 12,
         "startChar": 27,
@@ -108,6 +156,30 @@
       "side": 1,
       "message": "I and @Tony found out that it would work anyway since the reindexing of the groups on replicas is taken care from a background thread [1] which doesn\u0027t care about instanceId or anything else.\n\n[1]: https://gerrit.googlesource.com/gerrit/+/14b30a6608865c00aebdf9f4bb9182bec247fc3a/java/com/google/gerrit/server/group/PeriodicGroupIndexer.java#41",
       "parentUuid": "114743b4_1db8422b",
+      "range": {
+        "startLine": 248,
+        "startChar": 6,
+        "endLine": 248,
+        "endChar": 24
+      },
+      "revId": "f946ce9a8d3e99dd8b6da1a8b0b3f59b285e20e5",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dbb17275_0c2f42e2",
+        "filename": "dual-primary/Makefile",
+        "patchSetId": 3
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2023-02-16T14:20:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42efbf93_4da6fbb6",
       "range": {
         "startLine": 248,
         "startChar": 6,

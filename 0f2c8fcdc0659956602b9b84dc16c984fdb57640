@@ -16,6 +16,23 @@
       "message": "Please, let me know what you think. Feedback always very appreciated.",
       "revId": "0f2c8fcdc0659956602b9b84dc16c984fdb57640",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7e051f88_7745b281",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2023-02-16T14:20:32Z",
+      "side": 1,
+      "message": "Please, review the code again and let me know.",
+      "revId": "0f2c8fcdc0659956602b9b84dc16c984fdb57640",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
