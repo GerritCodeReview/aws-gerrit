@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ee7438bc_070379ec",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2023-03-02T15:37:13Z",
+      "side": 1,
+      "message": "makes sense to me",
+      "parentUuid": "5f837fcc_4a8e24f9",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 22
+      },
+      "revId": "435472cba4cfad675a3a8712df6f4c6574101f95",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8da6370e_49070c75",
         "filename": "primary-replica/cf-service-replica.yml",
         "patchSetId": 11
@@ -37,6 +61,30 @@
       "writtenOn": "2023-03-02T15:12:56Z",
       "side": 1,
       "message": "This doesn\u0027t seem to be used. What do we use it for?",
+      "range": {
+        "startLine": 337,
+        "startChar": 28,
+        "endLine": 337,
+        "endChar": 45
+      },
+      "revId": "435472cba4cfad675a3a8712df6f4c6574101f95",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "905252a8_8f282916",
+        "filename": "primary-replica/cf-service-replica.yml",
+        "patchSetId": 11
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2023-03-02T15:37:13Z",
+      "side": 1,
+      "message": "it is used in `gerrit/setup_gerrit.py`:\n```\nsetupReplication \u003d (os.getenv(\u0027SETUP_REPLICATION\u0027) \u003d\u003d \u0027true\u0027)\n\n```",
+      "parentUuid": "8da6370e_49070c75",
       "range": {
         "startLine": 337,
         "startChar": 28,
