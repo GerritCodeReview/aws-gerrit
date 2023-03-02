@@ -48,6 +48,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ed3fca67_dbeba6c5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 43
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2023-03-02T15:49:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e942410_d0af3b57",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 20
+      },
+      "revId": "43061e36a241ccc2ccdf36b0a3ff70e59e410592",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1455c3d4_3a0d11ef",
@@ -119,6 +143,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e178c6e2_c0210b30",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 43
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2023-03-02T15:49:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "360562af_2cc06894",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 16
+      },
+      "revId": "43061e36a241ccc2ccdf36b0a3ff70e59e410592",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0446402a_a3c76530",
@@ -166,6 +214,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3b4fe876_a72f6f17",
+        "filename": "gerrit/etc/replication.config.template",
+        "patchSetId": 43
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2023-03-02T15:49:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d522061_df04cbaa",
+      "range": {
+        "startLine": 20,
+        "startChar": 9,
+        "endLine": 20,
+        "endChar": 21
+      },
+      "revId": "43061e36a241ccc2ccdf36b0a3ff70e59e410592",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "63183310_af5fd931",
@@ -203,6 +275,30 @@
       "side": 1,
       "message": "happy to make the change.",
       "parentUuid": "63183310_af5fd931",
+      "range": {
+        "startLine": 197,
+        "startChar": 12,
+        "endLine": 197,
+        "endChar": 32
+      },
+      "revId": "43061e36a241ccc2ccdf36b0a3ff70e59e410592",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "405f4bc1_cc294d58",
+        "filename": "gerrit/setup_gerrit.py",
+        "patchSetId": 43
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2023-03-02T15:49:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20492bed_85a8b680",
       "range": {
         "startLine": 197,
         "startChar": 12,
