@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6e942410_d0af3b57",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 43
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2023-03-02T15:13:28Z",
+      "side": 1,
+      "message": "is push replication not a default plugin? what do we need to clarify?",
+      "parentUuid": "fae09563_7251741f",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 20
+      },
+      "revId": "43061e36a241ccc2ccdf36b0a3ff70e59e410592",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1455c3d4_3a0d11ef",
         "filename": "/COMMIT_MSG",
         "patchSetId": 43
@@ -37,6 +61,30 @@
       "writtenOn": "2023-03-02T15:07:55Z",
       "side": 1,
       "message": "I think is a bit redundant mentioning which files changed in this CS.\nThe diff will already contain this information. WDYT?\n\nI\u0027d rather explaining what `no-multisite` means and why we are excluding it at the moment.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 16
+      },
+      "revId": "43061e36a241ccc2ccdf36b0a3ff70e59e410592",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7c02a9c2_d44924de",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 43
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2023-03-02T15:13:28Z",
+      "side": 1,
+      "message": "makes sense, i will address it",
+      "parentUuid": "1455c3d4_3a0d11ef",
       "range": {
         "startLine": 9,
         "startChar": 0,
@@ -72,6 +120,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3d522061_df04cbaa",
+        "filename": "gerrit/etc/replication.config.template",
+        "patchSetId": 43
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2023-03-02T15:13:28Z",
+      "side": 1,
+      "message": "I dont have a strong opinion with that, I will change it.",
+      "parentUuid": "0446402a_a3c76530",
+      "range": {
+        "startLine": 20,
+        "startChar": 9,
+        "endLine": 20,
+        "endChar": 21
+      },
+      "revId": "43061e36a241ccc2ccdf36b0a3ff70e59e410592",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "63183310_af5fd931",
         "filename": "gerrit/setup_gerrit.py",
         "patchSetId": 43
@@ -83,6 +155,30 @@
       "writtenOn": "2023-03-02T15:07:55Z",
       "side": 1,
       "message": "nit: this is only used at L#201. You could just the the value there.",
+      "range": {
+        "startLine": 197,
+        "startChar": 12,
+        "endLine": 197,
+        "endChar": 32
+      },
+      "revId": "43061e36a241ccc2ccdf36b0a3ff70e59e410592",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20492bed_85a8b680",
+        "filename": "gerrit/setup_gerrit.py",
+        "patchSetId": 43
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2023-03-02T15:13:28Z",
+      "side": 1,
+      "message": "happy to make the change.",
+      "parentUuid": "63183310_af5fd931",
       "range": {
         "startLine": 197,
         "startChar": 12,
