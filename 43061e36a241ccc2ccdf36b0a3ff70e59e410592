@@ -74,6 +74,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7bd54564_db337008",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 43
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2023-03-02T16:43:31Z",
+      "side": 1,
+      "message": "It is, but it could be disabled. You can setup push + pull-replication, only pull or only push.",
+      "parentUuid": "ed3fca67_dbeba6c5",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 20
+      },
+      "revId": "43061e36a241ccc2ccdf36b0a3ff70e59e410592",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1455c3d4_3a0d11ef",
         "filename": "/COMMIT_MSG",
         "patchSetId": 43
@@ -240,6 +264,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9845c68b_060d51dd",
+        "filename": "gerrit/etc/replication.config.template",
+        "patchSetId": 43
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2023-03-02T16:43:31Z",
+      "side": 1,
+      "message": "```suggestion\n[remote \"replica-1-pull\"]\n```",
+      "parentUuid": "3b4fe876_a72f6f17",
+      "range": {
+        "startLine": 20,
+        "startChar": 9,
+        "endLine": 20,
+        "endChar": 21
+      },
+      "revId": "43061e36a241ccc2ccdf36b0a3ff70e59e410592",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "63183310_af5fd931",
         "filename": "gerrit/setup_gerrit.py",
         "patchSetId": 43
@@ -299,6 +347,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "20492bed_85a8b680",
+      "range": {
+        "startLine": 197,
+        "startChar": 12,
+        "endLine": 197,
+        "endChar": 32
+      },
+      "revId": "43061e36a241ccc2ccdf36b0a3ff70e59e410592",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c3857acf_fe0e97bb",
+        "filename": "gerrit/setup_gerrit.py",
+        "patchSetId": 43
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2023-03-02T16:43:31Z",
+      "side": 1,
+      "message": "Did you resolve this by accident?",
+      "parentUuid": "405f4bc1_cc294d58",
       "range": {
         "startLine": 197,
         "startChar": 12,
