@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fae09563_7251741f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 43
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2023-03-02T15:07:55Z",
+      "side": 1,
+      "message": "We are adding pull-replication along with push-replication, right?\n\nCan you clarify it is in the comment?",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 20
+      },
+      "revId": "43061e36a241ccc2ccdf36b0a3ff70e59e410592",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1455c3d4_3a0d11ef",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 43
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2023-03-02T15:07:55Z",
+      "side": 1,
+      "message": "I think is a bit redundant mentioning which files changed in this CS.\nThe diff will already contain this information. WDYT?\n\nI\u0027d rather explaining what `no-multisite` means and why we are excluding it at the moment.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 16
+      },
+      "revId": "43061e36a241ccc2ccdf36b0a3ff70e59e410592",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0446402a_a3c76530",
+        "filename": "gerrit/etc/replication.config.template",
+        "patchSetId": 43
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2023-03-02T15:07:55Z",
+      "side": 1,
+      "message": "I think if we call it `replica-1-pull` or similar it will be clearer we are still pointing to the same instance, but just using a different replication mechanism.",
+      "range": {
+        "startLine": 20,
+        "startChar": 9,
+        "endLine": 20,
+        "endChar": 21
+      },
+      "revId": "43061e36a241ccc2ccdf36b0a3ff70e59e410592",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "63183310_af5fd931",
+        "filename": "gerrit/setup_gerrit.py",
+        "patchSetId": 43
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2023-03-02T15:07:55Z",
+      "side": 1,
+      "message": "nit: this is only used at L#201. You could just the the value there.",
+      "range": {
+        "startLine": 197,
+        "startChar": 12,
+        "endLine": 197,
+        "endChar": 32
+      },
+      "revId": "43061e36a241ccc2ccdf36b0a3ff70e59e410592",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
