@@ -1,6 +1,29 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "68a797d9_bc840a3f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 47
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-03-10T13:57:53Z",
+      "side": 1,
+      "message": "What do you mean by this? In what context is it disabled?\n\nDoes this describe in which way multi-site is deployed?",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 55
+      },
+      "revId": "58e2679b595ed5287825360615d4a62d84827b4e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "6ac8f055_d9f30c6e",
@@ -14,6 +37,46 @@
       "writtenOn": "2023-03-02T16:51:46Z",
       "side": 1,
       "message": "I have changed the description of the commit to mention that the push replication is enabled",
+      "revId": "58e2679b595ed5287825360615d4a62d84827b4e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "92385382_2a9c8347",
+        "filename": "gerrit/etc/replication.config.template",
+        "patchSetId": 47
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-03-10T13:57:53Z",
+      "side": 1,
+      "message": "Since REPLICATE_ON_STARTUP is set to true, wouldn\u0027t this trigger fetching FROM _FROM_ the replica?\n\nThis is a problem because primary should never fetch from a replica, git transfers should only be fetched FROM replicas.\n\nWould it not be enough to only set the REPLICATE_ON_STARTUP to the replication.config template of the replica only and make sure that the master will never attempt to fetch?",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 27
+      },
+      "revId": "58e2679b595ed5287825360615d4a62d84827b4e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6261fffe_7761a566",
+        "filename": "gerrit/etc/replication_replica.config.template",
+        "patchSetId": 47
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-03-10T13:57:53Z",
+      "side": 1,
+      "message": "This could be hardcoded to true, all the times.\nSee my comment below.",
       "revId": "58e2679b595ed5287825360615d4a62d84827b4e",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
