@@ -24,6 +24,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "ff49044c_c96be852",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 47
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2023-03-10T14:39:08Z",
+      "side": 1,
+      "message": "According with the code, in `dual primary` topology, `multisite` can be `enabled` or `disabled`:\n\n\n```\ngerrit-publish:\nifeq ($(MULTISITE_ENABLED),true)\n\t$(MAKE) -C ../gerrit gerrit-publish RECIPE\u003ddual-primary PLUGINS\u003d\"$(MULTI_SITE_PLUGINS)\" PLUGINS_LIBS_LINKS\u003d\"$(MULTI_SITE_PLUGINS_LIBS_LINKS)\" MAVEN_LIBS\u003d\"$(HA_SITE_MAVEN_LIBS) $(MULTI_SITE_MAVEN_LIBS)\"\nelse\n\t$(MAKE) -C ../gerrit gerrit-publish RECIPE\u003ddual-primary PLUGINS\u003d\"$(HA_SITE_PLUGINS)\" PLUGINS_LIBS_LINKS\u003d\"$(HA_SITE_PLUGINS_LIBS_LINKS)\" MAVEN_LIBS\u003d\"$(HA_SITE_MAVEN_LIBS)\"\nendif\n```\n\n\nThis change add the `pull-replication plugin` when multisite is disabled. \n\nMaybe my description is a bit messy. Any recommendation?",
+      "parentUuid": "68a797d9_bc840a3f",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 55
+      },
+      "revId": "58e2679b595ed5287825360615d4a62d84827b4e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "6ac8f055_d9f30c6e",
@@ -66,6 +90,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5e14da6c_a953b220",
+        "filename": "gerrit/etc/replication.config.template",
+        "patchSetId": 47
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2023-03-10T14:39:08Z",
+      "side": 1,
+      "message": "Read my reply above.",
+      "parentUuid": "92385382_2a9c8347",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 27
+      },
+      "revId": "58e2679b595ed5287825360615d4a62d84827b4e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6261fffe_7761a566",
         "filename": "gerrit/etc/replication_replica.config.template",
         "patchSetId": 47
@@ -77,6 +125,24 @@
       "writtenOn": "2023-03-10T13:57:53Z",
       "side": 1,
       "message": "This could be hardcoded to true, all the times.\nSee my comment below.",
+      "revId": "58e2679b595ed5287825360615d4a62d84827b4e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c8fe3221_f862884b",
+        "filename": "gerrit/etc/replication_replica.config.template",
+        "patchSetId": 47
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2023-03-10T14:39:08Z",
+      "side": 1,
+      "message": "I created weeks ago a card to address that:\n`Pull replication on startup for primary: false and replica: true (dual-primary, primary-replica)`",
+      "parentUuid": "6261fffe_7761a566",
       "revId": "58e2679b595ed5287825360615d4a62d84827b4e",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
