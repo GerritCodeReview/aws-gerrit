@@ -72,6 +72,78 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d3cf9522_daa0ae0a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2023-03-10T14:53:04Z",
+      "side": 1,
+      "message": "Lets have a talk whenever you are available.",
+      "parentUuid": "adb74e9f_59f39bd7",
+      "range": {
+        "startLine": 9,
+        "startChar": 126,
+        "endLine": 9,
+        "endChar": 146
+      },
+      "revId": "9ef3c800392fce2287fb5d4e703fc50512ea0606",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df06ae58_ca9e32d3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2023-03-10T14:53:04Z",
+      "side": 1,
+      "message": "I will change it.",
+      "parentUuid": "1240d244_c69a4a49",
+      "range": {
+        "startLine": 9,
+        "startChar": 239,
+        "endLine": 9,
+        "endChar": 246
+      },
+      "revId": "9ef3c800392fce2287fb5d4e703fc50512ea0606",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9f856d55_559c2c69",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2023-03-10T14:53:04Z",
+      "side": 1,
+      "message": "Lets have a talk whenever you are available.",
+      "parentUuid": "5e994972_d27efaeb",
+      "range": {
+        "startLine": 9,
+        "startChar": 185,
+        "endLine": 9,
+        "endChar": 288
+      },
+      "revId": "9ef3c800392fce2287fb5d4e703fc50512ea0606",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "37fe8efa_dd2ed159",
         "filename": "/COMMIT_MSG",
         "patchSetId": 7
@@ -95,6 +167,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "242f9b35_8d3db61b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2023-03-10T14:53:04Z",
+      "side": 1,
+      "message": "I will remove it.",
+      "parentUuid": "37fe8efa_dd2ed159",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 28
+      },
+      "revId": "9ef3c800392fce2287fb5d4e703fc50512ea0606",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f9294576_542aa847",
         "filename": "dual-primary/Makefile",
         "patchSetId": 7
@@ -106,6 +202,30 @@
       "writtenOn": "2023-03-10T13:42:21Z",
       "side": 1,
       "message": "I believe that using the same value for both gerrit primary instances will make the cloudwatch dashboard invalid.\n\nThe problem is that the _two_ different instance ids are used to distinguish metrics coming from instance1 rather than instance2. This ability to differentiate metrics is exclusively based on the instanceId. See an example here [1].\n\nThe problem is that the cloudwatch plugin explicitly looks at the instanceId [2].\nPerhaps we need an extra change there to allow this to be specified _explicitly_.\nLet\u0027s discuss about it.\n\n[1] https://gerrit.googlesource.com/aws-gerrit/+/refs/heads/master/dual-primary/cf-dashboard.yml#39\n\n[2]https://gerrit.googlesource.com/plugins/metrics-reporter-cloudwatch/+/refs/heads/master/src/main/resources/Documentation/config.md#instanceid-dimension",
+      "range": {
+        "startLine": 303,
+        "startChar": 0,
+        "endLine": 308,
+        "endChar": 5
+      },
+      "revId": "9ef3c800392fce2287fb5d4e703fc50512ea0606",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6ff42548_a0d8fc24",
+        "filename": "dual-primary/Makefile",
+        "patchSetId": 7
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2023-03-10T14:53:04Z",
+      "side": 1,
+      "message": "@luca.milanesio@gmail.com, @maczech@gmail.com and I spoke about this and we agreed to address it in another change.",
+      "parentUuid": "f9294576_542aa847",
       "range": {
         "startLine": 303,
         "startChar": 0,
