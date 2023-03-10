@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1240d244_c69a4a49",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-03-10T13:42:21Z",
+      "side": 1,
+      "message": "perhaps `consume` describes better what\u0027s happening?",
+      "range": {
+        "startLine": 9,
+        "startChar": 239,
+        "endLine": 9,
+        "endChar": 246
+      },
+      "revId": "9ef3c800392fce2287fb5d4e703fc50512ea0606",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e994972_d27efaeb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-03-10T13:42:21Z",
+      "side": 1,
+      "message": "I believe the issue you are describing manifests _only_ when *also* multi-site has been configured.\n\nIn that case, since every HA peer (gerrit1 and gerrit2) will *also* be connected to the multi-site, they will also consume (via multi-site), what has already been consumed via the high-availability plugin.\n\nTo avoid this, the instanceId should be set to the _same_ value of the peer.",
+      "range": {
+        "startLine": 9,
+        "startChar": 185,
+        "endLine": 9,
+        "endChar": 288
+      },
+      "revId": "9ef3c800392fce2287fb5d4e703fc50512ea0606",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "adb74e9f_59f39bd7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-03-10T13:42:21Z",
+      "side": 1,
+      "message": "What do you mean by `fetch` operations?\nDo you mean git pull-replication fetches?\n\nI am asking because in an HA-only environment, there are no fetch operations involved: all git data is already on the same file system (EFS in this case).",
+      "range": {
+        "startLine": 9,
+        "startChar": 126,
+        "endLine": 9,
+        "endChar": 146
+      },
+      "revId": "9ef3c800392fce2287fb5d4e703fc50512ea0606",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "37fe8efa_dd2ed159",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-03-10T13:42:21Z",
+      "side": 1,
+      "message": "nit: consider removing this.\nThe current instance ids can be inferred by looking at the code without needing to mentioning them, imho.",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 28
+      },
+      "revId": "9ef3c800392fce2287fb5d4e703fc50512ea0606",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f9294576_542aa847",
+        "filename": "dual-primary/Makefile",
+        "patchSetId": 7
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-03-10T13:42:21Z",
+      "side": 1,
+      "message": "I believe that using the same value for both gerrit primary instances will make the cloudwatch dashboard invalid.\n\nThe problem is that the _two_ different instance ids are used to distinguish metrics coming from instance1 rather than instance2. This ability to differentiate metrics is exclusively based on the instanceId. See an example here [1].\n\nThe problem is that the cloudwatch plugin explicitly looks at the instanceId [2].\nPerhaps we need an extra change there to allow this to be specified _explicitly_.\nLet\u0027s discuss about it.\n\n[1] https://gerrit.googlesource.com/aws-gerrit/+/refs/heads/master/dual-primary/cf-dashboard.yml#39\n\n[2]https://gerrit.googlesource.com/plugins/metrics-reporter-cloudwatch/+/refs/heads/master/src/main/resources/Documentation/config.md#instanceid-dimension",
+      "range": {
+        "startLine": 303,
+        "startChar": 0,
+        "endLine": 308,
+        "endChar": 5
+      },
+      "revId": "9ef3c800392fce2287fb5d4e703fc50512ea0606",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
