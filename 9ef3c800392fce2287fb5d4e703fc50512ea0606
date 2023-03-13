@@ -144,6 +144,54 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d7739dcb_d0f663ed",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-03-13T08:22:56Z",
+      "side": 1,
+      "message": "sure thing",
+      "parentUuid": "9f856d55_559c2c69",
+      "range": {
+        "startLine": 9,
+        "startChar": 185,
+        "endLine": 9,
+        "endChar": 288
+      },
+      "revId": "9ef3c800392fce2287fb5d4e703fc50512ea0606",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d0e6bf3a_efc64e9e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-03-13T08:22:56Z",
+      "side": 1,
+      "message": "yep!",
+      "parentUuid": "d3cf9522_daa0ae0a",
+      "range": {
+        "startLine": 9,
+        "startChar": 126,
+        "endLine": 9,
+        "endChar": 146
+      },
+      "revId": "9ef3c800392fce2287fb5d4e703fc50512ea0606",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "37fe8efa_dd2ed159",
         "filename": "/COMMIT_MSG",
         "patchSetId": 7
@@ -226,6 +274,30 @@
       "side": 1,
       "message": "@luca.milanesio@gmail.com, @maczech@gmail.com and I spoke about this and we agreed to address it in another change.",
       "parentUuid": "f9294576_542aa847",
+      "range": {
+        "startLine": 303,
+        "startChar": 0,
+        "endLine": 308,
+        "endChar": 5
+      },
+      "revId": "9ef3c800392fce2287fb5d4e703fc50512ea0606",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5b0c9634_0926fb0c",
+        "filename": "dual-primary/Makefile",
+        "patchSetId": 7
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-03-13T08:22:56Z",
+      "side": 1,
+      "message": "ah ok, good that you were on top of this already.\nCan you post here the monorail issue once we have it?\n\nAlso (and I am open for discussion here), I suggest this should be done _before_ merging this change to avoid a point in history in which things are broken.\n\nWDYT?",
+      "parentUuid": "6ff42548_a0d8fc24",
       "range": {
         "startLine": 303,
         "startChar": 0,
