@@ -48,6 +48,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b433a76_b2867a55",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 47
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-03-13T08:28:55Z",
+      "side": 1,
+      "message": "\u003e According with the code, in `dual primary` topology, `multisite` can be `enabled` or `disabled`:\n\u003e \n\u003e This change add the `pull-replication plugin` when multisite is disabled.\n\n\nAh ok, sorry I missed that.\nAny reason why this is the case?\n\n\u003e \n\u003e Maybe my description is a bit messy. Any recommendation?\n\nI think the words you chose now to fill me in are more explanatory.\nSomething like:\n\n```\nNote: \nThis change add the pull-replication plugin when multisite is disabled.\nThis is because...\n```",
+      "parentUuid": "ff49044c_c96be852",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 55
+      },
+      "revId": "58e2679b595ed5287825360615d4a62d84827b4e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "6ac8f055_d9f30c6e",
@@ -114,6 +138,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5195a551_9d393ca0",
+        "filename": "gerrit/etc/replication.config.template",
+        "patchSetId": 47
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-03-13T08:28:55Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "5e14da6c_a953b220",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 27
+      },
+      "revId": "58e2679b595ed5287825360615d4a62d84827b4e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6261fffe_7761a566",
         "filename": "gerrit/etc/replication_replica.config.template",
         "patchSetId": 47
@@ -143,6 +191,24 @@
       "side": 1,
       "message": "I created weeks ago a card to address that:\n`Pull replication on startup for primary: false and replica: true (dual-primary, primary-replica)`",
       "parentUuid": "6261fffe_7761a566",
+      "revId": "58e2679b595ed5287825360615d4a62d84827b4e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "957f5b32_3b9565d8",
+        "filename": "gerrit/etc/replication_replica.config.template",
+        "patchSetId": 47
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-03-13T08:28:55Z",
+      "side": 1,
+      "message": "Do we have a monorail issue for this? or you were planning to do it as part of this?\n\nI think, since we are introducing new code here, we could already introduce the right value?\n\nPerhaps I am missing something, let\u0027s have a chat",
+      "parentUuid": "c8fe3221_f862884b",
       "revId": "58e2679b595ed5287825360615d4a62d84827b4e",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
