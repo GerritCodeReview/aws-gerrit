@@ -16,6 +16,29 @@
       "message": "Please @syntonyze@gmail.com have a look at the description of the commit. Feel free to provide another description.",
       "revId": "9ff4cee98cc35ee6bbf39b7824ddff56817c9a42",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "44e8372e_184f6fdf",
+        "filename": "dual-primary/Makefile",
+        "patchSetId": 8
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-03-15T20:13:51Z",
+      "side": 1,
+      "message": "nit: there is no reason to evaluate GERRIT_PRIMARY_INSTANCE_ID twice.\nI think we could loose one ifdef here",
+      "range": {
+        "startLine": 303,
+        "startChar": 0,
+        "endLine": 308,
+        "endChar": 5
+      },
+      "revId": "9ff4cee98cc35ee6bbf39b7824ddff56817c9a42",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
