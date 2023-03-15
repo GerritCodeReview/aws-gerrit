@@ -63,6 +63,30 @@
       },
       "revId": "9ff4cee98cc35ee6bbf39b7824ddff56817c9a42",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1aaaeb79_b8f8140d",
+        "filename": "dual-primary/Makefile",
+        "patchSetId": 8
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-03-15T21:32:37Z",
+      "side": 1,
+      "message": "I would leave still _two_ parameters for now (it will be easier later two pass two distinct values).\n\nBut for now we can do simply:\n\n```suggestion\nifdef GERRIT_PRIMARY_INSTANCE_ID\n\t\t$(eval DASHBOARD_OPTIONAL_PARAMS :\u003d $(DASHBOARD_OPTIONAL_PARAMS) ParameterKey\u003dPrimary1InstanceId,ParameterValue\u003d$(GERRIT_PRIMARY_INSTANCE_ID))\n\t\t$(eval DASHBOARD_OPTIONAL_PARAMS :\u003d $(DASHBOARD_OPTIONAL_PARAMS) ParameterKey\u003dPrimary2InstanceId,ParameterValue\u003d$(GERRIT_PRIMARY_INSTANCE_ID))\nendif\n```",
+      "parentUuid": "22c5223b_cae52e74",
+      "range": {
+        "startLine": 303,
+        "startChar": 0,
+        "endLine": 308,
+        "endChar": 5
+      },
+      "revId": "9ff4cee98cc35ee6bbf39b7824ddff56817c9a42",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
