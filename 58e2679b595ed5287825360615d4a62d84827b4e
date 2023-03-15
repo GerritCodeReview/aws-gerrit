@@ -96,6 +96,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "405c2be6_d295a8ef",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 47
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2023-03-15T19:06:01Z",
+      "side": 1,
+      "message": "@syntonyze@gmail.com please, have a look at this description. I dont feel very inspired.",
+      "parentUuid": "0df64f8d_d8838da5",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 55
+      },
+      "revId": "58e2679b595ed5287825360615d4a62d84827b4e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "6ac8f055_d9f30c6e",
@@ -251,6 +275,24 @@
       "side": 1,
       "message": "\u003e Do we have a monorail issue for this? or you were planning to do it as part of this?\n\nNo, I created the card in the kanban dashboard.\n\n\u003eI think, since we are introducing new code here, we could already introduce the right value?\n\nMy first version had this hardcoded to true in the replica (proposed by you) but because the change was getting too many things I thought that maybe we could split this in 2 cards. Maybe we should go back to the initial idea and do everything in this change.",
       "parentUuid": "957f5b32_3b9565d8",
+      "revId": "58e2679b595ed5287825360615d4a62d84827b4e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e1ddbe82_268e6e38",
+        "filename": "gerrit/etc/replication_replica.config.template",
+        "patchSetId": 47
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2023-03-15T19:06:01Z",
+      "side": 1,
+      "message": "As we spoke, I have hardcoded to `true` when is replica.",
+      "parentUuid": "e43d818b_e64b128e",
       "revId": "58e2679b595ed5287825360615d4a62d84827b4e",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
