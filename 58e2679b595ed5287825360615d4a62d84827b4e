@@ -208,6 +208,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6c57d35d_f83af4af",
+        "filename": "gerrit/etc/replication.config.template",
+        "patchSetId": 47
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-03-15T20:19:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5195a551_9d393ca0",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 27
+      },
+      "revId": "58e2679b595ed5287825360615d4a62d84827b4e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6261fffe_7761a566",
