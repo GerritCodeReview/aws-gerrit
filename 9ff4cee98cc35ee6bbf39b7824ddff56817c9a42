@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "23f7f8af_d3e9dd95",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2023-03-15T19:10:10Z",
+      "side": 1,
+      "message": "Please @syntonyze@gmail.com have a look at the description of the commit. Feel free to provide another description.",
+      "revId": "9ff4cee98cc35ee6bbf39b7824ddff56817c9a42",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
