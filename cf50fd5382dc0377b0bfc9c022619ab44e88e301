@@ -16,6 +16,24 @@
       "message": "nit: this is currently ignored by the pull-replication[1]\n\nShould we add a comment as you did for the primary replication?\n\n[1]https://bugs.chromium.org/p/gerrit/issues/detail?id\u003d16635\u0026q\u003dcomponent%3APlugins%3Epull-replication\u0026can\u003d2",
       "revId": "cf50fd5382dc0377b0bfc9c022619ab44e88e301",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "03c87e27_5fe82831",
+        "filename": "gerrit/etc/replication_replica.config.template",
+        "patchSetId": 49
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2023-03-16T15:38:16Z",
+      "side": 1,
+      "message": "I added in both, primary and replica replication.config.\n\nLet me know what you think.",
+      "parentUuid": "8f7ff27d_6c5861bd",
+      "revId": "cf50fd5382dc0377b0bfc9c022619ab44e88e301",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
