@@ -158,6 +158,8 @@ On top of that, you might set the additional parameters, specific for this recip
 
 Configuration values affecting deployment environment and cluster properties
 
+* `EVENTSBROKER_LIB_VER`: Mandatory. Use a [version which is compatible](https://repo1.maven.org/maven2/com/gerritforge/) with your gerrit version. Using incompatible versions will prevent the service from starting up.
+* `GLOBALREFDB_LIB_VER`: Mandatory. Use a [version which is compatible](https://repo1.maven.org/maven2/com/gerritforge/) with your gerrit version. Using incompatible versions will prevent the service from starting up.
 * `SERVICE_PRIMARY1_STACK_NAME`: Optional. Name of the primary 1 service stack. `gerrit-service-primary-1` by default.
 * `SERVICE_PRIMARY2_STACK_NAME`: Optional. Name of the primary 2 service stack. `gerrit-service-primary-2` by default.
 * `DASHBOARD_STACK_NAME` : Optional. Name of the dashboard stack. `gerrit-dashboard` by default.
