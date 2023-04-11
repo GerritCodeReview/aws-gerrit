@@ -24,6 +24,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3fa5fa92_3e5228c2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1157810
+      },
+      "writtenOn": "2023-04-11T09:54:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3775fe0f_d54ef918",
+      "range": {
+        "startLine": 17,
+        "startChar": 15,
+        "endLine": 17,
+        "endChar": 23
+      },
+      "revId": "731658614f1fd6edf92535496e0ebbeace6bee96",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0c0d1618_a9d9717d",
@@ -37,6 +61,30 @@
       "writtenOn": "2023-04-11T09:46:26Z",
       "side": 1,
       "message": "nit: unrelated change",
+      "range": {
+        "startLine": 308,
+        "startChar": 0,
+        "endLine": 309,
+        "endChar": 144
+      },
+      "revId": "731658614f1fd6edf92535496e0ebbeace6bee96",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eaa3207a_3ca86f12",
+        "filename": "dual-primary/Makefile",
+        "patchSetId": 2
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1157810
+      },
+      "writtenOn": "2023-04-11T09:54:51Z",
+      "side": 1,
+      "message": "Actually its not, without this you can\u0027t run the makefile, you get a `Makefile:312: *** commands commence before first target.  Stop`. I think everything needs to be indented at the same level",
+      "parentUuid": "0c0d1618_a9d9717d",
       "range": {
         "startLine": 308,
         "startChar": 0,
