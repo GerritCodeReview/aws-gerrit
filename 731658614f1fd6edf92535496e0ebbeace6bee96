@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3775fe0f_d54ef918",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-04-11T09:46:26Z",
+      "side": 1,
+      "message": "mandatory?",
+      "range": {
+        "startLine": 17,
+        "startChar": 15,
+        "endLine": 17,
+        "endChar": 23
+      },
+      "revId": "731658614f1fd6edf92535496e0ebbeace6bee96",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c0d1618_a9d9717d",
+        "filename": "dual-primary/Makefile",
+        "patchSetId": 2
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-04-11T09:46:26Z",
+      "side": 1,
+      "message": "nit: unrelated change",
+      "range": {
+        "startLine": 308,
+        "startChar": 0,
+        "endLine": 309,
+        "endChar": 144
+      },
+      "revId": "731658614f1fd6edf92535496e0ebbeace6bee96",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
