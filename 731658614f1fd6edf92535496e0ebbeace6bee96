@@ -93,6 +93,30 @@
       },
       "revId": "731658614f1fd6edf92535496e0ebbeace6bee96",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ed0f8ebb_8c5bcc83",
+        "filename": "dual-primary/Makefile",
+        "patchSetId": 2
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1157810
+      },
+      "writtenOn": "2023-04-11T09:56:28Z",
+      "side": 1,
+      "message": "Oooooh but I dont mention it in the commit (its only in the issue) - I will update the commit msg.",
+      "parentUuid": "eaa3207a_3ca86f12",
+      "range": {
+        "startLine": 308,
+        "startChar": 0,
+        "endLine": 309,
+        "endChar": 144
+      },
+      "revId": "731658614f1fd6edf92535496e0ebbeace6bee96",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
