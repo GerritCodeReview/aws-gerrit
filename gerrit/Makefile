@@ -4,7 +4,7 @@ include ../Makefile.common
 PLUGINS=javamelody healthcheck metrics-reporter-cloudwatch
 
 docker-registry-login:
-	aws ecr get-login-password --region $(AWS_REGION) \
+	$(AWS) ecr get-login-password \
 		| docker login --username AWS --password-stdin $(DOCKER_REGISTRY_URI)/aws-gerrit/gerrit
 
 gerrit-get-plugins:

@@ -35,7 +35,7 @@ launch-export-task:
 	@echo "Launched export task id $(TASK_ID) from $(EXPORT_FROM_MILLIS) to $(now)000"
 
 wait_for_export:
-	while [[ $$(aws logs describe-export-tasks --task-id "$(TASK_ID)" | jq -r '.exportTasks[0].status.code') =~ RUNNING|PENDING|PENDING_CANCEL ]]; do \
+	while [[ $$($(AWS) logs describe-export-tasks --task-id "$(TASK_ID)" | jq -r '.exportTasks[0].status.code') =~ RUNNING|PENDING|PENDING_CANCEL ]]; do \
   		echo "Wait for task $(DESTINATION_PREFIX) (id: $(TASK_ID)) to complete"; \
   		sleep 5; \
   	done;
@@ -47,7 +47,7 @@ output_log_urls:
 	@echo
 	@echo "*************** MAIN LOGS URLS **********************"
 	@for i in \
-		$(shell aws s3api list-objects --bucket $(S3_EXPORT_LOGS_BUCKET_NAME) \
+		$(shell $(AWS) s3api list-objects --bucket $(S3_EXPORT_LOGS_BUCKET_NAME) \
 			--prefix "$(DESTINATION_PREFIX)/$(TASK_ID)" | \
 			 jq -r '.Contents[] | select(.Key|test("httpd_log|sshd_log|error_log")) | .Key'); do \
 		  echo https://$(S3_EXPORT_LOGS_BUCKET_NAME).s3.amazonaws.com/$$i; \

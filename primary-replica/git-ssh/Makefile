@@ -4,7 +4,7 @@ include ../setup.env
 IMAGE_NAME:=git-ssh
 
 docker-registry-login:
-	aws ecr get-login-password --region $(AWS_REGION) \
+	$(AWS) ecr get-login-password \
 		| docker login --username AWS --password-stdin $(DOCKER_REGISTRY_URI)/aws-gerrit/$(IMAGE_NAME)
 
 git-ssh-build:

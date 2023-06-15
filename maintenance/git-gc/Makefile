@@ -1,5 +1,3 @@
-AWS=export AWS_PAGER=;aws
-AWS_FC_COMMAND=export AWS_PAGER=;aws cloudformation
 DOCKER_NAME=aws-gerrit/git-gc
 ECR_REPO=$(DOCKER_REGISTRY_URI)/$(DOCKER_NAME)
 GIT_GC_SHA1=$(shell find . -type f -exec cat {} \; | sha1sum | cut -c 1-20)
@@ -14,7 +12,7 @@ optional_git_gc_targets_deletion=delete-scheduled-gc-task
 endif
 
 docker-registry-login:
-	$(AWS) ecr get-login-password --region $(AWS_REGION) \
+	$(AWS) ecr get-login-password \
 		| docker login --username AWS --password-stdin ${ECR_REPO}
 
 git-gc-build:
@@ -33,7 +31,6 @@ service-git-gc: git-gc-publish
 		--stack-name $(SERVICE_GIT_GC_STACK_NAME) \
 		--capabilities CAPABILITY_IAM  \
 		--template-body file://`pwd`/$(SERVICE_GIT_GC_TEMPLATE) \
-		--region $(AWS_REGION) \
 		--parameters \
 		ParameterKey=ClusterStackName,ParameterValue=$(CLUSTER_STACK_NAME) \
 		ParameterKey=TemplateBucketName,ParameterValue=$(TEMPLATE_BUCKET_NAME) \
@@ -50,18 +47,17 @@ service-git-gc: git-gc-publish
 wait-for-service-git-gc-creation:
 	@echo "*** Wait for service-git-gc stack '$(SERVICE_GIT_GC_STACK_NAME)' creation"
 	$(AWS_FC_COMMAND) wait stack-create-complete \
-	--stack-name $(SERVICE_GIT_GC_STACK_NAME) \
-	--region $(AWS_REGION)
+	--stack-name $(SERVICE_GIT_GC_STACK_NAME)
+
 	@echo "*** Cluster stack '$(SERVICE_GIT_GC_STACK_NAME)' created"
 
 wait-for-service-git-gc-deletion:
 	@echo "*** Wait for service-git-gc stack '$(SERVICE_GIT_GC_STACK_NAME)' deletion"
 	$(AWS_FC_COMMAND) wait stack-delete-complete \
-	--stack-name $(SERVICE_GIT_GC_STACK_NAME) \
-	--region $(AWS_REGION)
+	--stack-name $(SERVICE_GIT_GC_STACK_NAME)
+
 	@echo "*** service-git-gc stack '$(SERVICE_GIT_GC_STACK_NAME)' deleted"
 
 delete-service-git-gc:
 	$(AWS_FC_COMMAND) delete-stack \
-	--stack-name $(SERVICE_GIT_GC_STACK_NAME) \
-	--region $(AWS_REGION)
+	--stack-name $(SERVICE_GIT_GC_STACK_NAME)

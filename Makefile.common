@@ -1,13 +1,14 @@
 SHELL := /bin/bash
 
 ROOT_DIR=$(dir $(realpath $(filter %Makefile.common,$(MAKEFILE_LIST))))
-AWS_FC_COMMAND=export AWS_PAGER=;aws cloudformation
+AWS=export AWS_PAGER=;aws --region $(AWS_REGION)
+AWS_FC_COMMAND=$(AWS) cloudformation
 include $(ROOT_DIR)/operations/export-logs/Makefile
 include $(ROOT_DIR)common.env
 
 cluster-keys:
-	aws ec2 describe-key-pairs --region $(AWS_REGION) --key-names $(CLUSTER_KEYS) > /dev/null 2>&1 || \
-		aws ec2 create-key-pair --region $(AWS_REGION) --key-name $(CLUSTER_KEYS) --query 'KeyMaterial' --output text > $(CLUSTER_KEYS).pem
+	$(AWS) ec2 describe-key-pairs --key-names $(CLUSTER_KEYS) > /dev/null 2>&1 || \
+		$(AWS) ec2 create-key-pair --key-name $(CLUSTER_KEYS) --query 'KeyMaterial' --output text > $(CLUSTER_KEYS).pem
 
 upload-common-templates:
 	$(eval CREATE_BUCKET_PARAMS := --bucket $(TEMPLATE_BUCKET_NAME))
@@ -15,15 +16,15 @@ ifneq ("$(AWS_REGION)", "us-east-1")
 		$(eval CREATE_BUCKET_PARAMS := $(CREATE_BUCKET_PARAMS) --create-bucket-configuration LocationConstraint=$(AWS_REGION))
 endif
 
-	export AWS_PAGER=; aws s3api head-bucket --bucket $(TEMPLATE_BUCKET_NAME) 2>/dev/null || \
-		aws s3api create-bucket $(CREATE_BUCKET_PARAMS)
-	aws s3 cp ../common-templates/cf-gerrit-task-execution-role.yml s3://$(TEMPLATE_BUCKET_NAME)/
-	aws s3 cp ../common-templates/cf-gerrit-network-stack.yml s3://$(TEMPLATE_BUCKET_NAME)/
-	aws s3 cp ../common-templates/cf-gerrit-volume.yml s3://$(TEMPLATE_BUCKET_NAME)/
-	aws s3 cp ../common-templates/cf-primary-asg.yml s3://$(TEMPLATE_BUCKET_NAME)/
-	aws s3 cp ../common-templates/cf-efs-stack.yml s3://$(TEMPLATE_BUCKET_NAME)/
-	aws s3 cp ../common-templates/cf-ecs-service-cpu-autoscaling.yml s3://$(TEMPLATE_BUCKET_NAME)/
-	aws s3 cp ../common-templates/cf-dynamodb-stack.yml s3://$(TEMPLATE_BUCKET_NAME)/
+	$(AWS) s3api head-bucket --bucket $(TEMPLATE_BUCKET_NAME) 2>/dev/null || \
+		$(AWS) s3api create-bucket $(CREATE_BUCKET_PARAMS)
+	$(AWS) s3 cp ../common-templates/cf-gerrit-task-execution-role.yml s3://$(TEMPLATE_BUCKET_NAME)/
+	$(AWS) s3 cp ../common-templates/cf-gerrit-network-stack.yml s3://$(TEMPLATE_BUCKET_NAME)/
+	$(AWS) s3 cp ../common-templates/cf-gerrit-volume.yml s3://$(TEMPLATE_BUCKET_NAME)/
+	$(AWS) s3 cp ../common-templates/cf-primary-asg.yml s3://$(TEMPLATE_BUCKET_NAME)/
+	$(AWS) s3 cp ../common-templates/cf-efs-stack.yml s3://$(TEMPLATE_BUCKET_NAME)/
+	$(AWS) s3 cp ../common-templates/cf-ecs-service-cpu-autoscaling.yml s3://$(TEMPLATE_BUCKET_NAME)/
+	$(AWS) s3 cp ../common-templates/cf-dynamodb-stack.yml s3://$(TEMPLATE_BUCKET_NAME)/
 
 set-optional-params-metrics-cloudwatch:
 ifdef METRICS_CLOUDWATCH_ENABLED
@@ -190,12 +191,10 @@ delete-network-persistent-stack:
 
 	$(if $(NETWORK_STACK_NAME), \
 		$(AWS_FC_COMMAND) delete-stack \
-			--stack-name $(NETWORK_STACK_NAME) \
-			--region $(AWS_REGION) && \
+			--stack-name $(NETWORK_STACK_NAME) && \
 		echo "*** Wait for Network stack '$(NETWORK_STACK_NAME)' deletion" && \
 		$(AWS_FC_COMMAND) wait stack-delete-complete \
-			--stack-name $(NETWORK_STACK_NAME) \
-			--region $(AWS_REGION) && \
+			--stack-name $(NETWORK_STACK_NAME) && \
 		echo "*** Network stack '$(NETWORK_STACK_NAME)' deleted" \
 		, \
 		echo "No network stack found. Nothing to do." \
@@ -206,12 +205,10 @@ delete-git-replica-persistent-stack:
 
 	$(if $(REPLICA_EFS_STACK_NAME), \
 		$(AWS_FC_COMMAND) delete-stack \
-			--stack-name $(REPLICA_EFS_STACK_NAME) \
-			--region $(AWS_REGION) && \
+			--stack-name $(REPLICA_EFS_STACK_NAME) && \
 		echo "*** Wait for Git persistent stack of replicas '$(REPLICA_EFS_STACK_NAME)' deletion" && \
 		$(AWS_FC_COMMAND) wait stack-delete-complete \
-			--stack-name $(REPLICA_EFS_STACK_NAME) \
-			--region $(AWS_REGION) && \
+			--stack-name $(REPLICA_EFS_STACK_NAME) && \
 		echo "*** Git persistent stack '$(EFSREPLICA_EFS_STACK_NAME_STACK_NAME)' deleted" \
 		, \
 		echo "No Git persistent stack for replicas found. Nothing to do." \

@@ -3,7 +3,6 @@ include setup.env
 include ../Makefile.common
 
 GEO_LOCATION_TEMPLATE:=cf-geo-location-routing.yml
-AWS_FC_COMMAND=export AWS_PAGER=;aws cloudformation
 
 .PHONY: create-all delete-all \
 		create-geo-location-routing wait-for-geo-location-routing-creation \
@@ -18,7 +17,6 @@ create-geo-location-routing:
 		--stack-name $(GEO_LOCATION_ROUTING_STACK_NAME) \
 		--capabilities CAPABILITY_IAM  \
 		--template-body file://`pwd`/$(GEO_LOCATION_TEMPLATE) \
-		--region $(AWS_REGION) \
 		--parameters \
 			ParameterKey=HostedZoneName,ParameterValue=$(HOSTED_ZONE_NAME) \
 			ParameterKey=HostedZoneId,ParameterValue=$(HOSTED_ZONE_ID) \
@@ -32,20 +30,19 @@ create-geo-location-routing:
 
 delete-geo-location-routing:
 	$(AWS_FC_COMMAND) delete-stack \
-	--stack-name $(GEO_LOCATION_ROUTING_STACK_NAME) \
-	--region $(AWS_REGION)
+	--stack-name $(GEO_LOCATION_ROUTING_STACK_NAME)
 
 wait-for-geo-location-routing-creation:
 	@echo "*** Wait for geo-location-routing stack '$(GEO_LOCATION_ROUTING_STACK_NAME)' creation"
 	$(AWS_FC_COMMAND) wait stack-create-complete \
-	--stack-name $(GEO_LOCATION_ROUTING_STACK_NAME) \
-	--region $(AWS_REGION)
+	--stack-name $(GEO_LOCATION_ROUTING_STACK_NAME)
+
 	@echo "*** geo-location-routing stack '$(GEO_LOCATION_ROUTING_STACK_NAME)' created"
 
 
 wait-for-geo-location-routing-deletion:
 	@echo "*** Wait for geo-location-routing stack '$(GEO_LOCATION_ROUTING_STACK_NAME)' deletion"
 	$(AWS_FC_COMMAND) wait stack-delete-complete \
-	--stack-name $(GEO_LOCATION_ROUTING_STACK_NAME) \
-	--region $(AWS_REGION)
+	--stack-name $(GEO_LOCATION_ROUTING_STACK_NAME)
+
 	@echo "*** geo-location-routing stack '$(GEO_LOCATION_ROUTING_STACK_NAME)' deleted"

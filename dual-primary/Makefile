@@ -9,7 +9,6 @@ SERVICE_REPLICA_TEMPLATE:=cf-service-replica.yml
 DNS_ROUTING_TEMPLATE:=cf-dns-route.yml
 CLOUDWATCH_DASHBOARD_TEMPLATE:=cf-dashboard.yml
 SERVICE_REPLICATION_TEMPLATE:=cf-service-replication.yml
-AWS_FC_COMMAND=export AWS_PAGER=;aws cloudformation
 GIT_GC_SOURCE_PATH=/mnt/efs/gerrit-shared/git
 
 SINGLE_SITE_PLUGINS=javamelody high-availability healthcheck metrics-reporter-cloudwatch
@@ -83,7 +82,6 @@ endif
 		--stack-name $(CLUSTER_STACK_NAME) \
 		--capabilities CAPABILITY_IAM  \
 		--template-body file://`pwd`/$(CLUSTER_TEMPLATE) \
-		--region $(AWS_REGION) \
 		--parameters \
 		ParameterKey=ECSKeyName,ParameterValue=$(CLUSTER_KEYS) \
 		ParameterKey=TemplateBucketName,ParameterValue=$(TEMPLATE_BUCKET_NAME) \
@@ -119,7 +117,6 @@ endif
 		--stack-name $(SERVICE_PRIMARY1_STACK_NAME) \
 		--capabilities CAPABILITY_IAM  \
 		--template-body file://`pwd`/$(SERVICE_PRIMARY_TEMPLATE) \
-		--region $(AWS_REGION) \
 		--parameters \
 		ParameterKey=GerritInstanceNumber,ParameterValue=1 \
 		ParameterKey=LDAPServer,ParameterValue=$(LDAP_SERVER) \
@@ -182,7 +179,6 @@ endif
 		--stack-name $(SERVICE_PRIMARY2_STACK_NAME) \
 		--capabilities CAPABILITY_IAM  \
 		--template-body file://`pwd`/$(SERVICE_PRIMARY_TEMPLATE) \
-		--region $(AWS_REGION) \
 		--parameters \
 		ParameterKey=GerritInstanceNumber,ParameterValue=2 \
 		ParameterKey=LDAPServer,ParameterValue=$(LDAP_SERVER) \
@@ -228,7 +224,6 @@ service-replication:
 		--stack-name $(SERVICE_REPLICATION_STACK_NAME) \
 		--capabilities CAPABILITY_IAM  \
 		--template-body file://`pwd`/$(SERVICE_REPLICATION_TEMPLATE) \
-		--region $(AWS_REGION) \
 		--parameters \
 		ParameterKey=GitReplicationServiceName,ParameterValue=$(SERVICE_REPLICATION_STACK_NAME) \
 		ParameterKey=ClusterStackName,ParameterValue=$(CLUSTER_STACK_NAME) \
@@ -258,7 +253,6 @@ endif
 		--stack-name $(SERVICE_REPLICA_STACK_NAME) \
 		--capabilities CAPABILITY_IAM  \
 		--template-body file://`pwd`/$(SERVICE_REPLICA_TEMPLATE) \
-		--region $(AWS_REGION) \
 		--parameters \
 		ParameterKey=LDAPServer,ParameterValue=$(LDAP_SERVER) \
 		ParameterKey=LDAPUsername,ParameterValue=\"$(LDAP_USERNAME)\" \
@@ -293,7 +287,6 @@ dns-routing:
 		--stack-name $(DNS_ROUTING_STACK_NAME) \
 		--capabilities CAPABILITY_IAM  \
 		--template-body file://`pwd`/$(DNS_ROUTING_TEMPLATE) \
-		--region $(AWS_REGION) \
 		--parameters \
 		ParameterKey=Primary1ServiceStackName,ParameterValue=$(SERVICE_PRIMARY1_STACK_NAME) \
 		ParameterKey=Primary2ServiceStackName,ParameterValue=$(SERVICE_PRIMARY2_STACK_NAME) \
@@ -320,7 +313,6 @@ endif
 		--stack-name $(DASHBOARD_STACK_NAME) \
 		--capabilities CAPABILITY_IAM  \
 		--template-body file://`pwd`/$(CLOUDWATCH_DASHBOARD_TEMPLATE) \
-		--region $(AWS_REGION) \
 		--parameters \
 		$(DASHBOARD_OPTIONAL_PARAMS)
 else
@@ -330,135 +322,128 @@ endif
 wait-for-cluster-creation:
 	@echo "*** Wait for cluster stack '$(CLUSTER_STACK_NAME)' creation"
 	$(AWS_FC_COMMAND) wait stack-create-complete \
-	--stack-name $(CLUSTER_STACK_NAME) \
-	--region $(AWS_REGION)
+	--stack-name $(CLUSTER_STACK_NAME)
+
 	@echo "*** Cluster stack '$(CLUSTER_STACK_NAME)' created"
 
 wait-for-service-primary-1-creation:
 	@echo "*** Wait for service primary stack '$(SERVICE_PRIMARY1_STACK_NAME)' creation"
 	$(AWS_FC_COMMAND) wait stack-create-complete \
-	--stack-name $(SERVICE_PRIMARY1_STACK_NAME) \
-	--region $(AWS_REGION)
+	--stack-name $(SERVICE_PRIMARY1_STACK_NAME)
+
 	@echo "*** Service stack '$(SERVICE_PRIMARY1_STACK_NAME)' created"
 
 wait-for-service-replication-creation:
 	@echo "*** Wait for service replication stack '$(SERVICE_REPLICATION_STACK_NAME)' creation"
 	$(AWS_FC_COMMAND) wait stack-create-complete \
-	--stack-name $(SERVICE_REPLICATION_STACK_NAME) \
-	--region $(AWS_REGION)
+	--stack-name $(SERVICE_REPLICATION_STACK_NAME)
+
 	@echo "*** Service stack '$(SERVICE_REPLICATION_STACK_NAME)' created"
 
 wait-for-service-primary-2-creation:
 	@echo "*** Wait for service primary stack '$(SERVICE_PRIMARY2_STACK_NAME)' creation"
 	$(AWS_FC_COMMAND) wait stack-create-complete \
-	--stack-name $(SERVICE_PRIMARY2_STACK_NAME) \
-	--region $(AWS_REGION)
+	--stack-name $(SERVICE_PRIMARY2_STACK_NAME)
+
 	@echo "*** Service stack '$(SERVICE_PRIMARY2_STACK_NAME)' created"
 
 wait-for-service-replica-creation:
 	@echo "*** Wait for service replica stack '$(SERVICE_REPLICA_STACK_NAME)' creation"
 	$(AWS_FC_COMMAND) wait stack-create-complete \
-	--stack-name $(SERVICE_REPLICA_STACK_NAME) \
-	--region $(AWS_REGION)
+	--stack-name $(SERVICE_REPLICA_STACK_NAME)
+
 	@echo "*** Service stack '$(SERVICE_REPLICA_STACK_NAME)' created"
 
 wait-for-dns-routing-creation:
 	@echo "*** Wait for DNS routing stack '$(DNS_ROUTING_STACK_NAME)' creation"
 	$(AWS_FC_COMMAND) wait stack-create-complete \
-	--stack-name $(DNS_ROUTING_STACK_NAME) \
-	--region $(AWS_REGION)
+	--stack-name $(DNS_ROUTING_STACK_NAME)
+
 	@echo "*** DNS Routing stack '$(DNS_ROUTING_STACK_NAME)' created"
 
 wait-for-dashboard-creation:
 	@echo "*** Wait for dashboard stack '$(DASHBOARD_STACK_NAME)' creation"
 	$(AWS_FC_COMMAND) wait stack-create-complete \
-	--stack-name $(DASHBOARD_STACK_NAME) \
-	--region $(AWS_REGION)
+	--stack-name $(DASHBOARD_STACK_NAME)
+
 	@echo "*** Dashboard stack '$(DASHBOARD_STACK_NAME)' created"
 
 wait-for-cluster-deletion:
 	@echo "*** Wait for cluster stack '$(CLUSTER_STACK_NAME)' deletion"
 	$(AWS_FC_COMMAND) wait stack-delete-complete \
-	--stack-name $(CLUSTER_STACK_NAME) \
-	--region $(AWS_REGION)
+	--stack-name $(CLUSTER_STACK_NAME)
+
 	@echo "*** Cluster stack '$(CLUSTER_STACK_NAME)' deleted"
 
 wait-for-service-primary-1-deletion:
 	@echo "*** Wait for service primary stack '$(SERVICE_PRIMARY1_STACK_NAME)' deletion"
 	$(AWS_FC_COMMAND) wait stack-delete-complete \
-	--stack-name $(SERVICE_PRIMARY1_STACK_NAME) \
-	--region $(AWS_REGION)
+	--stack-name $(SERVICE_PRIMARY1_STACK_NAME)
+
 	@echo "*** Service stack primary '$(SERVICE_PRIMARY1_STACK_NAME)' deleted"
 
 wait-for-service-primary-2-deletion:
 	@echo "*** Wait for service primary stack '$(SERVICE_PRIMARY2_STACK_NAME)' deletion"
 	$(AWS_FC_COMMAND) wait stack-delete-complete \
-	--stack-name $(SERVICE_PRIMARY2_STACK_NAME) \
-	--region $(AWS_REGION)
+	--stack-name $(SERVICE_PRIMARY2_STACK_NAME)
+
 	@echo "*** Service stack primary '$(SERVICE_PRIMARY2_STACK_NAME)' deleted"
 
 wait-for-service-replica-deletion:
 	@echo "*** Wait for service replica stack '$(SERVICE_REPLICA_STACK_NAME)' deletion"
 	$(AWS_FC_COMMAND) wait stack-delete-complete \
-	--stack-name $(SERVICE_REPLICA_STACK_NAME) \
-	--region $(AWS_REGION)
+	--stack-name $(SERVICE_REPLICA_STACK_NAME)
+
 	@echo "*** Service stack replica '$(SERVICE_REPLICA_STACK_NAME)' deleted"
 
 wait-for-dns-routing-deletion:
 	@echo "*** Wait for DNS routing stack '$(DNS_ROUTING_STACK_NAME)' deletion"
 	$(AWS_FC_COMMAND) wait stack-delete-complete \
-	--stack-name $(DNS_ROUTING_STACK_NAME) \
-	--region $(AWS_REGION)
+	--stack-name $(DNS_ROUTING_STACK_NAME)
+
 	@echo "*** DNS routing stack '$(DNS_ROUTING_STACK_NAME)' deleted"
 
 wait-for-service-replication-deletion:
 	@echo "*** Wait for service replication stack '$(SERVICE_REPLICATION_STACK_NAME)' deletion"
 	$(AWS_FC_COMMAND) wait stack-delete-complete \
-	--stack-name $(SERVICE_REPLICATION_STACK_NAME) \
-	--region $(AWS_REGION)
+	--stack-name $(SERVICE_REPLICATION_STACK_NAME)
+
 	@echo "*** Service stack '$(SERVICE_REPLICATION_STACK_NAME)' deleted"
 
 wait-for-dashboard-deletion:
 	@echo "*** Wait for dashboard stack '$(DASHBOARD_STACK_NAME)' deletion"
 	$(AWS_FC_COMMAND) wait stack-delete-complete \
-	--stack-name $(DASHBOARD_STACK_NAME) \
-	--region $(AWS_REGION)
+	--stack-name $(DASHBOARD_STACK_NAME)
+
 	@echo "*** Dashboard stack '$(DASHBOARD_STACK_NAME)' deleted"
 
 delete-cluster:
 	$(AWS_FC_COMMAND) delete-stack \
-	--stack-name $(CLUSTER_STACK_NAME) \
-	--region $(AWS_REGION)
+	--stack-name $(CLUSTER_STACK_NAME)
 
 delete-service-primary-1:
 	$(AWS_FC_COMMAND) delete-stack \
-	--stack-name $(SERVICE_PRIMARY1_STACK_NAME) \
-	--region $(AWS_REGION)
+	--stack-name $(SERVICE_PRIMARY1_STACK_NAME)
 
 delete-service-primary-2:
 	$(AWS_FC_COMMAND) delete-stack \
-	--stack-name $(SERVICE_PRIMARY2_STACK_NAME) \
-	--region $(AWS_REGION)
+	--stack-name $(SERVICE_PRIMARY2_STACK_NAME)
 
 delete-service-replica:
 	$(AWS_FC_COMMAND) delete-stack \
-	--stack-name $(SERVICE_REPLICA_STACK_NAME) \
-	--region $(AWS_REGION)
+	--stack-name $(SERVICE_REPLICA_STACK_NAME)
 
 delete-service-replication:
 	$(AWS_FC_COMMAND) delete-stack \
-	--stack-name $(SERVICE_REPLICATION_STACK_NAME) \
-	--region $(AWS_REGION)
+	--stack-name $(SERVICE_REPLICATION_STACK_NAME)
 
 delete-dns-routing:
 	$(AWS_FC_COMMAND) delete-stack \
-	--stack-name $(DNS_ROUTING_STACK_NAME) \
-	--region $(AWS_REGION)
+	--stack-name $(DNS_ROUTING_STACK_NAME)
 
 delete-dashboard:
 	$(AWS_FC_COMMAND) delete-stack \
-	--stack-name $(DASHBOARD_STACK_NAME) \
-	--region $(AWS_REGION)
+	--stack-name $(DASHBOARD_STACK_NAME)
 
 delete-all: delete-dns-routing wait-for-dns-routing-deletion \
 						delete-service-primary-1 delete-service-primary-2 delete-service-replica \
@@ -477,12 +462,10 @@ delete-git-primary-persistent-stack:
 
 	$(if $(EFS_STACK_NAME), \
 		$(AWS_FC_COMMAND) delete-stack \
-			--stack-name $(EFS_STACK_NAME) \
-			--region $(AWS_REGION) && \
+			--stack-name $(EFS_STACK_NAME) && \
 		echo "*** Wait for Git persistent stack '$(EFS_STACK_NAME)' deletion" && \
 		$(AWS_FC_COMMAND) wait stack-delete-complete \
-			--stack-name $(EFS_STACK_NAME) \
-			--region $(AWS_REGION) && \
+			--stack-name $(EFS_STACK_NAME) && \
 		echo "*** Git persistent stack '$(EFS_STACK_NAME)' deleted" \
 		, \
 		echo "No Git persistent stack found. Nothing to do." \
@@ -521,12 +504,10 @@ delete-dynamodb-persistent-stack:
 
 	$(if $(DYNAMODB_STACK_NAME), \
 		$(AWS_FC_COMMAND) delete-stack \
-			--stack-name $(DYNAMODB_STACK_NAME) \
-			--region $(AWS_REGION) && \
+			--stack-name $(DYNAMODB_STACK_NAME) && \
 		echo "*** Wait for DynamoDB stack '$(DYNAMODB_STACK_NAME)' deletion" && \
 		$(AWS_FC_COMMAND) wait stack-delete-complete \
-			--stack-name $(DYNAMODB_STACK_NAME) \
-			--region $(AWS_REGION) && \
+			--stack-name $(DYNAMODB_STACK_NAME) && \
 		echo "*** DynamoDB stack '$(DYNAMODB_STACK_NAME)' deleted" \
 		, \
 		echo "No DynamoDB stack found. Nothing to do." \

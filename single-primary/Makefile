@@ -6,7 +6,6 @@ include ../maintenance/git-gc/Makefile
 CLUSTER_TEMPLATE:=cf-cluster.yml
 SERVICE_TEMPLATE:=cf-service.yml
 DNS_ROUTING_TEMPLATE:=cf-dns-route.yml
-AWS_FC_COMMAND=export AWS_PAGER=;aws cloudformation
 GIT_GC_SOURCE_PATH=/gerrit-mount-point/gerrit-git
 
 .PHONY: create-all delete-all \
@@ -31,7 +30,6 @@ endif
 		--stack-name $(CLUSTER_STACK_NAME) \
 		--capabilities CAPABILITY_IAM  \
 		--template-body file://`pwd`/$(CLUSTER_TEMPLATE) \
-		--region $(AWS_REGION) \
 		--parameters \
 		ParameterKey=ECSKeyName,ParameterValue=$(CLUSTER_KEYS) \
 		ParameterKey=TemplateBucketName,ParameterValue=$(TEMPLATE_BUCKET_NAME) \
@@ -56,7 +54,6 @@ endif
 		--stack-name $(SERVICE_STACK_NAME) \
 		--capabilities CAPABILITY_IAM  \
 		--template-body file://`pwd`/$(SERVICE_TEMPLATE) \
-		--region $(AWS_REGION) \
 		--parameters \
 		ParameterKey=LDAPServer,ParameterValue=$(LDAP_SERVER) \
 		ParameterKey=LDAPUsername,ParameterValue=\"$(LDAP_USERNAME)\" \
@@ -91,66 +88,62 @@ dns-routing:
 		--stack-name $(DNS_ROUTING_STACK_NAME) \
 		--capabilities CAPABILITY_IAM  \
 		--template-body file://`pwd`/$(DNS_ROUTING_TEMPLATE) \
-		--region $(AWS_REGION) \
 		--parameters \
 		ParameterKey=ServiceStackName,ParameterValue=$(SERVICE_STACK_NAME)
 
 wait-for-cluster-creation:
 	@echo "*** Wait for cluster stack '$(CLUSTER_STACK_NAME)' creation"
 	$(AWS_FC_COMMAND) wait stack-create-complete \
-	--stack-name $(CLUSTER_STACK_NAME) \
-	--region $(AWS_REGION)
+	--stack-name $(CLUSTER_STACK_NAME)
+
 	@echo "*** Cluster stack '$(CLUSTER_STACK_NAME)' created"
 
 wait-for-service-creation:
 	@echo "*** Wait for service stack '$(SERVICE_STACK_NAME)' creation"
 	$(AWS_FC_COMMAND) wait stack-create-complete \
-	--stack-name $(SERVICE_STACK_NAME) \
-	--region $(AWS_REGION)
+	--stack-name $(SERVICE_STACK_NAME)
+
 	@echo "*** Service stack '$(SERVICE_STACK_NAME)' created"
 
 wait-for-dns-routing-creation:
 	@echo "*** Wait for DNS routing stack '$(DNS_ROUTING_STACK_NAME)' creation"
 	$(AWS_FC_COMMAND) wait stack-create-complete \
-	--stack-name $(DNS_ROUTING_STACK_NAME) \
-	--region $(AWS_REGION)
+	--stack-name $(DNS_ROUTING_STACK_NAME)
+
 	@echo "*** DNS Routing stack '$(DNS_ROUTING_STACK_NAME)' created"
 
 wait-for-cluster-deletion:
 	@echo "*** Wait for cluster stack '$(CLUSTER_STACK_NAME)' deletion"
 	$(AWS_FC_COMMAND) wait stack-delete-complete \
-	--stack-name $(CLUSTER_STACK_NAME) \
-	--region $(AWS_REGION)
+	--stack-name $(CLUSTER_STACK_NAME)
+
 	@echo "*** Cluster stack '$(CLUSTER_STACK_NAME)' deleted"
 
 wait-for-service-deletion:
 	@echo "*** Wait for service stack '$(SERVICE_STACK_NAME)' deletion"
 	$(AWS_FC_COMMAND) wait stack-delete-complete \
-	--stack-name $(SERVICE_STACK_NAME) \
-	--region $(AWS_REGION)
+	--stack-name $(SERVICE_STACK_NAME)
+
 	@echo "*** Service stack '$(SERVICE_STACK_NAME)' deleted"
 
 wait-for-dns-routing-deletion:
 	@echo "*** Wait for DNS routing stack '$(DNS_ROUTING_STACK_NAME)' deletion"
 	$(AWS_FC_COMMAND) wait stack-delete-complete \
-	--stack-name $(DNS_ROUTING_STACK_NAME) \
-	--region $(AWS_REGION)
+	--stack-name $(DNS_ROUTING_STACK_NAME)
+
 	@echo "*** DNS routing stack '$(DNS_ROUTING_STACK_NAME)' deleted"
 
 delete-cluster:
 	$(AWS_FC_COMMAND) delete-stack \
-	--stack-name $(CLUSTER_STACK_NAME) \
-	--region $(AWS_REGION)
+	--stack-name $(CLUSTER_STACK_NAME)
 
 delete-service:
 	$(AWS_FC_COMMAND) delete-stack \
-	--stack-name $(SERVICE_STACK_NAME) \
-	--region $(AWS_REGION)
+	--stack-name $(SERVICE_STACK_NAME)
 
 delete-dns-routing:
 	$(AWS_FC_COMMAND) delete-stack \
-	--stack-name $(DNS_ROUTING_STACK_NAME) \
-	--region $(AWS_REGION)
+	--stack-name $(DNS_ROUTING_STACK_NAME)
 
 delete-all: delete-dns-routing wait-for-dns-routing-deletion \
 						delete-service wait-for-service-deletion \
