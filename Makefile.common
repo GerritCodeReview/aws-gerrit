@@ -7,7 +7,7 @@ include $(ROOT_DIR)/operations/export-logs/Makefile
 include $(ROOT_DIR)common.env
 
 cluster-keys:
-	$(AWS) ec2 describe-key-pairs --key-names $(CLUSTER_KEYS) > /dev/null 2>&1 || \
+	aws --region $(AWS_REGION) ec2 describe-key-pairs --key-names $(CLUSTER_KEYS) > /dev/null 2>&1 || \
 		$(AWS) ec2 create-key-pair --key-name $(CLUSTER_KEYS) --query 'KeyMaterial' --output text > $(CLUSTER_KEYS).pem
 
 upload-common-templates:
