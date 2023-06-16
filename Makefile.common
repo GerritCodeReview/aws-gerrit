@@ -1,7 +1,7 @@
 SHELL := /bin/bash
 
 ROOT_DIR=$(dir $(realpath $(filter %Makefile.common,$(MAKEFILE_LIST))))
-AWS=export AWS_PAGER=;aws --region $(AWS_REGION)
+AWS=aws --no-cli-pager --region $(AWS_REGION)
 AWS_FC_COMMAND=$(AWS) cloudformation
 include $(ROOT_DIR)/operations/export-logs/Makefile
 include $(ROOT_DIR)common.env
