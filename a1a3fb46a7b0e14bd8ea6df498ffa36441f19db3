@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "25c8abd8_48fd9e0d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-06-16T07:41:13Z",
+      "side": 1,
+      "message": "I think this is happening because the aws command is now composed of 2 statements.\n\nso the or applies only to the leftmost part of that statement, in particular `export AWS_PAGER`.\n\n```\nexport AWS_PAGER\u003d;aws --region us-east-1 ec2 describe-key-pairs --key-names jenkins-cluster-keys \u003e /dev/null 2\u003e\u00261 || \\\n        export AWS_PAGER\u003d;aws --region us-east-1 ec2 create-key-pair --key-name jenkins-cluster-keys --query \u0027KeyMaterial\u0027 --output text \u003e jenkins-cluster-keys.pem\n        \n``` \n\nDoing `export AWS_PAGER\u003d \u0026\u0026 aws --region us-east-1` might fix the issue.\nAlternatively: wrapping everything in brackets:\n\n\nexport AWS_PAGER\u003d;aws --region us-east-1 ec2 describe-key-pairs --key-names jenkins-cluster-keys \u003e /dev/null 2\u003e\u00261 || \\\n        { export AWS_PAGER\u003d;aws --region us-east-1 ec2 create-key-pair --key-name jenkins-cluster-keys --query \u0027KeyMaterial\u0027 --output text \u003e jenkins-cluster-keys.pem }",
+      "revId": "a1a3fb46a7b0e14bd8ea6df498ffa36441f19db3",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
