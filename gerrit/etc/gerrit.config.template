@@ -20,6 +20,7 @@
 	database = db/ReviewDB
 [index]
 	type = LUCENE
+	pagination = NONE
 [auth]
   type = ldap
   gitBasicAuth = true
