@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e906c5bc_9e8766c3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-09-22T15:37:32Z",
+      "side": 1,
+      "message": "aws-gerrit does not build on 3.8\n\n```\n\u001b[91mError: Unable to find a match: python36 python36-devel\n\u001b[0mThe command \u0027/bin/sh -c yum install -y python36 python3-libs python36-devel python3-pip unzip wget\u0027 returned a non-zero code: 1\nmake[1]: *** [Makefile:47: gerrit-build] Error 1\nmake[1]: Leaving directory \u0027/home/jenkins/workspace/gatling-gerrit-test/aws-gerrit/gerrit\u0027\nmake: *** [Makefile:154: gerrit-publish] Error 2\n```\n\nLet\u0027s revert and address that first before defaulting to it.",
+      "revId": "3b8d0e15af2ea32c435895db4b33c3e0d9932cc3",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
