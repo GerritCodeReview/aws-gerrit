@@ -45,7 +45,7 @@ gerrit-get-plugins:
 
 gerrit-build: check-gerrit-version-vs-war-url
 	cat Dockerfile | \
-		envsubst '$${GERRIT_VERSION} $${GERRIT_PATCH} $${GERRIT_WAR_URL} $${PATH}' | \
+		envsubst '$${GERRIT_VERSION} $${GERRIT_PATCH} $${GERRIT_WAR_URL} $${PATH} $${GERRIT_BUILD_ARCH}' | \
 		docker build -f - --build-arg withXRay="$(XRAY_ENABLED)" -t aws-gerrit/gerrit:$(IMAGE_TAG) .
 	docker tag aws-gerrit/gerrit:$(IMAGE_TAG) $(DOCKER_REGISTRY_URI)/aws-gerrit/gerrit:$(IMAGE_TAG)
 
