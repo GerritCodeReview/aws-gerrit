@@ -1,4 +1,4 @@
-FROM gerritcodereview/gerrit:$GERRIT_VERSION.$GERRIT_PATCH-almalinux8
+FROM gerritcodereview/gerrit:$GERRIT_VERSION.$GERRIT_PATCH-$GERRIT_BUILD_ARCH
 
 ARG withXRay=false
 
