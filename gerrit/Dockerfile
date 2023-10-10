@@ -7,7 +7,7 @@ ARG withXRay=false
 
 USER root
 
-RUN  yum install -y python36 python3-libs python36-devel python3-pip unzip wget
+RUN  yum install -y python3 python3-libs python3-devel python3-pip unzip wget
 
 COPY ssh-config /var/gerrit/.ssh/config
 RUN chown -R gerrit:gerrit /var/gerrit/.ssh
@@ -20,7 +20,7 @@ COPY setup_gerrit.py /tmp
 RUN chown gerrit:gerrit /tmp/setup_gerrit.py
 
 RUN chmod +x /tmp/setup_gerrit.py \
-    && pip3 install --require-hashes --upgrade -r /tmp/requirements.txt
+    && pip install --require-hashes --upgrade -r /tmp/requirements.txt
 
 COPY plugins /var/gerrit/plugins
 COPY lib /var/gerrit/lib
