@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "98b3842a_24fd65c8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1063024
+      },
+      "writtenOn": "2023-10-11T12:25:09Z",
+      "side": 1,
+      "message": "Strictly speaking we could do this against system python, but I think this reduces the number of dependencies.",
+      "revId": "0d6a9170083826c21e11e3f52003f80dcb9780f5",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
