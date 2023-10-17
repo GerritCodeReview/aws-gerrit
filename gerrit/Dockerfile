@@ -1,6 +1,5 @@
 ARG GERRIT_VERSION
 ARG GERRIT_PATCH
-ARG GERRIT_WAR_URL
 FROM gerritcodereview/gerrit:$GERRIT_VERSION.$GERRIT_PATCH-almalinux8
 
 ARG withXRay=false
@@ -39,6 +38,7 @@ RUN chown -R gerrit:gerrit \
 
 USER gerrit
 
+ARG GERRIT_WAR_URL
 RUN bash -c '[ "$GERRIT_WAR_URL" == "" ] || curl $GERRIT_WAR_URL > /var/gerrit/bin/gerrit.war'
 
 ENV PATH ${PATH}:/var/gerrit/.local/bin
