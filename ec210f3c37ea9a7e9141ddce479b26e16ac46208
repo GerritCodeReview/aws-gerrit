@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5b6feb32_f12bec18",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-10-17T15:07:49Z",
+      "side": 1,
+      "message": "wow, well spotted @dariusjokilehto@gmail.com!",
+      "revId": "ec210f3c37ea9a7e9141ddce479b26e16ac46208",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
