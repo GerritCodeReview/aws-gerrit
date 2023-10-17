@@ -22,6 +22,30 @@
       },
       "revId": "d4c7726160875cbfb0e26e13cfee0514caf22357",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "06cc63a0_5b71e4f5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1063024
+      },
+      "writtenOn": "2023-10-17T19:22:39Z",
+      "side": 1,
+      "message": "Agreed - I\u0027ll do this in a separate change.",
+      "parentUuid": "add73286_b60daad9",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 47
+      },
+      "revId": "d4c7726160875cbfb0e26e13cfee0514caf22357",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
