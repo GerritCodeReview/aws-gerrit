@@ -1,7 +1,7 @@
 ARG GERRIT_VERSION
 ARG GERRIT_PATCH
 ARG GERRIT_WAR_URL
-FROM gerritcodereview/gerrit:$GERRIT_VERSION.$GERRIT_PATCH-almalinux9
+FROM gerritcodereview/gerrit:$GERRIT_VERSION.$GERRIT_PATCH-almalinux8
 
 ARG withXRay=false
 
