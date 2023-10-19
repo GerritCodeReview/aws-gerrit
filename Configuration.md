@@ -25,6 +25,8 @@ Configuration values affecting deployment environment and cluster properties
 * `HOSTED_ZONE_NAME`: Optional. Name of the hosted zone. `mycompany.com` by default.
 * `GERRIT_KEY_PREFIX` : Optional. Secrets prefix used during the [Import into AWS Secret Manager](#import-into-aws-secret-manager).
   `gerrit_secret` by default.
+* `GERRIT_BUILD_NO_CACHE`: Optional. Don't use the Docker build cache when building the Gerrit image.
+  Any non-zero length string will set this. Unset by default, so the cache is used.
 
 #### Scheduled Git Garbage Collection
 

@@ -44,7 +44,13 @@ gerrit-get-plugins:
 	done
 
 gerrit-build: check-gerrit-version-vs-war-url
-	docker build \
+	if [[ "$(GERRIT_BUILD_NO_CACHE)" ]]; \
+	then \
+		export build_args="--no-cache"; \
+	else \
+		export build_args=""; \
+	fi; \
+	docker build $${build_args} \
 		--build-arg withXRay="$(XRAY_ENABLED)" \
 		--build-arg GERRIT_VERSION=$(GERRIT_VERSION) \
 		--build-arg GERRIT_PATCH=$(GERRIT_PATCH) \
