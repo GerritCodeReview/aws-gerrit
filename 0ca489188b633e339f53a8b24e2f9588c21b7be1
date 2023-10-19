@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "353e576a_0ec4a80c",
+        "filename": "gerrit/Makefile",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-10-19T13:40:07Z",
+      "side": 1,
+      "message": "Can you also document this new variable?",
+      "range": {
+        "startLine": 47,
+        "startChar": 10,
+        "endLine": 47,
+        "endChar": 31
+      },
+      "revId": "0ca489188b633e339f53a8b24e2f9588c21b7be1",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "042f0d5a_fc7fd14d",
+        "filename": "gerrit/Makefile",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-10-19T13:40:07Z",
+      "side": 1,
+      "message": "nit: consider adding a space here as well, so that we don\u0027t have to rely on L49 (or others in the future) adding an explicit space.\n\nIf multiple spaces are provided is not going to be a problem anyway",
+      "range": {
+        "startLine": 53,
+        "startChar": 13,
+        "endLine": 53,
+        "endChar": 27
+      },
+      "revId": "0ca489188b633e339f53a8b24e2f9588c21b7be1",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
