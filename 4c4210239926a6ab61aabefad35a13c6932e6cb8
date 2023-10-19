@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5fd9558f_5ed3f5b8",
+        "filename": "Configuration.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1063024
+      },
+      "writtenOn": "2023-10-19T13:57:36Z",
+      "side": 1,
+      "message": "While I realise this setting is declared as a negation and not an affirmation (i.e. `DOCKER_BUILD_USE_CACHE`, for example), I think it makes more sense this way as it mirrors the underlying `--no-cache` flag that is set.",
+      "revId": "4c4210239926a6ab61aabefad35a13c6932e6cb8",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
