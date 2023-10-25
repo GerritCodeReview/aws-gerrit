@@ -46,6 +46,30 @@
       },
       "revId": "d4c7726160875cbfb0e26e13cfee0514caf22357",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "15c1359e_5d3080e9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1063024
+      },
+      "writtenOn": "2023-10-25T10:27:24Z",
+      "side": 1,
+      "message": "Created https://issues.gerritcodereview.com/307592551",
+      "parentUuid": "06cc63a0_5b71e4f5",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 47
+      },
+      "revId": "d4c7726160875cbfb0e26e13cfee0514caf22357",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ],
   "submitRequirementResults": [
