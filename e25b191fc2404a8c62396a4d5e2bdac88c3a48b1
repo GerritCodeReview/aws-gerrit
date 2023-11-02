@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c277c463_d9ca8bd6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1010134
+      },
+      "writtenOn": "2023-11-02T13:34:13Z",
+      "side": 1,
+      "message": "nit: how about `Document how to update the python requirements file`?",
+      "revId": "e25b191fc2404a8c62396a4d5e2bdac88c3a48b1",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
