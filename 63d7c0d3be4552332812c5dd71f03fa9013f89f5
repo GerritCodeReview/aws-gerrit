@@ -16,6 +16,24 @@
       "message": "nit: add `--rm` so that it cleans up itself upon exit",
       "revId": "63d7c0d3be4552332812c5dd71f03fa9013f89f5",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5d733fdc_09a9691d",
+        "filename": "gerrit/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1063024
+      },
+      "writtenOn": "2023-11-07T09:46:33Z",
+      "side": 1,
+      "message": "Good shout - done.",
+      "parentUuid": "15070a92_e6646efc",
+      "revId": "63d7c0d3be4552332812c5dd71f03fa9013f89f5",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
