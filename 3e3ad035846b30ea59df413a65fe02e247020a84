@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ed1ea6a4_2f92fd97",
+        "filename": "10518-16",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1155599
+      },
+      "writtenOn": "2023-11-14T00:41:56Z",
+      "side": 1,
+      "message": "test comment",
+      "range": {
+        "startLine": 1,
+        "startChar": 809,
+        "endLine": 1,
+        "endChar": 826
+      },
+      "revId": "3e3ad035846b30ea59df413a65fe02e247020a84",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
