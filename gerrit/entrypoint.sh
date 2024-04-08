@@ -32,10 +32,10 @@ if [ $CONTAINER_REPLICA ]; then
 else
   echo "Primary mode (init phase)..."
   java -jar /var/gerrit/bin/gerrit.war init --no-auto-start --batch --install-all-plugins -d /var/gerrit
-  if [ $REINDEX_AT_STARTUP == "true" ]; then
-    echo "Primary mode (reindex phase)..."
-    java -jar /var/gerrit/bin/gerrit.war reindex -d /var/gerrit
-  fi
+#  if [ $REINDEX_AT_STARTUP == "true" ]; then
+  echo "Primary mode (reindex phase)..."
+  java -jar /var/gerrit/bin/gerrit.war reindex -d /var/gerrit
+#  fi
 fi
 
 echo "Running Gerrit ..."
