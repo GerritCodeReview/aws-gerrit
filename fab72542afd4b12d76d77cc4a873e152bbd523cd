@@ -1,5 +1,23 @@
 {
-  "comments": [],
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e8cf5a1b_835298d9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1132356
+      },
+      "writtenOn": "2024-05-11T11:50:38Z",
+      "side": 1,
+      "message": "bROUGHT nIGHT",
+      "revId": "fab72542afd4b12d76d77cc4a873e152bbd523cd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ],
   "submitRequirementResults": [
     {
       "submitRequirement": {
@@ -14,26 +32,15 @@
       },
       "applicabilityExpressionResult": {},
       "submittabilityExpressionResult": {
-        "expression": {
-          "expressionString": "label:Code-Review\u003dMAX,user\u003dnon_uploader -label:Code-Review\u003dMIN"
-        },
-        "status": "PASS",
-        "errorMessage": {},
-        "passingAtoms": [
-          "label:Code-Review\u003dMAX,user\u003dnon_uploader",
-          "-label:Code-Review\u003dMIN"
-        ],
-        "failingAtoms": []
+        "value": {"expression":{"expressionString":"label:Code-Review=MAX,user=non_uploader -label:Code-Review=MIN"},"status":"PASS","errorMessage":{"value":null},"passingAtoms":["label:Code-Review=MAX,user=non_uploader","-label:Code-Review=MIN"],"failingAtoms":[]}
       },
       "overrideExpressionResult": {},
-      "patchSetCommitId": {
-        "w1": -88660670,
-        "w2": -1345015507,
-        "w3": 1993833668,
-        "w4": -1468800686,
-        "w5": -1143659571
+      "patchSetCommitId": "fab72542afd4b12d76d77cc4a873e152bbd523cd",
+      "legacy": {
+        "value": true
       },
-      "legacy": true
+      "forced": {},
+      "hidden": {}
     },
     {
       "submitRequirement": {
@@ -48,26 +55,15 @@
       },
       "applicabilityExpressionResult": {},
       "submittabilityExpressionResult": {
-        "expression": {
-          "expressionString": "label:Verified\u003dMAX -label:Verified\u003dMIN"
-        },
-        "status": "PASS",
-        "errorMessage": {},
-        "passingAtoms": [
-          "label:Verified\u003dMAX",
-          "-label:Verified\u003dMIN"
-        ],
-        "failingAtoms": []
+        "value": {"expression":{"expressionString":"label:Verified=MAX -label:Verified=MIN"},"status":"PASS","errorMessage":{"value":null},"passingAtoms":["label:Verified=MAX","-label:Verified=MIN"],"failingAtoms":[]}
       },
       "overrideExpressionResult": {},
-      "patchSetCommitId": {
-        "w1": -88660670,
-        "w2": -1345015507,
-        "w3": 1993833668,
-        "w4": -1468800686,
-        "w5": -1143659571
+      "patchSetCommitId": "fab72542afd4b12d76d77cc4a873e152bbd523cd",
+      "legacy": {
+        "value": true
       },
-      "legacy": true
+      "forced": {},
+      "hidden": {}
     },
     {
       "submitRequirement": {
@@ -82,25 +78,15 @@
       },
       "applicabilityExpressionResult": {},
       "submittabilityExpressionResult": {
-        "expression": {
-          "expressionString": "rule:checks~ChecksSubmitRule"
-        },
-        "status": "PASS",
-        "errorMessage": {},
-        "passingAtoms": [
-          "checks~ChecksSubmitRule"
-        ],
-        "failingAtoms": []
+        "value": {"expression":{"expressionString":"rule:checks~ChecksSubmitRule"},"status":"PASS","errorMessage":{"value":null},"passingAtoms":["checks~ChecksSubmitRule"],"failingAtoms":[]}
       },
       "overrideExpressionResult": {},
-      "patchSetCommitId": {
-        "w1": -88660670,
-        "w2": -1345015507,
-        "w3": 1993833668,
-        "w4": -1468800686,
-        "w5": -1143659571
+      "patchSetCommitId": "fab72542afd4b12d76d77cc4a873e152bbd523cd",
+      "legacy": {
+        "value": true
       },
-      "legacy": true
+      "forced": {},
+      "hidden": {}
     }
   ]
 }
