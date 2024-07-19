@@ -28,7 +28,7 @@ MULTI_SITE_MAVEN_LIBS=events-broker~$(EVENTSBROKER_LIB_VER)
 				wait-for-cluster-deletion wait-for-service-primary-1-deletion wait-for-service-primary-2-deletion wait-for-service-replica-deletion wait-for-dns-routing-deletion wait-for-dashboard-deletion \
 				gerrit-build gerrit-publish
 
-ifeq ($(REPLICATION_SERVICE_ENABLED),true)
+ifeq ($(REPLICATION_SERVICE_ENABLED),true) # TODO What is this?
 optional_replication_targets_creation=service-replication wait-for-service-replication-creation
 optional_replication_targets_deletion=delete-service-replication wait-for-service-replication-deletion
 endif
@@ -38,7 +38,7 @@ optional_dashboard_targets_creation=dashboard wait-for-dashboard-creation
 optional_dashboard_targets_deletion=delete-dashboard wait-for-dashboard-deletion
 endif
 
-create-all: upload-common-templates \
+create-all: upload-common-templates \ # TODO 2 primaries and 1 replica?
 						git-daemon-publish git-ssh-publish \
 						gerrit-publish \
 						cluster wait-for-cluster-creation \
@@ -479,10 +479,10 @@ else
 endif
 
 git-daemon-publish:
-	$(MAKE) -C ../primary-replica/git-daemon git-daemon-publish
+	$(MAKE) -C ../primary-replica/git-daemon git-daemon-publish # TODO why git daemon?
 
 git-ssh-publish:
-	$(MAKE) -C ../primary-replica/git-ssh git-ssh-publish
+	$(MAKE) -C ../primary-replica/git-ssh git-ssh-publish # TODO why ssh daemon?
 
 set-high-availability-optional-params:
 	$(eval HA_OPTIONAL_PARAMS=)

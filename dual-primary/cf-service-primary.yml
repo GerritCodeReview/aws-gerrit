@@ -230,7 +230,11 @@ Conditions:
 
 Resources:
     Service:
-        Type: AWS::ECS::Service
+        Type: AWS::ECS::Service # TODO this s creates 4 LB:
+      # 1 for HTTP traffic to the container defined in this file (application)
+      # 2 for SSH traffic to the container defined in this file (network)
+      # 3 for HTTP traffic to Primaries defined in the cluster ?
+      # 4 for SSH traffic to Primaries defined in the cluster?
         DependsOn:
           - HTTPListener
           - SSHListener
@@ -257,7 +261,7 @@ Resources:
                   TargetGroupArn:
                     Fn::ImportValue:
                       !Join [ ':', [ !Ref 'ClusterStackName', 'PrimariesGerritSSHTargetGroup' ] ]
-    TaskDefinition:
+    TaskDefinition: # TOOD this is the container
         Type: AWS::ECS::TaskDefinition
         Properties:
             Family: !Join ['', [!FindInMap ['Gerrit', 'Service', 'Name'], TaskDefinition]]
