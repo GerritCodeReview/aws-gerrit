@@ -16,6 +16,23 @@
       "message": "I need to test it",
       "revId": "2154b27bbf279ee802b7e688809c22ceaf1f1abf",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c069107c_29d3cc41",
+        "filename": "common.env",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2024-11-18T14:24:23Z",
+      "side": 1,
+      "message": "there is new a 0-rc4 available.",
+      "revId": "2154b27bbf279ee802b7e688809c22ceaf1f1abf",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
