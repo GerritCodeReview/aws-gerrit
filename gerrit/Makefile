@@ -61,7 +61,7 @@ gerrit-build: check-gerrit-version-vs-war-url
 check-gerrit-version-vs-war-url:
 	if [[ "$(GERRIT_WAR_URL)" != "" ]]; \
 	then \
-		. set-java.sh 17; \
+		. set-java.sh --branch $GERRIT_BRANCH; \
 		curl $(GERRIT_WAR_URL) > gerrit.war; \
 		GERRIT_VERSION_FROM_WAR=$$(java -jar gerrit.war version | awk '{print $$3}' | cut -d '.' -f 1,2); \
 		if [[ "$$GERRIT_VERSION_FROM_WAR" != "$(GERRIT_VERSION)" ]]; \
