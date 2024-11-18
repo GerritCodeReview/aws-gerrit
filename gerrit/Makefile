@@ -59,6 +59,12 @@ gerrit-build: check-gerrit-version-vs-war-url
 	docker tag aws-gerrit/gerrit:$(IMAGE_TAG) $(DOCKER_REGISTRY_URI)/aws-gerrit/gerrit:$(IMAGE_TAG)
 
 check-gerrit-version-vs-war-url:
+<<<<<<< PATCH SET (f90859 Set Gerrit version to 3.11.0-rc4 and JDK 21)
+	. set-java.sh 21; \
+||||||| BASE
+	. set-java.sh 17; \
+=======
+>>>>>>> BASE      (8bbc16 Set JDK 17 when env variable GERRIT_WAR_URL is defined)
 	if [[ "$(GERRIT_WAR_URL)" != "" ]]; \
 	then \
 		. set-java.sh 17; \
