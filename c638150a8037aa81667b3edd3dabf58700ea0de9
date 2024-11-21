@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d4209308_5d11ec28",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2024-11-21T16:31:12Z",
+      "side": 1,
+      "message": "This will work only on `bookworm` docker images, but that should be the case from now on.",
+      "revId": "c638150a8037aa81667b3edd3dabf58700ea0de9",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
