@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "db9d3ddd_5cb6399e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2024-11-21T16:31:50Z",
+      "side": 1,
+      "message": "rc4 is already out, wanna change it to that?",
+      "revId": "c317e7dceca039917d3cbf19f26d7324e4b36779",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
