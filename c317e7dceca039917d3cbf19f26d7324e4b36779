@@ -16,6 +16,24 @@
       "message": "rc4 is already out, wanna change it to that?",
       "revId": "c317e7dceca039917d3cbf19f26d7324e4b36779",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f6d9f06f_6a3d7132",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1149185
+      },
+      "writtenOn": "2024-11-22T09:35:22Z",
+      "side": 1,
+      "message": "Did you run gatling tests against aws-gerrit with rc4?",
+      "parentUuid": "db9d3ddd_5cb6399e",
+      "revId": "c317e7dceca039917d3cbf19f26d7324e4b36779",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
