@@ -1,4 +1,11 @@
-## Gerrit AWS Templates
+# DEPRECATION NOTICE
+
+GerritForge has decided to [change the license to BSL](https://gitenterprise.me/2025/09/30/re-licensing-gerritforge-plugins-welcome-to-gerrit-enterprise/)
+therefore the Apache 2.0 version of this plugin is deprecated.
+The recommended version of the aws-gerrit plugin is on [GitHub](https://github.com/GerritForge/aws-gerrit)
+and the development continues on [GerritHub.io](https://review.gerrithub.io/admin/repos/GerritForge/aws-gerrit,general).
+
+## Gerrit AWS Templates (DEPRECATED)
 Those are a collection of [AWS CloudFormation](https://aws.amazon.com/cloudformation/)
 templates and scripts to deploy Gerrit in AWS.
 
