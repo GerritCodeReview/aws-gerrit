@@ -1,5 +1,23 @@
 {
-  "comments": [],
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3cc76f81_862f5581",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1156256
+      },
+      "writtenOn": "2026-03-19T03:21:08Z",
+      "side": 1,
+      "message": "From f5fdf5d81b505ddd91cdaed380a5c58464ab7784 Mon Sep 17 00:00:00 2001\nDate: Fri, 03 Oct 2025 09:37:22 -0700\nSubject: [PATCH] Add deprecation notice\n\nChange-Id: I68a6581655293154093494b397b2d48aff36830e\n---\n\ndiff --git a/README.md b/README.md\nindex 1ace590..a509951 100644\n--- a/README.md\n+++ b/README.md\n@@ -1,26 +1,33 @@\n-## Gerrit AWS Templates\n+# DEPRECATION NOTICE\n+\n+GerritForge has decided to [change the license to BSL](https://gitenterprise.me/2025/09/30/re-licensing-gerritforge-plugins-welcome-to-gerrit-enterprise/)\n+therefore the Apache 2.0 version of this plugin is deprecated.\n+The recommended version of the aws-gerrit plugin is on [GitHub](https://github.com/GerritForge/aws-gerrit)\n+and the development continues on [GerritHub.io](https://review.gerrithub.io/admin/repos/GerritForge/aws-gerrit,general).\n+\n+## Gerrit AWS Templates (DEPRECATED)\n Those are a collection of [AWS CloudFormation](https://aws.amazon.com/cloudformation/)\n templates and scripts to deploy Gerrit in AWS.\n \n The aim is to provide some guidelines and example on how to deploy different Gerrit\n setups in the Cloud using AWS as provider.\n \n ## Outline\n \n - [Overview](#overview)\n - [Pre-requisites](#pre-requisites)\n - [Templates](#templates)\n - [External Services](#external-services)\n \n ## Overview\n \n The goal of Gerrit AWS Templates is to provide fully-functional Gerrit installations\n to helps users deploying Gerrit on AWS by providing out-of-the-box templates.\n \n With Gerrit AWS Templates, developers and administrator can create a production-ready\n installation on the cloud in minutes and in a repeatable way, allowing them\n to focus on fine tuning of the Gerrit configuration to suit the user needs.\n \n The provided CloudFormation templates automate the entire creation and deployment\n of the infrastructure and the application",
+      "revId": "f5fdf5d81b505ddd91cdaed380a5c58464ab7784",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ],
   "submitRequirementResults": [
     {
       "submitRequirement": {
